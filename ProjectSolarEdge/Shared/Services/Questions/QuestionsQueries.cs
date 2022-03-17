@@ -11,14 +11,9 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 		public static string GetQuestionByID => @"SELECT * FROM Questions WHERE ID = @ID";
 
 		public static string GetQuestionAnswers => @"SELECT * FROM QuestionAnswers WHERE QuestionID = @ID";
-		public static string GetAllQuestions => @"SELECT 
-													Q.ID,
-													Q.QuestionBody,
-													Q.Type,
-													Q.Difficulty,
-													Q.CreationDate,
-													Q.UpdateDate
-												FROM Questions as Q";
+		//public static string GetAllQuestions => @"SELECT Q.ID, Q.QuestionBody, Q.Type, Q.Difficulty, Q.CreationDate, Q.UpdateDate, FROM Questions as Q";
+		public static string GetAllQuestions => @"SELECT ID, QuestionBody, Type, Difficulty, CreationDate, UpdateDate, Creator, Feedback FROM Questions";
+
 
 		public static string AddNewQuestion => @"INSERT INTO Questions
 													(QuestionBody,

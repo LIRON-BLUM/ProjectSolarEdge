@@ -64,7 +64,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
 
                 await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
-                NavigationManager.NavigateTo("/Questions");
+                NavigationManager.NavigateTo("/");
 
             }
             else
@@ -72,7 +72,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
                 await QuestionDataService.UpdateQuestion(QuestionsCRUD);
 
-                    NavigationManager.NavigateTo("/Questions");
+                    NavigationManager.NavigateTo("/");
             }
 
         }
@@ -80,7 +80,7 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task DeleteQuestion()
         {
             await QuestionDataService.DeleteQuestion(QuestionsCRUD.ID);
-            NavigationManager.NavigateTo("/Questions");
+            NavigationManager.NavigateTo("/");
 
 
         }

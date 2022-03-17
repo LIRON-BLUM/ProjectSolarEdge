@@ -7,8 +7,7 @@
 
 <h3>Edit Questions @QuestionsCRUD.ID </h3>
 
-<span>QuestionBody</span>
-<input @QuestionsCRUD.Answers.answerBody />
+
 
 <EditForm Model="@QuestionsCRUD">
 	<div>
@@ -25,16 +24,14 @@
 	<InputText id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputText>
 	</div>
 
-		<InputText id="Qanswers" placeholder="Enter Your answer">@QuestionsCRUD.Answers.FirstOrDefault();</InputText>
+	@*	<InputText id="Qanswers" placeholder="Enter Your answer">@QuestionsCRUD.Answers.FirstOrDefault();</InputText>
 
 
 
 				  @foreach (var myanswer in  QuestionsCRUD.Answers)
                         {
                        	<InputText  placeholder="Enter Your answer">@QuestionsCRUD.Answers.FirstOrDefault();</InputText>
-                        }
-
-
+                        }*@
 </EditForm>
 
  <br><br>
