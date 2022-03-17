@@ -1,7 +1,9 @@
-﻿using ProjectSolarEdge.Shared.Entities;
+﻿using ProjectSolarEdge.Client.Services.Questions;
+using ProjectSolarEdge.Shared.Entities;
+using System.Text;
 using System.Text.Json;
 
-namespace ProjectSolarEdge.Client.Services.Questions
+namespace ProjectSolarEdge.Client.Services
 {
     public class QuestionDataService : IQuestionsDataService
     {
@@ -11,16 +13,78 @@ namespace ProjectSolarEdge.Client.Services.Questions
         {
             this._httpClient = client;
         }
+
+        public Task<IEnumerable<Question>> GetAllQuestions()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Question> GetQuestionByIdAsync(int Id)
         {
-
-            return await JsonSerializer.DeserializeAsync<Question>(await _httpClient.GetStreamAsync($"api/Questions/Question/{Id}"));
+            Stream stream = await _httpClient.GetStreamAsync($"api/Questions/Question/{Id}");
+            return await JsonSerializer.DeserializeAsync<Question>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
+
 
         public async Task<IEnumerable<Question>> GetQuestionsAsync()
         {
             Stream stream = await _httpClient.GetStreamAsync($"api/Questions/GetQuestions");
             return await JsonSerializer.DeserializeAsync<IEnumerable<Question>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
+
+
+        public async Task<bool> AddQuestionToDB(Question newQuestion)
+        {
+            var QuestionJson =
+                new StringContent(JsonSerializer.Serialize(newQuestion), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/Questions/Insert", QuestionJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+
+
+        public async Task<bool> UpdateQuestion(Question question)
+        {
+            var questionJson =
+                new StringContent(JsonSerializer.Serialize(question), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync("api/Questions/Question/{questionId}", questionJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+
+
+        public async Task<bool> DeleteQuestion(int questionId)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Questions/Question/{questionId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+        //public async Task<QuestionAnswer> GetAnswerByIdAsync(int Id)
+        //{
+        //    Stream stream = await _httpClient.GetStreamAsync($"api/QuestionAnswers/QuestionAnswer/{Id}");
+        //    return await JsonSerializer.DeserializeAsync<QuestionAnswer>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        //}
+
+
     }
 }

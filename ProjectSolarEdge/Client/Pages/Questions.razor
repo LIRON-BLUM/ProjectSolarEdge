@@ -1,14 +1,17 @@
-﻿@page "/questions"
+﻿@page "/Questions"
+@using ProjectSolarEdge.Shared.Entities
 
 <h3>Questions</h3>
+<p>hi my name is liron</p>
 
-
+<a href="/EditQuestion"><button type="button" class="btn btn-primary btn-sm">New Question</button></a>
 <table class="table">
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Question Name</th>
+            <th scope="col">Question</th>
             <th scope="col">Question Type</th>
+             <th scope="col">Creator</th>
             <th scope="col">Creation Date</th>
             <th scope="col">Edit</th>
         </tr>
@@ -18,13 +21,21 @@
         {
             <tr>
                 <th scope="row">@question.ID</th>
-                <td>@question.Name</td>
+                <td>@question.QuestionBody</td>
                 <td>@question.Type</td>
+                 <td>@question.Creator</td>
+                  <td>@question.Difficulty</td>
                 <td>@question.CreationDate</td>
-                <td><a href="/questions/editQuestion/@question.ID"><button type="button" class="btn btn-primary btn-sm">Edit</button></a></td>
+                <td><a href="/EditQuestion/@question.ID"><button type="button" class="btn btn-primary btn-sm">Edit</button></a></td>
+
             </tr>
         }
 
 
     </tbody>
 </table>
+
+
+@code {
+
+}

@@ -49,5 +49,24 @@ namespace ProjectSolarEdge.Shared.Data
                 throw;
             }
         }
+
+
+        public bool ExecuteAll(string query, object param)
+        {
+            try
+            {
+                OpenConnection();
+                int results = _db.Execute(query, param, commandType: CommandType.Text);
+                CloseConnection();
+
+                return results > 0;
+            }
+            catch (Exception)
+            {
+                CloseConnection();
+                throw;
+            }
+        }
+
     }
 }

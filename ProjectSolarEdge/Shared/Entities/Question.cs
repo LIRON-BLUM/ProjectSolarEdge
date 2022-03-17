@@ -24,7 +24,7 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public string Creator { get; set; }
 
-        public IEnumerable<QuestionAnswers> Answers { get; set; }
+        public IEnumerable<QuestionAnswer> Answers { get; set; }
 
     }
 

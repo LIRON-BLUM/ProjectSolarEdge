@@ -11,5 +11,20 @@ namespace ProjectSolarEdge.Shared.Services.Questions
     {
         IEnumerable<Question> getQuestions();
         Question GetQuestionById(int ID, bool IncludeOptions = true);
+
+        //Question AddQuestionToDB(string QuestionBody, DateTime CreationDate, DateTime UpdateDate, QuestionType Type, QuestionDifficulty Difficulty, string Feedback, string Creator);
+
+
+        bool AddQuestionToDB(Question question);
+
+    
+
+
+        bool UpdateQuestion(Question question);
+        bool DeleteQuestion(int id);
+
+        //Question UpdateQuestionByID(int ID);
+
+        //QuestionAnswer GetQuestionAnswerById(int ID, bool IncludeOptions = true);
     }
 }

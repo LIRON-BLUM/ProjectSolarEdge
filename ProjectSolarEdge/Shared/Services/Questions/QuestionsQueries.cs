@@ -10,7 +10,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
     {
 		public static string GetQuestionByID => @"SELECT * FROM Questions WHERE ID = @ID";
 
-		public static string GetQuestionOptions => @"SELECT * FROM QuestionAnswers WHERE QuestionID = @ID";
+		public static string GetQuestionAnswers => @"SELECT * FROM QuestionAnswers WHERE QuestionID = @ID";
 		public static string GetAllQuestions => @"SELECT 
 													Q.ID,
 													Q.QuestionBody,
@@ -19,5 +19,30 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Q.CreationDate,
 													Q.UpdateDate
 												FROM Questions as Q";
+
+		public static string AddNewQuestion => @"INSERT INTO Questions
+													(QuestionBody,
+													CreationDate,
+													UpdateDate,
+													Type,
+													Difficulty,
+													Feedback,
+													Creator)
+											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator)";
+
+
+
+		public static string UpdateQuestion => @"UPDATE Questions 
+												   SET
+													QuestionBody = @QuestionBody,
+													UpdateDate =  @UpdateDate,
+													Type = @Type,
+													Difficulty = @Difficulty,
+													Feedback =  @Feedback
+											    	WHERE  ID = @ID";
+
+
+		public static string DeleteQuestion => @"DELETE FROM Questions WHERE ID = @ID";
+
 	}
 }

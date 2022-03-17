@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
+using static System.Net.WebRequestMethods;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -10,9 +11,17 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public IQuestionsDataService QuestionsDataService { get; set; }
 
+        
+
         protected override async Task OnInitializedAsync()
         {
-            QuestionsData = await QuestionsDataService.GetQuestionsAsync();
+          QuestionsData = await QuestionsDataService.GetQuestionsAsync();
+          
+
         }
+
+
+   
+
     }
 }

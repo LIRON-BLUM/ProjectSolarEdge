@@ -27,10 +27,67 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
             if (IncludeOptions)
             {
-                _question.Answers = GetRecords<QuestionAnswers>(QuestionsQueries.GetQuestionOptions, new { ID = _question.ID });
+                _question.Answers = GetRecords<QuestionAnswer>(QuestionsQueries.GetQuestionAnswers, new { ID = _question.ID });
             }
 
             return _question;
         }
+
+        //string QuestionBody, DateTime CreationDate, DateTime UpdateDate, QuestionType Type, QuestionDifficulty Difficulty, string Feedback, string Creator
+        public bool AddQuestionToDB(Question question)
+        {
+
+           bool results = ExecuteAll(QuestionsQueries.AddNewQuestion, question);
+        
+
+            return results;
+        }
+
+        public bool UpdateQuestion(Question question)
+        {
+
+            bool results = ExecuteAll(QuestionsQueries.UpdateQuestion, question);
+
+
+            return results;
+        }
+
+        public bool DeleteQuestion(int ID)
+        {
+
+            bool results = ExecuteAll(QuestionsQueries.DeleteQuestion,new {ID = ID });
+
+
+            return results;
+        }
+
+
+        //public Question UpdateQuestion(int ID)
+        //{
+
+
+        //    Question _updateQuestion = GetRecords<Question>(QuestionsQueries.UpdateQuestionByID, new {ID}).FirstOrDefault();
+
+        //    return _updateQuestion;
+        //}
+
+
+
+
+        //public Question AddQuestionToDB()
+        //{
+        //    Question _question = GetRecords<Question>(QuestionsQueries.GetQuestionByID, new { ID }).FirstOrDefault();
+
+
+
+        //    return _question;
+        //}
+
+
+        //public QuestionAnswer GetQuestionAnswerById(int ID, bool IncludeOptions = true)
+        //{
+        //    QuestionAnswer _answer = GetRecords<QuestionAnswer>(QuestionsQueries.GetQuestionAnswers, new { ID }).FirstOrDefault();
+        //    return _answer;
+        //}
     }
 }

@@ -1,0 +1,51 @@
+﻿@page "/EditQuestion"
+@page "/EditQuestion/{Id}"
+
+
+
+<section class="question-edit">
+
+<h3>Edit Questions @QuestionsCRUD.ID </h3>
+
+<span>QuestionBody</span>
+<input @QuestionsCRUD.Answers.answerBody />
+
+<EditForm Model="@QuestionsCRUD">
+	<div>
+	<label for="QuestionBody">Question Body:</label>
+	<InputText id="QuestionBody" @bind-Value="@QuestionsCRUD.QuestionBody" placeholder="Enter Your Question"></InputText>
+	</div>
+		<div>
+	<label for="QuestionCreator">Creator:</label>
+	<InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>
+	</div>
+
+		<div>
+	<label for="QuestionFeedback">Feedback:</label>
+	<InputText id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputText>
+	</div>
+
+		<InputText id="Qanswers" placeholder="Enter Your answer">@QuestionsCRUD.Answers.FirstOrDefault();</InputText>
+
+
+
+				  @foreach (var myanswer in  QuestionsCRUD.Answers)
+                        {
+                       	<InputText  placeholder="Enter Your answer">@QuestionsCRUD.Answers.FirstOrDefault();</InputText>
+                        }
+
+
+</EditForm>
+
+ <br><br>
+<button type="button"  @onclick="AddAndUpdate"  class="btn btn-primary btn-sm">Save</button>
+
+<button type="button"  @onclick="DeleteQuestion"  class="btn btn-primary btn-sm">Delete Question</button>
+
+
+</section>
+
+
+
+
+	 
