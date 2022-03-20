@@ -24,15 +24,22 @@
 	<InputText id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputText>
 	</div>
 
-		  @foreach (var myanswer in  QuestionsCRUD.Answers)
-                        {
-                       <span>@myanswer.IsRight </span>
-                       	<InputText  @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText><br/><br/>
-                          
-                        }
 
+	@if (@QuestionsCRUD.ID == 0){
+		<InputText  @bind-Value="@Answer.AnswerBody" placeholder="Enter Your answer"></InputText><br/><br/>
+	}
+	else {
+
+			@foreach (var myanswer in QuestionsCRUD.Answers)
+			{
+				<span>@myanswer.IsRight </span>
+				<InputText  @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText><br/><br/>
+			}
+		}
 
 </EditForm>
+
+
 
  <br><br>
 <button type="button"  @onclick="AddAndUpdate"  class="btn btn-primary btn-sm">Save</button>

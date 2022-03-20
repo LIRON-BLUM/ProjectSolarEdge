@@ -61,6 +61,25 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return results;
         }
 
+        public bool AddAnswerToDB(QuestionAnswer answer)
+        {
+
+            bool results = ExecuteAll(QuestionsQueries.AddAnswer, answer);
+
+
+            return results;
+        }
+
+        
+
+        public bool UpdateAnswer(QuestionAnswer answer)
+        {
+
+            bool results = ExecuteAll(QuestionsQueries.UpdateAnswer, answer);
+
+
+            return results;
+        }
 
         //public Question UpdateQuestion(int ID)
         //{

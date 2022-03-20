@@ -15,7 +15,13 @@ namespace ProjectSolarEdge.Client.Pages
 
         public Question QuestionsCRUD { get; set; } = new Question();
 
-        //public List<QuestionAnswer> Answer { get; set; } =new List<QuestionAnswer>();
+        public List<QuestionAnswer> AnswerList { get; set; } = new List<QuestionAnswer>();
+
+        public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
+
+
+
+        public List<QuestionType> QuestionType { get; set; } = new List<QuestionType>();
 
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
@@ -64,6 +70,8 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
 
                 await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+                await QuestionDataService.AddAnswerToDB(Answer);
+                //await QuestionDataService.UpdateAnswer(Answer);
                 NavigationManager.NavigateTo("/");
 
             }
@@ -71,7 +79,7 @@ namespace ProjectSolarEdge.Client.Pages
             {
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
                 await QuestionDataService.UpdateQuestion(QuestionsCRUD);
-
+                await QuestionDataService.UpdateAnswer(Answer);
                     NavigationManager.NavigateTo("/");
             }
 

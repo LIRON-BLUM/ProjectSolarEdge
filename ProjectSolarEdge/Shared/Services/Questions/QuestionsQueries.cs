@@ -15,7 +15,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 		public static string GetAllQuestions => @"SELECT ID, QuestionBody, Type, Difficulty, CreationDate, UpdateDate, Creator, Feedback FROM Questions";
 
 
-		public static string AddNewQuestion => @"INSERT INTO Questions
+		public static string AddNewQuestion => @"INSERT INTO Question
 													(QuestionBody,
 													CreationDate,
 													UpdateDate,
@@ -25,8 +25,16 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Creator)
 											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator)";
 
+		public static string AddAnswer => @"INSERT INTO QuestionAnswer
+													(QuestionID,
+													AnswerBody,
+													CreationDate,
+													UpdateDate,
+													IsRight)
+											  VALUES (@QuestionID, @AnswerBody, @CreationDate, @UpdateDate, @IsRight)";
 
 
+	
 		public static string UpdateQuestion => @"UPDATE Questions 
 												   SET
 													QuestionBody = @QuestionBody,
@@ -34,6 +42,13 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Type = @Type,
 													Difficulty = @Difficulty,
 													Feedback =  @Feedback
+											    	WHERE  ID = @ID";
+
+		public static string UpdateAnswer => @"UPDATE QuestionAnswer 
+												   SET
+													AnswerBody = @AnswerBody,
+													UpdateDate =  @UpdateDate,
+													IsRight = @IsRight
 											    	WHERE  ID = @ID";
 
 

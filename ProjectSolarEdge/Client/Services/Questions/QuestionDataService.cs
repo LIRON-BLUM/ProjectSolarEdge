@@ -79,6 +79,42 @@ namespace ProjectSolarEdge.Client.Services
             return false;
         }
 
+        ////////----------Aswers----------//////////
+        
+        public async Task<bool> AddAnswerToDB(QuestionAnswer answer)
+        {
+            var AnswerJson =
+                new StringContent(JsonSerializer.Serialize(answer), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/Questions/InsertAns", AnswerJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+
+        
+
+         public async Task<bool> UpdateAnswer(QuestionAnswer answer)
+        {
+            var AnswerJson =
+                new StringContent(JsonSerializer.Serialize(answer), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync("api/Questions/Answer/{questionId}", AnswerJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+
         //public async Task<QuestionAnswer> GetAnswerByIdAsync(int Id)
         //{
         //    Stream stream = await _httpClient.GetStreamAsync($"api/QuestionAnswers/QuestionAnswer/{Id}");

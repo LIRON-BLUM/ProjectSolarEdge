@@ -100,6 +100,48 @@ namespace ProjectSolarEdge.Server.Controllers
 
             return Ok(_question);//success
         }
+
+
+
+        [HttpPost]
+        [Route("InsertAns")]
+        public async Task<IActionResult> AddAnswerToDB(QuestionAnswer answer)
+        {
+          
+
+            bool _Answer = _questionRepository.AddAnswerToDB(answer);
+
+
+            if (_Answer == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_Answer);
+
+
+
+        }
+
+
+
+        [HttpPut]
+        [Route("Answer/{Id}")]
+        public IActionResult UpdateAnswer(QuestionAnswer answer)
+        {
+            if (answer == null)
+            {
+
+                return BadRequest();
+            }
+
+            bool _answer = _questionRepository.UpdateAnswer(answer);
+
+            return Ok(_answer); //success
+        }
     }
 }
 
