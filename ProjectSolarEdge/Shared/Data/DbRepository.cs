@@ -68,5 +68,21 @@ namespace ProjectSolarEdge.Shared.Data
             }
         }
 
+        public int InsertAndreturnInt(string query, object param)
+        {
+            try
+            {
+                OpenConnection();
+                int results = _db.Execute(query, param, commandType: CommandType.Text);
+                CloseConnection();
+
+                return results;
+            }
+            catch (Exception)
+            {
+                CloseConnection();
+                throw;
+            }
+        }
     }
 }

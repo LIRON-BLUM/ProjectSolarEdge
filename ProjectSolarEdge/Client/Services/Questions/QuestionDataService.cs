@@ -104,7 +104,7 @@ namespace ProjectSolarEdge.Client.Services
             var AnswerJson =
                 new StringContent(JsonSerializer.Serialize(answer), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync("api/Questions/Answer/{questionId}", AnswerJson);
+            var response = await _httpClient.PutAsync("api/Questions/Answer/{Id}", AnswerJson);
 
             if (response.IsSuccessStatusCode)
             {

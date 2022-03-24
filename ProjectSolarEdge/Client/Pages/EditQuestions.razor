@@ -1,55 +1,114 @@
 ﻿@page "/EditQuestion"
 @page "/EditQuestion/{Id}"
+@using ProjectSolarEdge.Shared.Entities
 
+
+
+
+<h3>Edit Question @QuestionsCRUD.ID </h3>
 
 
 <section class="question-edit">
+	<EditForm Model="@QuestionsCRUD">
+		<div class="col-4">
+			<InputFile OnChange="@OnInputFileChanged"></InputFile>
+			<img src="@filePicDataUrl" style="width:250px; height:auto;" />
+		</div>
 
-<h3>Edit Questions @QuestionsCRUD.ID </h3>
+		
+	
+
+			<div>
+				<label for="QuestionBody">Type Your Multiple Question:</label><br />
+				<InputTextArea id="myQuestionBody" @bind-Value="@QuestionsCRUD.QuestionBody" placeholder="Enter Your Question"></InputTextArea>
+			</div>
+
+			<div>
+				<label for="QuestionCreator">Creator:</label>
+				<InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>
+			</div>
 
 
 
-<EditForm Model="@QuestionsCRUD">
-	<div>
-	<label for="QuestionBody">Question Body:</label>
-	<InputText id="QuestionBody" @bind-Value="@QuestionsCRUD.QuestionBody" placeholder="Enter Your Question"></InputText>
-	</div>
-		<div>
-	<label for="QuestionCreator">Creator:</label>
-	<InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>
-	</div>
 
-		<div>
-	<label for="QuestionFeedback">Feedback:</label>
-	<InputText id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputText>
-	</div>
-
-
-	@if (@QuestionsCRUD.ID == 0){
-		<InputText  @bind-Value="@Answer.AnswerBody" placeholder="Enter Your answer"></InputText><br/><br/>
-	}
-	else {
-
+			<div>
 			@foreach (var myanswer in QuestionsCRUD.Answers)
 			{
-				<span>@myanswer.IsRight </span>
-				<InputText  @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText><br/><br/>
+
+	
+				
+				if (myanswer.IsRight == true){
+					mychack = true;
+
+				}else
+				{
+					mychack = false;
+				}
+			
+
+			<input type="radio" onchange="@(() => checkedAnswerID = myanswer.ID)" checked="@(checkedAnswerID == myanswer.ID)" name="isRigntRadio"  />
+		
+	
+				<InputText  @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
+
+				<InputFile OnChange="@OnInputFileChanged"></InputFile>
+
+				<img src="@filePicDataUrl" style="width:50px; height:50px;" />
+
+				<br />
+
+				<br />
 			}
-		}
-
-</EditForm>
+			</div>
 
 
+			<InputRadioGroup Name="myRadGroup" @bind-Value="@QuestionsCRUD.Answers">
+			@foreach (var myanswer in QuestionsCRUD.Answers)
+			{
+				<InputRadio Value="@myanswer.IsRight" name="isRigntRadio"/>
+			}
+		</InputRadioGroup>
 
- <br><br>
-<button type="button"  @onclick="AddAndUpdate"  class="btn btn-primary btn-sm">Save</button>
 
-<button type="button"  @onclick="DeleteQuestion"  class="btn btn-primary btn-sm">Delete Question</button>
+			<div>
+				<label for="QuestionFeedback">Feedback:</label><br />
+				<InputTextArea id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputTextArea><br /><br />
+			</div>
 
+			<div>
+			<label for="Qdifficulty">Difficulty:</label><br />
+			<InputSelect id="Qdifficulty" @bind-Value="@QuestionsCRUD.Difficulty">
+				<option value="@(QuestionDifficulty.Easy)">Easy</option>
+				<option value="@(QuestionDifficulty.Medium)">Medium</option>
+				<option value="@(QuestionDifficulty.Hard)">Hard</option>
+			</InputSelect>
+			</div>
+		
+
+			
+			<input id="rad1" name="myRad" checked type="radio" value=True />
+
+	</EditForm>
+	<br/><br/>
+	<div>
+		<span>@MyQBody</span>
+		<br/>
+		<span>@Myans</span>
+	</div>
+
+	<br><br>
+	<button type="button" @onclick="AddAndUpdate" class="btn btn-primary btn-sm">Save</button>
+
+	<button type="button" @onclick="DeleteQuestion" class="btn btn-primary btn-sm">Delete Question</button>
+
+	<button type="button" @onclick="OnlyUI" class="btn btn-primary btn-sm">OnlyUI</button>
+
+	<br/><br/><br/><br/>
 
 </section>
 
 
 
 
-	 
+
+

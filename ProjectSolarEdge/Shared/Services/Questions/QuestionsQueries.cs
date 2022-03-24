@@ -11,11 +11,11 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 		public static string GetQuestionByID => @"SELECT * FROM Questions WHERE ID = @ID";
 
 		public static string GetQuestionAnswers => @"SELECT * FROM QuestionAnswers WHERE QuestionID = @ID";
-		//public static string GetAllQuestions => @"SELECT Q.ID, Q.QuestionBody, Q.Type, Q.Difficulty, Q.CreationDate, Q.UpdateDate, FROM Questions as Q";
+		
 		public static string GetAllQuestions => @"SELECT ID, QuestionBody, Type, Difficulty, CreationDate, UpdateDate, Creator, Feedback FROM Questions";
 
 
-		public static string AddNewQuestion => @"INSERT INTO Question
+		public static string AddNewQuestion => @"INSERT INTO Questions
 													(QuestionBody,
 													CreationDate,
 													UpdateDate,
@@ -25,16 +25,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Creator)
 											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator)";
 
-		public static string AddAnswer => @"INSERT INTO QuestionAnswer
-													(QuestionID,
-													AnswerBody,
-													CreationDate,
-													UpdateDate,
-													IsRight)
-											  VALUES (@QuestionID, @AnswerBody, @CreationDate, @UpdateDate, @IsRight)";
 
-
-	
 		public static string UpdateQuestion => @"UPDATE Questions 
 												   SET
 													QuestionBody = @QuestionBody,
@@ -44,15 +35,32 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Feedback =  @Feedback
 											    	WHERE  ID = @ID";
 
-		public static string UpdateAnswer => @"UPDATE QuestionAnswer 
+
+
+		public static string DeleteQuestion => @"DELETE FROM Questions WHERE ID = @ID";
+
+
+
+		//ANSWERS
+
+		public static string AddAnswer => @"INSERT INTO QuestionAnswers
+													(QuestionID,
+													AnswerBody,
+													CreationDate,
+													UpdateDate,
+													IsRight)
+											  VALUES (@QuestionID, @AnswerBody, @CreationDate, @UpdateDate, @IsRight)";
+
+
+		public static string UpdateAnswer => @"UPDATE QuestionAnswers 
 												   SET
 													AnswerBody = @AnswerBody,
 													UpdateDate =  @UpdateDate,
 													IsRight = @IsRight
 											    	WHERE  ID = @ID";
+//,IsRight = @IsRight
 
-
-		public static string DeleteQuestion => @"DELETE FROM Questions WHERE ID = @ID";
+		public static string DeleteQuestionAnswers => @"DELETE FROM QuestionAnswers WHERE QuestionID = @ID";
 
 	}
 }
