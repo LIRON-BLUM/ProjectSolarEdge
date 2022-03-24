@@ -11,6 +11,8 @@ namespace ProjectSolarEdge.Client.Pages
         [Parameter]
         public string Id { get; set; }
 
+        public int CheckedAnswerID { get; set; }
+
         public Question QuestionsCRUD { get; set; } = new Question();
 
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
@@ -79,26 +81,45 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task AddAndUpdate()
         {
-            if (QuestionsCRUD.ID == 0)
+            // 1) Check which answer is the correct one and set it up
+            if (QuestionsCRUD.Answers.Where(a => a.ID == CheckedAnswerID).Count() > 0)
             {
-                //Get information From User
-                QuestionsCRUD.CreationDate = DateTime.Now;
-                QuestionsCRUD.UpdateDate = DateTime.Now;
-                QuestionsCRUD.Type = (QuestionType)1;
-                QuestionsCRUD.Difficulty = (QuestionDifficulty)1;
-                QuestionsCRUD.Answers = new List<QuestionAnswer>();
-           
-                //Add Question to DB
-                await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+                QuestionsCRUD.Answers.Where(ans => ans.ID == CheckedAnswerID).FirstOrDefault().IsRight = true;
+            }
 
-                //Get new question ID
-                QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
-                Answer.CreationDate = DateTime.Now;
-                Answer.UpdateDate = DateTime.Now;   
-                Answer.IsRight=false;
 
-                //Add answers to new Question By QuestionID
-                await QuestionDataService.AddAnswerToDB(Answer);
+            if (QuestionsCRUD.ID == 0) // Create new question
+            {
+                // 2) Save the question itself into the database and get the question ID back from the database
+                int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+
+                if (QuestionID != 0) // Question added to the DB
+                {
+                    QuestionsCRUD.ID = QuestionID;
+                }
+
+                // 3) Add the answers on the question to the database using the question ID retunred from the DB
+
+                //4) If all successful then navigate the user to edit question or list of questions.
+
+                ////Get information From User
+                //QuestionsCRUD.CreationDate = DateTime.Now;
+                //QuestionsCRUD.UpdateDate = DateTime.Now;
+                //QuestionsCRUD.Type = (QuestionType)1;
+                //QuestionsCRUD.Difficulty = (QuestionDifficulty)1;
+                //QuestionsCRUD.Answers = new List<QuestionAnswer>();
+
+                ////Add Question to DB
+
+
+                ////Get new question ID
+                //QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
+                //Answer.CreationDate = DateTime.Now;
+                //Answer.UpdateDate = DateTime.Now;   
+                //Answer.IsRight=false;
+
+                ////Add answers to new Question By QuestionID
+                //await QuestionDataService.AddAnswerToDB(Answer);
                 NavigationManager.NavigateTo("/");
 
             }
@@ -141,12 +162,17 @@ namespace ProjectSolarEdge.Client.Pages
         string MyQBody = "";
         string Myans = "";
         bool mychack= true;
-        int checkedAnswerID = 0;
+        
         protected async Task OnlyUI()
         {
          
 
             MyQBody = QuestionsCRUD.QuestionBody + "  " +QuestionsCRUD.Creator +"  "+ QuestionsCRUD.Feedback +"  "+ QuestionsCRUD.Difficulty;
+
+            if (QuestionsCRUD.Answers.Where(a => a.ID == CheckedAnswerID).Count() > 0)
+            {
+                QuestionsCRUD.Answers.Where(ans => ans.ID == CheckedAnswerID).FirstOrDefault().IsRight = true;
+            }
             
             
             foreach (var ans in QuestionsCRUD.Answers)

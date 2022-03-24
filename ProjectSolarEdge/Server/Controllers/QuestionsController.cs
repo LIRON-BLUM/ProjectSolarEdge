@@ -51,7 +51,7 @@ namespace ProjectSolarEdge.Server.Controllers
         public async Task<IActionResult> AddQuestionToDB(Question newQuestion)
         {
 
-            bool _question = _questionRepository.AddQuestionToDB(newQuestion);
+            int _question = _questionRepository.AddQuestionToDB(newQuestion);
 
 
             if (_question == null)
@@ -63,8 +63,6 @@ namespace ProjectSolarEdge.Server.Controllers
             }
 
             return Ok(_question);
-
-
 
         }
 

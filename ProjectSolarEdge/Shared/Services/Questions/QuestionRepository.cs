@@ -34,10 +34,10 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         }
 
         //string QuestionBody, DateTime CreationDate, DateTime UpdateDate, QuestionType Type, QuestionDifficulty Difficulty, string Feedback, string Creator
-        public bool AddQuestionToDB(Question question)
+        public int AddQuestionToDB(Question question)
         {
 
-           bool results = ExecuteAll(QuestionsQueries.AddNewQuestion, question);
+           int results = InsertAndreturnInt(QuestionsQueries.AddNewQuestion, question);
         
 
             return results;

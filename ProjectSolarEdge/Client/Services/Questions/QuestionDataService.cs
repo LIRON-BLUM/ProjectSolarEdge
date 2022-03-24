@@ -33,7 +33,7 @@ namespace ProjectSolarEdge.Client.Services
         }
 
 
-        public async Task<bool> AddQuestionToDB(Question newQuestion)
+        public async Task<int> AddQuestionToDB(Question newQuestion)
         {
             var QuestionJson =
                 new StringContent(JsonSerializer.Serialize(newQuestion), Encoding.UTF8, "application/json");
@@ -42,10 +42,10 @@ namespace ProjectSolarEdge.Client.Services
 
             if (response.IsSuccessStatusCode)
             {
-                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+                return await JsonSerializer.DeserializeAsync<int>(await response.Content.ReadAsStreamAsync());
             }
 
-            return false;
+            return 0;
         }
 
 

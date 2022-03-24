@@ -9,101 +9,106 @@
 
 
 <section class="question-edit">
-	<EditForm Model="@QuestionsCRUD">
-		<div class="col-4">
-			<InputFile OnChange="@OnInputFileChanged"></InputFile>
-			<img src="@filePicDataUrl" style="width:250px; height:auto;" />
-		</div>
-
-		
-	
-
-			<div>
-				<label for="QuestionBody">Type Your Multiple Question:</label><br />
-				<InputTextArea id="myQuestionBody" @bind-Value="@QuestionsCRUD.QuestionBody" placeholder="Enter Your Question"></InputTextArea>
-			</div>
-
-			<div>
-				<label for="QuestionCreator">Creator:</label>
-				<InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>
-			</div>
+    <EditForm Model="@QuestionsCRUD">
+        <div class="col-4">
+            <InputFile OnChange="@OnInputFileChanged"></InputFile>
+            <img src="@filePicDataUrl" style="width:250px; height:auto;" />
+        </div>
 
 
 
 
-			<div>
-			@foreach (var myanswer in QuestionsCRUD.Answers)
-			{
+        <div>
+            <label for="QuestionBody">Type Your Multiple Question:</label><br />
+            <InputTextArea id="myQuestionBody" @bind-Value="@QuestionsCRUD.QuestionBody" placeholder="Enter Your Question"></InputTextArea>
+        </div>
 
-	
-				
-				if (myanswer.IsRight == true){
-					mychack = true;
-
-				}else
-				{
-					mychack = false;
-				}
-			
-
-			<input type="radio" onchange="@(() => checkedAnswerID = myanswer.ID)" checked="@(checkedAnswerID == myanswer.ID)" name="isRigntRadio"  />
-		
-	
-				<InputText  @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
-
-				<InputFile OnChange="@OnInputFileChanged"></InputFile>
-
-				<img src="@filePicDataUrl" style="width:50px; height:50px;" />
-
-				<br />
-
-				<br />
-			}
-			</div>
+        <div>
+            <label for="QuestionCreator">Creator:</label>
+            <InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>
+        </div>
 
 
-			<InputRadioGroup Name="myRadGroup" @bind-Value="@QuestionsCRUD.Answers">
-			@foreach (var myanswer in QuestionsCRUD.Answers)
-			{
-				<InputRadio Value="@myanswer.IsRight" name="isRigntRadio"/>
-			}
-		</InputRadioGroup>
 
 
-			<div>
-				<label for="QuestionFeedback">Feedback:</label><br />
-				<InputTextArea id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputTextArea><br /><br />
-			</div>
+        <div>
+            <InputRadioGroup @bind-Value="CheckedAnswerID">
+                @foreach (var myanswer in QuestionsCRUD.Answers)
+                {
 
-			<div>
-			<label for="Qdifficulty">Difficulty:</label><br />
-			<InputSelect id="Qdifficulty" @bind-Value="@QuestionsCRUD.Difficulty">
-				<option value="@(QuestionDifficulty.Easy)">Easy</option>
-				<option value="@(QuestionDifficulty.Medium)">Medium</option>
-				<option value="@(QuestionDifficulty.Hard)">Hard</option>
-			</InputSelect>
-			</div>
-		
 
-			
-			<input id="rad1" name="myRad" checked type="radio" value=True />
 
-	</EditForm>
-	<br/><br/>
-	<div>
-		<span>@MyQBody</span>
-		<br/>
-		<span>@Myans</span>
-	</div>
+                    if (myanswer.IsRight == true)
+                    {
+                        mychack = true;
 
-	<br><br>
-	<button type="button" @onclick="AddAndUpdate" class="btn btn-primary btn-sm">Save</button>
+                    }
+                    else
+                    {
+                        mychack = false;
+                    }
 
-	<button type="button" @onclick="DeleteQuestion" class="btn btn-primary btn-sm">Delete Question</button>
 
-	<button type="button" @onclick="OnlyUI" class="btn btn-primary btn-sm">OnlyUI</button>
+                    @*<input type="radio" onchange="@(() => CheckedAnswerID = myanswer.ID)" checked="@(CheckedAnswerID == myanswer.ID)" name="isRigntRadio"  />*@
+                    <InputRadio Value="myanswer.ID"></InputRadio>
 
-	<br/><br/><br/><br/>
+
+                    <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
+
+                    <InputFile OnChange="@OnInputFileChanged"></InputFile>
+
+                    <img src="@filePicDataUrl" style="width:50px; height:50px;" />
+
+                    <br />
+
+                    <br />
+                }
+            </InputRadioGroup>
+        </div>
+
+
+        <InputRadioGroup Name="myRadGroup" @bind-Value="@QuestionsCRUD.Answers">
+            @foreach (var myanswer in QuestionsCRUD.Answers)
+            {
+                <InputRadio Value="@myanswer.IsRight" name="isRigntRadio" />
+            }
+        </InputRadioGroup>
+
+
+        <div>
+            <label for="QuestionFeedback">Feedback:</label><br />
+            <InputTextArea id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputTextArea><br /><br />
+        </div>
+
+        <div>
+            <label for="Qdifficulty">Difficulty:</label><br />
+            <InputSelect id="Qdifficulty" @bind-Value="@QuestionsCRUD.Difficulty">
+                <option value="@(QuestionDifficulty.Easy)">Easy</option>
+                <option value="@(QuestionDifficulty.Medium)">Medium</option>
+                <option value="@(QuestionDifficulty.Hard)">Hard</option>
+            </InputSelect>
+        </div>
+
+
+
+        <input id="rad1" name="myRad" checked type="radio" value=True />
+
+    </EditForm>
+    <br /><br />
+    <div>
+        <span>@MyQBody</span>
+        <br />
+        <span>@Myans</span>
+    </div>
+
+    <br><br>
+    <button type="button" @onclick="AddAndUpdate" class="btn btn-primary btn-sm">Save</button>
+
+    <button type="button" @onclick="DeleteQuestion" class="btn btn-primary btn-sm">Delete Question</button>
+
+    <button type="button" @onclick="OnlyUI" class="btn btn-primary btn-sm">OnlyUI</button>
+
+    <br /><br /><br /><br />
 
 </section>
 

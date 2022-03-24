@@ -23,7 +23,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Difficulty,
 													Feedback,
 													Creator)
-											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator)";
+											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator)
+											  SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
 		public static string UpdateQuestion => @"UPDATE Questions 

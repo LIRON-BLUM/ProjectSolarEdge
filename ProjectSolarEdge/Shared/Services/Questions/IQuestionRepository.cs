@@ -15,7 +15,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         //Question AddQuestionToDB(string QuestionBody, DateTime CreationDate, DateTime UpdateDate, QuestionType Type, QuestionDifficulty Difficulty, string Feedback, string Creator);
 
 
-        bool AddQuestionToDB(Question question);
+        int AddQuestionToDB(Question question);
 
     
 

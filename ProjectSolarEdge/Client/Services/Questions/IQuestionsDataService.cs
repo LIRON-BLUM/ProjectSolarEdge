@@ -13,7 +13,7 @@ namespace ProjectSolarEdge.Client.Services.Questions
         //Task<QuestionAnswer> GetAnswerByIdAsync(int Id);
         Task<Question> GetQuestionByIdAsync(int Id);
 
-        Task<bool> AddQuestionToDB(Question newQuestion);
+        Task<int> AddQuestionToDB(Question newQuestion);
 
         Task<bool> UpdateQuestion(Question question);
 
