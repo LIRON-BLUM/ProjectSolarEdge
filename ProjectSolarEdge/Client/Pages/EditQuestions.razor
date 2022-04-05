@@ -37,19 +37,6 @@
                 {
 
 
-
-                    if (myanswer.IsRight == true)
-                    {
-                        mychack = true;
-
-                    }
-                    else
-                    {
-                        mychack = false;
-                    }
-
-
-                    @*<input type="radio" onchange="@(() => CheckedAnswerID = myanswer.ID)" checked="@(CheckedAnswerID == myanswer.ID)" name="isRigntRadio"  />*@
                     <InputRadio Value="myanswer.ID"></InputRadio>
 
 
@@ -67,12 +54,6 @@
         </div>
 
 
-        <InputRadioGroup Name="myRadGroup" @bind-Value="@QuestionsCRUD.Answers">
-            @foreach (var myanswer in QuestionsCRUD.Answers)
-            {
-                <InputRadio Value="@myanswer.IsRight" name="isRigntRadio" />
-            }
-        </InputRadioGroup>
 
 
         <div>

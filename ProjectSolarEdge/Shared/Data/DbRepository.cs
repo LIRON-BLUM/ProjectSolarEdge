@@ -73,7 +73,7 @@ namespace ProjectSolarEdge.Shared.Data
             try
             {
                 OpenConnection();
-                int results = _db.Execute(query, param, commandType: CommandType.Text);
+                int results = _db.Query<int>(query, param, commandType: CommandType.Text).FirstOrDefault();
                 CloseConnection();
 
                 return results;

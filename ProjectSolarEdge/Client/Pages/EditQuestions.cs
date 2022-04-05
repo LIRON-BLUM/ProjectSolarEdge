@@ -48,21 +48,21 @@ namespace ProjectSolarEdge.Client.Pages
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    ID = 2,
+                   ID = 2,
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    ID = 3,
+                   ID = 3,
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    ID = 4,
+                   ID = 4,
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
@@ -98,28 +98,15 @@ namespace ProjectSolarEdge.Client.Pages
                     QuestionsCRUD.ID = QuestionID;
                 }
 
-                // 3) Add the answers on the question to the database using the question ID retunred from the DB
+                // 3) Add the answers on the question to the database using the question ID retunred from the DB 
+                foreach (var ans in QuestionsCRUD.Answers)
+                {
+                    ans.QuestionID = QuestionID;
+                    await QuestionDataService.AddAnswerToDB(ans);
+
+                }
 
                 //4) If all successful then navigate the user to edit question or list of questions.
-
-                ////Get information From User
-                //QuestionsCRUD.CreationDate = DateTime.Now;
-                //QuestionsCRUD.UpdateDate = DateTime.Now;
-                //QuestionsCRUD.Type = (QuestionType)1;
-                //QuestionsCRUD.Difficulty = (QuestionDifficulty)1;
-                //QuestionsCRUD.Answers = new List<QuestionAnswer>();
-
-                ////Add Question to DB
-
-
-                ////Get new question ID
-                //QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
-                //Answer.CreationDate = DateTime.Now;
-                //Answer.UpdateDate = DateTime.Now;   
-                //Answer.IsRight=false;
-
-                ////Add answers to new Question By QuestionID
-                //await QuestionDataService.AddAnswerToDB(Answer);
                 NavigationManager.NavigateTo("/");
 
             }
@@ -178,7 +165,7 @@ namespace ProjectSolarEdge.Client.Pages
             foreach (var ans in QuestionsCRUD.Answers)
             {
 				
-				Myans += ans.AnswerBody +  "    mychack:" +mychack + "isRight"+ ans.IsRight + "    |    ";
+				Myans += ans.AnswerBody + "-    isRight: "+ ans.IsRight + "    |    ";
                
             } 
         }

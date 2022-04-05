@@ -59,7 +59,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													UpdateDate =  @UpdateDate,
 													IsRight = @IsRight
 											    	WHERE  ID = @ID";
-//,IsRight = @IsRight
+
 
 		public static string DeleteQuestionAnswers => @"DELETE FROM QuestionAnswers WHERE QuestionID = @ID";
 
