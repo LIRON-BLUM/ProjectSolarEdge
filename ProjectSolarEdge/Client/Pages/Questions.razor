@@ -9,15 +9,29 @@
 <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NewQuestion">NewQuestion</MudButton>
 
 
-<MudTable Items="QuestionsData" Hover="true">
+<MudTable Items="QuestionsData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Periodic Elements</MudText>
+        <MudSpacer />
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
     <HeaderContent>
-        <MudTh>ID</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.ID)">ID</MudTableSortLabel></MudTh>
         <MudTh>Question Body</MudTh>
-        <MudTh>Type</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Type)">Type</MudTableSortLabel></MudTh>
         <MudTh>Difficulty</MudTh>
         <MudTh>Creator</MudTh>
         <MudTh>Creation Date</MudTh>
         <MudTh>Edit</MudTh>
+
+
+        @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+   
     </HeaderContent>
     <RowTemplate>
         <MudTh DataLabel="ID">@context.ID</MudTh>
@@ -26,25 +40,53 @@
         <MudTh DataLabel="Difficulty">@context.Difficulty</MudTh>
         <MudTh DataLabel="Creator">@context.Creator</MudTh>
         <MudTh DataLabel="Creation Date">@context.CreationDate</MudTh>
-        <MudTh DataLabel="Edit"><a href="/EditQuestion/@context.ID">
-    <MudButton Variant="Variant.Outlined"
-               EndIcon="@Icons.Outlined.Edit"
-               Color="Color.Tertiary">
+        <MudTh DataLabel="Edit">
+            <a href="/EditQuestion/@context.ID">
+                <MudButton Variant="Variant.Outlined"
+                           EndIcon="@Icons.Filled.Edit"
+                           Color="Color.Primary">
 
-        Edit
-    </MudButton>
-</a>
-  
-</MudTh>
+                    Edit
+                </MudButton>
+            </a>
+
+        </MudTh>
 
 
     </RowTemplate>
     <PagerContent>
-        <MudTablePager PageSizeOptions="new int[]{10,20}"></MudTablePager>
+        <MudTablePager PageSizeOptions="new int[]{5,10,20}"></MudTablePager>
     </PagerContent>
 </MudTable>
 
 
 
  @code {
+
+     bool fixed_header = true;
+     bool fixed_footer = false;
+
+     private string searchString = "";
+
+
+     private bool FilterFunc(Question question)
+     {
+         if (string.IsNullOrWhiteSpace(searchString))
+             return true;
+         if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+             return true;
+         if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+             return true;
+         if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
+             return true;
+         return false;
+     }
+
+     private MudTable<Question> table;
+
+     private void OnSearch(string text)
+     {
+         searchString = text;
+         table.ReloadServerData();
+     }
                }

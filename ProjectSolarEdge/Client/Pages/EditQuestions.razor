@@ -7,92 +7,176 @@
 
 <h3>Edit Question @QuestionsCRUD.ID </h3>
 
-
-<section class="question-edit">
-    <EditForm Model="@QuestionsCRUD">
-        <div class="col-4">
-            <InputFile OnChange="@OnInputFileChanged"></InputFile>
-            <img src="@filePicDataUrl" style="width:250px; height:auto;" />
-        </div>
+<MudGrid Spacing=3>
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+            <EditForm Model="@QuestionsCRUD">
 
 
+                <MudItem xs="8">
+                    @*<InputTextArea id="myQuestionBody" @bind-Value="@QuestionsCRUD.QuestionBody" placeholder="Enter Your Question"></InputTextArea>*@
+                    <MudTextField T="string" Label="Question Body" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" />
 
+                </MudItem>
 
-        <div>
-            <label for="QuestionBody">Type Your Multiple Question:</label><br />
-            <InputTextArea id="myQuestionBody" @bind-Value="@QuestionsCRUD.QuestionBody" placeholder="Enter Your Question"></InputTextArea>
-        </div>
-
-        <div>
-            <label for="QuestionCreator">Creator:</label>
-            <InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>
-        </div>
+                <MudItem xs="4">
+                    @*<InputFile OnChange="@OnInputFileChanged"></InputFile>*@
 
 
 
+                    <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple />
 
-        <div>
-            <InputRadioGroup @bind-Value="CheckedAnswerID">
-                @foreach (var myanswer in QuestionsCRUD.Answers)
-                {
+                    <MudButton HtmlTag="label"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Filled.Image"
+                               for="fileInput">
+                        Upload Image
+                    </MudButton>
+                    <img src="@filePicDataUrl" style="width:250px; height:auto;" />
+
+                    @if (files != null)
+                    {
+                        <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+                        <MudList>
+                            @foreach (var file in files)
+                            {
+                                <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
+                                    @file.Name <code>@file.Size bytes</code>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+                </MudItem>
+                <MudItem xs="6">
+                    @*<label for="QuestionCreator">Creator:</label>*@
+                    @*<InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>*@
+                    <MudTextField @bind-Value="@QuestionsCRUD.Creator" Label="Enter Your Name" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                </MudItem>
+
+                <MudItem xs="6">  </MudItem>
 
 
-                    <InputRadio Value="myanswer.ID"></InputRadio>
+                <div>
+                    <InputRadioGroup @bind-Value="CheckedAnswerID">
+                        @foreach (var myanswer in QuestionsCRUD.Answers)
+                        {
 
 
-                    <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
+                            <InputRadio Value="myanswer.ID"></InputRadio>
 
-                    <InputFile OnChange="@OnInputFileChanged"></InputFile>
 
-                    <img src="@filePicDataUrl" style="width:50px; height:50px;" />
+                            <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
 
+                            <InputFile OnChange="@OnInputFileChanged"></InputFile>
+
+                            <img src="@filePicDataUrl" style="width:50px; height:50px;" />
+
+                            <br />
+
+                        }
+                    </InputRadioGroup>
+                    <MudRadioGroup @bind-SelectedOption="Dense_Radio">
+                        <MudRadio Option="true" Color="Color.Primary" Dense="true">Dense</MudRadio>
+                        <MudRadio Option="false" Color="Color.Secondary" Dense="false">Normal</MudRadio>
+                    </MudRadioGroup>
+
+                  
+
+                    @*<MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
+
+            @foreach (var myanswer in QuestionsCRUD.Answers)
+            {
+                <MudRadio Option="@myanswer.IsRight" Color="Color.Secondary">Primary</MudRadio>
+                <MudTextField @bind-Value="@myanswer.AnswerBody"  Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                <InputFile OnChange="@OnInputFileChanged"></InputFile>
+
+                <img src="@filePicDataUrl" style="width:50px; height:50px;" />
+
+                <br />
+            }
+
+        </MudRadioGroup>*@
+
+
+                </div>
+
+
+
+
+                <div>
+                    <label for="QuestionFeedback">Feedback:</label><br />
+                    <InputTextArea id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputTextArea><br /><br />
+                </div>
+
+                <div>
+                    <label for="Qdifficulty">Difficulty:</label><br />
+                    <InputSelect id="Qdifficulty" @bind-Value="@QuestionsCRUD.Difficulty">
+                        <option value="@(QuestionDifficulty.Easy)">Easy</option>
+                        <option value="@(QuestionDifficulty.Medium)">Medium</option>
+                        <option value="@(QuestionDifficulty.Hard)">Hard</option>
+                    </InputSelect>
+                </div>
+
+
+                <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Primary" DisableElevation="true">Save</MudButton>
+                <MudButton Variant="Variant.Filled" @onclick="DeleteQuestion" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+
+
+
+            </EditForm>
+
+            @*<div>
+                    <span>@MyQBody</span>
                     <br />
+                    <span>@Myans</span>
+                </div>*@
 
-                    <br />
-                }
-            </InputRadioGroup>
-        </div>
+            @*<br><br>
+                <button type="button" @onclick="AddAndUpdate"  class="btn btn-primary btn-sm">Save</button>
 
+                <button type="button" @onclick="DeleteQuestion" class="btn btn-primary btn-sm">Delete Question</button>*@
 
-
-
-        <div>
-            <label for="QuestionFeedback">Feedback:</label><br />
-            <InputTextArea id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputTextArea><br /><br />
-        </div>
-
-        <div>
-            <label for="Qdifficulty">Difficulty:</label><br />
-            <InputSelect id="Qdifficulty" @bind-Value="@QuestionsCRUD.Difficulty">
-                <option value="@(QuestionDifficulty.Easy)">Easy</option>
-                <option value="@(QuestionDifficulty.Medium)">Medium</option>
-                <option value="@(QuestionDifficulty.Hard)">Hard</option>
-            </InputSelect>
-        </div>
+            @*<button type="button" @onclick="OnlyUI" class="btn btn-primary btn-sm">OnlyUI</button>*@
 
 
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="5">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">QUESTIONS TABLE</MudPaper>
 
-        <input id="rad1" name="myRad" checked type="radio" value=True />
+    </MudItem>
+</MudGrid>
 
-    </EditForm>
-    <br /><br />
-    <div>
-        <span>@MyQBody</span>
-        <br />
-        <span>@Myans</span>
-    </div>
 
-    <br><br>
-    <button type="button" @onclick="AddAndUpdate" class="btn btn-primary btn-sm">Save</button>
+@code {
+    public bool Dense_Radio { get; set; } = true;
 
-    <button type="button" @onclick="DeleteQuestion" class="btn btn-primary btn-sm">Delete Question</button>
+    private IEnumerable<string> MaxCharacters(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
+            yield return "Max 25 characters";
+    }
 
-    <button type="button" @onclick="OnlyUI" class="btn btn-primary btn-sm">OnlyUI</button>
+    //IList<IBrowserFile> files = new List<IBrowserFile>();
+    //private void UploadFiles(InputFileChangeEventArgs e)
+    //{
+    //    foreach (var file in e.GetMultipleFiles())
+    //    {
+    //        //var file = inputFileChangeEvent.File;
 
-    <br /><br /><br /><br />
 
-</section>
+    //        files.Add(file);
+    //        var fileInArray = new byte[file.Size];
+    //        await file.OpenReadStream(1512000).ReadAsync(fileInArray);
 
+    //        filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
+
+
+    //    }
+    //TODO upload the files to the server
+}
+}
 
 
 

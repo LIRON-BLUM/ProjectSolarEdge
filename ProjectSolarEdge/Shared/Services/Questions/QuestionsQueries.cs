@@ -61,7 +61,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 											    	WHERE  ID = @ID";
 
 
-		public static string DeleteQuestionAnswers => @"DELETE FROM QuestionAnswers WHERE QuestionID = @ID";
+		public static string DeleteQuestionAnswer => @"DELETE FROM QuestionAnswers WHERE QuestionID = @QuestionID";
 
 	}
 }

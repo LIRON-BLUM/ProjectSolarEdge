@@ -1,12 +1,43 @@
 ﻿@inherits LayoutComponentBase
 
 <MudThemeProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1" Style="@($"background:#f2f7fb;")">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="@($"color:#FF002A;")" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <img src="https://www.solaredge.com/themes/solaredge_2018/img/SolarEdge_logo_header_new_0.svg" alt="Home" width="10%" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer>
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
+
+
+
+
+
+@*<MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar>
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+    <MudAppBar Style="@($"background:#f2f7fb;")">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="@($"color:#FF002A;")" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <img src="https://www.solaredge.com/themes/solaredge_2018/img/SolarEdge_logo_header_new_0.svg" alt="Home" width="10%" />
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
@@ -26,7 +57,7 @@
     {
         _drawerOpen = !_drawerOpen;
     }
-}
+}*@
 
 
 

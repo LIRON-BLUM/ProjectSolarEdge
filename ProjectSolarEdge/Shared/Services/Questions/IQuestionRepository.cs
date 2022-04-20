@@ -12,9 +12,6 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         IEnumerable<Question> getQuestions();
         Question GetQuestionById(int ID, bool IncludeOptions = true);
 
-        //Question AddQuestionToDB(string QuestionBody, DateTime CreationDate, DateTime UpdateDate, QuestionType Type, QuestionDifficulty Difficulty, string Feedback, string Creator);
-
-
         int AddQuestionToDB(Question question);
 
     
@@ -27,8 +24,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
         bool UpdateAnswer(QuestionAnswer answer);
 
-        //Question UpdateQuestionByID(int ID);
+        bool DeleteAnswer(int id);
 
-        //QuestionAnswer GetQuestionAnswerById(int ID, bool IncludeOptions = true);
+
     }
 }

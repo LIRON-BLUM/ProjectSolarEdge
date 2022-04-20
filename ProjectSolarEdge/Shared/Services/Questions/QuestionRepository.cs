@@ -81,32 +81,15 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return results;
         }
 
-        //public Question UpdateQuestion(int ID)
-        //{
+        public bool DeleteAnswer(int ID)
+        {
+
+            bool results = ExecuteAll(QuestionsQueries.DeleteQuestionAnswer, new { ID = ID });
 
 
-        //    Question _updateQuestion = GetRecords<Question>(QuestionsQueries.UpdateQuestionByID, new {ID}).FirstOrDefault();
+            return results;
+        }
 
-        //    return _updateQuestion;
-        //}
-
-
-
-
-        //public Question AddQuestionToDB()
-        //{
-        //    Question _question = GetRecords<Question>(QuestionsQueries.GetQuestionByID, new { ID }).FirstOrDefault();
-
-
-
-        //    return _question;
-        //}
-
-
-        //public QuestionAnswer GetQuestionAnswerById(int ID, bool IncludeOptions = true)
-        //{
-        //    QuestionAnswer _answer = GetRecords<QuestionAnswer>(QuestionsQueries.GetQuestionAnswers, new { ID }).FirstOrDefault();
-        //    return _answer;
-        //}
+ 
     }
 }

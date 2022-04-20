@@ -114,6 +114,18 @@ namespace ProjectSolarEdge.Client.Services
             return false;
         }
 
+        public async Task<bool> DeleteQuestionAnswers(int questionId)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Questions/DeleteAnswer/{questionId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
 
         //public async Task<QuestionAnswer> GetAnswerByIdAsync(int Id)
         //{

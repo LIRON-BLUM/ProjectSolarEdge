@@ -24,7 +24,6 @@ namespace ProjectSolarEdge.Client.Pages
         protected override async Task OnInitializedAsync()
         {
           QuestionsData = await QuestionsDataService.GetQuestionsAsync();
-            QuestionsData = await QuestionsDataService.GetQuestionsAsync();
             //  QuestionsData = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
 
         }

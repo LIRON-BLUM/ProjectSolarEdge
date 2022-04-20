@@ -41,28 +41,28 @@ namespace ProjectSolarEdge.Client.Pages
                 //ADD ANSWERS
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    ID = 1,
+                   // ID = 1,
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                   ID = 2,
+                 //  ID = 2,
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                   ID = 3,
+                //   ID = 3,
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                   ID = 4,
+               //    ID = 4,
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
@@ -112,10 +112,18 @@ namespace ProjectSolarEdge.Client.Pages
             }
             else
             {
-                QuestionsCRUD.Answers = new List<QuestionAnswer>();
+              //  QuestionsCRUD.Answers = new List<QuestionAnswer>();
 
                 await QuestionDataService.UpdateQuestion(QuestionsCRUD);
-                await QuestionDataService.UpdateAnswer(Answer);
+
+                foreach (var ans in QuestionsCRUD.Answers)
+                {
+                   
+                    await QuestionDataService.UpdateAnswer(ans);
+                  
+
+                }
+                
                     NavigationManager.NavigateTo("/");
             }
 
@@ -135,11 +143,44 @@ namespace ProjectSolarEdge.Client.Pages
 
             filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
 
+
+
+
         }
 
-        protected async Task DeleteQuestion()
+
+        IList<IBrowserFile> files = new List<IBrowserFile>();
+        private async Task UploadFiles(InputFileChangeEventArgs e)
+        {
+            foreach (var file in e.GetMultipleFiles())
+            {
+                //var file = inputFileChangeEvent.File;
+
+
+                files.Add(file);
+                var fileInArray = new byte[file.Size];
+                await file.OpenReadStream(1512000).ReadAsync(fileInArray);
+
+                filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
+
+
+            }
+
+        }
+
+            protected async Task DeleteQuestion()
         {
             await QuestionDataService.DeleteQuestion(QuestionsCRUD.ID);
+
+            foreach (var ans in QuestionsCRUD.Answers)
+            {
+
+
+
+                await QuestionDataService.DeleteQuestionAnswers(ans.QuestionID);
+
+            }
+
             NavigationManager.NavigateTo("/");
 
 
@@ -148,7 +189,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         string MyQBody = "";
         string Myans = "";
-        bool mychack= true;
+
         
         protected async Task OnlyUI()
         {
