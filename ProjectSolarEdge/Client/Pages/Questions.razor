@@ -9,20 +9,20 @@
 <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NewQuestion">NewQuestion</MudButton>
 
 
-<MudTable Items="QuestionsData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+<MudTable Items="QuestionsData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Periodic Elements</MudText>
         <MudSpacer />
-        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
-                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+
     </ToolBarContent>
     <HeaderContent>
-        <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.ID)">ID</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="ID_field" T="Question">ID</MudTableSortLabel></MudTh>
         <MudTh>Question Body</MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Question, object>(x=>x.Type)">Type</MudTableSortLabel></MudTh>
-        <MudTh>Difficulty</MudTh>
-        <MudTh>Creator</MudTh>
-        <MudTh>Creation Date</MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Type_field" T="Question">Type</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Difficulty_field" T="Question">Difficulty</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Creator_field" T="Question">Creator</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="Creation_Date_field" T="Question">Creation Date</MudTableSortLabel></MudTh>
         <MudTh>Edit</MudTh>
 
 
@@ -66,27 +66,62 @@
      bool fixed_header = true;
      bool fixed_footer = false;
 
+     //private string searchString = "";
      private string searchString = "";
-
-
-     private bool FilterFunc(Question question)
-     {
-         if (string.IsNullOrWhiteSpace(searchString))
-             return true;
-         if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-             return true;
-         if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-             return true;
-         if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
-             return true;
-         return false;
-     }
-
+     private int totalItems;
+     private IEnumerable<Question> pagedData;
      private MudTable<Question> table;
+
+
+     //private bool FilterFunc(Question question)
+
+     private async Task<TableData<Question>> ServerReload(TableState state)
+     {
+
+         IEnumerable<Question> data = await QuestionsDataService.GetQuestionsAsync();
+         await Task.Delay(300);
+         data = data.Where(question =>
+
+         {
+             if (string.IsNullOrWhiteSpace(searchString))
+                 return true;
+             if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                 return true;
+             if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                 return true;
+             if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
+                 return true;
+             return false;
+         }).ToArray();
+         totalItems = data.Count();
+         switch (state.SortLabel)
+         {
+             case "ID_field":
+                 data = data.OrderByDirection(state.SortDirection, o => o.ID);
+                 break;
+             case "Type_field":
+                 data = data.OrderByDirection(state.SortDirection, o => o.Type);
+                 break;
+             case "Difficulty_field":
+                 data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
+                 break;
+             case "Creator_field":
+                 data = data.OrderByDirection(state.SortDirection, o => o.Creator);
+                 break;
+             case "Creation_Date_field":
+                 data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
+                 break;
+         }
+
+         pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+         return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
+
+     }
 
      private void OnSearch(string text)
      {
          searchString = text;
          table.ReloadServerData();
      }
-               }
+
+     }
