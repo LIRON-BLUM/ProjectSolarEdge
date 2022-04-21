@@ -274,3 +274,11 @@ a, .btn-link {
 .mud-drawer {
     background-color: #001546 !important;
 }
+
+
+/*TABLE HEAD*/
+.mud-table-sticky-header * .mud-table-root .mud-table-head * .mud-table-cell {
+    border-radius: 0;
+    background-color: var(--mud-palette-primary) !important;
+    color: white;
+}

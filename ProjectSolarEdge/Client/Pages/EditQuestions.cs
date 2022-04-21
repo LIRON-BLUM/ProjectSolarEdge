@@ -161,7 +161,8 @@ namespace ProjectSolarEdge.Client.Pages
                 var fileInArray = new byte[file.Size];
                 await file.OpenReadStream(1512000).ReadAsync(fileInArray);
 
-                filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
+                filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}" ;
+                //TimeSpan.TicksPerMillisecond
 
 
             }

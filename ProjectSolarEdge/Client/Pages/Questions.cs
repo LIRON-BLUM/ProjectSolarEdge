@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 //using MudBlazor.Examples.Data.Models;
 using Microsoft.Extensions.DependencyInjection;
+using MudBlazor;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -33,21 +34,6 @@ namespace ProjectSolarEdge.Client.Pages
            
             NavigationManager.NavigateTo("/EditQuestion");
 
-
-            // QuestionsCRUD.CreationDate = DateTime.Now;
-            //QuestionsCRUD.UpdateDate = DateTime.Now;
-            // QuestionsCRUD.Type = (QuestionType)1;
-            // QuestionsCRUD.Difficulty = (QuestionDifficulty)1;
-            // QuestionsCRUD.Answers = new List<QuestionAnswer>();
-
-
-            //await QuestionsDataService.AddQuestionToDB(QuestionsCRUD);
-
-            //int QID = QuestionsCRUD.ID;
-            ////NavigationManager.NavigateTo("/EditQuestion/{Id}");
-            //NavigateToEdit(QID);
-           // NavigationManager.NavigateTo("/EditQuestion/"+ QuestionsCRUD.ID);
-
         }
 
         protected async Task NavigateToEdit(int qid)
@@ -58,32 +44,67 @@ namespace ProjectSolarEdge.Client.Pages
         }
 
 
-        //public bool dense = false;
-        //public bool hover = true;
-        //public bool striped = false;
-        //public bool bordered = false;
-        //public string searchString1 = "";
-        //public Question selectedItem1 = null;
-        //public HashSet<Question> selectedItems = new HashSet<Question>();
 
-        //public IEnumerable<Question> Elements = new List<Question>();
+        bool fixed_header = true;
+        bool fixed_footer = false;
+
+        //private string searchString = "";
+        private string searchString = "";
+        private int totalItems;
+        private IEnumerable<Question> pagedData;
+        private MudTable<Question> table;
 
 
+        //private bool FilterFunc(Question question)
 
-        //private bool FilterFunc1(Question element) => FilterFunc(element, searchString1);
+        protected async Task<TableData<Question>> ServerReload(TableState state)
+        {
 
-        //private bool FilterFunc(Question element, string searchString)
-        //{
-        //    if (string.IsNullOrWhiteSpace(searchString))
-        //        return true;
-        //    if (element.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //        return true;
-        //    if (element.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //        return true;
-        //    if ($"{element.Type} {element.Difficulty} {element.CreationDate}".Contains(searchString))
-        //        return true;
-        //    return false;
-        //}
+            IEnumerable<Question> data = await QuestionsDataService.GetQuestionsAsync();
+            //await Task.Delay(300);
+            data = data.Where(question =>
+
+            {
+                if (string.IsNullOrWhiteSpace(searchString))
+                    return true;
+                if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
+                    return true;
+                return false;
+            }).ToArray();
+            totalItems = data.Count();
+            switch (state.SortLabel)
+            {
+                case "ID_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.ID);
+                    break;
+                case "Type_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Type);
+                    break;
+                case "Difficulty_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
+                    break;
+                case "Creator_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Creator);
+                    break;
+                case "Creation_Date_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
+                    break;
+            }
+
+            pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+            return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
+
+        }
+
+        private async Task OnSearch(string text)
+        {
+            searchString = text;
+            table.ReloadServerData();
+        }
 
     }
 }
