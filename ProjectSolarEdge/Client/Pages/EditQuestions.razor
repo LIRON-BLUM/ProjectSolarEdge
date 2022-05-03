@@ -52,19 +52,21 @@
                     @*<label for="QuestionCreator">Creator:</label>*@
                     @*<InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>*@
                     <MudTextField @bind-Value="@QuestionsCRUD.Creator" Label="Enter Your Name" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+
+
                 </MudItem>
 
                 <MudItem xs="6">  </MudItem>
 
 
                 <div>
-                    <InputRadioGroup @bind-Value="CheckedAnswerID">
+                    @*<InputRadioGroup @bind-Value="CheckedAnswerID">
                         @foreach (var myanswer in QuestionsCRUD.Answers)
                         {
 
 
                             <InputRadio Value="myanswer.ID"></InputRadio>
-
+                            <InputRadio Value="myanswer.IsRight"></InputRadio>
 
                             <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
 
@@ -75,28 +77,49 @@
                             <br />
 
                         }
-                    </InputRadioGroup>
-                    <MudRadioGroup @bind-SelectedOption="Dense_Radio">
-                        <MudRadio Option="true" Color="Color.Primary" Dense="true">Dense</MudRadio>
-                        <MudRadio Option="false" Color="Color.Secondary" Dense="false">Normal</MudRadio>
-                    </MudRadioGroup>
+                    </InputRadioGroup>*@
 
-                  
+                    <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
+                        @foreach (var myanswer in QuestionsCRUD.Answers)
+                        {
+                            @*<MudRadio Option="myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
+              <br />
+            <MudRadio Option="myanswer.IsRight" Color="Color.Primary" Dense="true">
+                <MudTextField @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer" Variant="Variant.Outlined"  Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+            </MudRadio>
+              <br />*@
+             @*@if (myanswer.IsRight == true)
+            {
+                CheckedAnswerIsRight = myanswer.IsRight;
+            }else
+            {
+                CheckedAnswerIsRight = myanswer.IsRight;
+            }*@
+                            @*<MudRadio Option="@myanswer.IsRight" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>*@
+
+                            <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
+                            <br />
+                            @*<MudRadio Option="myanswer.IsRight" Color="Color.Primary" Dense="true">
+                <MudTextField @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer" Variant="Variant.Outlined" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+            </MudRadio>*@
+                            <br />
+                        }
+                    </MudRadioGroup>
 
                     @*<MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
 
-            @foreach (var myanswer in QuestionsCRUD.Answers)
-            {
-                <MudRadio Option="@myanswer.IsRight" Color="Color.Secondary">Primary</MudRadio>
-                <MudTextField @bind-Value="@myanswer.AnswerBody"  Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
-                <InputFile OnChange="@OnInputFileChanged"></InputFile>
+                        @foreach (var myanswer in QuestionsCRUD.Answers)
+                        {
+                            <MudRadio Option="@myanswer.IsRight" Color="Color.Secondary">Primary</MudRadio>
+                            <MudTextField @bind-Value="@myanswer.AnswerBody" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                            <InputFile OnChange="@OnInputFileChanged"></InputFile>
+                            <MudRadio Option="true" Color="Color.Primary" Dense="true">Dense</MudRadio>
+                            <img src="@filePicDataUrl" style="width:50px; height:50px;" />
 
-                <img src="@filePicDataUrl" style="width:50px; height:50px;" />
+                            <br /> 
+                        }
 
-                <br />
-            }
-
-        </MudRadioGroup>*@
+                    </MudRadioGroup>*@
 
 
                 </div>
@@ -176,7 +199,7 @@
     //    }
     //TODO upload the files to the server
 }
-}
+
 
 
 

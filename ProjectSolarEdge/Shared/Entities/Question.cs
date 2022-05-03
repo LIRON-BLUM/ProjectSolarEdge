@@ -26,6 +26,9 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public List<QuestionAnswer> Answers { get; set; }
 
+        public byte isDeleted { get; set; }
+
+
     }
 
     public enum QuestionType

@@ -13,6 +13,8 @@ namespace ProjectSolarEdge.Client.Pages
 
         public int CheckedAnswerID { get; set; }
 
+        public bool CheckedAnswerIsRight { get; set; }
+
         public Question QuestionsCRUD { get; set; } = new Question();
 
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
@@ -74,17 +76,34 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
             }
 
+          
 
-         QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
+            QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
+
+            foreach (var TFanswer in QuestionsCRUD.Answers)
+            {
+                if (TFanswer.IsRight == true)
+                {
+                    CheckedAnswerID = TFanswer.ID;
+                }
+            }
+
+
 
         }
 
         protected async Task AddAndUpdate()
         {
             // 1) Check which answer is the correct one and set it up
-            if (QuestionsCRUD.Answers.Where(a => a.ID == CheckedAnswerID).Count() > 0)
+            foreach (var ans in QuestionsCRUD.Answers)
+            {
+
+                ans.IsRight = false;
+
+                if (QuestionsCRUD.Answers.Where(a => a.ID == CheckedAnswerID).Count() > 0)
             {
                 QuestionsCRUD.Answers.Where(ans => ans.ID == CheckedAnswerID).FirstOrDefault().IsRight = true;
+            } 
             }
 
 
@@ -202,7 +221,7 @@ namespace ProjectSolarEdge.Client.Pages
             {
                 QuestionsCRUD.Answers.Where(ans => ans.ID == CheckedAnswerID).FirstOrDefault().IsRight = true;
             }
-            
+
             
             foreach (var ans in QuestionsCRUD.Answers)
             {
