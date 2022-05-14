@@ -49,8 +49,7 @@
                     }
                 </MudItem>
                 <MudItem xs="6">
-                    @*<label for="QuestionCreator">Creator:</label>*@
-                    @*<InputText id="QuestionCreator" @bind-Value="@QuestionsCRUD.Creator" placeholder="Enter Your Name"></InputText>*@
+                   
                     <MudTextField @bind-Value="@QuestionsCRUD.Creator" Label="Enter Your Name" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
 
 
@@ -82,27 +81,10 @@
                     <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
                         @foreach (var myanswer in QuestionsCRUD.Answers)
                         {
-                            @*<MudRadio Option="myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
-              <br />
-            <MudRadio Option="myanswer.IsRight" Color="Color.Primary" Dense="true">
-                <MudTextField @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer" Variant="Variant.Outlined"  Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
-            </MudRadio>
-              <br />*@
-             @*@if (myanswer.IsRight == true)
-            {
-                CheckedAnswerIsRight = myanswer.IsRight;
-            }else
-            {
-                CheckedAnswerIsRight = myanswer.IsRight;
-            }*@
-                            @*<MudRadio Option="@myanswer.IsRight" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>*@
-
+                       
                             <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
                             <br />
-                            @*<MudRadio Option="myanswer.IsRight" Color="Color.Primary" Dense="true">
-                <MudTextField @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer" Variant="Variant.Outlined" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
-            </MudRadio>*@
-                            <br />
+                           <br/>
                         }
                     </MudRadioGroup>
 

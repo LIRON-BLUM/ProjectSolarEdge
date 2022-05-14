@@ -67,9 +67,12 @@ namespace ProjectSolarEdge.Client.Services
 
 
 
-        public async Task<bool> DeleteQuestion(int questionId)
+        public async Task<bool> DeleteQuestion(Question question)
         {
-            var response = await _httpClient.DeleteAsync($"api/Questions/Question/{questionId}");
+            var questionJson =
+                new StringContent(JsonSerializer.Serialize(question), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync("api/Questions/DeleteQuestion/{questionId}", questionJson);
 
             if (response.IsSuccessStatusCode)
             {
@@ -78,6 +81,22 @@ namespace ProjectSolarEdge.Client.Services
 
             return false;
         }
+
+
+
+        //public async Task<bool> DeleteQuestion(int questionId)
+        //{
+        //    var response = await _httpClient.DeleteAsync($"api/Questions/Question/{questionId}");
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+        //    }
+
+        //    return false;
+        //}
+
+
 
         ////////----------Aswers----------//////////
         
@@ -113,6 +132,24 @@ namespace ProjectSolarEdge.Client.Services
 
             return false;
         }
+
+
+        public async Task<bool> DeleteAnswer(QuestionAnswer answer)
+        {
+            var AnswerJson =
+                new StringContent(JsonSerializer.Serialize(answer), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync("api/Questions/DeleteAnswer/{Id}", AnswerJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+
 
         public async Task<bool> DeleteQuestionAnswers(int questionId)
         {

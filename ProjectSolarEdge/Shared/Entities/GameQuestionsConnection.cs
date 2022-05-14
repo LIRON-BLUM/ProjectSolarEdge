@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 
 namespace ProjectSolarEdge.Shared.Entities
 {
-    public class Subject
+    internal class GameQuestionsConnection
     {
-
         public int ID { get; set; }
-        public string SubjectName { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public DateTime UpdateDate { get; set; }
         public int QuestionID { get; set; }
-        public byte isDeleted { get; set; }
+
+        public int GameID { get; set; }
+
+        public int Score { get; set; }
 
     }
 }

@@ -28,6 +28,8 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public byte isDeleted { get; set; }
 
+        public int SubjectID { get; set; }
+
 
     }
 

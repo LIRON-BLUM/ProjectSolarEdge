@@ -83,21 +83,37 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_question); //success
         }
 
-        [HttpDelete]
-        [Route("Question/{Id}")]
-        public IActionResult DeleteQuestion(int Id)
+        [HttpPut]
+        [Route("DeleteQuestion/{Id}")]
+        public IActionResult DeleteQuestion(Question question)
         {
-            if (Id == 0)
+            if (question == null)
+            {
+
                 return BadRequest();
+            }
 
-            //var questionToDelete = _questionRepository.GetQuestionById(Id);
-            if (Id == null)
-                return NotFound();
+            bool _question = _questionRepository.DeleteQuestion(question);
 
-            bool _question = _questionRepository.DeleteQuestion(Id);
-
-            return Ok(_question);//success
+            return Ok(_question); //success
         }
+
+
+        //[HttpDelete]
+        //[Route("Question/{Id}")]
+        //public IActionResult DeleteQuestion(int Id)
+        //{
+        //    if (Id == 0)
+        //        return BadRequest();
+
+        //    //var questionToDelete = _questionRepository.GetQuestionById(Id);
+        //    if (Id == null)
+        //        return NotFound();
+
+        //    bool _question = _questionRepository.DeleteQuestion(Id);
+
+        //    return Ok(_question);//success
+        //}
 
 
 
@@ -141,23 +157,38 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_answer); //success
         }
 
-
-
-        [HttpDelete]
+        [HttpPut]
         [Route("DeleteAnswer/{Id}")]
-        public IActionResult DeleteQuestionAnswer(int Id)
+        public IActionResult DeleteAnswer(QuestionAnswer answer)
         {
-            if (Id == 0)
+            if (answer == null)
+            {
+
                 return BadRequest();
+            }
 
-            //var questionToDelete = _questionRepository.GetQuestionById(Id);
-            if (Id == null)
-                return NotFound();
+            bool _answer = _questionRepository.DeleteAnswer(answer);
 
-            bool _question = _questionRepository.DeleteAnswer(Id);
-
-            return Ok(_question);//success
+            return Ok(_answer); //success
         }
+
+
+
+        //[HttpDelete]
+        //[Route("DeleteAnswer/{Id}")]
+        //public IActionResult DeleteQuestionAnswer(int Id)
+        //{
+        //    if (Id == 0)
+        //        return BadRequest();
+
+        //    //var questionToDelete = _questionRepository.GetQuestionById(Id);
+        //    if (Id == null)
+        //        return NotFound();
+
+        //    bool _question = _questionRepository.DeleteAnswer(Id);
+
+        //    return Ok(_question);//success
+        //}
 
     }
 }

@@ -8,11 +8,13 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 {
     public static class QuestionsQueries
     {
-		public static string GetQuestionByID => @"SELECT * FROM Questions WHERE ID = @ID";
 
-		public static string GetQuestionAnswers => @"SELECT * FROM QuestionAnswers WHERE QuestionID = @ID";
+		//-----------------Questions----------------//
+		public static string GetQuestionByID => @"SELECT * FROM Questions WHERE ID = @ID AND isDeleted = 0";
+
+		public static string GetQuestionAnswers => @"SELECT * FROM QuestionAnswers WHERE QuestionID = @ID AND isDeleted = 0";
 		
-		public static string GetAllQuestions => @"SELECT ID, QuestionBody, Type, Difficulty, CreationDate, UpdateDate, Creator, Feedback FROM Questions";
+		public static string GetAllQuestions => @"SELECT ID, QuestionBody, Type, Difficulty, CreationDate, UpdateDate, Creator, Feedback FROM Questions WHERE isDeleted = 0";
 
 
 		public static string AddNewQuestion => @"INSERT INTO Questions
@@ -22,8 +24,10 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Type,
 													Difficulty,
 													Feedback,
-													Creator)
-											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator)
+													Creator,
+													isDeleted,
+													SubjectID)
+											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator, 0, @SubjectID)
 											  SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
@@ -38,11 +42,13 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 
 
-		public static string DeleteQuestion => @"DELETE FROM Questions WHERE ID = @ID";
+        //public static string DeleteQuestion => @"DELETE FROM Questions WHERE ID = @ID";
+        public static string DeleteQuestion => @"UPDATE Questions 
+												SET isDeleted = 1
+													WHERE ID = @ID";
 
 
-
-		//ANSWERS
+		//-----------------ANSWERS----------------//
 
 		public static string AddAnswer => @"INSERT INTO QuestionAnswers
 													(QuestionID,
@@ -61,7 +67,17 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 											    	WHERE  ID = @ID";
 
 
+		public static string DeleteAnswer => @"UPDATE QuestionAnswers 
+												SET isDeleted = 1
+													WHERE ID = @ID";
+
+
 		public static string DeleteQuestionAnswer => @"DELETE FROM QuestionAnswers WHERE QuestionID = @QuestionID";
 
+
+		//-----------------Subjects----------------//
+		public static string GetSubjectByID => @"SELECT * FROM Subjects WHERE ID = @ID AND isDeleted = 0";
+
+		public static string GetAllSubjectsName => @"SELECT SubjectName FROM Subjects WHERE isDeleted = 0";
 	}
 }

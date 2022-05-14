@@ -18,13 +18,16 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 
         bool UpdateQuestion(Question question);
-        bool DeleteQuestion(int id);
+        bool DeleteQuestion(Question question);
+        
+        //bool DeleteQuestion(int id);
 
         bool AddAnswerToDB(QuestionAnswer answer);
 
         bool UpdateAnswer(QuestionAnswer answer);
+        bool DeleteAnswer(QuestionAnswer answer);
 
-        bool DeleteAnswer(int id);
+        //bool DeleteAnswer(int id);
 
 
     }

@@ -19,7 +19,10 @@ namespace ProjectSolarEdge.Client.Pages
 
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
 
+        public Subject Subject { get; set; } = new Subject();
 
+        public IEnumerable<Subject> SubjectsList { get; set; } = new List<Subject>();
+        
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
 
@@ -32,39 +35,43 @@ namespace ProjectSolarEdge.Client.Pages
 
 
             int.TryParse(Id, out var QId);
-
+            
             if (QId == 0) //new Question is being created
             {
                 //add some defaults
-                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1 };
+                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1, SubjectID=1 };
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
 
-
+            
                 //ADD ANSWERS
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
                    // ID = 1,
+                    //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                 //  ID = 2,
+                    //  ID = 2,
+                    //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                //   ID = 3,
+                    //   ID = 3,
+                    //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-               //    ID = 4,
+                    //    ID = 4,
+                    //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
@@ -80,11 +87,11 @@ namespace ProjectSolarEdge.Client.Pages
 
             QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
 
-            foreach (var TFanswer in QuestionsCRUD.Answers)
+            foreach (var myanswer in QuestionsCRUD.Answers)
             {
-                if (TFanswer.IsRight == true)
+                if (myanswer.IsRight == true)
                 {
-                    CheckedAnswerID = TFanswer.ID;
+                    CheckedAnswerID = myanswer.ID;
                 }
             }
 
@@ -131,10 +138,10 @@ namespace ProjectSolarEdge.Client.Pages
             }
             else
             {
-              //  QuestionsCRUD.Answers = new List<QuestionAnswer>();
-
-                await QuestionDataService.UpdateQuestion(QuestionsCRUD);
-
+                //  QuestionsCRUD.Answers = new List<QuestionAnswer>();
+                
+                  await QuestionDataService.UpdateQuestion(QuestionsCRUD);
+               
                 foreach (var ans in QuestionsCRUD.Answers)
                 {
                    
@@ -190,14 +197,16 @@ namespace ProjectSolarEdge.Client.Pages
 
             protected async Task DeleteQuestion()
         {
-            await QuestionDataService.DeleteQuestion(QuestionsCRUD.ID);
+
+            await QuestionDataService.DeleteQuestion(QuestionsCRUD);
+
 
             foreach (var ans in QuestionsCRUD.Answers)
             {
 
 
-
-                await QuestionDataService.DeleteQuestionAnswers(ans.QuestionID);
+                await QuestionDataService.DeleteAnswer(ans);
+                //await QuestionDataService.DeleteQuestionAnswers(ans.QuestionID);
 
             }
 

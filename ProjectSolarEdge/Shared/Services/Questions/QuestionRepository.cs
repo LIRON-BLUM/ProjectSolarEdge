@@ -52,14 +52,23 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return results;
         }
 
-        public bool DeleteQuestion(int ID)
+        public bool DeleteQuestion(Question question)
         {
 
-            bool results = ExecuteAll(QuestionsQueries.DeleteQuestion,new {ID = ID });
+            bool results = ExecuteAll(QuestionsQueries.DeleteQuestion, question);
 
 
             return results;
         }
+
+        //public bool DeleteQuestion(int ID)
+        //{
+
+        //    bool results = ExecuteAll(QuestionsQueries.DeleteQuestion,new {ID = ID });
+
+
+        //    return results;
+        //}
 
         public bool AddAnswerToDB(QuestionAnswer answer)
         {
@@ -81,14 +90,24 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return results;
         }
 
-        public bool DeleteAnswer(int ID)
+        public bool DeleteAnswer(QuestionAnswer answer)
         {
 
-            bool results = ExecuteAll(QuestionsQueries.DeleteQuestionAnswer, new { ID = ID });
+            bool results = ExecuteAll(QuestionsQueries.DeleteAnswer, answer);
 
 
             return results;
         }
+
+
+        //public bool DeleteAnswer(int ID)
+        //{
+
+        //    bool results = ExecuteAll(QuestionsQueries.DeleteQuestionAnswer, new { ID = ID });
+
+
+        //    return results;
+        //}
 
  
     }

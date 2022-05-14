@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 //using MudBlazor.Examples.Data.Models;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
+using ProjectSolarEdge.Client.Services;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -14,17 +15,25 @@ namespace ProjectSolarEdge.Client.Pages
     public partial class Questions
     {
         public Question QuestionsCRUD { get; set; } = new Question();
+
+        public Question QuestionsToDelete { get; set; } = new Question();
+
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
         public IEnumerable<Question> QuestionsData { get; set; }
+
         [Inject]
         public IQuestionsDataService QuestionsDataService { get; set; }
+
+        [Inject]
+        public IQuestionsDataService QuestionDataService { get; set; }
+
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
        
         protected override async Task OnInitializedAsync()
         {
-          QuestionsData = await QuestionsDataService.GetQuestionsAsync();
+          QuestionsData = await QuestionDataService.GetQuestionsAsync();
             //  QuestionsData = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
 
         }
@@ -60,7 +69,7 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task<TableData<Question>> ServerReload(TableState state)
         {
 
-            IEnumerable<Question> data = await QuestionsDataService.GetQuestionsAsync();
+            IEnumerable<Question> data = await QuestionDataService.GetQuestionsAsync();
             //await Task.Delay(300);
             data = data.Where(question =>
 
@@ -105,6 +114,40 @@ namespace ProjectSolarEdge.Client.Pages
             searchString = text;
             table.ReloadServerData();
         }
+
+
+        protected async Task QuestionsToDeleteID(int id)
+        {
+            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
+
+            DeleteQuestion();
+
+        }
+            protected async Task DeleteQuestion()
+            {
+
+                await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+
+
+                //foreach (var ans in QuestionsToDelete.Answers)
+                //{
+
+
+                //    await QuestionDataService.DeleteAnswer(ans);
+                //    //await QuestionDataService.DeleteQuestionAnswers(ans.QuestionID);
+
+                //}
+
+                //NavigationManager.NavigateTo("/");
+
+
+            }
+
+
+
+
+
+       
 
     }
 }
