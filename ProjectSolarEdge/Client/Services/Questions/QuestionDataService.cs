@@ -32,6 +32,12 @@ namespace ProjectSolarEdge.Client.Services
             return await JsonSerializer.DeserializeAsync<IEnumerable<Question>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
+        public async Task<IEnumerable<Subject>> GetSubjectsAsync()
+        {
+            Stream stream = await _httpClient.GetStreamAsync($"api/Questions/GetSubjects");
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Subject>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
 
         public async Task<int> AddQuestionToDB(Question newQuestion)
         {

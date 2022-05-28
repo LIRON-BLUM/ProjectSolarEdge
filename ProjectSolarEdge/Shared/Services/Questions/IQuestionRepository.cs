@@ -10,6 +10,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
     public interface IQuestionRepository
     {
         IEnumerable<Question> getQuestions();
+        
+        IEnumerable<Subject> getSubjects();
         Question GetQuestionById(int ID, bool IncludeOptions = true);
 
         int AddQuestionToDB(Question question);

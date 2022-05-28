@@ -8,7 +8,7 @@ namespace ProjectSolarEdge.Shared.Entities
 {
     public class Game
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         public string GameName { get; set; }
 
@@ -31,7 +31,6 @@ namespace ProjectSolarEdge.Shared.Entities
         public int CreatorID { get; set; }
 
         //public List<QuestionAnswer> Answers { get; set; }
-        public List<Creator> CreatorID { get; set; }
 
         public int GameTimeLimit { get; set; }
 

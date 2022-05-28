@@ -31,6 +31,8 @@
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="ID_field" T="Question">ID</MudTableSortLabel></MudTh>
                 <MudTh>Question Body</MudTh>
+                @*<MudTh><MudTableSortLabel SortLabel="Subject_field" T="Subject">Subject</MudTableSortLabel></MudTh>*@
+
                 <MudTh><MudTableSortLabel SortLabel="Type_field" T="Question">Type</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Difficulty_field" T="Question">Difficulty</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Creator_field" T="Question">Creator</MudTableSortLabel></MudTh>
@@ -40,15 +42,36 @@
 
 
                 @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
 
             </HeaderContent>
             <RowTemplate>
                 <MudTh DataLabel="ID">@context.ID</MudTh>
                 <MudTh DataLabel="Question Body">@context.QuestionBody</MudTh>
+                
+                @*<MudTh DataLabel="Subject">
+
+                    @foreach (var subject in SubjectsData)
+                    {
+
+
+                        if (subject.QuestionID == @context.ID)
+                        {
+                            SubName = subject.SubjectName;
+                            <MudChip>@SubName</MudChip>
+                        }
+
+
+
+                    }
+
+
+                </MudTh>*@
+
+
                 <MudTh DataLabel="Type">@context.Type</MudTh>
                 <MudTh DataLabel="Difficulty">@context.Difficulty</MudTh>
                 <MudTh DataLabel="Creator">@context.Creator</MudTh>
@@ -61,9 +84,9 @@
                     </a>
                 </MudTh>
                 <MudTh DataLabel="Delete">
-                   
+
                     <MudTooltip Text="Delete Question">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))"  Color="Color.Primary" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />
                     </MudTooltip>
 
                 </MudTh>

@@ -7,6 +7,9 @@ namespace ProjectSolarEdge.Client.Services.Questions
     public interface IQuestionsDataService
     {
         Task<IEnumerable<Question>> GetQuestionsAsync();
+        Task<IEnumerable<Subject>> GetSubjectsAsync();
+
+       
         Task<IEnumerable<Question>> GetAllQuestions();
 
         

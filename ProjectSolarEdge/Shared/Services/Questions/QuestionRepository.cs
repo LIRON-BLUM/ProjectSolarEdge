@@ -21,6 +21,13 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return _data;
         }
 
+        public IEnumerable<Subject> getSubjects()
+        {
+            IEnumerable<Subject> _data = GetRecords<Subject>(QuestionsQueries.GetAllSubjects, null);
+            return _data;
+        }
+        
+
         public Question GetQuestionById(int ID, bool IncludeOptions = true)
         {
             Question _question = GetRecords<Question>(QuestionsQueries.GetQuestionByID, new { ID }).FirstOrDefault();

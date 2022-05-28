@@ -7,10 +7,9 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Shared.Services.Games
 {
-    internal interface IGameRepository
+    public interface IGameRepository
     {
 
-        public static string GetQuestionByID => @"SELECT * FROM Games WHERE ID = @ID AND isDeleted = 0";
-
+        IEnumerable<Game> GetGames();
     }
 }

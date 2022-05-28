@@ -19,7 +19,10 @@ namespace ProjectSolarEdge.Client.Pages
         public Question QuestionsToDelete { get; set; } = new Question();
 
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
+
         public IEnumerable<Question> QuestionsData { get; set; }
+
+        public IEnumerable<Subject> SubjectsData { get; set; }
 
         [Inject]
         public IQuestionsDataService QuestionsDataService { get; set; }
@@ -34,6 +37,7 @@ namespace ProjectSolarEdge.Client.Pages
         protected override async Task OnInitializedAsync()
         {
           QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
             //  QuestionsData = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
 
         }
@@ -62,7 +66,7 @@ namespace ProjectSolarEdge.Client.Pages
         private int totalItems;
         private IEnumerable<Question> pagedData;
         private MudTable<Question> table;
-
+        public string SubName= "";
 
         //private bool FilterFunc(Question question)
 

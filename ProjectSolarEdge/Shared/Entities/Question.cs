@@ -25,7 +25,7 @@ namespace ProjectSolarEdge.Shared.Entities
         public string Creator { get; set; }
 
         public List<QuestionAnswer> Answers { get; set; }
-
+        public List<Subject> Subjects { get; set; }
         public byte isDeleted { get; set; }
 
         public int SubjectID { get; set; }
