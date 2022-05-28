@@ -149,9 +149,5 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-
-
-       
-
     }
 }

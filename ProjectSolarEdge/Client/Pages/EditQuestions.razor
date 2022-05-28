@@ -1,7 +1,8 @@
 ﻿@page "/EditQuestion"
 @page "/EditQuestion/{Id}"
 @using ProjectSolarEdge.Shared.Entities
-
+@using System.Net.Http.Json
+@inject HttpClient httpClient
 
 
 
@@ -49,59 +50,63 @@
                     }
                 </MudItem>
                 <MudItem xs="6">
-                   
+
                     <MudTextField @bind-Value="@QuestionsCRUD.Creator" Label="Enter Your Name" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
 
 
                 </MudItem>
 
-                <MudItem xs="6">  </MudItem>
+                <MudItem xs="6">
+
+
+
+                </MudItem>
 
 
                 <div>
                     @*<InputRadioGroup @bind-Value="CheckedAnswerID">
-                        @foreach (var myanswer in QuestionsCRUD.Answers)
-                        {
+                            @foreach (var myanswer in QuestionsCRUD.Answers)
+                            {
 
 
-                            <InputRadio Value="myanswer.ID"></InputRadio>
-                            <InputRadio Value="myanswer.IsRight"></InputRadio>
+                                <InputRadio Value="myanswer.ID"></InputRadio>
+                                <InputRadio Value="myanswer.IsRight"></InputRadio>
 
-                            <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
+                                <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
 
-                            <InputFile OnChange="@OnInputFileChanged"></InputFile>
+                                <InputFile OnChange="@OnInputFileChanged"></InputFile>
 
-                            <img src="@filePicDataUrl" style="width:50px; height:50px;" />
+                                <img src="@filePicDataUrl" style="width:50px; height:50px;" />
 
-                            <br />
+                                <br />
 
-                        }
-                    </InputRadioGroup>*@
+                            }
+                        </InputRadioGroup>*@
 
                     <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
                         @foreach (var myanswer in QuestionsCRUD.Answers)
                         {
-                       
+
                             <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
                             <br />
-                           <br/>
+                            <br />
                         }
                     </MudRadioGroup>
 
                     @*<MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
 
-                        @foreach (var myanswer in QuestionsCRUD.Answers)
-                        {
-                            <MudRadio Option="@myanswer.IsRight" Color="Color.Secondary">Primary</MudRadio>
-                            <MudTextField @bind-Value="@myanswer.AnswerBody" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
-                            <InputFile OnChange="@OnInputFileChanged"></InputFile>
-                            <MudRadio Option="true" Color="Color.Primary" Dense="true">Dense</MudRadio>
-                            <img src="@filePicDataUrl" style="width:50px; height:50px;" />
+                            @foreach (var myanswer in QuestionsCRUD.Answers)
+                            {
+                                <MudRadio Option="@myanswer.IsRight" Color="Color.Secondary">Primary</MudRadio>
+                                <MudTextField @bind-Value="@myanswer.AnswerBody" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                                <InputFile OnChange="@OnInputFileChanged"></InputFile>
+                                <MudRadio Option="true" Color="Color.Primary" Dense="true">Dense</MudRadio>
+                                <img src="@filePicDataUrl" style="width:50px; height:50px;" />
 
-                            <br /> 
-                        }
+                                <br />
+                            }
 
-                    </MudRadioGroup>*@
+                        </MudRadioGroup>*@
 
 
                 </div>
@@ -148,9 +153,31 @@
         </MudPaper>
     </MudItem>
     <MudItem xs="12" sm="5">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">QUESTIONS TABLE</MudPaper>
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
 
+                <MudTable Items="QuestionsData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
+                    <HeaderContent>
+                        <MudTh>Type</MudTh>
+                        <MudTh>Question</MudTh>
+                        <MudTh>Delete</MudTh>
+
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Type">@context.Type</MudTd>
+                        <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
+                        <MudTd DataLabel="Delete">
+
+                            <MudTooltip Text="Delete Question">
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />
+                            </MudTooltip>
+                        </MudTd>
+
+                    </RowTemplate>
+                </MudTable>
+          
+        </MudPaper>
     </MudItem>
+    
 </MudGrid>
 
 

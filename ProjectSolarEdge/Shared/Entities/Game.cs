@@ -50,7 +50,10 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public byte isDeleted { get; set; }
 
-
+        public static implicit operator Game(Question v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum GameTheme

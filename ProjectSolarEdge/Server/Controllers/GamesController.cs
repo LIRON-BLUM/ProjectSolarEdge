@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectSolarEdge.Shared.Entities;
 using ProjectSolarEdge.Shared.Services.Games;
 
+
 namespace ProjectSolarEdge.Server.Controllers
 {
     [Route("api/[controller]")]
@@ -26,5 +27,28 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(games);
         }
 
+
+        [HttpGet]
+        [Route("Game/{Id}")]
+        public IActionResult GetGameId(int Id)
+        {
+            Game _game = _GameRepository.GetGameById(Id);
+
+            if (_game == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_game);
+
+        }
     }
+
+
 }
+
+
+

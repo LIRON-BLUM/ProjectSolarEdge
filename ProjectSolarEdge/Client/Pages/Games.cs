@@ -104,5 +104,22 @@ namespace ProjectSolarEdge.Client.Pages
             searchString = text;
             table.ReloadServerData();
         }
+
+
+        public Game GameToDelete { get; set; } = new Game();
+        protected async Task GameToDeleteID(int id)
+        {
+            //GameToDelete = await GameDataService.GetGameByIdAsync(id);
+
+            //DeleteGame();
+
+        }
+
+        protected async Task DeleteQuestion()
+        {
+
+            //await GameToDelete.DeleteGame(GameToDelete);
+
+        }
     }
 }

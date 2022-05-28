@@ -22,5 +22,18 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         }
 
+        public Game GetGameById(int ID)
+        {
+            Game _game = GetRecords<Game>(GamesQueries.GetGameByID, new { ID }).FirstOrDefault();
+
+        
+
+            return _game;
+        }
+
+        public Game GetQuestionById(int ID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

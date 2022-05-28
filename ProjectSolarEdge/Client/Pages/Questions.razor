@@ -1,4 +1,5 @@
 ﻿@page "/"
+@page "/Questions"
 @using ProjectSolarEdge.Shared.Entities
 @inject HttpClient httpClient
 @using System.Net.Http.Json
@@ -12,7 +13,7 @@
 
 
     <MudItem xs="4">
-        <MudTextField  T="string" ValueChanged="@(s=>OnSearch(s))"  Placeholder="Search" Adornment="Adornment.Start"
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
     </MudItem>
     <MudItem xs="6" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
@@ -42,34 +43,34 @@
 
 
                 @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
 
             </HeaderContent>
             <RowTemplate>
                 <MudTh DataLabel="ID">@context.ID</MudTh>
                 <MudTh DataLabel="Question Body">@context.QuestionBody</MudTh>
-                
+
                 @*<MudTh DataLabel="Subject">
 
-                    @foreach (var subject in SubjectsData)
-                    {
-
-
-                        if (subject.QuestionID == @context.ID)
+                        @foreach (var subject in SubjectsData)
                         {
-                            SubName = subject.SubjectName;
-                            <MudChip>@SubName</MudChip>
+
+
+                            if (subject.QuestionID == @context.ID)
+                            {
+                                SubName = subject.SubjectName;
+                                <MudChip>@SubName</MudChip>
+                            }
+
+
+
                         }
 
 
-
-                    }
-
-
-                </MudTh>*@
+                    </MudTh>*@
 
 
                 <MudTh DataLabel="Type">@context.Type</MudTh>
@@ -106,67 +107,67 @@
     </MudItem>
 </MudGrid>
 
-    @code {
+@code {
 
-        //bool fixed_header = true;
-        //bool fixed_footer = false;
+    //bool fixed_header = true;
+    //bool fixed_footer = false;
 
-        ////private string searchString = "";
-        //private string searchString = "";
-        //private int totalItems;
-        //private IEnumerable<Question> pagedData;
-        //private MudTable<Question> table;
+    ////private string searchString = "";
+    //private string searchString = "";
+    //private int totalItems;
+    //private IEnumerable<Question> pagedData;
+    //private MudTable<Question> table;
 
 
-        ////private bool FilterFunc(Question question)
+    ////private bool FilterFunc(Question question)
 
-        //private async Task<TableData<Question>> ServerReload(TableState state)
-        //{
+    //private async Task<TableData<Question>> ServerReload(TableState state)
+    //{
 
-        //    IEnumerable<Question> data = await QuestionsDataService.GetQuestionsAsync();
-        //    await Task.Delay(300);
-        //    data = data.Where(question =>
+    //    IEnumerable<Question> data = await QuestionsDataService.GetQuestionsAsync();
+    //    await Task.Delay(300);
+    //    data = data.Where(question =>
 
-        //    {
-        //        if (string.IsNullOrWhiteSpace(searchString))
-        //            return true;
-        //        if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //            return true;
-        //        if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //            return true;
-        //        if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
-        //            return true;
-        //        return false;
-        //    }).ToArray();
-        //    totalItems = data.Count();
-        //    switch (state.SortLabel)
-        //    {
-        //        case "ID_field":
-        //            data = data.OrderByDirection(state.SortDirection, o => o.ID);
-        //            break;
-        //        case "Type_field":
-        //            data = data.OrderByDirection(state.SortDirection, o => o.Type);
-        //            break;
-        //        case "Difficulty_field":
-        //            data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
-        //            break;
-        //        case "Creator_field":
-        //            data = data.OrderByDirection(state.SortDirection, o => o.Creator);
-        //            break;
-        //        case "Creation_Date_field":
-        //            data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
-        //            break;
-        //    }
+    //    {
+    //        if (string.IsNullOrWhiteSpace(searchString))
+    //            return true;
+    //        if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+    //            return true;
+    //        if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+    //            return true;
+    //        if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
+    //            return true;
+    //        return false;
+    //    }).ToArray();
+    //    totalItems = data.Count();
+    //    switch (state.SortLabel)
+    //    {
+    //        case "ID_field":
+    //            data = data.OrderByDirection(state.SortDirection, o => o.ID);
+    //            break;
+    //        case "Type_field":
+    //            data = data.OrderByDirection(state.SortDirection, o => o.Type);
+    //            break;
+    //        case "Difficulty_field":
+    //            data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
+    //            break;
+    //        case "Creator_field":
+    //            data = data.OrderByDirection(state.SortDirection, o => o.Creator);
+    //            break;
+    //        case "Creation_Date_field":
+    //            data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
+    //            break;
+    //    }
 
-        //    pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
-        //    return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
+    //    pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+    //    return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
 
-        //}
+    //}
 
-        //private void OnSearch(string text)
-        //{
-        //    searchString = text;
-        //    table.ReloadServerData();
-        //}
+    //private void OnSearch(string text)
+    //{
+    //    searchString = text;
+    //    table.ReloadServerData();
+    //}
 
-    }
+}

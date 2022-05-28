@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Forms;
 using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
+using MudBlazor;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -17,6 +18,8 @@ namespace ProjectSolarEdge.Client.Pages
 
         public Question QuestionsCRUD { get; set; } = new Question();
 
+        public IEnumerable<Question> QuestionsData { get; set; }
+
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
 
         public Subject Subject { get; set; } = new Subject();
@@ -28,6 +31,9 @@ namespace ProjectSolarEdge.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+
+        public Question QuestionsToDelete { get; set; } = new Question();
 
 
         protected override async Task OnInitializedAsync()
@@ -240,7 +246,78 @@ namespace ProjectSolarEdge.Client.Pages
             } 
         }
 
-      
+        protected async Task QuestionsToDeleteID(int id)
+        {
+            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
+
+            DeleteTheQuestion();
+
+        }
+        protected async Task DeleteTheQuestion()
+        {
+
+            await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+
+
+          
+
+
+        }
+
+        bool fixed_header = true;
+        bool fixed_footer = false;
+
+        //private string searchString = "";
+        private string searchString = "";
+        private int totalItems;
+        private IEnumerable<Question> pagedData;
+        private MudTable<Question> table;
+        public string SubName = "";
+
+        //private bool FilterFunc(Question question)
+
+        protected async Task<TableData<Question>> ServerReload(TableState state)
+        {
+
+            IEnumerable<Question> data = await QuestionDataService.GetQuestionsAsync();
+            //await Task.Delay(300);
+            data = data.Where(question =>
+
+            {
+                if (string.IsNullOrWhiteSpace(searchString))
+                    return true;
+                if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
+                    return true;
+                return false;
+            }).ToArray();
+            totalItems = data.Count();
+            switch (state.SortLabel)
+            {
+                case "ID_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.ID);
+                    break;
+                case "Type_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Type);
+                    break;
+                case "Difficulty_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
+                    break;
+                case "Creator_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Creator);
+                    break;
+                case "Creation_Date_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
+                    break;
+            }
+
+            pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+            return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
+
+        }
 
     }
 }

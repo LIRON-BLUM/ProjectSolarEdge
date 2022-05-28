@@ -1,40 +1,89 @@
 ﻿@page "/Games"
-@*@using ProjectSolarEdge.Shared.Entities
+@using ProjectSolarEdge.Shared.Entities
 @inject HttpClient httpClient
-@using System.Net.Http.Json*@
+@using System.Net.Http.Json
+
+<MudGrid>
+
+
+    <MudItem xs="12">
+        <h1 Class="d-flex align-center justify-start mud-width-full py-8">Games</h1>
+    </MudItem>
+
+
+    <MudItem xs="4">
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
+    </MudItem>
+    <MudItem xs="6" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
+    <MudItem xs="2">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NewGame" Icon="@Icons.Material.Filled.Add" Class="d-flex align-center justify-end mud-width-full py-2">ADD QUESTION</MudButton>
+    </MudItem>
+
+    <br />
+    <MudItem xs="12">
+        <MudTable Items="GamesData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Game>>>(ServerReload))">
+            <!--<ToolBarContent>-->
+            @*<MudText Typo="Typo.h6">Questions</MudText>*@
+
+            @*<MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>*@
+            <!--</ToolBarContent>-->
+            <HeaderContent>
+                <MudTh><MudTableSortLabel SortLabel="ID_field" T="Game">ID</MudTableSortLabel></MudTh>
+              
+                @*<MudTh><MudTableSortLabel SortLabel="Subject_field" T="Subject">Subject</MudTableSortLabel></MudTh>*@
+
+                <MudTh><MudTableSortLabel SortLabel="GameName_field" T="Game">Game Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Creator_field" T="Game">Creator</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="QuestionNum_field" T="Game">Question No.</MudTableSortLabel></MudTh>
+
+                <MudTh><MudTableSortLabel SortLabel="Update_Date_field" T="Game">Last Update</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Published_field" T="Game">Published</MudTableSortLabel></MudTh>
+                <MudTh>Edit</MudTh>
+                <MudTh>Delete</MudTh>
 
 
 
+            </HeaderContent>
+            <RowTemplate>
+                <MudTh DataLabel="ID">@context.ID</MudTh>
+                <MudTh DataLabel="GameName">@context.GameName</MudTh>
+                <MudTh DataLabel="Creator">@context.CreatorID</MudTh>
+                <MudTh DataLabel="SumQuestion">x Question</MudTh>
+                <MudTh DataLabel="Update">@context.UpdateDate</MudTh>
+                <MudTh DataLabel="Published">@context.isPublished</MudTh>
+                <MudTh DataLabel="Edit">
+                    <a href="/EditGame/@context.ID">
+                       
+                            <MudTooltip Text="Edit Game">
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
+                            </MudTooltip>
+                        </a>
+                </MudTh>
+                <MudTh DataLabel="Delete">
+
+                    <MudTooltip Text="Delete Question">
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>GameToDeleteID(context.ID))" Color="Color.Primary" />
+                    </MudTooltip>
+
+                </MudTh>
+
+            </RowTemplate>
+            <NoRecordsContent>
+                <MudText>No matching records found</MudText>
+            </NoRecordsContent>
+            <LoadingContent>
+                <MudText>Loading...</MudText>
+            </LoadingContent>
+
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[]{5,10,20}"></MudTablePager>
+            </PagerContent>
+        </MudTable>
+    </MudItem>
+</MudGrid>
 
 
-<h3>Games</h3>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Game Name</th>
-            <th scope="col">Game Description</th>
-            <th scope="col">Creation Date</th>
-            @*<th scope="col">Edit</th>*@
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var game in GamesData)
-        {
-            <tr>
-                <th scope="row">@game.ID</th>
-                <td>@game.GameName</td>
-                <td>@game.GameDescription</td>
-                <td>@game.CreationDate</td>
-                @*<td><a href="/questions/editQuestion/@game.ID"><button type="button" class="btn btn-primary btn-sm">Edit</button></a></td>*@
-            </tr>
-        }
-
-
-    </tbody>
-</table>
 
 
 

@@ -32,5 +32,16 @@ namespace ProjectSolarEdge.Client.Services.Games
         {
             throw new NotImplementedException();
         }
+
+        public async Task<Game> GetGameByIdAsync(int Id)
+        {
+            Stream stream = await _httpClient.GetStreamAsync($"api/Games/Game/{Id}");
+            return await JsonSerializer.DeserializeAsync<Game>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
+        //Task<Game> IGamesDataService.GetGameByIdAsync(int Id)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
