@@ -39,9 +39,6 @@ namespace ProjectSolarEdge.Client.Services.Games
             return await JsonSerializer.DeserializeAsync<Game>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
-        //Task<Game> IGamesDataService.GetGameByIdAsync(int Id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
     }
 }

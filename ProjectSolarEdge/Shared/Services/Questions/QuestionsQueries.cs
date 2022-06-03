@@ -83,11 +83,22 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 		public static string GetAllSubjectsName => @"SELECT SubjectName FROM Subjects WHERE isDeleted = 0";
 
+
+		//Returns Subjects by QuestionID
 		public static string GetSubjectByQuesID => @"SELECT 
 														S.ID,
 														S.SubjectName
 													FROM SubjectsQuestionsConnection as SQC
 													INNER JOIN Subjects as S ON SQC.SubjectID = S.ID
 													WHERE SQC.QuestionID = @QuestionID";
+
+
+		//Returns all Questions & Subjects
+		public static string GetQuestionsSubjects => @"SELECT 
+														S.ID,
+														S.SubjectName,
+														SQC.QuestionID
+													FROM SubjectsQuestionsConnection as SQC
+													INNER JOIN Subjects as S ON SQC.SubjectID = S.ID";
 	}
 }

@@ -14,7 +14,7 @@ namespace ProjectSolarEdge.Client.Pages
   
     public partial class Questions
     {
-        public Question QuestionsCRUD { get; set; } = new Question();
+        public Question AllQuestions { get; set; } = new Question();
 
         public Question QuestionsToDelete { get; set; } = new Question();
 
@@ -22,7 +22,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<Question> QuestionsData { get; set; }
 
-        public IEnumerable<Subject> SubjectsData { get; set; }
+        public IEnumerable<SubjectsQuestions> SubjectsData { get; set; }
 
         [Inject]
         public IQuestionsDataService QuestionsDataService { get; set; }
@@ -37,7 +37,7 @@ namespace ProjectSolarEdge.Client.Pages
         protected override async Task OnInitializedAsync()
         {
           QuestionsData = await QuestionDataService.GetQuestionsAsync();
-            SubjectsData = await QuestionDataService.GetSubjectsAsync();
+            //SubjectsData = await QuestionDataService.GetSubjectsAsync();
             //  QuestionsData = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
 
         }

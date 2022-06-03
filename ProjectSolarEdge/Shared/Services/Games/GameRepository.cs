@@ -26,6 +26,9 @@ namespace ProjectSolarEdge.Shared.Services.Games
         {
             Game _game = GetRecords<Game>(GamesQueries.GetGameByID, new { ID }).FirstOrDefault();
 
+            // Get Game Questions
+            // _game.Questions = get questions from DB.
+
         
 
             return _game;

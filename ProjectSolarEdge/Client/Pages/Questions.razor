@@ -32,7 +32,7 @@
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="ID_field" T="Question">ID</MudTableSortLabel></MudTh>
                 <MudTh>Question Body</MudTh>
-                @*<MudTh><MudTableSortLabel SortLabel="Subject_field" T="Subject">Subject</MudTableSortLabel></MudTh>*@
+                <MudTh><MudTableSortLabel SortLabel="Subject_field" T="Question">Subject</MudTableSortLabel></MudTh>
 
                 <MudTh><MudTableSortLabel SortLabel="Type_field" T="Question">Type</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Difficulty_field" T="Question">Difficulty</MudTableSortLabel></MudTh>
@@ -43,34 +43,40 @@
 
 
                 @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
 
             </HeaderContent>
             <RowTemplate>
                 <MudTh DataLabel="ID">@context.ID</MudTh>
                 <MudTh DataLabel="Question Body">@context.QuestionBody</MudTh>
 
-                @*<MudTh DataLabel="Subject">
+                <MudTh DataLabel="Subject">
 
-                        @foreach (var subject in SubjectsData)
+                    @*@foreach (var subject in SubjectsData)
+                    {
+
+
+                        if (subject.QuestionID == @context.ID)
                         {
-
-
-                            if (subject.QuestionID == @context.ID)
-                            {
-                                SubName = subject.SubjectName;
-                                <MudChip>@SubName</MudChip>
-                            }
-
-
-
+                            SubName = subject.SubjectName;
+                            <MudChip>@SubName</MudChip>
                         }
 
 
-                    </MudTh>*@
+
+                    }*@
+
+                    @foreach (var Qsub in AllQuestions.Subjects)
+                    {
+                        SubName = subject.SubjectName;
+                        <MudChip>@SubName</MudChip>
+                    }
+
+
+                </MudTh>
 
 
                 <MudTh DataLabel="Type">@context.Type</MudTh>
