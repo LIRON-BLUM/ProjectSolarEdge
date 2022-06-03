@@ -26,14 +26,14 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(questions);
         }
 
-        //[HttpGet]
-        //[Route("GetSubjects")]
-        //public IActionResult GetSubjects()
-        //{
-        //    IEnumerable<Subject> subjects = _questionRepository.getSubjects();
+        [HttpGet]
+        [Route("GetSubjects")]
+        public IActionResult GetSubjects()
+        {
+            IEnumerable<Subject> subjects = _questionRepository.getSubjects();
 
-        //    return Ok(subjects);
-        //}
+            return Ok(subjects);
+        }
 
         [HttpGet]
         [Route("Question/{Id}")]

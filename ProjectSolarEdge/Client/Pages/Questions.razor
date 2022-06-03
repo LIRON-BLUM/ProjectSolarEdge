@@ -54,28 +54,10 @@
                 <MudTh DataLabel="Question Body">@context.QuestionBody</MudTh>
 
                 <MudTh DataLabel="Subject">
-
-                    @*@foreach (var subject in SubjectsData)
-                    {
-
-
-                        if (subject.QuestionID == @context.ID)
-                        {
-                            SubName = subject.SubjectName;
-                            <MudChip>@SubName</MudChip>
-                        }
-
-
-
-                    }*@
-
-                    @foreach (var Qsub in AllQuestions.Subjects)
-                    {
-                        SubName = subject.SubjectName;
-                        <MudChip>@SubName</MudChip>
+                    @foreach (var QuestionSub in @context.Subjects)
+                    {                      
+                    <MudChip>@QuestionSub.SubjectName</MudChip>
                     }
-
-
                 </MudTh>
 
 

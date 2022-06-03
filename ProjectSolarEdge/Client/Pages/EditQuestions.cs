@@ -24,8 +24,25 @@ namespace ProjectSolarEdge.Client.Pages
 
         public Subject Subject { get; set; } = new Subject();
 
-        public IEnumerable<Subject> SubjectsList { get; set; } = new List<Subject>();
-        
+      
+        public SubjectsQuestions QuestionSubject { get; set; }
+
+        public IEnumerable<Subject> SubjectsData { get; set; }
+  
+
+        //public IEnumerable<SubjectsQuestions> SQConnection { get; set; } = new List<SubjectsQuestions>();
+        public IEnumerable<string> Options { get; set; } = new HashSet<string>() { "Soft Skills" };
+        public string SubValue { get; set; } = "Nothing selected";
+
+      
+      
+        public string[] states =
+          {
+        "Alabama", "Alaska", "American Samoa", "Arizona",
+
+        };
+        public SubjectsQuestions SQConnection { get; set; } = new SubjectsQuestions();
+
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
 
@@ -38,17 +55,18 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
+       
 
             int.TryParse(Id, out var QId);
             
             if (QId == 0) //new Question is being created
             {
                 //add some defaults
-                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1, SubjectID=1 };
+                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1 };
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
+                QuestionsCRUD.Subjects = new List<Subject>();
 
-            
                 //ADD ANSWERS
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
@@ -87,11 +105,14 @@ namespace ProjectSolarEdge.Client.Pages
             {
                 //Get question by ID
                 QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
+           
             }
 
-          
 
+   
             QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
+
+            
 
             foreach (var myanswer in QuestionsCRUD.Answers)
             {

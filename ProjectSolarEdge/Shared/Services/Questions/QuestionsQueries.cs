@@ -78,7 +78,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 		//-----------------Subjects----------------//
 		public static string GetSubjectByID => @"SELECT * FROM Subjects WHERE ID = @ID AND isDeleted = 0";
 
-		public static string GetAllSubjects => @"SELECT * FROM Subjects WHERE isDeleted = 0";
+		public static string GetAllSubjects => @"SELECT ID, SubjectName, CreationDate, UpdateDate FROM Subjects WHERE isDeleted = 0";
 
 
 		public static string GetAllSubjectsName => @"SELECT SubjectName FROM Subjects WHERE isDeleted = 0";
