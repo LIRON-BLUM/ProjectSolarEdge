@@ -15,16 +15,12 @@
 
 
                 <MudItem xs="8">
-                    @*<InputTextArea id="myQuestionBody" @bind-Value="@QuestionsCRUD.QuestionBody" placeholder="Enter Your Question"></InputTextArea>*@
                     <MudTextField T="string" Label="Question Body" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" />
 
                 </MudItem>
 
                 <MudItem xs="4">
                     @*<InputFile OnChange="@OnInputFileChanged"></InputFile>*@
-
-
-
                     <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple />
 
                     <MudButton HtmlTag="label"
@@ -49,78 +45,31 @@
                         </MudList>
                     }
                 </MudItem>
-                <MudItem xs="6">
 
+                <MudItem xs="6">
                     <MudTextField @bind-Value="@QuestionsCRUD.Creator" Label="Enter Your Name" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
-
-
                 </MudItem>
 
                 <MudItem xs="6">
 
-
-
                 </MudItem>
 
 
-                <div>
-                    @*<InputRadioGroup @bind-Value="CheckedAnswerID">
-                @foreach (var myanswer in QuestionsCRUD.Answers)
-                {
-
-
-                    <InputRadio Value="myanswer.ID"></InputRadio>
-                    <InputRadio Value="myanswer.IsRight"></InputRadio>
-
-                    <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>
-
-                    <InputFile OnChange="@OnInputFileChanged"></InputFile>
-
-                    <img src="@filePicDataUrl" style="width:50px; height:50px;" />
-
-                    <br />
-
-                }
-            </InputRadioGroup>*@
-
+                <div>                 
                     <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
                         @foreach (var myanswer in QuestionsCRUD.Answers)
                         {
-
                             <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
                             <br />
                             <br />
                         }
                     </MudRadioGroup>
-
-                    @*<MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
-
-                @foreach (var myanswer in QuestionsCRUD.Answers)
-                {
-                    <MudRadio Option="@myanswer.IsRight" Color="Color.Secondary">Primary</MudRadio>
-                    <MudTextField @bind-Value="@myanswer.AnswerBody" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
-                    <InputFile OnChange="@OnInputFileChanged"></InputFile>
-                    <MudRadio Option="true" Color="Color.Primary" Dense="true">Dense</MudRadio>
-                    <img src="@filePicDataUrl" style="width:50px; height:50px;" />
-
-                    <br />
-                }
-
-            </MudRadioGroup>*@
-
-
                 </div>
-
-
-
 
                 <div>
                     <label for="QuestionFeedback">Feedback:</label><br />
                     <InputTextArea id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputTextArea><br /><br />
                 </div>
-
-
-
 
                 <div>
                     <MudSelect Dense="true" T="QuestionDifficulty" Label="Difficulty" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.Difficulty">
@@ -130,6 +79,8 @@
                     </MudSelect>
                 </div>
                 <br />
+
+                @* The SubOption is IEnumerable<string> defined as new HashSet<string>() - line 43*@
                 <div>
                     <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="Subject.SubjectName" @bind-SelectedValues="SubOptions">
                         @foreach (var subject in SubjectsData)
@@ -139,6 +90,7 @@
                     </MudSelect>
                 </div>
 
+                @* When I try this one it doesnt work (the bind-value was changed to QuestionSubject.SubjectName) *@
                 @*<div>
             <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="QuestionSubject.SubjectName" @bind-SelectedValues="SubOptions">
                 @foreach (var subject in SubjectsData)
@@ -160,18 +112,7 @@
 
             </EditForm>
 
-            @*<div>
-                    <span>@MyQBody</span>
-                    <br />
-                    <span>@Myans</span>
-                </div>*@
-
-            @*<br><br>
-                <button type="button" @onclick="AddAndUpdate"  class="btn btn-primary btn-sm">Save</button>
-
-                <button type="button" @onclick="DeleteQuestion" class="btn btn-primary btn-sm">Delete Question</button>*@
-
-            @*<button type="button" @onclick="OnlyUI" class="btn btn-primary btn-sm">OnlyUI</button>*@
+     
 
 
         </MudPaper>

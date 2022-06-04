@@ -39,7 +39,6 @@ namespace ProjectSolarEdge.Client.Pages
         public int SubjectsQuestionsID { get; set; }
 
         //public IEnumerable<SubjectsQuestions> SQConnection { get; set; } = new List<SubjectsQuestions>();
-        public IEnumerable<SubjectsQuestions> Options { get; set; } = new HashSet<SubjectsQuestions>() { };
 
         public IEnumerable<string> SubOptions { get; set; } = new HashSet<string>() { "General" };
 
