@@ -93,6 +93,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													WHERE SQC.QuestionID = @QuestionID";
 
 
+
 		//Returns all Questions & Subjects
 		public static string GetQuestionsSubjects => @"SELECT 
 														S.ID,

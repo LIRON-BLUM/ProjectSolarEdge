@@ -55,6 +55,7 @@ namespace ProjectSolarEdge.Server.Controllers
 
 
 
+
         [HttpPost]
         [Route("Insert")]
         public async Task<IActionResult> AddQuestionToDB(Question newQuestion)

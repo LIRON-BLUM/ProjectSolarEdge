@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.Forms;
 using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
 using MudBlazor;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -13,6 +15,8 @@ namespace ProjectSolarEdge.Client.Pages
         public string Id { get; set; }
 
         public int CheckedAnswerID { get; set; }
+
+        
 
         public bool CheckedAnswerIsRight { get; set; }
 
@@ -25,23 +29,19 @@ namespace ProjectSolarEdge.Client.Pages
         public Subject Subject { get; set; } = new Subject();
 
       
-        public SubjectsQuestions QuestionSubject { get; set; }
+        public SubjectsQuestions QuestionSubject { get; set; } = new SubjectsQuestions();
 
         public IEnumerable<Subject> SubjectsData { get; set; }
-  
+
+        public IEnumerable<SubjectsQuestions> SubjectsQuestionData { get; set; }
+
+        public SubjectsQuestions subjectNameList { get; set; }
+        public int SubjectsQuestionsID { get; set; }
 
         //public IEnumerable<SubjectsQuestions> SQConnection { get; set; } = new List<SubjectsQuestions>();
-        public IEnumerable<string> Options { get; set; } = new HashSet<string>() { "Soft Skills" };
-        public string SubValue { get; set; } = "Nothing selected";
+        public IEnumerable<SubjectsQuestions> Options { get; set; } = new HashSet<SubjectsQuestions>() { };
 
-      
-      
-        public string[] states =
-          {
-        "Alabama", "Alaska", "American Samoa", "Arizona",
-
-        };
-        public SubjectsQuestions SQConnection { get; set; } = new SubjectsQuestions();
+        public IEnumerable<string> SubOptions { get; set; } = new HashSet<string>() { "General" };
 
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
@@ -49,14 +49,19 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-
         public Question QuestionsToDelete { get; set; } = new Question();
+
+
+
 
 
         protected override async Task OnInitializedAsync()
         {
+
+
+
             SubjectsData = await QuestionDataService.GetSubjectsAsync();
-       
+
 
             int.TryParse(Id, out var QId);
             
@@ -181,6 +186,10 @@ namespace ProjectSolarEdge.Client.Pages
             }
 
         }
+
+
+
+
 
         public string filePicDataUrl { get; set; }
 
