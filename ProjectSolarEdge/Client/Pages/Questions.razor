@@ -18,7 +18,8 @@
     </MudItem>
     <MudItem xs="6" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
     <MudItem xs="2">
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NewQuestion" Icon="@Icons.Material.Filled.Add" Class="d-flex align-center justify-end mud-width-full py-2">ADD QUESTION</MudButton>
+        @*<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NewQuestion" Icon="@Icons.Filled.Add" Class="d-flex align-center justify-end mud-width-full py-2">ADD QUESTION</MudButton>*@
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" @onclick="NewQuestion" Class="justify-content-end">ADD QUESTION</MudButton>
     </MudItem>
 
     <br />
@@ -43,10 +44,10 @@
 
 
                 @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
 
             </HeaderContent>
             <RowTemplate>
@@ -55,8 +56,8 @@
 
                 <MudTh DataLabel="Subject">
                     @foreach (var QuestionSub in @context.Subjects)
-                    {                      
-                    <MudChip>@QuestionSub.SubjectName</MudChip>
+                    {
+                        <MudChip>@QuestionSub.SubjectName</MudChip>
                     }
                 </MudTh>
 
