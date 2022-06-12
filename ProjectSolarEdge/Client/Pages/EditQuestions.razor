@@ -90,6 +90,15 @@
                     </MudSelect>
                 </div>
 
+                <div>
+                   
+                        @foreach (var QuestionSub in QuestionsCRUD.Subjects)
+                        {
+                            <p>@QuestionSub.SubjectName</p><br/>
+                        }
+                  
+                </div>
+
                 @* When I try this one it doesnt work (the bind-value was changed to QuestionSubject.SubjectName) *@
                 @*<div>
             <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="QuestionSubject.SubjectName" @bind-SelectedValues="SubOptions">

@@ -6,6 +6,115 @@
 
 <h3>EditGame @GameCRUD.ID </h3>
 
+
+<MudGrid Spacing=3>
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+            <EditForm Model="@GameCRUD">
+
+
+                <MudItem xs="12">
+                    <MudTextField T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName" Lines="4" />
+
+                </MudItem>
+
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudDatePicker Label="Editable with Placeholder" Editable="true" @bind-Date="startdate" Placeholder="Select Date" />
+                </MudItem>
+
+                <MudItem xs="12">
+
+                    <MudDatePicker Label="Editable with Placeholder" Editable="true" @bind-Date="enddate" Placeholder="Select Date" />
+
+                </MudItem>
+
+
+
+
+
+
+            </EditForm>
+
+
+
+
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="5">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+
+            <MudTable Items="GameData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+                <HeaderContent>
+                    <MudTh>Type</MudTh>
+                    <MudTh>Question</MudTh>
+                    <MudTh>Delete</MudTh>
+
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Type">Type</MudTd>
+                    <MudTd DataLabel="Question">QuestionBody <br /> <MudChip>Difficulty</MudChip>  <MudChip>UpdateDate</MudChip> </MudTd>
+                    <MudTd DataLabel="Delete">
+
+                        <MudTooltip Text="Delete Question">
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete"  Color="Color.Primary" />
+                        </MudTooltip>
+                    </MudTd>
+
+                </RowTemplate>
+            </MudTable>
+
+        </MudPaper>
+    </MudItem>
+
+</MudGrid>
+
+
 @code {
 
+    DateTime? startdate = DateTime.Today;
+
+    DateTime? enddate = DateTime.Today;
+
+
+
+
+    //public bool Dense_Radio { get; set; } = true;
+
+    private IEnumerable<string> MaxCharacters(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
+            yield return "Max 25 characters";
+    }
+
+    //IList<IBrowserFile> files = new List<IBrowserFile>();
+    //private void UploadFiles(InputFileChangeEventArgs e)
+    //{
+    //    foreach (var file in e.GetMultipleFiles())
+    //    {
+    //        //var file = inputFileChangeEvent.File;
+
+
+    //        files.Add(file);
+    //        var fileInArray = new byte[file.Size];
+    //        await file.OpenReadStream(1512000).ReadAsync(fileInArray);
+
+    //        filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
+
+
+    //    }
+    //TODO upload the files to the server
+
+
+
 }
+
+
+
+
+
+

@@ -25,7 +25,6 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public string SubjectName { get; set; }
 
-
         public int QuestionID { get; set; }
     }
 }
