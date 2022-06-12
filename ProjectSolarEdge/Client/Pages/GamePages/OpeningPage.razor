@@ -1,0 +1,51 @@
+﻿@page "/OpeningPage/{Id}"
+  <link href="/css/styles/OpeningPage.css" rel="stylesheet" />
+
+<h3>OpeningPage</h3>
+
+
+    <div class="container">
+        <div class="flex-center flex-column">
+            <h1> @GamePlaying.GameName</h1>
+            <h2 id="playerName"> Hi </h2>
+            <p>@GamePlaying.GameDescription </p>
+
+            <div id="highScores" class="flex-center flex-column">
+                <p class="bestSoFare">The best Players So Far</p>
+                <ul id="highScoreList"> </ul>
+
+                <div class="podium">
+                    <div class="podium__item">
+                        <div id="secondPlace"></div>
+
+                    </div>
+
+                    <div class="podium__item">
+                        <div id="firstPlace"></div>
+                    </div>
+
+                    <div class="podium__item">
+                        <div id="thirdPlace"></div>
+                    </div>
+
+                </div>
+            </div>
+            <p>
+                You have <span id="gameTime">@GamePlaying.GameTimeLimit </span> minutes to give it your best!
+            </p>
+            <h2> Think You Can Do Better?</h2>
+            <a class="btnGreen" href="/WheelOfFortiune.html">START GAME</a>
+            <a class="btn" href="/OrderQuestions.html">Order question</a>
+
+        </div>
+
+
+    </div>
+
+  
+
+
+
+@code {
+
+}
