@@ -45,6 +45,22 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_game);
 
         }
+
+        [HttpPut]
+        [Route("UpdateGame/{Id}")]
+        public IActionResult UpdateGame(Game game)
+        {
+            if (game == null)
+            {
+
+                return BadRequest();
+            }
+
+            bool _game = _GameRepository.UpdateGame(game);
+
+            return Ok(_game); //success
+        }
+
     }
 
 

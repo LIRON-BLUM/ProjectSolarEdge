@@ -17,5 +17,29 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         public static string GetAllGames => @"SELECT ID,  GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration FROM Games WHERE isDeleted = 0";
 
+        public static string UpdateGame => @"UPDATE Games 
+        SET
+        GameName=@GameName,
+        GameDescription=@GameDescription,
+        UpdadeDate=@UpdadeDate,
+        IsPublished=@IsPublished,
+        GameTheme=@GameTheme,
+        GameStartDate=@GameStartDate,
+        GameEndDate=@GameEndDate,
+        GameTimeLimit=@GameTimeLimit,
+        ScoreMethod =@ScoreMethod,
+        ScoreEasy=@ScoreEasy,
+        ScoreMedium=@ScoreMedium,
+        ScoreHard=@ScoreHard,
+        IsGamified=@IsGamified,
+        WheelIteration=@WheelIteration,
+        GambleIteration=@GambleIteration
+        WHERE ID=@ID";
+
+
     }
 }
+
+
+
+

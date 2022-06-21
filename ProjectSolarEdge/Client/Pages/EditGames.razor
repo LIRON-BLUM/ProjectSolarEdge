@@ -33,9 +33,10 @@
 
                 </MudItem>
 
+                <MudNumericField @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />
 
 
-
+                <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Primary" DisableElevation="true">Save</MudButton>
 
 
             </EditForm>

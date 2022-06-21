@@ -82,10 +82,10 @@
 
                 @* The SubOption is IEnumerable<string> defined as new HashSet<string>() - line 43*@
                 <div>
-                    <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="Subject.SubjectName" @bind-SelectedValues="SubOptions">
+                    <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
                         @foreach (var subject in SubjectsData)
                         {
-                            <MudSelectItem T="string" Value="@subject.SubjectName">@subject.SubjectName</MudSelectItem>
+                            <MudSelectItem T="string" Value="@subject.ID.ToString()">@subject.SubjectName</MudSelectItem>
                         }
                     </MudSelect>
                 </div>
