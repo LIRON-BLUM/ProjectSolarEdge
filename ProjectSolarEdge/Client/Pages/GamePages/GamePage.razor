@@ -1,0 +1,50 @@
+﻿@page "/GamePage"
+
+@inject IJSRuntime JSRuntime;
+
+<link href="/css/styles/Game.css" rel="stylesheet" />
+
+<h3>GamePage</h3>
+
+<div class="container">
+        <div id="game" class="flex-center flex-column">
+            <div id="points">
+                <span id="score"> 0 </span> <span> Points</span>
+            </div>
+            <div id="hud">
+                <div id="hud-item">
+                    <div id="progressBar">
+                        <div id="progressBarFull"></div>
+                    </div>
+                    <p id="progressText"></p>
+                </div>
+                <div id="hud-item">
+                </div>
+            </div>
+
+            <div id="QuestionPic"></div>
+            <h2 id="question"> What is the answer to this question? </h2>
+            <div id="answersContainer"> </div>
+
+            <button type="button" id="submitAnswer" class="btn" onclick="saveAnawer(event)" disabled>submit</button>
+            <button type="button" id="SkipAnswer" onclick="SkipAnawer()">Skip</button>
+
+            <span id="timer"></span>
+
+        </div>
+    </div>
+
+@code {
+     protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CallJSMethod();
+        }
+     }
+
+    private async Task CallJSMethod()
+    {
+        await JSRuntime.InvokeVoidAsync("GamePage");
+    }
+}

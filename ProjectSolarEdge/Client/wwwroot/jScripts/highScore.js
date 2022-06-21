@@ -1,4 +1,6 @@
-﻿const highScoreList = document.getElementById('highScoreList');
+﻿function highScorePage() {
+
+const highScoreList = document.getElementById('highScoreList');
 const gameTime = document.getElementById('gameTime');
 const playerName = document.getElementById('playerName');
 const getPlayerName = JSON.parse(localStorage.getItem("userName"));
@@ -14,12 +16,6 @@ highScoreList.innerHTML = highScores
     .map(score => {
         return `<li class="high-score">${score.name} - ${score.score}</li>`;
     })
-    .join("");
+        .join("");
 
-setTime = () => {
-    const min = Math.floor(time / 60);
-    let sec = time % 60;
-    gameTime.innerText = (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec);
 }
-
-setTime();

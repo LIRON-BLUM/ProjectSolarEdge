@@ -1,0 +1,41 @@
+﻿@page "/WheelOfFortune"
+
+@inject IJSRuntime JSRuntime;
+
+<link href="styles/WheelOfFortiune.css" rel="stylesheet" />
+
+<h3>WheelOfFortune</h3>
+   
+    <div class="container">
+        <div class="flex-center flex-column">
+
+            <h1> Check your luck</h1>
+            <p> Spin the wheel and get your points</p>
+            <div id="wheelOfFortune">
+                <div class="arrow"></div>
+                <canvas id="wheel" width="300" height="300"></canvas>
+                <p id="wheelScore"> </p>
+
+            </div>
+            <button type="button" id="spinBTN" class="btn" onclick="wheelRotate()"> Spin</button>
+            <button type="button" id="Continue" class="btnGreen" onclick="goToGame()" disabled> Continue</button>
+
+        </div>
+    </div>
+
+
+@code {
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CallJSMethod();
+        }
+     }
+
+    private async Task CallJSMethod()
+    {
+        await JSRuntime.InvokeVoidAsync("wheelPage");
+    }
+}

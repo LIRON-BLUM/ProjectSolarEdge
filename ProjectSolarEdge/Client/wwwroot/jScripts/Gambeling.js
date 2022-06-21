@@ -1,4 +1,6 @@
-﻿const gambelOptions = document.getElementById('gambelOptions');
+﻿function gambelingPage() {
+
+const gambelOptions = document.getElementById('gambelOptions');
 const gambelContinue = document.getElementById('gambelContinue');
 let choosenGambel = document.getElementById('choosenGambel');
 let score = +localStorage.getItem("mostRecentScore");
@@ -22,4 +24,5 @@ function gambelChoice() {
 function gambelToContinue() {
     localStorage.setItem("gambelChoice", choosenGambel.innerText);
     window.location.assign('/Game.html');
+    }
 }

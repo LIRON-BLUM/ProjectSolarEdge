@@ -1,4 +1,4 @@
-﻿
+﻿function endPage() {
 
 const saveScoreBtn = document.getElementById('saveScoreBtn');
 const finalScore = document.getElementById('finalScore');
@@ -63,3 +63,5 @@ highScoreList.innerHTML = highScores
         return `<li class="high-score">${score.name} - ${score.score}</li>`;
     })
     .join("");
+
+}

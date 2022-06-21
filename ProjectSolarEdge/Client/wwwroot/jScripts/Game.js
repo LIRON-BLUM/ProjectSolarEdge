@@ -1,4 +1,6 @@
-﻿let firstStart = +localStorage.getItem("gameStarted");
+﻿function GamePage() {
+
+let firstStart = +localStorage.getItem("gameStarted");
 const question = document.getElementById('question');
 const choices = Array.from(document.getElementsByClassName('choice-text'));
 const progressText = document.getElementById('progressText');
@@ -311,7 +313,8 @@ if (firstStart == 1) {
     localStorage.setItem("skippedAnswers", skippedAnswers);
     answerCheck = [];
     localStorage.setItem("answerCheck", answerCheck);
-    time = +localStorage.getItem("timeLeft");
+    timeInMinutes = +localStorage.getItem("timeLeft");
+    time = timeInMinutes * 60;
     startGame();
     localStorage.setItem("gameStarted", 2);
 }
@@ -325,4 +328,5 @@ else {
     skippedCount = +localStorage.getItem("skippedCount");
     skippedAnswers = JSON.parse(localStorage.getItem("skippedAnswers"));
     answerCheck = JSON.parse(localStorage.getItem("answerCheck"));
+    }
 }

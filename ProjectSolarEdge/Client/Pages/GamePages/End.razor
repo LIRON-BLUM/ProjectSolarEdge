@@ -1,0 +1,79 @@
+﻿@page "/End"
+
+@inject IJSRuntime JSRuntime;
+  <link href="/css/styles/OpeningPage.css" rel="stylesheet" />
+
+<h3>End</h3>
+
+<div class="container">
+        <div id="end" class="flex-center  flex-column">
+
+            <div id="leaderBoard" class="flex-center flex-column">
+                <h2 id="allScores">Leaderboard</h2>
+                <ul id="userLucationList"> </ul>
+         @*       <table id="winingTable">
+                    <tr>
+                        <th>
+                            Place
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Score
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>1.</td>
+                        <td>lili</td>
+                        <td>2010</td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>yoyo</td>
+                        <td>2020</td>
+                    </tr>
+
+                </table>*@
+            </div>
+
+            <div id="highScores" class="flex-center flex-column">
+                <p class="bestSoFare">The best Players So Far</p>
+                <h2 id="finalScore">high score</h2>
+                <ul id="highScoreList2"> </ul>
+            </div>
+            <div class="podium">
+                <div class="podium__item">
+                    <div id="secondPlace"></div>
+
+                </div>
+
+                <div class="podium__item">
+                    <div id="firstPlace"></div>
+                </div>
+
+                <div class="podium__item">
+                    <div id="thirdPlace"></div>
+                </div>
+
+            </div>
+
+            <a class="btn" href="Feedback.html">Check answers</a>
+
+        </div>
+
+    </div>
+@code {
+       protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CallJSMethod();
+        }
+     }
+
+    private async Task CallJSMethod()
+    {
+        await JSRuntime.InvokeVoidAsync("endPage");
+    }
+}

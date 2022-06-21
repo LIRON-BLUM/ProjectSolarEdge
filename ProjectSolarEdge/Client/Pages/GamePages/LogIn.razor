@@ -1,0 +1,40 @@
+﻿@page "/LogIn"
+
+@inject IJSRuntime JSRuntime;
+
+<link href="/css/styles/LogIn.css" rel="stylesheet" />
+
+<h3>LogIn</h3>
+
+<div class="container">
+        <div class="flex-center flex-column">
+            <h1> Welcome</h1>
+            <p id="ErrorHelp"> </p>
+            <form>
+                <p>Enter your full name</p>
+                <input type="text" name="employeeName" id="employeeName" placeholder="Employee name" />
+                <p>Enter your Email</p>
+                <input type="text" name="employeeEmail" id="employeeEmail" placeholder="employee Email" />
+                <button type="submit" id="StartGame" class="btn" onclick="StartTheGame(event)" disabled> Log in</button>
+               
+            </form>
+           
+        </div>
+
+        
+    </div>
+
+@code {
+     protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CallJSMethod();
+        }
+     }
+
+    private async Task CallJSMethod()
+    {
+        await JSRuntime.InvokeVoidAsync("logInPage");
+    }
+}

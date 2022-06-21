@@ -1,4 +1,6 @@
-﻿const employeeName = document.getElementById('employeeName');
+﻿function logInPage() {
+
+const employeeName = document.getElementById('employeeName');
 const employeeEmail = document.getElementById('employeeEmail');
 const StartGame = document.getElementById('StartGame');
 const ErrorHelp = document.getElementById('ErrorHelp');
@@ -17,6 +19,7 @@ StartTheGame = (e) => {
 
     if (employeeName.value != null && !employeeEmail.value != null) {
         window.location.href = "OpeningPage.html";
+
         localStorage.setItem("userName", JSON.stringify(employeeName.value));
         localStorage.setItem("mostRecentScore", 0);
         localStorage.setItem("gameStarted", 1);
@@ -25,4 +28,5 @@ StartTheGame = (e) => {
     else {
         ErrorHelp.innerText = "Plese enter your full name and Email";
     }
+}
 }

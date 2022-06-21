@@ -1,4 +1,5 @@
-﻿
+﻿function endFeedbackPage() {
+
 const answerCheck = JSON.parse(localStorage.getItem("answerCheck")) || [];
 const answerCheckTxt = document.getElementById('answerCheck');
 answerCheckTxt.innerHTML = answerCheck
@@ -50,3 +51,5 @@ for (i = 0; i < questions.length; i++) {
 //const myTry = document.getElementById('myTry');
 //const try1 = myTry.getAttribute('isRight');
 //alert(try1);
+
+}

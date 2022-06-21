@@ -1,0 +1,32 @@
+﻿@page "/EndFeedback"
+
+@inject IJSRuntime JSRuntime;
+
+<link href="/css/styles/feedback.css" rel="stylesheet" />
+
+
+<h3>EndFeedback</h3>
+
+    <div class="container">
+        <div id="feedback" class="flex-center  flex-column">
+
+            <h1>Check your answer</h1>
+            <div id="answerCheck"></div> 
+
+        </div>
+
+    </div>
+
+@code {
+     protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CallJSMethod();
+        }
+     }
+    private async Task CallJSMethod()
+    {
+        await JSRuntime.InvokeVoidAsync("endFeedbackPage");
+    }
+}

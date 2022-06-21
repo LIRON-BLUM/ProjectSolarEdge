@@ -1,4 +1,6 @@
-﻿const draggable_list = document.getElementById('draggable-list');
+﻿function orderQuestionPage() {
+
+const draggable_list = document.getElementById('draggable-list');
 const submitAnswer = document.getElementById('checkAnswer');
 const orderQuestion = document.getElementById('orderQuestion');
 
@@ -139,4 +141,5 @@ function addEventListeners() {
         item.addEventListener('dragenter', dragEnter);
         item.addEventListener('dragleave', dragLeave);
     });
+    }
 }

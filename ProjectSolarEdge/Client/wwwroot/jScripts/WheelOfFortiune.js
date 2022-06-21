@@ -1,4 +1,6 @@
-﻿const sectors = [
+﻿function wheelPage() {
+
+const sectors = [
     { color: "#4AEC96", label: 700 },
     { color: "#FF6E1F", label: 100 },
     { color: "#EDF8FE", label: 200 },
@@ -92,4 +94,5 @@ wheelRotate = () => {
 goToGame = () => {
     localStorage.setItem("mostRecentScore", score);
     window.location.assign('/Gambelin.html');
+    }
 }
