@@ -40,7 +40,10 @@ namespace ProjectSolarEdge.Client.Pages
 
         //public IEnumerable<SubjectsQuestions> SQConnection { get; set; } = new List<SubjectsQuestions>();
 
-        public IEnumerable<string> SubOptions { get; set; } = new HashSet<string>() { "General" };
+        public IEnumerable<string> SelectedSubjects { get; set; } = new HashSet<string>();
+
+        public string DefaultValue { get; set; } = "Select Subject";
+
 
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
@@ -115,7 +118,7 @@ namespace ProjectSolarEdge.Client.Pages
 
    
             QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
-
+            SelectedSubjects = new HashSet<string>(QuestionsCRUD.Subjects.Select(s => s.SubjectName));
             
 
             foreach (var myanswer in QuestionsCRUD.Answers)

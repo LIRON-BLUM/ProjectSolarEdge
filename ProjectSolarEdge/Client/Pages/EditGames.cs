@@ -19,6 +19,9 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public IGamesDataService GameDataService { get; set; }
 
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
@@ -78,5 +81,64 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
+        protected async Task AddAndUpdate()
+        {
+
+            await GameDataService.UpdateGame(GameCRUD);
+            NavigationManager.NavigateTo("/Games");
+        }
+        // 1) Check which answer is the correct one and set it up
+        //foreach (var ans in GameCRUD.Questions)
+        //{
+
+        //    ans.IsRight = false;
+
+        //    if (GameCRUD.Questions.Where(a => a.ID == CheckedQuestionID).Count() > 0)
+        //    {
+        //        GameCRUD.Questions.Where(ans => ans.ID == CheckedQuestionID).FirstOrDefault().IsRight = true;
+        //    }
+        //}
+
+
+        //if (QuestionsCRUD.ID == 0) // Create new question
+        //{
+        //    // 2) Save the question itself into the database and get the question ID back from the database
+        //    int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+
+        //    if (QuestionID != 0) // Question added to the DB
+        //    {
+        //        QuestionsCRUD.ID = QuestionID;
+        //    }
+
+        //    // 3) Add the answers on the question to the database using the question ID retunred from the DB 
+        //    foreach (var ans in QuestionsCRUD.Answers)
+        //    {
+        //        ans.QuestionID = QuestionID;
+        //        await QuestionDataService.AddAnswerToDB(ans);
+
+        //    }
+
+        //    //4) If all successful then navigate the user to edit question or list of questions.
+        //    NavigationManager.NavigateTo("/");
+
+        //}
+        //else
+        //{
+        //    //  QuestionsCRUD.Answers = new List<QuestionAnswer>();
+
+        //    await QuestionDataService.UpdateQuestion(QuestionsCRUD);
+
+        //    foreach (var ans in QuestionsCRUD.Answers)
+        //    {
+
+        //        await QuestionDataService.UpdateAnswer(ans);
+
+
+        //  }  }
+
+
+
     }
+
 }
+

@@ -9,5 +9,7 @@ namespace ProjectSolarEdge.Client.Services.Games
         Task<IEnumerable<Game>> GetAllGames();
 
         Task<Game> GetGameByIdAsync(int Id);
+
+        Task<bool> UpdateGame(Game game);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ProjectSolarEdge.Shared.Entities;
+using System.Text;
 using System.Text.Json;
 
 namespace ProjectSolarEdge.Client.Services.Games
@@ -37,6 +38,21 @@ namespace ProjectSolarEdge.Client.Services.Games
         {
             Stream stream = await _httpClient.GetStreamAsync($"api/Games/Game/{Id}");
             return await JsonSerializer.DeserializeAsync<Game>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<bool> UpdateGame(Game game)
+        {
+            var gameJson =
+                new StringContent(JsonSerializer.Serialize(game), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync("api/Games/UpdateGame/{Id}", gameJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
         }
 
 

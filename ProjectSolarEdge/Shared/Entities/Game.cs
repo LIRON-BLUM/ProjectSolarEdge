@@ -20,7 +20,7 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public byte isPublished { get; set; }
 
-        public GameTheme Theme { get; set; }
+        public GameTheme GameTheme { get; set; }
 
         public DateTime GameStartDate { get; set; }
 

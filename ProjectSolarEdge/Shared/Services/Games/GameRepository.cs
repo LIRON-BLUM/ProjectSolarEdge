@@ -38,5 +38,14 @@ namespace ProjectSolarEdge.Shared.Services.Games
         {
             throw new NotImplementedException();
         }
+
+        public bool UpdateGame(Game game)
+        {
+
+            bool results = ExecuteAll(GamesQueries.UpdateGame, game);
+
+
+            return results;
+        }
     }
 }
