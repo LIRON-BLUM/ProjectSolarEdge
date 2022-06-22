@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace ProjectSolarEdge.Client.Pages
 {
-    public partial class EditQuestions
+    public partial class EditQuestions : ComponentBase, IDisposable
     {
 
         [Parameter]
@@ -135,6 +135,14 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task AddAndUpdate()
         {
+            List<Subject> selectedSubjectToUpdate = new List<Subject>();
+
+            foreach (var item in SelectedSubjects)
+            {
+                selectedSubjectToUpdate.Add(SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault());
+            }
+
+            QuestionsCRUD.Subjects = selectedSubjectToUpdate;
             // 1) Check which answer is the correct one and set it up
             foreach (var ans in QuestionsCRUD.Answers)
             {
@@ -351,5 +359,9 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

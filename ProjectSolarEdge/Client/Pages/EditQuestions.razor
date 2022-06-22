@@ -85,7 +85,7 @@
                     <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
                         @foreach (var subject in SubjectsData)
                         {
-                            <MudSelectItem T="string" Value="@subject.ID.ToString()">@subject.SubjectName</MudSelectItem>
+                            <MudSelectItem T="string" Value="@subject.SubjectName">@subject.SubjectName</MudSelectItem>
                         }
                     </MudSelect>
                 </div>

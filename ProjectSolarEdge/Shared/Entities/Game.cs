@@ -26,8 +26,6 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public DateTime GameEndDate { get; set; }
 
-        public string Feedback { get; set; }
-
         public int CreatorID { get; set; }
 
         //public List<QuestionAnswer> Answers { get; set; }
@@ -66,8 +64,8 @@ namespace ProjectSolarEdge.Shared.Entities
 
     public enum ScoreMethod
     {
-        ScoreMethodA = 1,
-        ScoreMethodB = 2,
-        ScoreMethodC = 3
+        SpreadEqualy = 1,
+        SpreadByDifficulty = 2,
+        SeldSpread = 3
     }
 }

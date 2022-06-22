@@ -21,7 +21,7 @@ namespace ProjectSolarEdge.Shared.Services.Games
         SET
         GameName=@GameName,
         GameDescription=@GameDescription,
-        UpdadeDate=@UpdadeDate,
+        UpdateDate=@UpdateDate,
         IsPublished=@IsPublished,
         GameTheme=@GameTheme,
         GameStartDate=@GameStartDate,

@@ -12,7 +12,7 @@ using ProjectSolarEdge.Client.Services;
 namespace ProjectSolarEdge.Client.Pages
 {
   
-    public partial class Questions
+    public partial class Questions : ComponentBase, IDisposable
     {
         public Question AllQuestions { get; set; } = new Question();
 
@@ -147,7 +147,9 @@ namespace ProjectSolarEdge.Client.Pages
 
             }
 
-
-
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

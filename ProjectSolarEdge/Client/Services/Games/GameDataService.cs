@@ -42,18 +42,29 @@ namespace ProjectSolarEdge.Client.Services.Games
 
         public async Task<bool> UpdateGame(Game game)
         {
-            var gameJson =
+            try
+            {
+                var gameJson =
                 new StringContent(JsonSerializer.Serialize(game), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync("api/Games/UpdateGame/{Id}", gameJson);
+                var response = await _httpClient.PutAsync($"api/Games/UpdateGame/{game.ID}", gameJson);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+                if (response.IsSuccessStatusCode)
+                {
+                    return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+                }
+
+                return false;
             }
+            catch (Exception ex)
+            {
 
-            return false;
+                return false;
+            }
+            
         }
+
+      
 
 
     }
