@@ -3,7 +3,7 @@ h1 {
     background-color: #001546;
     width: 100%;
     height: 80px;
-    color: aliceblue;
+    color: red;
     text-align: center;
 }
 
@@ -14,8 +14,6 @@ h1 {
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     border-top: 40px solid #001546;
-    /*    transform: rotate(-20deg);
-*/
 }
 
 #spinBTN {
