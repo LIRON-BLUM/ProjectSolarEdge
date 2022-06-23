@@ -19,6 +19,8 @@ namespace ProjectSolarEdge.Client.Services
             throw new NotImplementedException();
         }
 
+
+
         public async Task<Question> GetQuestionByIdAsync(int Id)
         {
             Stream stream = await _httpClient.GetStreamAsync($"api/Questions/Question/{Id}");
