@@ -140,9 +140,13 @@ namespace ProjectSolarEdge.Client.Pages
             foreach (var item in SelectedSubjects)
             {
                 selectedSubjectToUpdate.Add(SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault());
+                // InsertSubjectConnction
+                await QuestionDataService.InsertSubjectConnction(selectedSubjectToUpdate);
             }
 
             QuestionsCRUD.Subjects = selectedSubjectToUpdate;
+
+
             // 1) Check which answer is the correct one and set it up
             foreach (var ans in QuestionsCRUD.Answers)
             {

@@ -7,7 +7,7 @@ using ProjectSolarEdge.Client.Services.Games;
 
 namespace ProjectSolarEdge.Client.Pages
 {
-    public partial class EditGames
+    public partial class EditGames : ComponentBase, IDisposable
     {
         [Parameter]
         public string Id { get; set; }
@@ -86,6 +86,11 @@ namespace ProjectSolarEdge.Client.Pages
 
             await GameDataService.UpdateGame(GameCRUD);
             NavigationManager.NavigateTo("/Games");
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
         // 1) Check which answer is the correct one and set it up
         //foreach (var ans in GameCRUD.Questions)

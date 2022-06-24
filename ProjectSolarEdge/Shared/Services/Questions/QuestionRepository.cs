@@ -136,6 +136,34 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         //    return results;
         //}
 
- 
+
+
+
+        public int InsertSubjectConnction(SubjectsQuestionsConnection SubjectsQuestionsConnection)
+        {
+
+            int results = InsertAndreturnInt(QuestionsQueries.InsertSubjectToConnectionTable, SubjectsQuestionsConnection);
+
+
+            return results;
+        }
+
+        //public bool DeleteSubjectConnctionn(SubjectsQuestionsConnection SubjectsQuestionsConnection)
+        //{
+
+        //    bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, SubjectsQuestionsConnection);
+
+
+        //    return results;
+        //}
+
+        public bool DeleteSubjectConnction(int ID)
+        {
+
+            bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, new { ID = ID });
+
+
+            return results;
+        }
     }
 }

@@ -1,9 +1,8 @@
-﻿using ProjectSolarEdge.Client.Services.Questions;
-using ProjectSolarEdge.Shared.Entities;
+﻿using ProjectSolarEdge.Shared.Entities;
 using System.Text;
 using System.Text.Json;
 
-namespace ProjectSolarEdge.Client.Services
+namespace ProjectSolarEdge.Client.Services.Questions
 {
     public class QuestionDataService : IQuestionsDataService
     {
@@ -11,7 +10,7 @@ namespace ProjectSolarEdge.Client.Services
 
         public QuestionDataService(HttpClient client)
         {
-            this._httpClient = client;
+            _httpClient = client;
         }
 
         public Task<IEnumerable<Question>> GetAllQuestions()
@@ -76,7 +75,7 @@ namespace ProjectSolarEdge.Client.Services
             var questionJson =
                 new StringContent(JsonSerializer.Serialize(question), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync("api/Questions/DeleteQuestion/{questionId}", questionJson);
+            var response = await _httpClient.PutAsync("api/Questions/DeleteQuestion/{question}", questionJson);
 
             if (response.IsSuccessStatusCode)
             {
@@ -94,28 +93,9 @@ namespace ProjectSolarEdge.Client.Services
             return await JsonSerializer.DeserializeAsync<IEnumerable<Subject>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
-        //public async Task<bool> DeleteQuestion(int questionId)
-        //{
-        //    var response = await _httpClient.DeleteAsync($"api/Questions/Question/{questionId}");
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
-        //    }
-
-        //    return false;
-        //}
-
-
-
-        ////////----------Aswers----------//////////
-
-        public async Task<bool> AddAnswerToDB(QuestionAnswer answer)
+        public async Task<bool> DeleteSubjectConnction(int SubID)
         {
-            var AnswerJson =
-                new StringContent(JsonSerializer.Serialize(answer), Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/Questions/InsertAns", AnswerJson);
+            var response = await _httpClient.DeleteAsync($"api/Questions/DeleteSubConnection/{SubID}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -126,9 +106,43 @@ namespace ProjectSolarEdge.Client.Services
         }
 
 
-        
+        public async Task<bool> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
+        {
+            var AnswerJson =
+                new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
 
-         public async Task<bool> UpdateAnswer(QuestionAnswer answer)
+            var response = await _httpClient.PostAsync($"api/Questions/InsertSubConnection", AnswerJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+
+        ////////----------Aswers----------//////////
+
+        public async Task<bool> AddAnswerToDB(QuestionAnswer answer)
+        {
+            var AnswerJson =
+                new StringContent(JsonSerializer.Serialize(answer), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync($"api/Questions/InsertAns", AnswerJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+
+
+
+        public async Task<bool> UpdateAnswer(QuestionAnswer answer)
         {
             var AnswerJson =
                 new StringContent(JsonSerializer.Serialize(answer), Encoding.UTF8, "application/json");
@@ -171,6 +185,11 @@ namespace ProjectSolarEdge.Client.Services
             }
 
             return false;
+        }
+
+        public Task InsertSubjectConnction(List<Subject> selectedSubjectToUpdate)
+        {
+            throw new NotImplementedException();
         }
 
 

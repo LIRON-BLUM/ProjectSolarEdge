@@ -11,7 +11,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
     {
         IEnumerable<Question> getQuestions();
         
-        IEnumerable<Subject> getSubjects();
+
         Question GetQuestionById(int ID, bool IncludeOptions = true);
 
         int AddQuestionToDB(Question question);
@@ -28,6 +28,11 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         bool DeleteAnswer(QuestionAnswer answer);
 
         //bool DeleteAnswer(int id);
+
+        IEnumerable<Subject> getSubjects();
+
+        bool DeleteSubjectConnction(int ID);
+        int InsertSubjectConnction(SubjectsQuestionsConnection subjectsQuestionsConnection);
 
 
     }

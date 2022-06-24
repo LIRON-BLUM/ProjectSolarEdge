@@ -184,21 +184,42 @@ namespace ProjectSolarEdge.Server.Controllers
 
 
 
-        //[HttpDelete]
-        //[Route("DeleteAnswer/{Id}")]
-        //public IActionResult DeleteQuestionAnswer(int Id)
-        //{
-        //    if (Id == 0)
-        //        return BadRequest();
+        [HttpDelete]
+        [Route("DeleteSubConnection/{Id}")]
+        public IActionResult DeleteSubConnection(int Id)
+        {
+            if (Id == 0)
+                return BadRequest();
 
-        //    //var questionToDelete = _questionRepository.GetQuestionById(Id);
-        //    if (Id == null)
-        //        return NotFound();
+            //var questionToDelete = _questionRepository.GetQuestionById(Id);
+            if (Id == null)
+                return NotFound();
 
-        //    bool _question = _questionRepository.DeleteAnswer(Id);
+            bool _question = _questionRepository.DeleteSubjectConnction(Id);
 
-        //    return Ok(_question);//success
-        //}
+            return Ok(_question);//success
+        }
+
+
+        [HttpPost]
+        [Route("InsertSubConnection")]
+        public async Task<IActionResult> AddSubjectToConnection(SubjectsQuestionsConnection newSubject)
+        {
+
+            int _newSubject = _questionRepository.InsertSubjectConnction(newSubject);
+
+
+            if (_newSubject == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_newSubject);
+
+        }
 
     }
 }

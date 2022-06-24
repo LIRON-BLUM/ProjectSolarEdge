@@ -83,6 +83,14 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 		public static string GetAllSubjectsName => @"SELECT SubjectName FROM Subjects WHERE isDeleted = 0";
 
+		public static string InsertSubjectToConnectionTable => @"INSERT INTO SubjectsQuestionsConnection(QuestionID, SubjectID)
+													VALUES(@QuestionID, @SubjectID)";
+
+		public static string DeleteSubjectFromConnectionTable => @"DELETE FROM SubjectsQuestionsConnection WHERE QuestionID = @QuestionID AND SubjectID = @SubjectID";
+
+
+
+
 
 		//Returns Subjects by QuestionID
 		public static string GetSubjectByQuesID => @"SELECT 

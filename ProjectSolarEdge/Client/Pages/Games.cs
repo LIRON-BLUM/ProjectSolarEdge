@@ -11,7 +11,7 @@ using ProjectSolarEdge.Client.Services;
 
 namespace ProjectSolarEdge.Client.Pages
 {
-    public partial class Games
+    public partial class Games : ComponentBase, IDisposable
     {
 
 
@@ -120,6 +120,11 @@ namespace ProjectSolarEdge.Client.Pages
 
             //await GameToDelete.DeleteGame(GameToDelete);
 
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
