@@ -10,30 +10,32 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
     {
 
 
-		public static string GetAllGameScore => @"SELECT ID, QuestionBody, Type, Difficulty, CreationDate, UpdateDate, Creator, Feedback FROM GameScore WHERE isDeleted = 0";
+		public static string GetAllGameScore => @"SELECT ID, UserID, GameID, QuestionID, GameElement, IsRight, GamblingScore, ElementScore, IsAnswered FROM GameScore";
 
 
 		public static string AddNewGameScore => @"INSERT INTO GameScore
-													(QuestionBody,
-													CreationDate,
-													UpdateDate,
-													Type,
-													Difficulty,
-													Feedback,
-													Creator,
-													isDeleted,
-													SubjectID)
-											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator, 0, @SubjectID)
+													(UserID,
+													GameID,
+													QuestionID,
+													GameElement,
+													IsRight,
+													GamblingScore,
+													ElementScore,
+													IsAnswered)
+											  VALUES (@UserID, @GameID, @QuestionID, @GameElement, @IsRight, @GamblingScore, @ElementScore, @IsAnswered)
 											  SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
 		public static string UpdateGameScore => @"UPDATE GameScore 
 												   SET
-													QuestionBody = @QuestionBody,
-													UpdateDate =  @UpdateDate,
-													Type = @Type,
-													Difficulty = @Difficulty,
-													Feedback =  @Feedback
+													UserID = @UserID,
+													GameID =  @GameID,
+													QuestionID = @QuestionID,
+													GameElement = @GameElement,
+													IsRight =  @IsRight,
+													GamblingScore = @GamblingScore,
+													ElementScore = @ElementScore,
+													IsAnswered = @IsAnswered,
 											    	WHERE  ID = @ID";
 
 	}
