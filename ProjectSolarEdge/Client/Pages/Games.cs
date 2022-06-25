@@ -22,7 +22,7 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public IGamesDataService GamesDataService { get; set; }
 
-
+        public IEnumerable<Question> QuestionsData { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }

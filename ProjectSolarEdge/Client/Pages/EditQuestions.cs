@@ -26,7 +26,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
 
-        public Subject Subject { get; set; } = new Subject();
+        public Subject OneSubject { get; set; } = new Subject();
 
       
         public SubjectsQuestions QuestionSubject { get; set; } = new SubjectsQuestions();
@@ -38,9 +38,14 @@ namespace ProjectSolarEdge.Client.Pages
         public SubjectsQuestions subjectNameList { get; set; }
         public int SubjectsQuestionsID { get; set; }
 
+     
+
         //public IEnumerable<SubjectsQuestions> SQConnection { get; set; } = new List<SubjectsQuestions>();
 
         public IEnumerable<string> SelectedSubjects { get; set; } = new HashSet<string>();
+
+        public SubjectsQuestionsConnection SubjectConnection { get; set; }
+        public IEnumerable<SubjectsQuestionsConnection> SubjectConnectionData { get; set; }
 
         public string DefaultValue { get; set; } = "Select Subject";
 
@@ -73,6 +78,8 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1 };
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
                 QuestionsCRUD.Subjects = new List<Subject>();
+
+              
 
                 //ADD ANSWERS
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
@@ -140,11 +147,34 @@ namespace ProjectSolarEdge.Client.Pages
             foreach (var item in SelectedSubjects)
             {
                 selectedSubjectToUpdate.Add(SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault());
-                // InsertSubjectConnction
-                await QuestionDataService.InsertSubjectConnction(selectedSubjectToUpdate);
+                
             }
 
+
             QuestionsCRUD.Subjects = selectedSubjectToUpdate;
+
+            foreach (var s in selectedSubjectToUpdate)
+            {
+                SubjectConnection.SubjectID = s.ID;
+                SubjectConnection.QuestionID = QuestionsCRUD.ID;
+              await QuestionDataService.AddSubjectConnection(SubjectConnection);
+            }
+
+            //foreach (var sub in selectedSubjectToUpdate)
+            //{
+            //    foreach (var s in SubjectConnectionData)
+            //    {
+            //        if (sub.ID != s.SubjectID)
+            //        {
+
+            //            s.SubjectID = sub.ID;
+            //            s.QuestionID = QuestionsCRUD.ID;
+            //            await QuestionDataService.AddSubjectConnection(s);
+                    
+            //        }
+            //    }
+
+            //}
 
 
             // 1) Check which answer is the correct one and set it up
@@ -154,9 +184,10 @@ namespace ProjectSolarEdge.Client.Pages
                 ans.IsRight = false;
 
                 if (QuestionsCRUD.Answers.Where(a => a.ID == CheckedAnswerID).Count() > 0)
-            {
+                 {
+
                 QuestionsCRUD.Answers.Where(ans => ans.ID == CheckedAnswerID).FirstOrDefault().IsRight = true;
-            } 
+                 } 
             }
 
 
@@ -195,8 +226,12 @@ namespace ProjectSolarEdge.Client.Pages
                   
 
                 }
+
                 
-                    NavigationManager.NavigateTo("/");
+
+
+
+                NavigationManager.NavigateTo("/");
             }
 
         }

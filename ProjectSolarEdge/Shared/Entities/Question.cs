@@ -45,4 +45,13 @@ namespace ProjectSolarEdge.Shared.Entities
         Medium = 2,
         Hard = 3
     }
+
+    public class GamesQuestions
+    {
+        public int ID { get; set; }
+
+        public string QuestionBody { get; set; }
+
+        public int GameID { get; set; }
+    }
 }

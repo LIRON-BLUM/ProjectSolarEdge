@@ -18,18 +18,31 @@ namespace ProjectSolarEdge.Shared.Services.Games
         public IEnumerable<Game> GetGames()
         {
             IEnumerable<Game> _data = GetRecords<Game>(GamesQueries.GetAllGames, null);
-            return _data;
+            IEnumerable<GamesQuestions> _questions = GetGameQuestions();
 
+            foreach (Game game in _data)
+            {
+                game.Questions = _questions.Where(g => g.GameID == game.ID).Select(q => new Question
+                {
+                    ID = q.ID,
+                    QuestionBody = q.QuestionBody
+                }).ToList();
+
+            }
+
+            return _data;
         }
 
-        public Game GetGameById(int ID)
+        public IEnumerable<GamesQuestions>  GetGameQuestions()
+        {
+         IEnumerable<GamesQuestions> _data = GetRecords<GamesQuestions>(GamesQueries.GetGameQuestions, null);
+         return _data;
+        }
+
+    public Game GetGameById(int ID)
         {
             Game _game = GetRecords<Game>(GamesQueries.GetGameByID, new { ID }).FirstOrDefault();
-
-            // Get Game Questions
-            // _game.Questions = get questions from DB.
-
-        
+            _game.Questions = GetRecords<Question>(GamesQueries.GetQuestionByGameID, new { GameID = ID });
 
             return _game;
         }

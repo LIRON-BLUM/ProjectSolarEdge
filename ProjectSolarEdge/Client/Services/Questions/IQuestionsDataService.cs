@@ -31,6 +31,9 @@ namespace ProjectSolarEdge.Client.Services.Questions
         Task<bool> DeleteAnswer(QuestionAnswer answer);
 
         Task<bool> DeleteQuestionAnswers(int questionId);
-        Task InsertSubjectConnction(List<Subject> selectedSubjectToUpdate);
+        //Task AddSubjectConnection(int QuestionID, int SubjetID);
+
+        Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection);
+
     }
 }

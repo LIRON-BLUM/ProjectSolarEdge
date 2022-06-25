@@ -16,6 +16,8 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         bool UpdateGame(Game game);
 
+        IEnumerable<GamesQuestions> GetGameQuestions();
+
 
     }
 }

@@ -201,12 +201,33 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
 
+        //[HttpPost]
+        //[Route("InsertSubConnection/{QuestionID}/{SubjectID}")]
+        //public async Task<IActionResult> AddSubjectToConnection(int QuestionID, int SubjetID)
+        //{
+
+        //    int _newSubject = _questionRepository.InsertSubjectConnction(QuestionID, SubjetID);
+
+
+        //    if (_newSubject == null)
+        //    {
+        //        return NotFound(new ApiResult
+        //        {
+        //            Success = false
+        //        });
+        //    }
+
+        //    return Ok(_newSubject);
+
+        //}
+
+
         [HttpPost]
         [Route("InsertSubConnection")]
-        public async Task<IActionResult> AddSubjectToConnection(SubjectsQuestionsConnection newSubject)
+        public async Task<IActionResult> AddSubjectToConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         {
 
-            int _newSubject = _questionRepository.InsertSubjectConnction(newSubject);
+            int _newSubject = _questionRepository.AddSubjectToConnection(subjectsQuestionsConnection);
 
 
             if (_newSubject == null)

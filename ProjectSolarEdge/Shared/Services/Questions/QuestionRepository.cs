@@ -139,10 +139,20 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 
 
-        public int InsertSubjectConnction(SubjectsQuestionsConnection SubjectsQuestionsConnection)
+        //public int InsertSubjectConnction(int QuestionID, int SubjetID)
+        //{
+
+        //    int results = InsertAndreturnInt(QuestionsQueries.InsertSubjectToConnectionTable, (QuestionID, SubjetID));
+
+
+        //    return results;
+        //}
+
+
+        public int AddSubjectToConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         {
 
-            int results = InsertAndreturnInt(QuestionsQueries.InsertSubjectToConnectionTable, SubjectsQuestionsConnection);
+            int results = InsertAndreturnInt(QuestionsQueries.InsertSubjectToConnectionTable, subjectsQuestionsConnection);
 
 
             return results;
@@ -165,5 +175,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
             return results;
         }
+
+      
+
     }
 }

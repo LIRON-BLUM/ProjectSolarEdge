@@ -16,15 +16,30 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<Game> GameData { get; set; }
 
+        public IEnumerable<Question> QuestionsData { get; set; }
+
+        public HashSet<Question> selectedQuestions = new HashSet<Question>();
+
+        public IEnumerable<Question> Elements = new List<Question>();
+
         [Inject]
         public IGamesDataService GameDataService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        public IQuestionsDataService QuestionDataService { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
+          
             GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
+            QuestionsData = await QuestionDataService.GetQuestionsAsync();
+           
+
+
+            //selectedQuestions = new HashSet<Question>((IEnumerable<Question>)GameCRUD.Questions.Select(q => q.ID));
         }
 
         bool fixed_header = true;
@@ -57,24 +72,7 @@ namespace ProjectSolarEdge.Client.Pages
                 return false;
             }).ToArray();
             totalItems = data.Count();
-            //switch (state.SortLabel)
-            //{
-            //    case "ID_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.ID);
-            //        break;
-            //    case "Type_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.Type);
-            //        break;
-            //    case "Difficulty_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
-            //        break;
-            //    case "Creator_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.Creator);
-            //        break;
-            //    case "Creation_Date_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
-            //        break;
-            //}
+
 
             pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
             return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };

@@ -32,7 +32,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         IEnumerable<Subject> getSubjects();
 
         bool DeleteSubjectConnction(int ID);
-        int InsertSubjectConnction(SubjectsQuestionsConnection subjectsQuestionsConnection);
+        int AddSubjectToConnection(SubjectsQuestionsConnection subjectsQuestionsConnection);
 
 
     }

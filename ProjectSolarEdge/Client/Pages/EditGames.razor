@@ -41,15 +41,15 @@
 
             </EditForm>
 
-
-
-
         </MudPaper>
     </MudItem>
+
+
+
     <MudItem xs="12" sm="5">
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
 
-            <MudTable Items="GameData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+            <MudTable Items="QuestionsData"  MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
                 <HeaderContent>
                     <MudTh>Type</MudTh>
                     <MudTh>Question</MudTh>
@@ -57,12 +57,14 @@
 
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd DataLabel="Type">Type</MudTd>
-                    <MudTd DataLabel="Question">QuestionBody <br /> <MudChip>Difficulty</MudChip>  <MudChip>UpdateDate</MudChip> </MudTd>
+                    <MudTd DataLabel="Type">@context.Type</MudTd>
+                    <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
                     <MudTd DataLabel="Delete">
 
                         <MudTooltip Text="Delete Question">
-                            <MudIconButton Icon="@Icons.Material.Filled.Delete"  Color="Color.Primary" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />
+                            @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
+
                         </MudTooltip>
                     </MudTd>
 
@@ -76,6 +78,9 @@
 
 
 @code {
+
+
+
 
     DateTime? startdate = DateTime.Today;
 

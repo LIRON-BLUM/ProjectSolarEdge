@@ -37,6 +37,25 @@ namespace ProjectSolarEdge.Shared.Services.Games
         WHERE ID=@ID";
 
 
+        //Returns Questions by QuestionID
+        public static string GetQuestionByGameID => @"SELECT 
+                                                    Q.ID,
+                                                    Q.QuestionBody,
+                                                    Q.Type,
+                                                    Q.Difficulty
+                                                    FROM GameQuestionsConnections as GQC
+                                                    INNER JOIN Questions as Q ON GQC.QuestionID = Q.ID
+                                                    WHERE GQC.GameID = @GameID";
+
+
+
+        //Returns all Gaames & Questions
+        public static string GetGameQuestions => @"SELECT 
+                                                        Q.ID,
+                                                        Q.QuestionBody,
+                                                        GQC.GameID
+                                                        FROM GameQuestionsConnections as GQC
+                                                        INNER JOIN Questions as Q ON GQC.QuestionID = Q.ID";
     }
 }
 
