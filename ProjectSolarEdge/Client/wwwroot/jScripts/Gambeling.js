@@ -8,7 +8,7 @@ let newScore = document.getElementById('colectedScore');
 
 newScore.innerText = "score: " + score;
 
-function gambelChoice() {
+    gambelChoice = () => {
     let gambelChoice = gambelOptions.options[gambelOptions.selectedIndex].text
     if (score >= +gambelChoice) {
         choosenGambel.innerText = gambelOptions.options[gambelOptions.selectedIndex].text;
@@ -20,9 +20,8 @@ function gambelChoice() {
     }
     
 }
-
-function gambelToContinue() {
-    localStorage.setItem("gambelChoice", choosenGambel.innerText);
-    window.location.assign('/Game.html');
+    gambelToContinue = () => {
+        localStorage.setItem("gambelChoice", choosenGambel.innerText);
+        window.location.assign('/GamePage');
     }
 }

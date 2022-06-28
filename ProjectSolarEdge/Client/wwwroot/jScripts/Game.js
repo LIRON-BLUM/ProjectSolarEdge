@@ -142,7 +142,8 @@ startTimer = () => {
                         endFeedback(classToApply);
                     }
                 }
-                return window.location.assign('/end.html');
+                return window.location.assign('/end');
+
             }   
         }
         startTimer();
@@ -242,10 +243,11 @@ saveAnawer = (e) => {
 
         if (questionCounter == MAX_QUESTIONS) {
             localStorage.setItem("mostRecentScore", score);
-            return window.location.assign('/end.html');
+            return window.location.assign('/end');
+
         }
         else {
-            window.location.assign('/WheelOfFortiune.html');
+            window.location.assign('/WheelOfFortune');
 
         }
     }, 1000);
@@ -276,7 +278,8 @@ SkipAnawer = () => {
     skippedCount++;
     localStorage.setItem("skippedCount", skippedCount);
     removeAns();
-    window.location.assign('/WheelOfFortiune.html');
+    window.location.assign('/WheelOfFortune');
+
 }
 
 endFeedback = (classToApply) => {

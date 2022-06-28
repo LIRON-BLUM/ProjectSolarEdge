@@ -18,8 +18,8 @@ StartTheGame = (e) => {
     e.preventDefault();
 
     if (employeeName.value != null && !employeeEmail.value != null) {
-        //window.location.href = "/OpeningPage/{Id}";
-        document.getElementById('GoToOpening').click();
+        window.location.assign('/OpeningPage/3');
+
 
         localStorage.setItem("userName", JSON.stringify(employeeName.value));
         localStorage.setItem("mostRecentScore", 0);

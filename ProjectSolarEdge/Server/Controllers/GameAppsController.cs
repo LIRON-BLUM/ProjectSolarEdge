@@ -21,12 +21,12 @@ namespace ProjectSolarEdge.Server.Controllers
 
 
         //[HttpGet]
-        //[Route("GetGameApp")]
-        //public IActionResult GetQuestions()
+        //[Route("GetCurrentScore")]
+        //public IActionResult GetCurrentScore()
         //{
-        //    IEnumerable<Question> questions = _gameAppRepository.getQuestions();
+        //    IEnumerable<GameScore> gameScore = _gameAppRepository.getGameScore();
 
-        //    return Ok(questions);
+        //    return Ok(gameScore);
         //}
 
 

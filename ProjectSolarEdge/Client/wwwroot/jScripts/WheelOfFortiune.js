@@ -93,6 +93,6 @@ wheelRotate = () => {
 
 goToGame = () => {
     localStorage.setItem("mostRecentScore", score);
-    window.location.assign('/Gambelin.html');
+    window.location.assign('/Gambeling');
     }
 }
