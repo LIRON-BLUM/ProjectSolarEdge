@@ -106,20 +106,7 @@ namespace ProjectSolarEdge.Client.Services.Questions
         }
 
 
-        public async Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
-        {
-            var AnswerJson =
-                new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync($"api/Questions/InsertSubConnection", AnswerJson);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return await JsonSerializer.DeserializeAsync<int>(await response.Content.ReadAsStreamAsync());
-            }
-
-            return 0;
-        }
+        
 
 
         //public async Task<bool> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
@@ -202,9 +189,19 @@ namespace ProjectSolarEdge.Client.Services.Questions
             return false;
         }
 
-        Task<int> IQuestionsDataService.AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
+        public async Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         {
-            throw new NotImplementedException();
+            var AnswerJson =
+                new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync($"api/Questions/InsertSubConnection", AnswerJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<int>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return 0;
         }
 
         //public Task InsertSubjectConnction(List<Subject> selectedSubjectToUpdate)

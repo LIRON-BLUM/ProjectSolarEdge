@@ -144,22 +144,25 @@ namespace ProjectSolarEdge.Client.Pages
         {
             List<Subject> selectedSubjectToUpdate = new List<Subject>();
 
+            // Delete the existing subjects 
+
             foreach (var item in SelectedSubjects)
             {
-                 Subject s = SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault();
+
+                Subject s = SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault();
                 selectedSubjectToUpdate.Add(s);
-                await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
+                //await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
             }
 
 
 
             QuestionsCRUD.Subjects = selectedSubjectToUpdate;
 
-            //foreach (var s in selectedSubjectToUpdate)
-            //{
-                
-            //  await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID});
-            //}
+            foreach (var s in selectedSubjectToUpdate)
+            {
+
+                await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
+            }
 
             //foreach (var sub in selectedSubjectToUpdate)
             //{
@@ -171,7 +174,7 @@ namespace ProjectSolarEdge.Client.Pages
             //            s.SubjectID = sub.ID;
             //            s.QuestionID = QuestionsCRUD.ID;
             //            await QuestionDataService.AddSubjectConnection(s);
-                    
+
             //        }
             //    }
 
@@ -401,7 +404,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+       
         }
     }
 }
