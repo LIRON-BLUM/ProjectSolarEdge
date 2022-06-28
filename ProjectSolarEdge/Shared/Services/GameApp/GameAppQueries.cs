@@ -38,5 +38,8 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 													IsAnswered = @IsAnswered,
 											    	WHERE  ID = @ID";
 
+
+		public static string GetAllUsers => @"SELECT ID, UserFirstName, UserLastName, UserName, UserPassword, UserType, GameStartDate, GameEndDate, isDeleted FROM UsersTable WHERE UserName = @UserName";
+
 	}
 }
