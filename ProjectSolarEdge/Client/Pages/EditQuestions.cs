@@ -146,19 +146,20 @@ namespace ProjectSolarEdge.Client.Pages
 
             foreach (var item in SelectedSubjects)
             {
-                selectedSubjectToUpdate.Add(SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault());
-                
+                 Subject s = SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault();
+                selectedSubjectToUpdate.Add(s);
+                await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
             }
+
 
 
             QuestionsCRUD.Subjects = selectedSubjectToUpdate;
 
-            foreach (var s in selectedSubjectToUpdate)
-            {
-                SubjectConnection.SubjectID = s.ID;
-                SubjectConnection.QuestionID = QuestionsCRUD.ID;
-              await QuestionDataService.AddSubjectConnection(SubjectConnection);
-            }
+            //foreach (var s in selectedSubjectToUpdate)
+            //{
+                
+            //  await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID});
+            //}
 
             //foreach (var sub in selectedSubjectToUpdate)
             //{
