@@ -158,6 +158,14 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return results;
         }
 
+        public bool DeleteSubjectConnction(int ID)
+        {
+            bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, new { ID = ID });
+
+
+            return results;
+        }
+
         //public bool DeleteSubjectConnctionn(SubjectsQuestionsConnection SubjectsQuestionsConnection)
         //{
 
@@ -167,16 +175,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         //    return results;
         //}
 
-        public bool DeleteSubjectConnction(int ID)
-        {
-
-            bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, new { ID = ID });
 
 
-            return results;
-        }
-
-      
 
     }
 }
