@@ -15,7 +15,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         Question GetQuestionById(int ID, bool IncludeOptions = true);
 
         int AddQuestionToDB(Question question);
-
+        int AddSubjectToDB(Subject subject);
 
         bool UpdateQuestion(Question question);
         bool DeleteQuestion(Question question);

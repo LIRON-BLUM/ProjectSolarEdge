@@ -70,9 +70,9 @@ namespace ProjectSolarEdge.Client.Pages
             SubjectsData = await QuestionDataService.GetSubjectsAsync();
 
 
-            int.TryParse(Id, out var QId);
+            int.TryParse(Id, out var GId);
             
-            if (QId == 0) //new Question is being created
+            if (GId == 0) //new Game is being created
             {
                 //add some defaults
                 QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1 };
@@ -140,6 +140,11 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
+        protected async Task AddSubject()
+        {
+            await QuestionDataService.AddSubjectToDB(OneSubject);
+        }
+
         protected async Task AddAndUpdate()
         {
             List<Subject> selectedSubjectToUpdate = new List<Subject>();
@@ -159,7 +164,9 @@ namespace ProjectSolarEdge.Client.Pages
               
                 await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = newS.ID });
 
-              }  
+              }
+
+         
 
             //foreach (var s in SubjectConnectionData)
             //{
@@ -170,7 +177,7 @@ namespace ProjectSolarEdge.Client.Pages
             //    }
             //}
 
-            
+
 
 
             QuestionsCRUD.Subjects = selectedSubjectToUpdate;

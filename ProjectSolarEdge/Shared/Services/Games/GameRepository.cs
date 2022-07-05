@@ -47,15 +47,19 @@ namespace ProjectSolarEdge.Shared.Services.Games
             return _game;
         }
 
-        public Game GetQuestionById(int ID)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool UpdateGame(Game game)
         {
 
             bool results = ExecuteAll(GamesQueries.UpdateGame, game);
+
+
+            return results;
+        }
+
+        public int AddGameToDB(Game game)
+        {
+            int results = InsertAndreturnInt(GamesQueries.AddGame, game);
 
 
             return results;

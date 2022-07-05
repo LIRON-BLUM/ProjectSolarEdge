@@ -11,5 +11,7 @@ namespace ProjectSolarEdge.Client.Services.Games
         Task<Game> GetGameByIdAsync(int Id);
 
         Task<bool> UpdateGame(Game game);
+
+        Task<int> AddGameToDB(Game game);
     }
 }

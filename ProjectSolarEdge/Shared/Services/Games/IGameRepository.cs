@@ -18,6 +18,8 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         IEnumerable<GamesQuestions> GetGameQuestions();
 
+        int AddGameToDB(Game game);
+
 
     }
 }

@@ -260,6 +260,28 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_subConnection);//success
         }
 
+
+
+
+        [HttpPost]
+        [Route("InsertSubject")]
+        public async Task<IActionResult> AddSubjectToDB(Subject subject)
+        {
+
+            int _subject = _questionRepository.AddSubjectToDB(subject);
+
+
+            if (_subject == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_subject);
+
+        }
     }
 }
 

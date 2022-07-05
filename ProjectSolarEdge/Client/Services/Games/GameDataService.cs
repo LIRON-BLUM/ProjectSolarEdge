@@ -64,8 +64,19 @@ namespace ProjectSolarEdge.Client.Services.Games
             
         }
 
-      
+        public async Task<int> AddGameToDB(Game game)
+        {
+            var GameJson =
+                           new StringContent(JsonSerializer.Serialize(game), Encoding.UTF8, "application/json");
 
+            var response = await _httpClient.PostAsync("api/Questions/InsertSubject", GameJson);
 
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<int>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return 0;
+        }
     }
 }

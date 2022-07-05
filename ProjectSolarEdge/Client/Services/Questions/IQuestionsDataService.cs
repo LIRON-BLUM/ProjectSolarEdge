@@ -36,5 +36,7 @@ namespace ProjectSolarEdge.Client.Services.Questions
 
         Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection);
 
+        Task<int> AddSubjectToDB(Subject subject);
+
     }
 }

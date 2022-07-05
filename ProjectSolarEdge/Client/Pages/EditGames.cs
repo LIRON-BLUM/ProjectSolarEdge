@@ -33,13 +33,20 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-          
+
             GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
-           
+
+            int.TryParse(Id, out var QId);
+
+            //if (QId == 0) //new Question is being created
+            //{
+            //    //add some defaults
+            //    GameCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now };
+            //    GameCRUD.Questions = new List<Question>();
 
 
-            //selectedQuestions = new HashSet<Question>((IEnumerable<Question>)GameCRUD.Questions.Select(q => q.ID));
+            //}
         }
 
         bool fixed_header = true;
@@ -81,9 +88,20 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task AddAndUpdate()
         {
+            if (GameCRUD.ID == 0) // Create new question
+            {
+                // 2) Save the question itself into the database and get the question ID back from the database
+              await GameDataService.AddGameToDB(GameCRUD);
 
-            await GameDataService.UpdateGame(GameCRUD);
-            NavigationManager.NavigateTo("/Games");
+              
+
+                }
+            else
+            {
+              await GameDataService.UpdateGame(GameCRUD);
+             
+            }
+               NavigationManager.NavigateTo("/Games");
         }
 
         public void Dispose()

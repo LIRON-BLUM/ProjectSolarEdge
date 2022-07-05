@@ -61,6 +61,27 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_game); //success
         }
 
+
+        [HttpPost]
+        [Route("InsertGame")]
+        public async Task<IActionResult> AddGameToDB(Game game)
+        {
+
+            int _game = _GameRepository.AddGameToDB(game);
+
+
+            if (_game == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_game);
+
+        }
+
     }
 
 
