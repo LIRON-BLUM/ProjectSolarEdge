@@ -59,38 +59,38 @@ questions = [
         choiceImg3: "",
         choice4: "New York",
         choiceImg4: "",
-        answer: 2,
+        answer: 4,
         feedback: "I live now in Petah Tikva",
         tyep: "multiple",
         difficulty: 2
     },
-    {
-        question: "What is your favorite food?",
-        QuestionPic: "/Imeg/food.jpg",
-        choice1: "",
-        choiceImg1: "/Imeg/sushi.jpg",
-        choice2: "",
-        choiceImg2: "/Imeg/pizza.jpg",
-        choice3: "Hamburger",
-        choiceImg3: "",
-        choice4: "Noodles",
-        choiceImg4: "",
-        answer: 1,
-        feedback: "I can eat sushi all day every day",
-        tyep: "multiple",
-        difficulty: 3
-     }
     //{
-    //    question: "What is your favorite color?",
-    //    choice1: "Red",
-    //    choice2: "Blue",
-    //    choice3: "Purple",
-    //    choice4: "Pink",
-    //    answer: 3,
-    //    feedback: "my favorite color is purple",
+    //    question: "What is your favorite food?",
+    //    QuestionPic: "/Imeg/food.jpg",
+    //    choice1: "",
+    //    choiceImg1: "/Imeg/sushi.jpg",
+    //    choice2: "",
+    //    choiceImg2: "/Imeg/pizza.jpg",
+    //    choice3: "Hamburger",
+    //    choiceImg3: "",
+    //    choice4: "Noodles",
+    //    choiceImg4: "",
+    //    answer: 1,
+    //    feedback: "I can eat sushi all day every day",
     //    tyep: "multiple",
     //    difficulty: 3
-    //},
+    // }
+    {
+        question: "What is your favorite color?",
+        choice1: "Red",
+        choice2: "Blue",
+        choice3: "Purple",
+        choice4: "Pink",
+        answer: 3,
+        feedback: "my favorite color is purple",
+        tyep: "multiple",
+        difficulty: 3
+    }
     //{
     //    question: "How old are you?",
     //    choice1: "100",
@@ -179,42 +179,39 @@ getNewQuestion = () => {
     }
     acceptingAnswers = true;
 
-    //creat answers
-    for (let i = 1; i < 5; i++) {
-        choiceContainer = document.createElement(`div`);
-        choiceContainer.className = 'choiceContainer';
-        choiceContainer.id = 'choiceContainer'+i;
-        const myChoice = choiceContainer.appendChild(document.createElement(`p`));
-        myChoice.className = `choice-text`;
-        myChoice.dataset = i;
-        if (currentQuestion['choice' + i] == "") {
-
+    choices.forEach(choice => {
+        const number = choice.dataset['number'];
+        
+        if (currentQuestion['choice' + number] == "") {
+            
             const choiceImg = document.createElement("img");
             choiceImg.src = currentQuestion['choiceImg' + i];
             choiceImg.setAttribute("style", "width:150px");
-            myChoice.appendChild(choiceImg);
+            choice.appendChild(choiceImg);
         }
         else {
-            myChoice.appendChild(document.createTextNode(currentQuestion['choice' + i]));
-        }
-        myDiv.appendChild(choiceContainer);
+            choice.innerText = currentQuestion['choice' + number];
+            }   
+    });
 
-        myChoice.addEventListener('click', (e) => {
+    choices.forEach(choice => {
+        choice.addEventListener("click", e => {
             if (!acceptingAnswers) {
                 selectedChoice.parentElement.classList.remove("chosenAnswer");
             }
 
             acceptingAnswers = false;
             selectedChoice = e.target;
-            selectedAnswer = i;
+            selectedAnswer = choice.dataset['number'];
 
             selectedChoice.parentElement.classList.add("chosenAnswer");
-            submitAnswer.disabled = !selectedChoice;
+            submitAnswer.disabled = false;
         });
-    }
+    });
+  
     availableQuesions.splice(questionIndex, 1);
     localStorage.setItem("availableQuesions", JSON.stringify(availableQuesions));
-  };
+ };
 
 saveAnawer = (e) => {
     newTime = time;
@@ -239,7 +236,6 @@ saveAnawer = (e) => {
  
     setTimeout(() => {
         selectedChoice.parentElement.classList.remove(classToApply);
-        removeAns();
 
         if (questionCounter == MAX_QUESTIONS) {
             localStorage.setItem("mostRecentScore", score);
@@ -257,12 +253,6 @@ saveAnawer = (e) => {
         
 }
 
-removeAns = () => {
-    for (let i = 1; i < 5; i++) {
-        const answersToRemove = document.getElementById('choiceContainer' + i);
-        myDiv.removeChild(answersToRemove);
-    }
-}
 
 checkSkip = () => {
     if (availableQuesions.length == 0) {
@@ -277,7 +267,6 @@ SkipAnawer = () => {
     localStorage.setItem("skippedAnswers", JSON.stringify(skippedAnswers));
     skippedCount++;
     localStorage.setItem("skippedCount", skippedCount);
-    removeAns();
     window.location.assign('/WheelOfFortune');
 
 }

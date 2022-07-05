@@ -1,16 +1,16 @@
-﻿@page "/Gambeling"
+﻿@layout SeconderyLayout
+@page "/Gambeling"
 
 @inject IJSRuntime JSRuntime;
 
-<link href="styles/Gambeling.css" rel="stylesheet" />
+<link href="/css/styles/Gambeling.css" rel="stylesheet" />
 
 
-<h3>Gambeling</h3>
-
- <div class="container">
-        <div class="flex-center flex-column">
-
-            <h1> How Much Would You Like To Bet On Your Success </h1>
+ <div id="gambelBack"> 
+    <div class="container">
+        <div class="flex-center flex-column ">
+           
+             <h1> How Much Would You Like To Bet On Your Success </h1>
     
             <p id="colectedScore"></p>
             <form>
@@ -29,6 +29,7 @@
             <button type="button" id="gambelContinue" class="btnGreen" onclick="gambelToContinue()"> Continue</button>
             <a id="GoToGame" href="/GamePage"> </a>
 
+            </div>
 
         </div>
     </div>

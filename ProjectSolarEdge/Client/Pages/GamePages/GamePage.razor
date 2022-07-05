@@ -1,10 +1,9 @@
-﻿@page "/GamePage"
+﻿@layout SeconderyLayout
+@page "/GamePage"
 
 @inject IJSRuntime JSRuntime;
 
 <link href="/css/styles/Game.css" rel="stylesheet" />
-
-<h3>GamePage</h3>
 
 <div class="container">
         <div id="game" class="flex-center flex-column">
@@ -24,7 +23,20 @@
 
             <div id="QuestionPic"></div>
             <h2 id="question"> What is the answer to this question? </h2>
-            <div id="answersContainer"> </div>
+            <div id="answersContainer">
+                <div class="choiceContainer"> 
+                    <p class="choice-text" data-number="1"> Choice 1</p>
+                </div>
+                  <div class="choiceContainer"> 
+                    <p class="choice-text" data-number="2"> Choice 2</p>
+                </div>
+                  <div class="choiceContainer"> 
+                    <p class="choice-text" data-number="3"> Choice 3</p>
+                </div>
+                  <div class="choiceContainer"> 
+                    <p class="choice-text" data-number="4"> Choice 4</p>
+                </div>
+            </div>
 
             <button type="button" id="submitAnswer" class="btn" onclick="saveAnawer(event)" disabled>submit</button>
             <button type="button" id="SkipAnswer" onclick="SkipAnawer()">Skip</button>
