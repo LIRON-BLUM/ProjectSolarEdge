@@ -148,21 +148,18 @@ namespace ProjectSolarEdge.Client.Pages
 
             foreach (var item in SelectedSubjects)
             {
-<<<<<<< Updated upstream
+
 
                 Subject s = SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault();
                 selectedSubjectToUpdate.Add(s);
                 //await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
-            }
-=======
                 Subject newS = SubjectsData.Where(newS => newS.SubjectName == item).SingleOrDefault();
                 selectedSubjectToUpdate.Add(newS);
               
               
                 await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = newS.ID });
->>>>>>> Stashed changes
 
-                
+              }  
 
             //foreach (var s in SubjectConnectionData)
             //{
@@ -173,18 +170,17 @@ namespace ProjectSolarEdge.Client.Pages
             //    }
             //}
 
-            }
+            
 
 
             QuestionsCRUD.Subjects = selectedSubjectToUpdate;
 
-<<<<<<< Updated upstream
             foreach (var s in selectedSubjectToUpdate)
             {
 
                 await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
             }
-=======
+
 
        
 
@@ -193,7 +189,7 @@ namespace ProjectSolarEdge.Client.Pages
                 
             //  await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID});
             //}
->>>>>>> Stashed changes
+
 
             //foreach (var sub in selectedSubjectToUpdate)
             //{
