@@ -106,9 +106,7 @@ namespace ProjectSolarEdge.Client.Services.Questions
         }
 
 
-<<<<<<< Updated upstream
-        
-=======
+
 
         public async Task<bool> DeleteSubjectConnection(int Id)
         {
@@ -121,7 +119,6 @@ namespace ProjectSolarEdge.Client.Services.Questions
 
             return false;
         }
->>>>>>> Stashed changes
 
         //public async Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         //{
@@ -209,11 +206,10 @@ namespace ProjectSolarEdge.Client.Services.Questions
         public async Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         {
             var AnswerJson =
-<<<<<<< Updated upstream
                 new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
-=======
+
             new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
->>>>>>> Stashed changes
+
 
             var response = await _httpClient.PostAsync($"api/Questions/InsertSubConnection", AnswerJson);
 
