@@ -21,8 +21,10 @@ namespace ProjectSolarEdge.Client.Services.Questions
         Task<bool> UpdateQuestion(Question question);
         Task<bool> DeleteQuestion(Question question);
 
+        Task<bool> DeleteSubjectConnection(int Id);
+
         //Task<bool> DeleteQuestion(int questionId);
- 
+
 
         Task<bool> AddAnswerToDB(QuestionAnswer answer);
 

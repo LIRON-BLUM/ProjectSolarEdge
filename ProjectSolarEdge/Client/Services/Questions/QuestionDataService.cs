@@ -106,10 +106,24 @@ namespace ProjectSolarEdge.Client.Services.Questions
         }
 
 
+<<<<<<< Updated upstream
         
+=======
 
+        public async Task<bool> DeleteSubjectConnection(int Id)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Questions/SubjectConnection/{Id}");
 
-        //public async Task<bool> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+>>>>>>> Stashed changes
+
+        //public async Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         //{
         //    var AnswerJson =
         //        new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
@@ -118,11 +132,14 @@ namespace ProjectSolarEdge.Client.Services.Questions
 
         //    if (response.IsSuccessStatusCode)
         //    {
-        //        return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+        //        return await JsonSerializer.DeserializeAsync<int>(await response.Content.ReadAsStreamAsync());
         //    }
 
-        //    return false;
+        //    return 0;
         //}
+
+
+
 
         ////////----------Aswers----------//////////
 
@@ -192,7 +209,11 @@ namespace ProjectSolarEdge.Client.Services.Questions
         public async Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         {
             var AnswerJson =
+<<<<<<< Updated upstream
                 new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
+=======
+            new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
+>>>>>>> Stashed changes
 
             var response = await _httpClient.PostAsync($"api/Questions/InsertSubConnection", AnswerJson);
 
@@ -203,6 +224,8 @@ namespace ProjectSolarEdge.Client.Services.Questions
 
             return 0;
         }
+
+
 
         //public Task InsertSubjectConnction(List<Subject> selectedSubjectToUpdate)
         //{
