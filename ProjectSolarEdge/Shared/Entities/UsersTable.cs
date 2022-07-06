@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSolarEdge.Shared.Entities
 {
-    internal class UsersTable
+    public class UsersTable
     {
         public int ID { get; set; }
         

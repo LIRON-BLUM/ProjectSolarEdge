@@ -1,20 +1,27 @@
 ﻿@layout SeconderyLayout
 @page "/OpeningPage/{Id}"
-@inject IJSRuntime JSRuntime;
-
+@using ProjectSolarEdge.Shared.Entities
+@*@inject IJSRuntime JSRuntime;
+*@
   <link href="/css/styles/OpeningPage.css" rel="stylesheet" />
 
     <div class="container">
         <div class="flex-center flex-column">
             <h1> @GamePlaying.GameName</h1>
-            <h2 id="playerName"> Hi </h2>
+            <h2> Hi @player.UserFirstName @player.UserLastName</h2>
             <p>@GamePlaying.GameDescription </p>
 
             <div id="highScores" class="flex-center flex-column">
                 <p class="bestSoFare">The best Players So Far</p>
                 <ul id="highScoreList"> </ul>
-
-                <div class="podium">
+        
+            @foreach (var user in TopPlayers)
+            {
+                <li class="high-score">
+                    @user.UserFirstName @user.UserLastName @user.TotalScore
+                </li>
+            }
+            <div class="podium">
                     <div class="podium__item">
                         <div id="secondPlace"></div>
 
@@ -44,16 +51,16 @@
   
 @code {
     
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if(firstRender)
-        {
-            CallJSMethod();
-        }
-     }
+    //protected override void OnAfterRender(bool firstRender)
+    //{
+    //    if(firstRender)
+    //    {
+    //        CallJSMethod();
+    //    }
+    // }
 
-    private async Task CallJSMethod()
-    {
-        await JSRuntime.InvokeVoidAsync("highScorePage");
-    }
+    //private async Task CallJSMethod()
+    //{
+    //    await JSRuntime.InvokeVoidAsync("highScorePage");
+    //}
 }

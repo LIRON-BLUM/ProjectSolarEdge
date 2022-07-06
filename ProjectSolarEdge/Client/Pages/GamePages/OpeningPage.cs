@@ -9,16 +9,57 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Parameter]
         public string Id { get; set; }
 
-        public Game GamePlaying { get; set; } = new Game();
+        public Game GamePlaying { get; set; }
 
-        public IEnumerable<Game> GameData { get; set; }
+        public UsersTable player { get; set; }
+        public IEnumerable<UsersGameRecord>  TopPlayers { get; set; }
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
 
+        // for Liron - delete this after querise
         protected override async Task OnInitializedAsync()
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(Id));
+
+            player = new UsersTable()
+            {
+                ID = 8,
+                UserFirstName = "Limor",
+                UserLastName = "Avrahami",
+                UserName = "LimorAvrahami",
+            };
+
+            TopPlayers = new List<UsersGameRecord>()
+            {
+                new UsersGameRecord()
+                {
+                    UserFirstName = "Adi",
+                    UserId =1,
+                    UserLastName ="Silagy",
+                    UserName ="AdiSilagi",
+                    TotalScore=3000
+                },
+
+                new UsersGameRecord()
+                {
+                    UserFirstName = "Moti",
+                    UserId =2,
+                    UserLastName ="Elnekave",
+                    UserName ="MotiElnekave",
+                    TotalScore=2000
+                },
+                  new UsersGameRecord()
+                {
+                    UserFirstName = "Liron",
+                    UserId =3,
+                    UserLastName ="Blum",
+                    UserName ="LironBlum",
+                    TotalScore=2500
+                }
+            };
+
+            TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
         }
 
     }

@@ -14,6 +14,7 @@ const sectors = [
 const rand = (m, M) => Math.random() * (M - m) + m;
 const tot = sectors.length;
 const wheelScore = document.getElementById("wheelScore");
+const wheelScoreHidden = document.getElementById("wheelScoreHidden");
 const wheel = document.getElementById("wheel").getContext('2d');
 const dia = wheel.canvas.width;
 const rad = dia / 2;
@@ -65,6 +66,9 @@ function frame() {
         const sector = sectors[getIndex()];
         //score += sector.label;
         wheelScore.innerText += "Score: " + sector.label;
+        wheelScoreHidden.value = sector.label;
+        var event = new Event('change');
+        wheelScoreHidden.dispatchEvent(event);
         score += sector.label;
         Continue.disabled = false;
         spinBTN.disabled = true;
