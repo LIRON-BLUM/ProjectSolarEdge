@@ -92,7 +92,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 		public static string InsertSubjectToConnectionTable => @"INSERT INTO SubjectsQuestionsConnection (QuestionID, SubjectID) VALUES (@QuestionID, @SubjectID)  SELECT CAST(SCOPE_IDENTITY() as int)";
 
-		public static string DeleteSubjectFromConnectionTable => @"DELETE FROM SubjectsQuestionsConnection WHERE QuestionID = @QuestionID AND SubjectID = @SubjectID";
+		public static string DeleteSubjectFromConnectionTable => @"DELETE FROM SubjectsQuestionsConnection WHERE QuestionID = @QuestionID";
 
 
 

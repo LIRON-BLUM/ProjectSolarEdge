@@ -170,7 +170,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
         public bool DeleteSubjectConnction(int ID)
         {
-            bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, new { ID = ID });
+            bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, new { QuestionID = ID });
 
 
             return results;

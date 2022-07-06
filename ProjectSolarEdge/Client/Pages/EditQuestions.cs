@@ -31,6 +31,7 @@ namespace ProjectSolarEdge.Client.Pages
       
         public SubjectsQuestions QuestionSubject { get; set; } = new SubjectsQuestions();
 
+
         public IEnumerable<Subject> SubjectsData { get; set; }
 
         public IEnumerable<SubjectsQuestions> SubjectsQuestionData { get; set; }
@@ -70,9 +71,9 @@ namespace ProjectSolarEdge.Client.Pages
             SubjectsData = await QuestionDataService.GetSubjectsAsync();
 
 
-            int.TryParse(Id, out var GId);
+            int.TryParse(Id, out var QId);
             
-            if (GId == 0) //new Game is being created
+            if (QId == 0) //new Game is being created
             {
                 //add some defaults
                 QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1 };
@@ -148,8 +149,10 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task AddAndUpdate()
         {
             List<Subject> selectedSubjectToUpdate = new List<Subject>();
+            
 
             // Delete the existing subjects 
+            await QuestionDataService.DeleteSubjectConnection(QuestionsCRUD.ID);
 
             foreach (var item in SelectedSubjects)
             {
@@ -157,63 +160,19 @@ namespace ProjectSolarEdge.Client.Pages
 
                 Subject s = SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault();
                 selectedSubjectToUpdate.Add(s);
-                //await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
-                Subject newS = SubjectsData.Where(newS => newS.SubjectName == item).SingleOrDefault();
-                selectedSubjectToUpdate.Add(newS);
-              
-              
-                await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = newS.ID });
-
-              }
-
-         
-
-            //foreach (var s in SubjectConnectionData)
-            //{
-            //    Subject DeleteS = SubjectsData.Where(DeleteS => DeleteS.SubjectName == item).SingleOrDefault();
-            //    if (item != DeleteS.SubjectName)
-            //    {
-            //        await QuestionDataService.DeleteSubjectConnection(s.ID);
-            //    }
-            //}
 
 
+                await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
+
+            }
 
 
             QuestionsCRUD.Subjects = selectedSubjectToUpdate;
 
-            foreach (var s in selectedSubjectToUpdate)
-            {
-
-                await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
-            }
+          
 
 
-       
-
-            //foreach (var s in selectedSubjectToUpdate)
-            //{
-                
-            //  await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID});
-            //}
-
-
-            //foreach (var sub in selectedSubjectToUpdate)
-            //{
-            //    foreach (var s in SubjectConnectionData)
-            //    {
-            //        if (sub.ID != s.SubjectID)
-            //        {
-
-            //            s.SubjectID = sub.ID;
-            //            s.QuestionID = QuestionsCRUD.ID;
-            //            await QuestionDataService.AddSubjectConnection(s);
-
-            //        }
-            //    }
-
-            //}
-
+          
 
             // 1) Check which answer is the correct one and set it up
             foreach (var ans in QuestionsCRUD.Answers)

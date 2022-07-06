@@ -18,12 +18,12 @@ namespace ProjectSolarEdge.Shared.Services.Games
         public static string GetAllGames => @"SELECT ID,  GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration FROM Games WHERE isDeleted = 0";
 
 
-        //public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted)
-        //                                VALUES (@GameName,@GameDescription, GETDATE(), GETDATE(), 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0)"
-
-
         public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted)
-                                            VALUES ('Game Name','This is the game Description',GETDATE(), GETDATE(), 0, 1, GETDATE(),GETDATE(),1,10,1,200, 300, 400, 1, 2, 3, 0)";
+                                        VALUES (@GameName,@GameDescription, @CreationDate, @UpdateDate, 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0)";
+
+
+        //public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted)
+        //                                    VALUES ('Game Name','This is the game Description',GETDATE(), GETDATE(), 0, 1, GETDATE(),GETDATE(),1,10,1,200, 300, 400, 1, 2, 3, 0)";
 
         public static string UpdateGame => @"UPDATE Games 
         SET
@@ -50,6 +50,7 @@ namespace ProjectSolarEdge.Shared.Services.Games
                                                     Q.ID,
                                                     Q.QuestionBody,
                                                     Q.Type,
+                                                    Q.UpdateDate,
                                                     Q.Difficulty
                                                     FROM GameQuestionsConnections as GQC
                                                     INNER JOIN Questions as Q ON GQC.QuestionID = Q.ID

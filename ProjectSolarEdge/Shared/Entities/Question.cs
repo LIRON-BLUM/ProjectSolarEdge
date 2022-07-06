@@ -52,6 +52,12 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public string QuestionBody { get; set; }
 
+        public QuestionType Type { get; set; }
+
+        public QuestionDifficulty Difficulty { get; set; }
+
+        public DateTime UpdateDate { get; set; }
+
         public int GameID { get; set; }
     }
 }

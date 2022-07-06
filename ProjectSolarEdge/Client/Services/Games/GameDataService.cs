@@ -69,7 +69,7 @@ namespace ProjectSolarEdge.Client.Services.Games
             var GameJson =
                            new StringContent(JsonSerializer.Serialize(game), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("api/Questions/InsertSubject", GameJson);
+            var response = await _httpClient.PostAsync("api/Games/InsertGame", GameJson);
 
             if (response.IsSuccessStatusCode)
             {
