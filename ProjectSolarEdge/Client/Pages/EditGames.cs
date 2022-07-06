@@ -20,6 +20,10 @@ namespace ProjectSolarEdge.Client.Pages
 
         public HashSet<Question> selectedQuestions = new HashSet<Question>();
 
+        public GamesQuestions GameQuestion { get; set; } = new GamesQuestions();
+
+        public IEnumerable<GamesQuestions> GameQuestionData { get; set; }
+
         public IEnumerable<Question> Elements = new List<Question>();
 
         [Inject]
@@ -33,13 +37,30 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            int.TryParse(Id, out var GId);
+
+            if (GId == 0)
+            {
+              GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1,GameTimeLimit=10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
+              GameCRUD.Questions = new List<Question>();
+            } else
+            {
+                GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
+
+            }
+
+
+
+            //public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted)
+            //                   VALUES (@GameName,@GameDescription, GETDATE(), GETDATE(), 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0)";
+
+
+
           
-            GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
-           
 
 
-            //selectedQuestions = new HashSet<Question>((IEnumerable<Question>)GameCRUD.Questions.Select(q => q.ID));
+
         }
 
         bool fixed_header = true;
@@ -81,9 +102,23 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task AddAndUpdate()
         {
+            if (GameCRUD.ID == 0) // Create new question
+            {
 
-            await GameDataService.UpdateGame(GameCRUD);
-            NavigationManager.NavigateTo("/Games");
+
+
+                 // 2) Save the question itself into the database and get the question ID back from the database
+                 await GameDataService.AddGameToDB(GameCRUD);
+
+              
+
+                }
+            else
+            {
+              await GameDataService.UpdateGame(GameCRUD);
+             
+            }
+               NavigationManager.NavigateTo("/Games");
         }
 
         public void Dispose()

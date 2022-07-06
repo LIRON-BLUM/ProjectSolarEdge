@@ -106,8 +106,6 @@ namespace ProjectSolarEdge.Client.Services.Questions
         }
 
 
-
-
         public async Task<bool> DeleteSubjectConnection(int Id)
         {
             var response = await _httpClient.DeleteAsync($"api/Questions/SubjectConnection/{Id}");
@@ -211,7 +209,24 @@ namespace ProjectSolarEdge.Client.Services.Questions
             new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
 
 
+            new StringContent(JsonSerializer.Serialize(subjectsQuestionsConnection), Encoding.UTF8, "application/json");
+
             var response = await _httpClient.PostAsync($"api/Questions/InsertSubConnection", AnswerJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<int>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return 0;
+        }
+
+        public async Task<int> AddSubjectToDB(Subject subject)
+        {
+            var SubjectJson =
+                new StringContent(JsonSerializer.Serialize(subject), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/Questions/InsertSubject", SubjectJson);
 
             if (response.IsSuccessStatusCode)
             {

@@ -55,7 +55,7 @@
                 </MudItem>
 
 
-                <div>                 
+                <div>
                     <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
                         @foreach (var myanswer in QuestionsCRUD.Answers)
                         {
@@ -89,15 +89,25 @@
                         }
                     </MudSelect>
                 </div>
+                <br />
+                <div>
 
+                    <MudTextField @bind-Value="@OneSubject.SubjectName" Label="Subject Name" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" @onclick="AddSubject" Class="justify-content-end">Add Subject</MudButton>
+
+                </div>
+                <br />
+                <br />
+                <br />
                 @*<div>
-                   
-                        @foreach (var QuestionSub in QuestionsCRUD.Subjects)
-                        {
-                            <p>@QuestionSub.SubjectName</p><br/>
-                        }
-                  
-                </div>*@
+
+                @foreach (var QuestionSub in QuestionsCRUD.Subjects)
+                {
+                    <p>@QuestionSub.SubjectName</p><br/>
+                }
+
+        </div>*@
 
                 @* When I try this one it doesnt work (the bind-value was changed to QuestionSubject.SubjectName) *@
                 @*<div>

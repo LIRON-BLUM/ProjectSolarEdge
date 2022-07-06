@@ -149,6 +149,16 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         //}
 
 
+
+        public int AddSubjectToDB(Subject subject)
+        {
+
+            int results = InsertAndreturnInt(QuestionsQueries.AddSubject, subject);
+
+
+            return results;
+        }
+
         public int AddSubjectToConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         {
 
@@ -160,11 +170,13 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
         public bool DeleteSubjectConnction(int ID)
         {
-            bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, new { ID = ID });
+            bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, new { QuestionID = ID });
 
 
             return results;
         }
+
+    
 
         //public bool DeleteSubjectConnctionn(SubjectsQuestionsConnection SubjectsQuestionsConnection)
         //{

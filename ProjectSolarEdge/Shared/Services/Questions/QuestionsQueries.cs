@@ -31,6 +31,9 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 											  SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
+
+
+
 		public static string UpdateQuestion => @"UPDATE Questions 
 												   SET
 													QuestionBody = @QuestionBody,
@@ -83,9 +86,13 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 		public static string GetAllSubjectsName => @"SELECT SubjectName FROM Subjects WHERE isDeleted = 0";
 
+
+		public static string AddSubject => @"INSERT INTO Subjects (SubjectName, CreationDate, UpdateDate, isDeleted)
+											VALUES (@SubjectName, GETDATE(), GETDATE(), 0)";
+
 		public static string InsertSubjectToConnectionTable => @"INSERT INTO SubjectsQuestionsConnection (QuestionID, SubjectID) VALUES (@QuestionID, @SubjectID)  SELECT CAST(SCOPE_IDENTITY() as int)";
 
-		public static string DeleteSubjectFromConnectionTable => @"DELETE FROM SubjectsQuestionsConnection WHERE QuestionID = @QuestionID AND SubjectID = @SubjectID";
+		public static string DeleteSubjectFromConnectionTable => @"DELETE FROM SubjectsQuestionsConnection WHERE QuestionID = @QuestionID";
 
 
 
