@@ -23,6 +23,8 @@ namespace ProjectSolarEdge.Client.Services.Questions
 
         Task<bool> DeleteSubjectConnection(int Id);
 
+        Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection);
+
         //Task<bool> DeleteQuestion(int questionId);
 
 
@@ -34,7 +36,7 @@ namespace ProjectSolarEdge.Client.Services.Questions
 
         Task<bool> DeleteQuestionAnswers(int questionId);
 
-        Task<int> AddSubjectConnection(SubjectsQuestionsConnection subjectsQuestionsConnection);
+      
 
         Task<int> AddSubjectToDB(Subject subject);
 

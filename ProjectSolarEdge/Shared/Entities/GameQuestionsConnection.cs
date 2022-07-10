@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSolarEdge.Shared.Entities
 {
-    internal class GameQuestionsConnection
+    public class GameQuestionsConnection
     {
         public int ID { get; set; }
 

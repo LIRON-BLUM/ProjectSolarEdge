@@ -13,5 +13,10 @@ namespace ProjectSolarEdge.Client.Services.Games
         Task<bool> UpdateGame(Game game);
 
         Task<int> AddGameToDB(Game game);
+
+
+        Task<bool> DeleteQuestionConnection(int Id);
+
+        Task<int> AddQuestionConnection(GameQuestionsConnection gameQuestionsConnection);
     }
 }

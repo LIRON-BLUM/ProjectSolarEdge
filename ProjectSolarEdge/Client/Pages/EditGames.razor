@@ -40,6 +40,29 @@
 
 
             </EditForm>
+            <MudItem>
+                <MudTable Items="QuestionsData" MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+                    <HeaderContent>
+                        <MudTh>Type</MudTh>
+                        <MudTh>Question</MudTh>
+                        <MudTh>Delete</MudTh>
+
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Type">@context.Type</MudTd>
+                        <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
+                        <MudTd DataLabel="Delete">
+
+                            <MudTooltip Text="Delete Question">
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />
+                                @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
+
+                            </MudTooltip>
+                        </MudTd>
+
+                    </RowTemplate>
+                </MudTable>
+            </MudItem>
 
         </MudPaper>
     </MudItem>

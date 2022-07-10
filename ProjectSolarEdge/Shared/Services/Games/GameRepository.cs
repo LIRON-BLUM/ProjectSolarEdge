@@ -64,5 +64,22 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
             return results;
         }
+
+        public bool DeleteQuestionConnction(int ID)
+        {
+            bool results = ExecuteAll(GamesQueries.DeleteQuestionFromConnectionTable, new { QuestionID = ID });
+
+
+            return results;
+        }
+
+
+
+        int IGameRepository.AddQuestionToConnection(GameQuestionsConnection gameQuestionsConnection)
+        {
+            int results = InsertAndreturnInt(GamesQueries.InsertQuestionToConnectionTable, gameQuestionsConnection);
+
+            return results;
+        }
     }
 }

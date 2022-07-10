@@ -44,6 +44,12 @@ namespace ProjectSolarEdge.Shared.Services.Games
         GambleIteration=@GambleIteration
         WHERE ID=@ID";
 
+        public static string InsertQuestionToConnectionTable => @"INSERT INTO GameQuestionsConnections (QuestionID, GameID, Score) VALUES (@QuestionID, @GameID, 0)  SELECT CAST(SCOPE_IDENTITY() as int)";
+
+        public static string DeleteQuestionFromConnectionTable => @"DELETE FROM GameQuestionsConnections WHERE GameID = @GameID";
+
+
+
 
         //Returns Questions by QuestionID
         public static string GetQuestionByGameID => @"SELECT 
