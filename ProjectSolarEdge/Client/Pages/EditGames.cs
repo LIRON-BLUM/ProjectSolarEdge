@@ -18,7 +18,18 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<Question> QuestionsData { get; set; }
 
-        public HashSet<Question> selectedQuestions = new HashSet<Question>();
+        //public IEnumerable<Question> selectedQuestions { get; set; } = new HashSet<Question>();
+
+        public IEnumerable<string> selectedQuestions { get; set; } = new HashSet<string>();
+
+        public string DefaultValue { get; set; } = "Select Question";
+
+
+
+        //public IEnumerable<string> SelectedSubjects { get; set; } = new HashSet<string>();
+
+        public List<GameQuestionsConnection> GameQuestionsConnectionsData { get; set; }
+
 
         public GamesQuestions GameQuestion { get; set; } = new GamesQuestions();
 
@@ -46,6 +57,9 @@ namespace ProjectSolarEdge.Client.Pages
             } else
             {
                 GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
+                selectedQuestions = new HashSet<string>(GameCRUD.Questions.Select(q => q.QuestionBody));
+
+
 
             }
 
@@ -102,6 +116,32 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task AddAndUpdate()
         {
+
+            int.TryParse(Id, out var GId);
+
+            List<Question> selectedQuestionToUpdate = new List<Question>();
+
+
+            // Delete the existing subjects 
+            await GameDataService.DeleteQuestionConnection(GId);
+
+            foreach (var item in selectedQuestions)
+            {
+
+
+                Question q = QuestionsData.Where(q => q.QuestionBody == item).SingleOrDefault();
+                selectedQuestionToUpdate.Add(q);
+
+
+                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score=0 });
+
+            }
+            
+
+
+            GameCRUD.Questions = selectedQuestionToUpdate;
+
+
             if (GameCRUD.ID == 0) // Create new question
             {
 

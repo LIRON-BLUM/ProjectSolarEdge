@@ -67,7 +67,7 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         public bool DeleteQuestionConnction(int ID)
         {
-            bool results = ExecuteAll(GamesQueries.DeleteQuestionFromConnectionTable, new { QuestionID = ID });
+            bool results = ExecuteAll(GamesQueries.DeleteQuestionFromConnectionTable, new { GameID = ID });
 
 
             return results;
