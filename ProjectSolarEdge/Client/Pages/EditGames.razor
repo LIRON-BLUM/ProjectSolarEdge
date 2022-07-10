@@ -41,68 +41,87 @@
 
             </EditForm>
 
-            <div>
-                <MudSelect T="string" Label="Choose Questions" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="selectedQuestions">
-                    @foreach (var question in QuestionsData)
-                    {
-                        <MudSelectItem T="string" Value="@question.QuestionBody">@question.QuestionBody</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
-            <!--<MudItem>
-        <MudTable Items="QuestionsData"  MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
-            <HeaderContent>
-                <MudTh>Type</MudTh>
-                <MudTh>Question</MudTh>
-                <MudTh>Delete</MudTh>
 
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Type">@context.Type</MudTd>
-                <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
-                <MudTd DataLabel="Delete">
 
-                    <MudTooltip Text="Delete Question">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />-->
-            @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
 
-            <!--</MudTooltip>
+        </MudPaper>
+    </MudItem>
+
+
+    <!--<MudItem>
+         <MudTable Items="QuestionsData"  MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+             <HeaderContent>
+                 <MudTh>Type</MudTh>
+                 <MudTh>Question</MudTh>
+                 <MudTh>Delete</MudTh>
+
+             </HeaderContent>
+             <RowTemplate>
+                 <MudTd DataLabel="Type">@context.Type</MudTd>
+                 <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
+                 <MudTd DataLabel="Delete">
+
+                     <MudTooltip Text="Delete Question">
+                         <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />-->
+    @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
+
+    <!--</MudTooltip>
                 </MudTd>
 
             </RowTemplate>
         </MudTable>
     </MudItem>-->
 
-        </MudPaper>
-    </MudItem>
-
+    @*<div>
+        <MudSelect T="string" Label="Choose Questions" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="selectedQuestions">
+            @foreach (var question in QuestionsData)
+            {
+                <MudSelectItem T="string" Value="@question.QuestionBody">@question.QuestionBody</MudSelectItem>
+            }
+        </MudSelect>
+    </div>*@
 
 
     <MudItem xs="12" sm="5">
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
             @*<MudTable Items="QuestionsData" MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">*@
 
-                <MudTable Items="GameCRUD.Questions"  Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
-                    <HeaderContent>
-                        <MudTh>Type</MudTh>
-                        <MudTh>Question</MudTh>
-                        <MudTh>Delete</MudTh>
+            <MudTable Items="GameCRUD.Questions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+                <HeaderContent>
+                    <MudTh>Type</MudTh>
+                    <MudTh>Question</MudTh>
+                    <MudTh>Delete</MudTh>
 
-                    </HeaderContent>
-                    <RowTemplate>
-                        <MudTd DataLabel="Type">@context.Type</MudTd>
-                        <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
-                        <MudTd DataLabel="Delete">
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Type">@context.Type</MudTd>
+                    <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
+                    <MudTd DataLabel="Delete">
 
-                            <MudTooltip Text="Delete Question">
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />
-                                @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
+                        <MudTooltip Text="Delete Question">
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />
+                            @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
 
-                            </MudTooltip>
-                        </MudTd>
+                        </MudTooltip>
+                    </MudTd>
 
-                    </RowTemplate>
-                </MudTable>
+                </RowTemplate>
+            </MudTable>
+            <br/>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@ToggleOpen">@(_isOpen? "Close" : "Add Quesrion")</MudButton>
+                <MudPopover Open="_isOpen" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.CenterLeft" Paper="false">
+                    <MudPaper Outlined="true" Class="px-4 py-8">
+                        <MudSelect T="string" Label="Choose Questions" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="selectedQuestions">
+                            @foreach (var question in QuestionsData)
+                            {
+                                <MudSelectItem T="string" Value="@question.QuestionBody">@question.QuestionBody</MudSelectItem>
+                            }
+                        </MudSelect>
+
+
+                    </MudPaper>
+                </MudPopover>
+         
 
         </MudPaper>
     </MudItem>
@@ -110,7 +129,21 @@
 </MudGrid>
 
 
+
+
+
+
 @code {
+    public bool _isOpen = false;
+
+    public void ToggleOpen()
+    {
+        if (_isOpen)
+            _isOpen = false;
+        else
+            _isOpen = true;
+    }
+
 
 
 
