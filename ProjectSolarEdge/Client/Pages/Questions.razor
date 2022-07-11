@@ -13,7 +13,7 @@
 
 
     <MudItem xs="4">
-        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
     </MudItem>
     <MudItem xs="6" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
@@ -24,7 +24,7 @@
 
     <br />
     <MudItem xs="12">
-        <MudTable Items="QuestionsData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
+        <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
             <!--<ToolBarContent>-->
             @*<MudText Typo="Typo.h6">Questions</MudText>*@
 
@@ -76,7 +76,7 @@
                 <MudTh DataLabel="Delete">
 
                     <MudTooltip Text="Delete Question">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteQuestion(context.ID))" Color="Color.Primary" />
                     </MudTooltip>
 
                 </MudTh>

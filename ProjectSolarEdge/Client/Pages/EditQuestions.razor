@@ -80,7 +80,7 @@
                 </div>
                 <br />
 
-                @* The SubOption is IEnumerable<string> defined as new HashSet<string>() - line 43*@
+       
                 <div>
                     <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
                         @foreach (var subject in SubjectsData)
@@ -100,24 +100,7 @@
                 <br />
                 <br />
                 <br />
-                @*<div>
-
-                @foreach (var QuestionSub in QuestionsCRUD.Subjects)
-                {
-                    <p>@QuestionSub.SubjectName</p><br/>
-                }
-
-        </div>*@
-
-                @* When I try this one it doesnt work (the bind-value was changed to QuestionSubject.SubjectName) *@
-                @*<div>
-            <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="QuestionSubject.SubjectName" @bind-SelectedValues="SubOptions">
-                @foreach (var subject in SubjectsData)
-                {
-                    <MudSelectItem T="string" Value="@subject.SubjectName">@subject.SubjectName</MudSelectItem>
-                }
-            </MudSelect>
-        </div>*@
+         
 
 
 
@@ -131,15 +114,20 @@
 
             </EditForm>
 
-     
+
 
 
         </MudPaper>
     </MudItem>
+    
     <MudItem xs="12" sm="5">
+        <MudItem>
+            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
+        </MudItem>
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
 
-            <MudTable Items="QuestionsData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
+            <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
                 <HeaderContent>
                     <MudTh>Type</MudTh>
                     <MudTh>Question</MudTh>
