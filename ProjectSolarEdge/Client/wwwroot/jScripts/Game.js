@@ -11,7 +11,6 @@ const timerText = document.getElementById('timer');
 const mostRecentScore = +localStorage.getItem("mostRecentScore");
 let gambelAmount = +localStorage.getItem("gambelChoice");
 const SkipAnswer = document.getElementById('SkipAnswer');
-let myDiv = document.getElementById('answersContainer');
 const QuestionPicDiv = document.getElementById("QuestionPic");
 
 scoreText.innerText = mostRecentScore;
@@ -27,7 +26,6 @@ let selectedChoice;
 let selectedAnswer;
 let time;
 let newTime;
-let choiceContainer;
 let answerCheck = [];
 let QuestionPic;
 

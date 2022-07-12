@@ -207,7 +207,7 @@ namespace ProjectSolarEdge.Client.Pages
                 }
 
                 //4) If all successful then navigate the user to edit question or list of questions.
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/GetNextStep");
 
             }
             else
