@@ -1,5 +1,5 @@
 ﻿@layout SeconderyLayout
-@page "/Gambeling"
+@page "/Gambeling/{GameId}/{UserId}"
 
 @inject IJSRuntime JSRuntime;
 
@@ -24,9 +24,12 @@
                     <option>600</option>
                 </select>
                 <p> You've chosen to gamble on </p> <p id="choosenGambel"></p>
+                <input id="gambelScoreHidden" type="hidden" value="@GambelScore" @onchange="@(e=>{GambelScore=e.Value.ToString();})" />
+
             </form>
 
             <button type="button" id="gambelContinue" class="btnGreen" onclick="gambelToContinue()"> Continue</button>
+            <button type="button" id="gambelContinue" class="btnGreen" @onclick="goToNext"> Continue2</button>
             <a id="GoToGame" href="/GamePage"> </a>
 
             </div>

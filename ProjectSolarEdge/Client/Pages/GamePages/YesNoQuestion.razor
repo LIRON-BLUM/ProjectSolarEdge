@@ -1,0 +1,41 @@
+﻿@layout SeconderyLayout
+@page "/YesNoQuestion/{GameId}/{UserId}/{QuestionID}"
+
+@inject IJSRuntime JSRuntime;
+
+<link href="/css/styles/Game.css" rel="stylesheet" />
+
+<div class="container">
+        <div id="game" class="flex-center flex-column">
+
+            <div id="QuestionPic"></div>
+            <h2 id="question"> What is the answer to this question? </h2>
+            <div id="answersContainer">
+                <div class="choiceContainer"> 
+                    <p class="choice-text" data-number="1"> Choice 1</p>
+                </div>
+                  <div class="choiceContainer"> 
+                    <p class="choice-text" data-number="2"> Choice 2</p>
+                </div>
+            </div>
+            <button type="button" id="submitAnswer" class="btn" onclick="saveAnawer(event)" disabled>submit</button>
+            @*<button type="button" id="SkipAnswer" onclick="SkipAnawer()">Skip</button>*@
+
+        </div>
+    </div>
+
+@code {
+     protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CallJSMethod();
+        }
+     }
+
+    private async Task CallJSMethod()
+    {
+        await JSRuntime.InvokeVoidAsync("YesNoQuestion");
+    }
+}
+

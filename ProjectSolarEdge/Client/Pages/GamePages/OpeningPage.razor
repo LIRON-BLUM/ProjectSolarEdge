@@ -1,8 +1,7 @@
 ﻿@layout SeconderyLayout
-@page "/OpeningPage/{Id}"
+@page "/OpeningPage/{GameId}/{UserId}"
 @using ProjectSolarEdge.Shared.Entities
-@*@inject IJSRuntime JSRuntime;
-*@
+
   <link href="/css/styles/OpeningPage.css" rel="stylesheet" />
 
     <div class="container">
@@ -41,7 +40,9 @@
                 You have <span id="gameTime">@GamePlaying.GameTimeLimit </span> minutes to give it your best!
             </p>
             <h2> Think You Can Do Better?</h2>
-            <a class="btnGreen" href="/WheelOfFortune">START GAME</a>
+            <button type="button" id="Continue" class="btnGreen" @onclick="STARTGAME" > START GAME</button>
+
+            @*<a class="btnGreen" href="/WheelOfFortune">START GAME</a>*@
             <a class="btn" href="/OrderQuestion">Order question</a>
 
         </div>
@@ -50,17 +51,5 @@
 
   
 @code {
-    
-    //protected override void OnAfterRender(bool firstRender)
-    //{
-    //    if(firstRender)
-    //    {
-    //        CallJSMethod();
-    //    }
-    // }
-
-    //private async Task CallJSMethod()
-    //{
-    //    await JSRuntime.InvokeVoidAsync("highScorePage");
-    //}
+   
 }

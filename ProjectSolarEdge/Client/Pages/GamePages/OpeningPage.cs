@@ -2,12 +2,16 @@
 using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
+
 namespace ProjectSolarEdge.Client.Pages.GamePages
 {
     public partial class OpeningPage
     {
         [Parameter]
-        public string Id { get; set; }
+        public string GameId { get; set; }
+
+        [Parameter]
+        public string UserId { get; set; }
 
         public Game GamePlaying { get; set; }
 
@@ -17,10 +21,19 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Inject]
         public IGamesDataService GameDataService { get; set; }
 
-        // for Liron - delete this after querise
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
+        protected async Task STARTGAME()
+        {
+            int gameId = GamePlaying.ID;
+            NavigationManager.NavigateTo($"/GetNextStep/{gameId}" );
+        }
+
+        //  Liron - delete this after querise
         protected override async Task OnInitializedAsync()
         {
-            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(Id));
+            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
 
             player = new UsersTable()
             {

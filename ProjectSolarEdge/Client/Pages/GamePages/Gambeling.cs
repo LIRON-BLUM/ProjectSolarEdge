@@ -3,14 +3,13 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 {
-    public partial class WheelOfFortune
+    public partial class Gambeling
     {
-
         public Game GamePlaying { get; set; }
 
         public UsersTable player { get; set; }
 
-        public GameScore WheelScoreToInsert { get; set; }
+        public GameScore GambelingScoreToInsert { get; set; }
 
 
         [Parameter]
@@ -20,7 +19,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public string UserId { get; set; }
 
         [Parameter]
-        public string WheelScore { get; set; }
+        public string GambelScore { get; set; }
 
 
         [Inject]
@@ -28,22 +27,21 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected async Task goToNext()
         {
-            string check = WheelScore;
-            NavigationManager.NavigateTo("/Gambeling");
+            string check = GambelScore;
 
         }
-
         protected override async Task OnInitializedAsync()
         {
-            // for liron - we need to insert this in the GameScore table
-            WheelScoreToInsert = new GameScore()
+            //  liron - we need to insert this in the GameScore table
+           GambelingScoreToInsert = new GameScore()
             {
                 UserID = player.ID,
                 GameID = GamePlaying.ID,
-                GameElement = 1,
-                ElementScore = Convert.ToUInt16(WheelScore),
+                GameElement = 2,
+                ElementScore = Convert.ToUInt16(GambelScore),
             };
 
         }
+
     }
 }
