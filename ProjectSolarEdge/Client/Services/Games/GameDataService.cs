@@ -78,5 +78,38 @@ namespace ProjectSolarEdge.Client.Services.Games
 
             return 0;
         }
+
+        public async Task<bool> DeleteQuestionConnection(int Id)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Games/QuestionConnection/{Id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+        public async Task<int> AddQuestionConnection(GameQuestionsConnection gameQuestionsConnection)
+        {
+            var AnswerJson =
+                new StringContent(JsonSerializer.Serialize(gameQuestionsConnection), Encoding.UTF8, "application/json");
+
+          
+
+            var response = await _httpClient.PostAsync($"api/Games/InsertQuestionConnection", AnswerJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<int>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return 0;
+        }
+    
+
+
+    
     }
 }

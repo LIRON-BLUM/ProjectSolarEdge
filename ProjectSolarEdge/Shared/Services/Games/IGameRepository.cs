@@ -20,6 +20,11 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         int AddGameToDB(Game game);
 
+        bool DeleteQuestionConnction(int ID);
+
+        int AddQuestionToConnection(GameQuestionsConnection gameQuestionsConnection);
+
+
 
     }
 }

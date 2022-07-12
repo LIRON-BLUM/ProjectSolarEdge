@@ -82,6 +82,47 @@ namespace ProjectSolarEdge.Server.Controllers
 
         }
 
+
+
+        [HttpPost]
+        [Route("InsertQuestionConnection")]
+        public async Task<IActionResult> AddQuestionToConnection(GameQuestionsConnection gameQuestionsConnection)
+        {
+
+            int _newQuestiont = _GameRepository.AddQuestionToConnection(gameQuestionsConnection);
+
+
+            if (_newQuestiont == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_newQuestiont);
+
+        }
+
+
+
+        [HttpDelete]
+        [Route("QuestionConnection/{Id}")]
+        public IActionResult QuestionConnection(int Id)
+        {
+            if (Id == 0)
+                return BadRequest();
+
+            //var questionToDelete = _questionRepository.GetQuestionById(Id);
+            if (Id == null)
+                return NotFound();
+
+            bool _QuesConnection = _GameRepository.DeleteQuestionConnction(Id);
+
+            return Ok(_QuesConnection);//success
+        }
+
+
     }
 
 
