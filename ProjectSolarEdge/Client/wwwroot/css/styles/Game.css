@@ -59,7 +59,7 @@
 }
 
 /*imeg*/
-#QuestionPic {
+.QuestionPic {
     padding: 1.5rem;
 }
 
@@ -90,7 +90,7 @@
         color: white;
     }
 
-#SkipAnswer {
+.SkipAnswer {
     font-size: 1.8rem;
     font-weight: 900;
     padding: 1rem 0;
@@ -103,6 +103,6 @@
     border: none;
 }
 
-#SkipAnswer:hover {
+.SkipAnswer:hover {
     color: #4aec96;
 }

@@ -22,8 +22,9 @@
                 <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
 
             </div>
-            <button type="button" id="submitAnswer" class="btn" @onclick="saveAnawer" disabled>submit</button>
-            <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
+            <button type="button" id="submitAnswer" class="btn" @onclick="saveAnawer" >submit</button>
+@*            <button type="button" id="submitAnswer" class="btn" onclick="submit()" disabled>submit</button>
+*@            <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
 
         </div>
     </div>

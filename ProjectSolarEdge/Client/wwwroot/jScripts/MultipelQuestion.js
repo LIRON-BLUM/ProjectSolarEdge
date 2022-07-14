@@ -4,6 +4,7 @@
     let choices = document.getElementsByClassName("choice-text");
     let acceptingAnswers = true;
     let selectedChoice;
+    let isRight;
 
     answerClicked = (answer, e) => {
 
@@ -14,6 +15,7 @@
 
         acceptingAnswers = false;
         questionHidden.value = answer;
+        isRight = answer;
         var event = new Event('change');
         questionHidden.dispatchEvent(event);
 
@@ -22,7 +24,24 @@
         selectedChoice = e.target;
         selectedChoice.parentElement.classList.add("chosenAnswer");
        
-    }    
+    }
+
+    //submit= () => {
+    //    if (isRight == true) {
+    //        selectedChoice.parentElement.classList.add("correct");
+
+    //    }
+    //    else {
+    //        selectedChoice.parentElement.classList.add("chosenAnswer");
+    //    }
+
+
+    //    setTimeout(() => {
+
+    //    document.getElementById("submitAnswer").click();
+    //    }, 1000);
+    //}
+
 }
 
 
