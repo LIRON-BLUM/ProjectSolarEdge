@@ -11,8 +11,23 @@
             <h1>Order questions</h1>
             <p>Drag and drop the items into their corresponding spots</p>
             <br />
-            <p id="orderQuestion"></p>
-            <ul class="draggable-list" id="draggable-list"></ul>
+            <p id="orderQuestion">@currentQuestion.QuestionBody</p>
+            <ul class="draggable-list" id="draggable-list">
+                 @foreach (var answer in currentQuestion.Answers)
+                    {
+                        <li data-index=@answer.QuestionID> 
+                         <div class="draggable" draggable="true" >
+                         <p class="person-name"> @answer.AnswerBody</p>
+                         <i class="fas fa-grip-lines"></i>
+                         </div>
+                         </li>
+                @*<div class="choiceContainer">
+                    <li class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</li>
+                </div>*@
+                    }
+                <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
+
+            </ul>
             <button type="button" id="checkAnswer" class="btn" onclick="checkOrder()" disabled>submit</button>
         </div>
     </div>

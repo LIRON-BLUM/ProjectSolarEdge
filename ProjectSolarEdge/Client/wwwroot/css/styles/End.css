@@ -1,0 +1,21 @@
+﻿:root {
+    background-color: #edf8fe;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #001546;    
+    font-size: 1.8rem;
+}
+
+.currentUser {
+    background-color: #001546;
+    color:aliceblue;
+}

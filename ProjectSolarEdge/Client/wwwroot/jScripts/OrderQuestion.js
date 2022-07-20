@@ -1,149 +1,152 @@
 ﻿function orderQuestionPage() {
-
-const draggable_list = document.getElementById('draggable-list');
-const submitAnswer = document.getElementById('checkAnswer');
-const orderQuestion = document.getElementById('orderQuestion');
-
-let availableQuesions = [];
-let correntQuestion = {};
-let questionCount = 0;
-const questions = [
-    {
-        question: "Sort the list of names so the richest person is on top",
-        QuestionPic: "",
-        listItem: [
-            'Jeff Bezos',
-            'Bill Gates',
-            'Warren Buffett',
-            'Bernard Arnault'            
-        ],
-        feedback: "The richest man in the world is Jeff Bezos",
-        tyep: "order",
-        difficulty: 3
-    },
-    {
-        question: "Sort the list of names so the oldest person is on top",
-        QuestionPic: "",
-        listItem: [
-            'Yotam Avrahami',
-            'Limor Avrahami',
-            'Roi Ben-Zvi',
-            'Liron Blum'
-        ],
-        feedback: "The oldes person in the list is Yotam Avrahami",
-        tyep: "order",
-        difficulty: 1
-    }
-    
-];
-availableQuesions = [...questions];
-//correntQuestion = availableQuesions[questionCount];
-
-// Store listitems
-const listItems = [];
-let dragStartIndex;
-
-createList();
-
-
-// Insert list items into DOM
-function createList() {
-    correntQuestion = availableQuesions[questionCount];
-
-    orderQuestion.innerText = correntQuestion.question;
-    correntQuestion.listItem
-        .map(a => ({ value: a, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(a => a.value)
-        .forEach((person, index) => {
-            const listItem = document.createElement('li');
-
-            listItem.setAttribute('data-index', index);
-
-            listItem.innerHTML = `
-             <div class="draggable" draggable="true">
-             <p class="person-name">${person}</p>
-             <i class="fas fa-grip-lines"></i>
-             </div>
-             `;
-
-            listItems.push(listItem);
-
-            draggable_list.appendChild(listItem);
-        });
+    let questionHidden = document.getElementById("questionHidden");
+    let submitAnswer = document.getElementById("submitAnswer");
+    //let acceptingAnswers = true;
+    let selectedChoice;
 
     addEventListeners();
-}
 
-function dragStart() {
-    dragStartIndex = +this.closest('li').getAttribute('data-index');
-    submitAnswer.disabled = false;
-}
+    //answerClicked = (answer, e) => {
 
-function dragEnter() {
-    this.classList.add('over');
-}
+    //    if (!acceptingAnswers) {
+    //        selectedChoice.parentElement.classList.remove("chosenAnswer");
+    //    }
 
-function dragLeave() {
-    this.classList.remove('over');
-}
+    //    acceptingAnswers = false;
+    //    questionHidden.value = answer;
+    //    var event = new Event('change');
+    //    questionHidden.dispatchEvent(event);
 
-function dragOver(e) {
-    e.preventDefault();
-}
+    //    submitAnswer.disabled = false;
 
-function dragDrop() {
-    const dragEndIndex = +this.getAttribute('data-index');
-    swapItems(dragStartIndex, dragEndIndex);
+    //    selectedChoice = e.target;
+    //    selectedChoice.parentElement.classList.add("chosenAnswer");
 
-    this.classList.remove('over');
-}
+    //}
 
-// Swap list items that are drag and drop
-function swapItems(fromIndex, toIndex) {
-    const itemOne = listItems[fromIndex].querySelector('.draggable');
-    const itemTwo = listItems[toIndex].querySelector('.draggable');
-
-    listItems[fromIndex].appendChild(itemTwo);
-    listItems[toIndex].appendChild(itemOne);
-}
-
-// Check the order of list items
-    checkOrder = () => {
-    listItems.forEach((listItem, index) => {
-        const personName = listItem.querySelector('.draggable').innerText.trim();
-
-        //if (personName !== questions[index]) {
-        if (personName !== correntQuestion.listItem[index]) {
-            listItem.classList.add('wrong');
-        } else {
-            listItem.classList.remove('wrong');
-            listItem.classList.add('right');
-        }
-    });
-    questionCount++
-        setTimeout(() => {
-            const  removedIdems = document.getElementsByClassName("draggable");
-          //  draggable_list.removeChild(removedIdems);
-
-          createList();
-    }, 1000);
+    function dragStart() {
+        console.log("dragStart function");
+        
+        dragStartIndex = +this.closest('li').getAttribute('data-index');
+        submitAnswer.disabled = false;
     }
 
+    function dragEnter() {
+        console.log("dragEnter function");
 
-function addEventListeners() {
-    const draggables = document.querySelectorAll('.draggable');
-    const dragListItems = document.querySelectorAll('.draggable-list li');
+        this.classList.add('over');
+    }
 
-    draggables.forEach(draggable => {
-        draggable.addEventListener('dragstart', dragStart);
-    });
+    function dragLeave() {
+        console.log("dragLeave function");
+        this.classList.remove('over');
+    }
 
-    dragListItems.forEach(item => {
-        item.addEventListener('dragover', dragOver);
-        item.addEventListener('drop', dragDrop);
-        item.addEventListener('dragenter', dragEnter);
-        item.addEventListener('dragleave', dragLeave);
-    });
+    function dragOver(e) {
+        console.log("dragOver function");
+        e.preventDefault();
+    }
+
+    function dragDrop() {
+        console.log("dragDrop function");
+        const dragEndIndex = +this.getAttribute('data-index');
+        swapItems(dragStartIndex, dragEndIndex);
+
+        this.classList.remove('over');
+    }
+
+    // Swap list items that are drag and drop
+    function swapItems(fromIndex, toIndex) {
+        console.log(fromIndex);
+        console.log(toIndex);
+        console.log(li[fromIndex]);
+
+        const itemOne = li[fromIndex].querySelector('.draggable');
+        const itemTwo = li[toIndex].querySelector('.draggable');
+
+        li[fromIndex].appendChild(itemTwo);
+        li[toIndex].appendChild(itemOne);
+    }
+
+    function addEventListeners() {
+        const draggables = document.querySelectorAll('.draggable');
+        const dragListItems = document.querySelectorAll('.draggable-list li');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', dragStart);
+        });
+
+        dragListItems.forEach(item => {
+            item.addEventListener('dragover', dragOver);
+            item.addEventListener('drop', dragDrop);
+            item.addEventListener('dragenter', dragEnter);
+            item.addEventListener('dragleave', dragLeave);
+        });
     }
 }
+
+//const draggable_list = document.getElementById('draggable-list');
+//const submitAnswer = document.getElementById('checkAnswer');
+
+
+//// Store listitems
+//const listItems = [];
+//let dragStartIndex;
+
+//createList();
+
+
+//// Insert list items into DOM
+//function createList() {
+//    //correntQuestion = availableQuesions[questionCount];
+
+//    //correntQuestion.listItem
+//    //    .map(a => ({ value: a, sort: Math.random() }))
+//    //    .sort((a, b) => a.sort - b.sort)
+//    //    .map(a => a.value)
+//    //    .forEach((person, index) => {
+//    //        const listItem = document.createElement('li');
+
+//    //        listItem.setAttribute('data-index', index);
+
+//    //        listItem.innerHTML = `
+//    //         <div class="draggable" draggable="true">
+//    //         <p class="person-name">${person}</p>
+//    //         <i class="fas fa-grip-lines"></i>
+//    //         </div>
+//    //         `;
+
+//    //        listItems.push(listItem);
+
+//    //        draggable_list.appendChild(listItem);
+//    //    });
+
+//    addEventListeners();
+//}
+
+
+
+//// Check the order of list items
+//    checkOrder = () => {
+//    listItems.forEach((listItem, index) => {
+//        const personName = listItem.querySelector('.draggable').innerText.trim();
+
+//        //if (personName !== questions[index]) {
+//        if (personName !== correntQuestion.listItem[index]) {
+//            listItem.classList.add('wrong');
+//        } else {
+//            listItem.classList.remove('wrong');
+//            listItem.classList.add('right');
+//        }
+//    });
+//    questionCount++
+//        setTimeout(() => {
+//            const  removedIdems = document.getElementsByClassName("draggable");
+//          //  draggable_list.removeChild(removedIdems);
+
+//          createList();
+//    }, 1000);
+//    }
+
+
+

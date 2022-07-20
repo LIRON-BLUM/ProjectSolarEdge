@@ -73,18 +73,3 @@ h1 {
 .high-score:nth-of-type(3) {
 /*    position: relative;*/
 }
-
-/*end winner table*/
-#winingTable {
-    border-collapse: collapse;
-    width: 100%;
-    color: red;
-}
-
-th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #001546;
-    font-size:1.8rem;
-    color:red;
-}
