@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
@@ -25,7 +26,10 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public string chosenanswer { get; set; }
 
         public GameScore questionScoreToInsert { get; set; }
-        
+
+        [Inject]
+        public IGamesDataService GameDataService { get; set; }
+
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
@@ -44,20 +48,35 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             };
 
             int gameId = GamePlaying.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
+            int playerId = player.ID;
+            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
         }
 
         protected async Task SkipAnawer()
         {
             int gameId = GamePlaying.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
+            int playerId = player.ID;
+
+            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
         }
         protected override async Task OnInitializedAsync()
         {
-           // Get question by id from question service
+            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
 
-             currentQuestion = new Question()
+            player = new UsersTable()
             {
+                ID = 8,
+                UserFirstName = "Limor",
+                UserLastName = "Avrahami",
+                UserName = "LimorAvrahami",
+            };
+
+
+            // Get question by id from question service
+
+            currentQuestion = new Question()
+            {
+                ID=1,
                 QuestionBody = "What is your favorite color?",
                 Difficulty = QuestionDifficulty.Medium,
                 Answers = new List<QuestionAnswer>()
@@ -78,11 +97,15 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                         AnswerBody= "Pink",
                         IsRight = false
                     }
-                    
+
 
                 }
-        
+
             };
+            questionScore = new GameQuestionsConnection()
+            {
+                Score = 200
+             };
         }
 
     }

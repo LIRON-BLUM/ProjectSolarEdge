@@ -24,6 +24,15 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        
+             protected async Task GoToFeedback()
+        {
+            int gameId = GamePlaying.ID;
+            int playerId = player.ID;
+
+            NavigationManager.NavigateTo($"/endFeedback/{gameId}/{playerId}");
+        }
+
         //  Liron - delete this after querise
         protected override async Task OnInitializedAsync()
         {

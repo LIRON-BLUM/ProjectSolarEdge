@@ -1,7 +1,6 @@
 ﻿function MultipelQuestion() {
     let questionHidden = document.getElementById("questionHidden");
     let submitAnswer = document.getElementById("submitAnswer");
-    let choices = document.getElementsByClassName("choice-text");
     let acceptingAnswers = true;
     let selectedChoice;
     let isRight;
@@ -19,7 +18,7 @@
         var event = new Event('change');
         questionHidden.dispatchEvent(event);
 
-        submitAnswer.disabled = false;
+        //submitAnswer.disabled = false;
 
         selectedChoice = e.target;
         selectedChoice.parentElement.classList.add("chosenAnswer");

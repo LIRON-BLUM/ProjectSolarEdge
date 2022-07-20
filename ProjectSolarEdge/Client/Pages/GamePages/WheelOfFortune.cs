@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
@@ -22,6 +23,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Parameter]
         public string WheelScore { get; set; }
 
+        [Inject]
+        public IGamesDataService GameDataService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -29,12 +32,24 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected async Task goToNext()
         {
             string check = WheelScore;
-            NavigationManager.NavigateTo("/Gambeling");
+            int gameId = GamePlaying.ID;
+            int playerId = player.ID;
+            NavigationManager.NavigateTo($"/Gambeling/{gameId}/{playerId}");
 
         }
 
         protected override async Task OnInitializedAsync()
         {
+            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+
+            player = new UsersTable()
+            {
+                ID = 8,
+                UserFirstName = "Limor",
+                UserLastName = "Avrahami",
+                UserName = "LimorAvrahami",
+            };
+
             // for liron - we need to insert this in the GameScore table
             WheelScoreToInsert = new GameScore()
             {

@@ -25,8 +25,4 @@ newScore.innerText = "score: " + score;
     }
     
     }
-    //gambelToContinue = () => {
-    //    localStorage.setItem("gambelChoice", choosenGambel.innerText);
-    //    window.location.assign('/GamePage');
-    //}
 }

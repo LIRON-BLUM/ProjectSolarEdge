@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
@@ -26,6 +27,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public GameScore questionScoreToInsert { get; set; }
 
         [Inject]
+        public IGamesDataService GameDataService { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         protected async Task saveAnawer()
@@ -43,16 +47,29 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             };
 
             int gameId = GamePlaying.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
+            int playerId = player.ID;
+            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
         }
 
         protected async Task SkipAnawer()
         {
             int gameId = GamePlaying.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
+            int playerId = player.ID;
+
+            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
         }
         protected override async Task OnInitializedAsync()
         {
+            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+
+            player = new UsersTable()
+            {
+                ID = 8,
+                UserFirstName = "Limor",
+                UserLastName = "Avrahami",
+                UserName = "LimorAvrahami",
+            };
+
             // Get question by id from question service
 
             currentQuestion = new Question()
@@ -71,6 +88,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                     }
                 }
 
+            };
+
+            questionScore = new GameQuestionsConnection()
+            {
+                Score = 200
             };
         }
 
