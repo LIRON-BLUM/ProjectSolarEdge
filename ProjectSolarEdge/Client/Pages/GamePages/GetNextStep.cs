@@ -33,7 +33,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             string gameGamification = GamePlaying.IsGamified.ToString();
 
             // we need to get all the question didacting the questions the user had all ready answerd.
-
+            // השאילתה שלירון ועדי כתבו
 
             availleblQuestions = new List<Question>()
             {

@@ -102,7 +102,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                         IsRight = false
                     }
 
-
                 }
 
             };
