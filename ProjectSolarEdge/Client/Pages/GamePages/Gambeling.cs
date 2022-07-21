@@ -32,10 +32,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         {
             string check = GambelScore;
 
-            int gameId = GamePlaying.ID;
-            int playerId = player.ID;
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
 
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
 
         }
         protected override async Task OnInitializedAsync()

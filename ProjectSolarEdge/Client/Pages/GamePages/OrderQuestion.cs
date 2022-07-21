@@ -44,14 +44,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 IsAnswered = true
             };
 
-            int gameId = GamePlaying.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
         }
 
         protected async Task SkipAnawer()
         {
-            int gameId = GamePlaying.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
         }
         protected override async Task OnInitializedAsync()
         {

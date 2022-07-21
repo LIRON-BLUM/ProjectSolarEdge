@@ -115,9 +115,12 @@ p {
         transition: transform 150ms;
     }
 
+#SkipAnswer {
+    font-size: 1.8rem;
+    font-weight: 900;
+}
 /* form */
-
-form{
+form {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -137,8 +140,13 @@ input::placeholder{
     color:#aaa;
 }
 
-/* high score*/
+.score {
+    text-align: left;
+    font-size: 2rem;
+    font-weight: 600;
+}
 
+/* high score*/
 highScoresList {
     list-style: none;
     padding-left: 0;
@@ -153,3 +161,27 @@ highScoresList {
     .high-score:hover {
         transform: scale(1.025);
     }
+
+/* progresbar */
+#hud {
+    margin-top: 2rem;
+    display: flow;
+    width: 100%;
+
+}
+
+.hud-prefix {
+    font-size: 2rem;
+}
+
+
+#progressBar {
+    height: 1rem;
+    background-color: #edf8fe;
+}
+
+#progressBarFull {
+    height: 1rem;
+    background-color: #001546;
+    width: 0%;
+}

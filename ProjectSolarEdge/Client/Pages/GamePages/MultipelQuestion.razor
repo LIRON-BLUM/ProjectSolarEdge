@@ -7,6 +7,19 @@
 
 <div class="container">
         <div id="game" class="flex-center flex-column">
+            <div id="points">
+                <span class="score"> @currentScore  </span> <span class="score"> Points</span>
+                </div>
+            <div id="hud">
+                <div id="hud-item">
+                    <div id="progressBar">
+                        <div id="progressBarFull"></div>
+                    </div>
+                    <p id="progressText"> <span id="availleblQuestions"> @availleblQuestions.Count() </span> / <span id="maxQuestions"> @GamePlaying.Questions.Count() </span></p>
+                </div>
+                <div id="hud-item">
+                </div>
+            </div>
 
             <div id="QuestionPic"></div>
             <h2 id="question"> @currentQuestion.QuestionBody </h2>
@@ -27,7 +40,7 @@
 *@            <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
 
         </div>
-    </div>
+        </div>
 
     
 

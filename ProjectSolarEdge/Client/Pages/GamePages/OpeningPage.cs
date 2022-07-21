@@ -26,9 +26,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected async Task STARTGAME()
         {
-            int gameId = GamePlaying.ID;
-            int playerId = player.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}" );
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
         }
 
         //  Liron - delete this after querise

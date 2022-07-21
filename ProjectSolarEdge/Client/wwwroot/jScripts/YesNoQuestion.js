@@ -3,6 +3,8 @@
         let submitAnswer = document.getElementById("submitAnswer");
         let acceptingAnswers = true;
         let selectedChoice;
+    const maxQuestions = document.getElementById("maxQuestions").innerText;
+    const availleblQuestions = document.getElementById("availleblQuestions").innerText;
 
         answerClicked = (answer, e) => {
 
@@ -21,7 +23,9 @@
             selectedChoice.parentElement.classList.add("chosenAnswer");
 
         }
-    
+
+    // update the progress bar
+    progressBarFull.style.width = `${(availleblQuestions / maxQuestions) * 100}%`;
 }
 ////    const question = document.getElementById("question");
 ////    const submitAnswer = document.getElementById("submitAnswer");

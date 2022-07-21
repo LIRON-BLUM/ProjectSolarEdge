@@ -28,10 +28,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected async Task backToEnd()
         {
-            int gameId = GamePlaying.ID;
-            int playerId = player.ID;
-
-            NavigationManager.NavigateTo($"/End/{gameId}/{playerId}");
+            
+            NavigationManager.NavigateTo($"/End/{GameId}/{UserId}");
         }
 
         //  Liron - delete this after querise

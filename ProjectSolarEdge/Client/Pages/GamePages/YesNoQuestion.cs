@@ -23,8 +23,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public GameQuestionsConnection questionScore { get; set; }
         public string chosenanswer { get; set; }
+        public IEnumerable<Question> availleblQuestions { get; set; }
 
         public GameScore questionScoreToInsert { get; set; }
+
+        int currentScore = 200;
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -46,17 +49,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 IsAnswered = true
             };
 
-            int gameId = GamePlaying.ID;
-            int playerId = player.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
         }
 
         protected async Task SkipAnawer()
         {
-            int gameId = GamePlaying.ID;
-            int playerId = player.ID;
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
 
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
         }
         protected override async Task OnInitializedAsync()
         {
@@ -93,6 +93,21 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             questionScore = new GameQuestionsConnection()
             {
                 Score = 200
+            };
+
+            availleblQuestions = new List<Question>()
+            {
+                new Question()
+                {
+                    ID = 1,
+                    Type= QuestionType.SingleChoice
+                },
+                  new Question() {
+                    ID = 2,
+                    Type= QuestionType.TrueFalse
+                },
+
+
             };
         }
 

@@ -32,9 +32,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected async Task goToNext()
         {
             string check = WheelScore;
-            int gameId = GamePlaying.ID;
-            int playerId = player.ID;
-            NavigationManager.NavigateTo($"/Gambeling/{gameId}/{playerId}");
+      
+            NavigationManager.NavigateTo($"Gambeling/{GameId}/{UserId}");
+
 
         }
 

@@ -26,6 +26,12 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public string chosenanswer { get; set; }
 
         public GameScore questionScoreToInsert { get; set; }
+        public IEnumerable<GameScore>  gameCurrentScore { get; set; }
+
+        int currentScore = 200;
+
+        public IEnumerable<Question> availleblQuestions { get; set; }
+
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -47,18 +53,16 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 IsAnswered= true
             };
 
-            int gameId = GamePlaying.ID;
-            int playerId = player.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
         }
 
         protected async Task SkipAnawer()
         {
-            int gameId = GamePlaying.ID;
-            int playerId = player.ID;
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
 
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}/{playerId}");
         }
+
         protected override async Task OnInitializedAsync()
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
@@ -102,10 +106,54 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 }
 
             };
+
             questionScore = new GameQuestionsConnection()
             {
                 Score = 200
              };
+
+
+            availleblQuestions = new List<Question>()
+            {
+                new Question()
+                {
+                    ID = 1,
+                    Type= QuestionType.SingleChoice
+                },
+                  new Question() {
+                    ID = 2,
+                    Type= QuestionType.TrueFalse
+                },
+
+
+            };
+
+            gameCurrentScore = new List<GameScore>()
+            {
+                new GameScore()
+                {
+                    ElementScore= 100
+                },
+                 new GameScore()
+                {
+                    ElementScore= 200
+                },
+                  new GameScore()
+                {
+                    ElementScore= 400
+                },
+                   new GameScore()
+                {
+                    ElementScore= 100
+                }
+            };
+
+
+            //foreach (int score in gameCurrentScore)
+            //{
+            //    currentScore += score.;
+            //}
+
         }
 
     }
