@@ -109,7 +109,7 @@ function swapItems(fromIndex, toIndex) {
 }
 
 // Check the order of list items
-function checkOrder() {
+    checkOrder = () => {
     listItems.forEach((listItem, index) => {
         const personName = listItem.querySelector('.draggable').innerText.trim();
 
@@ -122,10 +122,14 @@ function checkOrder() {
         }
     });
     questionCount++
-    setTimeout(() => {
-        createList();
+        setTimeout(() => {
+            const  removedIdems = document.getElementsByClassName("draggable");
+          //  draggable_list.removeChild(removedIdems);
+
+          createList();
     }, 1000);
-}
+    }
+
 
 function addEventListeners() {
     const draggables = document.querySelectorAll('.draggable');

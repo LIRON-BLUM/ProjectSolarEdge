@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSolarEdge.Shared.Entities
 {
-    internal class GameScore
+    public class GameScore
     {
         public int ID { get; set; }
 

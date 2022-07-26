@@ -95,8 +95,4 @@ wheelRotate = () => {
     if (!angVel) angVel = rand(0.25, 0.35);
 }
 
-goToGame = () => {
-    localStorage.setItem("mostRecentScore", score);
-    window.location.assign('/Gambeling');
-    }
 }

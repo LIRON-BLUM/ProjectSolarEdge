@@ -1,0 +1,47 @@
+﻿@layout SeconderyLayout
+@page "/MultipelQuestion/{GameId}/{UserId}/{QuestionID}"
+
+@inject IJSRuntime JSRuntime;
+
+<link href="/css/styles/Game.css" rel="stylesheet" />
+
+<div class="container">
+        <div id="game" class="flex-center flex-column">
+
+            <div id="QuestionPic"></div>
+            <h2 id="question"> @currentQuestion.QuestionBody </h2>
+            <div id="answersContainer">
+                 @foreach (var answer in currentQuestion.Answers)
+                    {
+                <div class="choiceContainer">
+                    <p class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</p>
+                </div>
+
+               
+                }
+                <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
+
+            </div>
+            <button type="button" id="submitAnswer" class="btn" @onclick="saveAnawer" disabled>submit</button>
+            <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
+
+        </div>
+    </div>
+
+    
+
+@code {
+     protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CallJSMethod();
+        }
+     }
+
+    private async Task CallJSMethod()
+    {
+        await JSRuntime.InvokeVoidAsync("MultipelQuestion");
+    }
+}
+

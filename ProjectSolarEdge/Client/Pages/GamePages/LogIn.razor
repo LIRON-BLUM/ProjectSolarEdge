@@ -10,11 +10,12 @@
             <h1> Welcome</h1>
             <p id="ErrorHelp"> </p>
             <form>
-                <p>Enter your full name</p>
-                <input type="text" name="employeeName" id="employeeName" placeholder="Employee name" />
+                
                 <p>Enter your Email</p>
-                <input type="text" name="employeeEmail" id="employeeEmail" placeholder="employee Email" />
-                <button type="submit" id="StartGame" class="btn" onclick="StartTheGame(event)" disabled> Log in</button>
+                <input type="text" name="employeeEmail" id="employeeEmail" placeholder="employee Email" value="@UserEmail" @onchange="@(e=>{UserEmail=e.Value.ToString();})" />
+                <p>Enter game code</p>
+                <input type="text" name="GameCode" id="GameCode" placeholder="Game code" value="@GameCode" @onchange="@(e=>{GameCode=e.Value.ToString();})" />
+                <button type="submit" id="StartGame" class="btn" @onclick="StartTheGame" disabled> Enter the game</button>
                
             </form>
            
