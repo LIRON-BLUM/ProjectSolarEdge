@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSolarEdge.Shared.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 {
     public interface IGameAppRepository
     {
+        IEnumerable<UsersGameRecord> GetAllUsersGameRecord(int ID);
     }
 }

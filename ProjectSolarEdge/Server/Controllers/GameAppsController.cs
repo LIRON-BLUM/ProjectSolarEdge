@@ -30,7 +30,23 @@ namespace ProjectSolarEdge.Server.Controllers
         //}
 
 
+        [HttpGet]
+        [Route("GetAllUsersGameRecord/{Id}")]
+        public IActionResult GetGameId(int Id)
+        {
+            UsersGameRecord _data = (UsersGameRecord)_gameAppRepository.GetAllUsersGameRecord(Id);
 
+            if (_data == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_data);
+
+        }
 
 
     }
