@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
@@ -22,6 +23,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public IGamesDataService GameDataService { get; set; }
 
         [Inject]
+        public IGameAppService GameAppDataService { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         protected async Task STARTGAME()
@@ -34,6 +38,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected override async Task OnInitializedAsync()
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+            TopPlayers = (IEnumerable<UsersGameRecord>)await GameAppDataService.GetUsersGameRecordById(int.Parse(GameId));
 
             player = new UsersTable()
             {
@@ -43,34 +48,34 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 UserName = "LimorAvrahami",
             };
 
-            TopPlayers = new List<UsersGameRecord>()
-            {
-                new UsersGameRecord()
-                {
-                    UserFirstName = "Adi",
-                    UserId =1,
-                    UserLastName ="Silagy",
-                    UserName ="AdiSilagi",
-                    TotalScore=3000
-                },
+            //TopPlayers = new List<UsersGameRecord>()
+            //{
+            //    new UsersGameRecord()
+            //    {
+            //        UserFirstName = "Adi",
+            //        ID =1,
+            //        UserLastName ="Silagy",
+            //        UserName ="AdiSilagi",
+            //        TotalScore=3000
+            //    },
 
-                new UsersGameRecord()
-                {
-                    UserFirstName = "Moti",
-                    UserId =2,
-                    UserLastName ="Elnekave",
-                    UserName ="MotiElnekave",
-                    TotalScore=2000
-                },
-                  new UsersGameRecord()
-                {
-                    UserFirstName = "Liron",
-                    UserId =3,
-                    UserLastName ="Blum",
-                    UserName ="LironBlum",
-                    TotalScore=2500
-                }
-            };
+            //    new UsersGameRecord()
+            //    {
+            //        UserFirstName = "Moti",
+            //        ID =2,
+            //        UserLastName ="Elnekave",
+            //        UserName ="MotiElnekave",
+            //        TotalScore=2000
+            //    },
+            //      new UsersGameRecord()
+            //    {
+            //        UserFirstName = "Liron",
+            //        ID =3,
+            //        UserLastName ="Blum",
+            //        UserName ="LironBlum",
+            //        TotalScore=2500
+            //    }
+            //};
 
             TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
         }

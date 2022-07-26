@@ -18,9 +18,15 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<Question> QuestionsData { get; set; }
 
+        public Question QuestionsToDelete { get; set; } = new Question();
+
+        public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
+
         //public IEnumerable<Question> selectedQuestions { get; set; } = new HashSet<Question>();
 
-        public IEnumerable<string> selectedQuestions { get; set; } = new HashSet<string>();
+        public HashSet<Question> selectedQuestions { get; set; } = new HashSet<Question>();
+
+        public IEnumerable<Question> Elements = new List<Question>();
 
         public string DefaultValue { get; set; } = "Select Question";
 
@@ -35,7 +41,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<GamesQuestions> GameQuestionData { get; set; }
 
-        public IEnumerable<Question> Elements = new List<Question>();
+ 
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -48,6 +54,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            QuestionsData = await QuestionDataService.GetQuestionsAsync();
             int.TryParse(Id, out var GId);
 
             if (GId == 0)
@@ -57,22 +64,15 @@ namespace ProjectSolarEdge.Client.Pages
             } else
             {
                 GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
-                selectedQuestions = new HashSet<string>(GameCRUD.Questions.Select(q => q.QuestionBody));
 
+                selectedQuestions = GameCRUD.Questions.ToHashSet();
 
 
             }
 
-
-
-            //public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted)
-            //                   VALUES (@GameName,@GameDescription, GETDATE(), GETDATE(), 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0)";
-
-
-
           
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
-
+            Elements = QuestionsData;
 
 
         }
@@ -129,7 +129,7 @@ namespace ProjectSolarEdge.Client.Pages
             {
 
 
-                Question q = QuestionsData.Where(q => q.QuestionBody == item).SingleOrDefault();
+                Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
                 selectedQuestionToUpdate.Add(q);
 
 
@@ -159,6 +159,21 @@ namespace ProjectSolarEdge.Client.Pages
              
             }
                NavigationManager.NavigateTo("/Games");
+        }
+
+        protected async Task DeleteQuestion(int id)
+        {
+            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
+            await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+
+            QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            QuestionsDataToDisplay = QuestionsData;
+
+            //NavigationManager.NavigateTo("Questions");
+
+
+
+
         }
 
         public void Dispose()

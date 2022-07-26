@@ -25,9 +25,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Difficulty,
 													Feedback,
 													Creator,
-													isDeleted,
-													SubjectID)
-											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator, 0, @SubjectID)
+													isDeleted)
+											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator, 0)
 											  SELECT CAST(SCOPE_IDENTITY() as int)";
 
 

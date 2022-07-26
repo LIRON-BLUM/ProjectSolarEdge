@@ -21,11 +21,11 @@ namespace ProjectSolarEdge.Client.Pages
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
 
         public IEnumerable<Question> QuestionsData { get; set; }
+        public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
 
         public IEnumerable<SubjectsQuestions> SubjectsData { get; set; }
 
-        [Inject]
-        public IQuestionsDataService QuestionsDataService { get; set; }
+
 
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
@@ -37,6 +37,7 @@ namespace ProjectSolarEdge.Client.Pages
         protected override async Task OnInitializedAsync()
         {
           QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            QuestionsDataToDisplay = QuestionsData;
             //SubjectsData = await QuestionDataService.GetSubjectsAsync();
             //  QuestionsData = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
 
@@ -74,21 +75,8 @@ namespace ProjectSolarEdge.Client.Pages
         {
 
             IEnumerable<Question> data = await QuestionDataService.GetQuestionsAsync();
-            //await Task.Delay(300);
-            data = data.Where(question =>
-
-            {
-                if (string.IsNullOrWhiteSpace(searchString))
-                    return true;
-                if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                    return true;
-                if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                    return true;
-                if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
-                    return true;
-                return false;
-            }).ToArray();
-            totalItems = data.Count();
+          
+        
             switch (state.SortLabel)
             {
                 case "ID_field":
@@ -115,37 +103,27 @@ namespace ProjectSolarEdge.Client.Pages
 
         private async Task OnSearch(string text)
         {
-            searchString = text;
-            table.ReloadServerData();
+            QuestionsDataToDisplay = QuestionsData.Where(q => q.QuestionBody.Contains(text) || q.Creator.ToLower().Contains(text.ToLower()));
+            //searchString = text;
+            //table.ReloadServerData();
         }
 
 
-        protected async Task QuestionsToDeleteID(int id)
-        {
-            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
-
-            DeleteQuestion();
-
-        }
-            protected async Task DeleteQuestion()
+       
+            protected async Task DeleteQuestion(int id)
             {
+            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
+            await QuestionDataService.DeleteQuestion(QuestionsToDelete);
 
-                await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+            QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            QuestionsDataToDisplay = QuestionsData;
 
-
-                //foreach (var ans in QuestionsToDelete.Answers)
-                //{
-
-
-                //    await QuestionDataService.DeleteAnswer(ans);
-                //    //await QuestionDataService.DeleteQuestionAnswers(ans.QuestionID);
-
-                //}
-
-                //NavigationManager.NavigateTo("/");
+            //NavigationManager.NavigateTo("Questions");
 
 
-            }
+
+
+        }
 
         public void Dispose()
         {
@@ -153,3 +131,20 @@ namespace ProjectSolarEdge.Client.Pages
         }
     }
 }
+
+
+
+//data = data.Where(question =>
+
+//{
+//    if (string.IsNullOrWhiteSpace(searchString))
+//        return true;
+//    if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+//        return true;
+//    if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+//        return true;
+//    if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
+//        return true;
+//    return false;
+//}).ToArray();
+//totalItems = data.Count();

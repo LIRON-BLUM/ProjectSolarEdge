@@ -49,8 +49,10 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         public Question GetQuestionById(int ID, bool IncludeOptions = true)
         {
             Question _question = GetRecords<Question>(QuestionsQueries.GetQuestionByID, new { ID }).FirstOrDefault();
-            _question.Subjects = GetRecords<Subject>(QuestionsQueries.GetSubjectByQuesID, new { QuestionID = ID });
 
+           
+            _question.Subjects = GetRecords<Subject>(QuestionsQueries.GetSubjectByQuesID, new { QuestionID = ID });
+               
 
             if (IncludeOptions)
             {

@@ -8,7 +8,7 @@ namespace ProjectSolarEdge.Shared.Entities
 {
     public class UsersGameRecord
     {
-        public int UserId { get; set; }
+        public int ID { get; set; }
 
         public string UserName { get; set; }
 
@@ -17,6 +17,8 @@ namespace ProjectSolarEdge.Shared.Entities
         public string UserLastName { get; set; }
 
         public int TotalScore { get; set; }
+
+        public int GameID { get; set; }
 
 
     }
