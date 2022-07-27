@@ -8,19 +8,37 @@
 <div class="container">
         <div id="game" class="flex-center flex-column">
 
-            <div id="QuestionPic"></div>
-            <h2 id="question"> What is the answer to this question? </h2>
-            <div id="answersContainer">
-                <div class="choiceContainer"> 
-                    <p class="choice-text" data-number="1"> Choice 1</p>
+            <div id="points">
+                <span id="score"> @currentScore </span> <span> Points</span>
                 </div>
-                  <div class="choiceContainer"> 
-                    <p class="choice-text" data-number="2"> Choice 2</p>
+            <div id="hud">
+                <div id="hud-item">
+                    <div id="progressBar">
+                        <div id="progressBarFull"></div>
+                    </div>
+                    <p id="progressText"> <span id="availleblQuestions"> @availleblQuestions.Count() </span> / <span id="maxQuestions"> @GamePlaying.Questions.Count() </span></p>
+                </div>
+                <div id="hud-item">
                 </div>
             </div>
-            <button type="button" id="submitAnswer" class="btn" onclick="saveAnawer(event)" disabled>submit</button>
-            @*<button type="button" id="SkipAnswer" onclick="SkipAnawer()">Skip</button>*@
 
+            <div id="QuestionPic"></div>
+            <h2 id="question">@currentQuestion.QuestionBody </h2>
+            <div id="answersContainer">
+                 @foreach (var answer in currentQuestion.Answers)
+                    {
+                <div class="choiceContainer">
+                    <p class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</p>
+                </div>
+
+               
+                }
+                <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
+
+            </div>
+            <button type="button" id="submitAnswer" class="btn" @onclick="saveAnawer" disabled>submit</button>
+            <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
+  
         </div>
     </div>
 

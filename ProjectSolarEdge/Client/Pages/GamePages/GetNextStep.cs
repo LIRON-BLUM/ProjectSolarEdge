@@ -28,10 +28,12 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected override async Task OnInitializedAsync()
         {
+            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+
             string gameGamification = GamePlaying.IsGamified.ToString();
 
             // we need to get all the question didacting the questions the user had all ready answerd.
-
+            // השאילתה שלירון ועדי כתבו
 
             availleblQuestions = new List<Question>()
             {
@@ -50,13 +52,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                     Type= QuestionType.MultipleChoice
                 },
 
-                new Question(){ID = 4,
+                new Question(){
+                    ID = 4,
                     Type= QuestionType.TrueFalse
                 }
 
             };
 
-            
+
 
             if (GamePlaying.IsGamified == 1)
             {
@@ -70,6 +73,12 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                     // we need to do a random to see what question get gamification
                     NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
                 }
+            }
+
+            if (availleblQuestions.Count() == 0)
+            {
+                NavigationManager.NavigateTo($"End/{GameId}/{UserId}");
+
             }
 
             Question SelectedQuestion = getRandomQuestion();
@@ -87,13 +96,13 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                         NavigationManager.NavigateTo($"YesNoQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
                         break;
                     }
-                case QuestionType.MultipleChoice:
-                    {
-                        NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
-                        break;
-                    }
-                    break;
-            }
+                //case QuestionType.MultipleChoice:
+                //    {
+                //        NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                //        break;
+                //    }
+                    
+            };
         }
 
         private Question getRandomQuestion()

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
@@ -21,6 +22,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Parameter]
         public string GambelScore { get; set; }
 
+        [Inject]
+        public IGamesDataService GameDataService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -29,11 +32,24 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         {
             string check = GambelScore;
 
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
+
         }
         protected override async Task OnInitializedAsync()
         {
+            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+
+            player = new UsersTable()
+            {
+                ID = 8,
+                UserFirstName = "Limor",
+                UserLastName = "Avrahami",
+                UserName = "LimorAvrahami",
+            };
+
             //  liron - we need to insert this in the GameScore table
-           GambelingScoreToInsert = new GameScore()
+            GambelingScoreToInsert = new GameScore()
             {
                 UserID = player.ID,
                 GameID = GamePlaying.ID,

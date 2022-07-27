@@ -4,10 +4,9 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 {
-    public partial class MultipelQuestion
+    public partial class YesNoQuestion
     {
         [Parameter]
-
         public string GameId { get; set; }
 
         [Parameter]
@@ -21,17 +20,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public UsersTable player { get; set; }
 
         public Question currentQuestion { get; set; }
-        
+
         public GameQuestionsConnection questionScore { get; set; }
         public string chosenanswer { get; set; }
-
-        public GameScore questionScoreToInsert { get; set; }
-        public IEnumerable<GameScore>  gameCurrentScore { get; set; }
-
-        int currentScore = 200;
-
         public IEnumerable<Question> availleblQuestions { get; set; }
 
+        public GameScore questionScoreToInsert { get; set; }
+
+        int currentScore = 200;
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -39,24 +35,18 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        [Inject]
-        public IQuestionsDataService QuestionDataService { get; set; }
-
-        
-
         protected async Task saveAnawer()
         {
             //  Liron check if the is a row for this question in gameScore table if ther is Update the game score table with this if not insert
-            //is the Query supposed to be - update Game score table?
-           
+
             questionScoreToInsert = new GameScore()
             {
                 UserID = player.ID,
                 GameID = GamePlaying.ID,
                 QuestionID = currentQuestion.ID,
-                IsRight= Convert.ToBoolean(chosenanswer),
+                IsRight = Convert.ToBoolean(chosenanswer),
                 ElementScore = questionScore.Score,
-                IsAnswered= true
+                IsAnswered = true
             };
 
             NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
@@ -68,7 +58,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
 
         }
-
         protected override async Task OnInitializedAsync()
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
@@ -81,33 +70,22 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 UserName = "LimorAvrahami",
             };
 
-
             // Get question by id from question service
 
             currentQuestion = new Question()
             {
-                ID=1,
-                QuestionBody = "What is your favorite color?",
+                QuestionBody = "Does Liron miss me?",
                 Difficulty = QuestionDifficulty.Medium,
                 Answers = new List<QuestionAnswer>()
                 {
                     new QuestionAnswer() {
-                        AnswerBody= "Red",
+                        AnswerBody= "Yes",
                         IsRight = false
                     },
                     new QuestionAnswer() {
-                        AnswerBody= "Blue",
-                        IsRight = false
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Purple",
+                        AnswerBody= "No",
                         IsRight = true
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Pink",
-                        IsRight = false
                     }
-
                 }
 
             };
@@ -115,8 +93,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             questionScore = new GameQuestionsConnection()
             {
                 Score = 200
-             };
-
+            };
 
             availleblQuestions = new List<Question>()
             {
@@ -132,34 +109,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
             };
-
-            gameCurrentScore = new List<GameScore>()
-            {
-                new GameScore()
-                {
-                    ElementScore= 100
-                },
-                 new GameScore()
-                {
-                    ElementScore= 200
-                },
-                  new GameScore()
-                {
-                    ElementScore= 400
-                },
-                   new GameScore()
-                {
-                    ElementScore= 100
-                }
-            };
-
-
-            //foreach (int score in gameCurrentScore)
-            //{
-            //    currentScore += score.;
-            //}
-
         }
 
     }
 }
+

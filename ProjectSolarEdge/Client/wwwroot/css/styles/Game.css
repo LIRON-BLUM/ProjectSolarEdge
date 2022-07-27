@@ -34,7 +34,7 @@
     background-color: darkgray;
 }
 
-/* HUD */
+/* progresbar */
 #hud {
     display: flow;
     /*justify-content: space-between;*/
@@ -59,7 +59,7 @@
 }
 
 /*imeg*/
-#QuestionPic {
+.QuestionPic {
     padding: 1.5rem;
 }
 
@@ -77,8 +77,8 @@
 #points {
     background-color: #001546;
     color: white;
-    width: 20%;
-    height: 2rem;
+    width: 25%;
+    height: 3.5rem;
     padding-left: 10px;
 }
 
@@ -90,7 +90,8 @@
         color: white;
     }
 
-#SkipAnswer {
+
+.SkipAnswer {
     font-size: 1.8rem;
     font-weight: 900;
     padding: 1rem 0;
@@ -103,6 +104,6 @@
     border: none;
 }
 
-#SkipAnswer:hover {
+.SkipAnswer:hover {
     color: #4aec96;
 }

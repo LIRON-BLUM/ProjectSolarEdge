@@ -29,11 +29,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             string gameId = GameToPlay.ID.ToString();
             string userId = User.ID.ToString();
-
             
             NavigationManager.NavigateTo($"/OpeningPage/{gameId}/{userId}");
-
-
         }
 
         protected override async Task OnInitializedAsync()

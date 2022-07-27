@@ -1,8 +1,9 @@
 ﻿@layout SeconderyLayout
-@page "/End"
+@page "/End/{GameId}/{UserId}"
 
 @inject IJSRuntime JSRuntime;
 
+  <link href="/css/styles/End.css" rel="stylesheet" />
   <link href="/css/styles/OpeningPage.css" rel="stylesheet" />
 
 <div class="container">
@@ -10,8 +11,7 @@
 
             <div id="leaderBoard" class="flex-center flex-column">
                 <h2 id="allScores">Leaderboard</h2>
-                <ul id="userLucationList"> </ul>
-         @*       <table id="winingTable">
+                <table id="winingTable">
                     <tr>
                         <th>
                             Place
@@ -22,58 +22,74 @@
                         <th>
                             Score
                         </th>
-                    </tr>
-                    <tr>
-                        <td>1.</td>
-                        <td>lili</td>
-                        <td>2010</td>
-                    </tr>
-                    <tr>
-                        <td>2.</td>
-                        <td>yoyo</td>
-                        <td>2020</td>
-                    </tr>
+                    </tr>   
 
-                </table>*@
+                @foreach (var user in allPlayers)
+                {
+                   userIncreaseCount();
+                    <tr>
+                        @if(@user.UserId == @player.ID)
+                        {
+                       <td class="currentUser">@userCount</td>
+                       <td class="currentUser" >@user.UserFirstName @user.UserLastName</td>
+                            <td class="currentUser">@user.TotalScore</td>
+                        }
+                        else
+                        {
+                            
+                        
+                        <td>@userCount</td>
+                       
+                        <td>@user.UserFirstName @user.UserLastName</td>
+                        
+                        <td>@user.TotalScore</td>
+                        }
+                         
+                    </tr>
+                }  
+                </table>
             </div>
 
+           
             <div id="highScores" class="flex-center flex-column">
                 <p class="bestSoFare">The best Players So Far</p>
-                <h2 id="finalScore">high score</h2>
-                <ul id="highScoreList2"> </ul>
-            </div>
+                <ul id="highScoreList"> </ul>
+            @foreach (var user in TopPlayers)
+            {
+                <li class="high-score">
+                    @user.UserFirstName @user.UserLastName @user.TotalScore
+                </li>
+            }
             <div class="podium">
-                <div class="podium__item">
-                    <div id="secondPlace"></div>
+                    <div class="podium__item">
+                        <div id="secondPlace"></div>
 
-                </div>
+                    </div>
 
-                <div class="podium__item">
-                    <div id="firstPlace"></div>
-                </div>
+                    <div class="podium__item">
+                        <div id="firstPlace"></div>
+                    </div>
 
-                <div class="podium__item">
-                    <div id="thirdPlace"></div>
+                    <div class="podium__item">
+                        <div id="thirdPlace"></div>
+                    </div>
+
                 </div>
 
             </div>
 
-            <a class="btn" href="/EndFeedback">Check answers</a>
+                        <button type="button" class="btn" @onclick="GoToFeedback">Check answers</button>
+
 
         </div>
 
     </div>
 @code {
-       protected override void OnAfterRender(bool firstRender)
-    {
-        if(firstRender)
-        {
-            CallJSMethod();
-        }
-     }
+    int userCount = 0;
 
-    private async Task CallJSMethod()
+    private void userIncreaseCount()
     {
-        await JSRuntime.InvokeVoidAsync("endPage");
+        userCount++;
+
     }
 }
