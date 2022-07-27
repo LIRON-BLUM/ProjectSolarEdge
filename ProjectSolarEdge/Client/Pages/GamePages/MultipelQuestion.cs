@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
@@ -29,9 +30,15 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        public IQuestionsDataService QuestionDataService { get; set; }
+
+        
+
         protected async Task saveAnawer()
         {
             //  Liron check if the is a row for this question in gameScore table if ther is Update the game score table with this if not insert
+            //is the Query supposed to be - update Game score table?
            
             questionScoreToInsert = new GameScore()
             {
@@ -54,35 +61,40 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         }
         protected override async Task OnInitializedAsync()
         {
-           // Get question by id from question service
+            
+            
+            currentQuestion = await QuestionDataService.GetQuestionByIdAsync(int.Parse(QuestionId));
+            
+            
+            // Get question by id from question service
 
-             currentQuestion = new Question()
-            {
-                QuestionBody = "What is your favorite color?",
-                Difficulty = QuestionDifficulty.Medium,
-                Answers = new List<QuestionAnswer>()
-                {
-                    new QuestionAnswer() {
-                        AnswerBody= "Red",
-                        IsRight = false
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Blue",
-                        IsRight = false
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Purple",
-                        IsRight = true
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Pink",
-                        IsRight = false
-                    }
+            //currentQuestion = new Question()
+            //{
+            //    QuestionBody = "What is your favorite color?",
+            //    Difficulty = QuestionDifficulty.Medium,
+            //    Answers = new List<QuestionAnswer>()
+            //    {
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Red",
+            //            IsRight = false
+            //        },
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Blue",
+            //            IsRight = false
+            //        },
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Purple",
+            //            IsRight = true
+            //        },
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Pink",
+            //            IsRight = false
+            //        }
                     
 
-                }
+            //    }
         
-            };
+            //};
         }
 
     }

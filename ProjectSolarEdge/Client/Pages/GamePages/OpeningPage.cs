@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Games;
+
 using ProjectSolarEdge.Shared.Entities;
 
 
@@ -27,6 +28,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+ 
 
         protected async Task STARTGAME()
         {
