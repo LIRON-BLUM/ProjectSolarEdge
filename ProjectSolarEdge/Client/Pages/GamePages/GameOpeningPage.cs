@@ -1,47 +1,40 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿
+
+using Microsoft.AspNetCore.Components;
 using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
-
-
-
 namespace ProjectSolarEdge.Client.Pages.GamePages
-{
-    public partial class OpeningPage : ComponentBase, IDisposable
+{ 
+    public partial class GameOpeningPage
     {
-        [Parameter]
-        public string GameId { get; set; }
 
-        [Parameter]
-        public string UserId { get; set; }
+    [Parameter]
+    public string GameId { get; set; }
 
-        public Game GamePlaying { get; set; }
+    [Parameter]
+    public string UserId { get; set; }
 
-        public UsersTable Player { get; set; }
-        public IEnumerable<UsersGameRecord> TopPlayers { get; set; } 
+    public Game GamePlaying { get; set; }
 
-        public UsersGameRecord PlayrsByGameID { get; set; }
+    public UsersTable Player { get; set; }
+    public IEnumerable<UsersGameRecord> TopPlayers { get; set; }
 
-        [Inject]
-        public IGamesDataService GameDataService { get; set; }
+    [Inject]
+    public IGamesDataService GameDataService { get; set; }
 
-        [Inject]
-        public IGameAppService GameAppDataService { get; set; }
+    [Inject]
+    public IGameAppService GameAppDataService { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-        public List<UsersGameRecord> TopThreePlayers { get; private set; }
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
 
         protected override async Task OnInitializedAsync()
         {
-
-            int.TryParse(GameId, out var GId);
-
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-          
-
-
+            TopPlayers = (IEnumerable<UsersGameRecord>)await GameAppDataService.GetUsersGameRecordById(int.Parse(GameId));
 
             Player = new UsersTable()
             {
@@ -51,9 +44,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 UserName = "LimorAvrahami",
             };
 
-            //TopPlayers = await GameAppDataService.GetUsersGameRecord();
-
-            PlayrsByGameID = await GameAppDataService.GetUsersGameRecordById(int.Parse(GameId));
 
             //  Liron - delete this after querise
 
@@ -86,26 +76,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 }
             };
 
-            //Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-            //selectedQuestionToUpdate.Add(q);
-
-            //UsersGameRecord p = TopPlayers.Where(p => p.GameID == GId).SingleOrDefault();
-
-            //TopThreePlayers = new List<UsersGameRecord>()
-            //{
-            //    new UsersGameRecord()
-            //    {
-            //    ID = p.ID,
-            //    UserFirstName = p.UserFirstName,
-            //    UserLastName = p.UserLastName,
-            //    UserName = p.UserName,
-            //    TotalScore = p.TotalScore
-            //    }
-            //};
-
-
-
-
             TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
         }
 
@@ -114,11 +84,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         {
             int gameId = GamePlaying.ID;
             NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
-        }
-
-        public void Dispose()
-        { 
-           throw new NotImplementedException();
         }
 
     }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using ProjectSolarEdge.Shared.Services.GameApp;
 using ProjectSolarEdge.Shared.Services.Games;
 using ProjectSolarEdge.Shared.Services.Questions;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 string connectionString = builder.Configuration.GetConnectionString("SolarEdgeDB");
 builder.Services.AddSingleton<IQuestionRepository>(new QuestionRepository(connectionString));
 builder.Services.AddSingleton<IGameRepository>(new GameRepository(connectionString));
+builder.Services.AddSingleton<IGameAppRepository>(new GameAppRepository(connectionString));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

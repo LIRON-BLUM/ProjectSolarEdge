@@ -6,5 +6,7 @@ namespace ProjectSolarEdge.Client.Services.GameApp
     {
         Task<UsersGameRecord> GetUsersGameRecordById(int Id);
 
+        Task<UsersGameRecord> GetUsersGameRecord();
+
     }
 }

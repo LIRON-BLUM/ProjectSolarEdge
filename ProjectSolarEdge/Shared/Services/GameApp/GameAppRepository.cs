@@ -18,12 +18,18 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
 	    }
 
-        public IEnumerable<UsersGameRecord> GetAllUsersGameRecord(int ID)
+        public IEnumerable<UsersGameRecord> GetAllUsersGameRecordByGameID(int ID)
         {
-            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecord, new { ID });
+            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecordByGameID, new { GameID = ID }).ToList();
             return _data;
         }
 
-      
+        public IEnumerable<UsersGameRecord> GetAllUsersGameRecord()
+        {
+            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecordByGameID, null );
+            return _data;
+        }
+
+
     }
 }

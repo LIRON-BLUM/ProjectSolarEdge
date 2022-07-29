@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
@@ -20,6 +21,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
+
+        [Inject]
+        public IGameAppService GameAppDataService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -49,7 +53,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 new UsersGameRecord()
                 {
                     UserFirstName = "Adi",
-                    UserId =1,
+                    ID =1,
                     UserLastName ="Silagy",
                     UserName ="AdiSilagi",
                     TotalScore=3000
@@ -58,7 +62,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 new UsersGameRecord()
                 {
                     UserFirstName = "Moti",
-                    UserId =2,
+                    ID =2,
                     UserLastName ="Elnekave",
                     UserName ="MotiElnekave",
                     TotalScore=2000
@@ -66,7 +70,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                   new UsersGameRecord()
                 {
                     UserFirstName = "Liron",
-                    UserId =3,
+                    ID =3,
                     UserLastName ="Blum",
                     UserName ="LironBlum",
                     TotalScore=2500
@@ -76,12 +80,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
 
+            //allPlayers = (IEnumerable<UsersGameRecord>)await GameAppDataService.GetUsersGameRecordById(int.Parse(GameId));
+
             allPlayers = new List<UsersGameRecord>()
             {
                 new UsersGameRecord()
                 {
                     UserFirstName = "Adi",
-                    UserId =1,
+                    ID =1,
                     UserLastName ="Silagy",
                     UserName ="AdiSilagi",
                     TotalScore=3000
@@ -90,7 +96,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 new UsersGameRecord()
                 {
                     UserFirstName = "Moti",
-                    UserId =2,
+                    ID =2,
                     UserLastName ="Elnekave",
                     UserName ="MotiElnekave",
                     TotalScore=2000
@@ -98,7 +104,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                   new UsersGameRecord()
                 {
                     UserFirstName = "Liron",
-                    UserId =3,
+                    ID =3,
                     UserLastName ="Blum",
                     UserName ="LironBlum",
                     TotalScore=2500
@@ -106,7 +112,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                      new UsersGameRecord()
                 {
                     UserFirstName = "Yotam",
-                    UserId =4,
+                    ID =4,
                     UserLastName ="Avrahami",
                     UserName ="YotamAvrahami",
                     TotalScore=2400
@@ -114,7 +120,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                         new UsersGameRecord()
                 {
                     UserFirstName = "Roi",
-                    UserId =3,
+                    ID =3,
                     UserLastName ="Ben-Zvi",
                     UserName ="RoiBenZVI",
                     TotalScore=2100
@@ -122,7 +128,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                         new UsersGameRecord()
                 {
                     UserFirstName = "Limor",
-                    UserId = 8,
+                    ID = 8,
                     UserLastName = "Avrahami",
                     UserName = "LimorAvrahami",
                     TotalScore=2000

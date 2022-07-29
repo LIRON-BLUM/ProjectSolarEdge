@@ -43,7 +43,19 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
 
 
-		public static string GetAllUsersGameRecord => @"SELECT ID, GameID, UserName, UserFirstName, UserLastName, TotalScore, CreationDate FROM UsersGameRecord
-														WHERE GameID=@GameID";
+		public static string GetAllUsersGameRecordByGameID => @"SELECT ID, GameID, UserName, UserFirstName, UserLastName, TotalScore, CreationDate FROM UsersGameRecord
+																WHERE GameID = @GameID";
+
+
+		public static string GetAllUsersGameRecord => @"SELECT ID, GameID, UserName, UserFirstName, UserLastName, TotalScore, CreationDate FROM UsersGameRecord";
+
+		public static string AvailableQuestions => @"select 
+														q.ID,
+														q.QuestionBody,
+														q.Type
+													from GameQuestionsConnections as GQ 
+													inner join Questions as q ON GQ.QuestionID = q.ID
+													WHERE GQ.GameID = @GameID AND GQ.QuestionID NOT IN (SELECT gs.QuestionID FROM GameScore as gs WHERE gs.GameID = @GameID AND gs.UserID = @UserID AND gs.GameElement = 2)";
+																
 	}
 }

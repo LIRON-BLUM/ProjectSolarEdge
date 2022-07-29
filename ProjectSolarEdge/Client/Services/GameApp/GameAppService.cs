@@ -12,6 +12,12 @@ namespace ProjectSolarEdge.Client.Services.GameApp
             this._httpClient = client;
         }
 
+        public async Task<UsersGameRecord> GetUsersGameRecord()
+        {
+            Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecord");
+            return await JsonSerializer.DeserializeAsync<UsersGameRecord>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
         public async Task<UsersGameRecord> GetUsersGameRecordById(int Id)
         {
             Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecord/{Id}");

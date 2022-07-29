@@ -31,10 +31,20 @@ namespace ProjectSolarEdge.Server.Controllers
 
 
         [HttpGet]
-        [Route("GetAllUsersGameRecord/{Id}")]
-        public IActionResult GetGameId(int Id)
+        [Route("GetAllUsersGameRecord")]
+        public IActionResult GetQuestions()
         {
-            UsersGameRecord _data = (UsersGameRecord)_gameAppRepository.GetAllUsersGameRecord(Id);
+            IEnumerable<UsersGameRecord> _data = _gameAppRepository.GetAllUsersGameRecord();
+
+            return Ok(_data);
+        }
+
+
+        [HttpGet]
+        [Route("GetAllUsersGameRecord/{Id}")]
+        public IActionResult UsersGameRecordByGameID(int Id)
+        {
+            IEnumerable<UsersGameRecord> _data = _gameAppRepository.GetAllUsersGameRecordByGameID(Id);
 
             if (_data == null)
             {
@@ -47,6 +57,9 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_data);
 
         }
+
+
+
 
 
     }

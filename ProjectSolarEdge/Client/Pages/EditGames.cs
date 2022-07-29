@@ -13,7 +13,7 @@ namespace ProjectSolarEdge.Client.Pages
         public string Id { get; set; }
 
         public Game GameCRUD { get; set; } = new Game();
-
+      
         public IEnumerable<Game> GameData { get; set; }
 
         public IEnumerable<Question> QuestionsData { get; set; }
@@ -26,6 +26,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public HashSet<Question> selectedQuestions { get; set; } = new HashSet<Question>();
 
+      
         public IEnumerable<Question> Elements = new List<Question>();
 
         public string DefaultValue { get; set; } = "Select Question";

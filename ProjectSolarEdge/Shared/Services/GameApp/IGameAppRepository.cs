@@ -9,6 +9,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 {
     public interface IGameAppRepository
     {
-        IEnumerable<UsersGameRecord> GetAllUsersGameRecord(int ID);
+        IEnumerable<UsersGameRecord> GetAllUsersGameRecordByGameID(int ID);
+
+        IEnumerable<UsersGameRecord> GetAllUsersGameRecord();
+
     }
 }

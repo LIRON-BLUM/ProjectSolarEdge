@@ -20,6 +20,6 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public int GameID { get; set; }
 
-
+       
     }
 }

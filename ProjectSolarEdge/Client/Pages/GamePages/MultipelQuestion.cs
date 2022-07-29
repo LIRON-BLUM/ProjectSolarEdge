@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ProjectSolarEdge.Client.Services.Games;
+using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
@@ -84,38 +85,43 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             // Get question by id from question service
 
-            currentQuestion = new Question()
-            {
-                ID=1,
-                QuestionBody = "What is your favorite color?",
-                Difficulty = QuestionDifficulty.Medium,
-                Answers = new List<QuestionAnswer>()
-                {
-                    new QuestionAnswer() {
-                        AnswerBody= "Red",
-                        IsRight = false
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Blue",
-                        IsRight = false
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Purple",
-                        IsRight = true
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Pink",
-                        IsRight = false
-                    }
+            currentQuestion = await QuestionDataService.GetQuestionByIdAsync(int.Parse(QuestionId));
 
-                }
+            //currentQuestion = new Question()
+            //{
+            //    ID=1,
+            //    QuestionBody = "What is your favorite color?",
+            //    Difficulty = QuestionDifficulty.Medium,
+            //    Answers = new List<QuestionAnswer>()
+            //    {
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Red",
+            //            IsRight = false
+            //        },
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Blue",
+            //            IsRight = false
+            //        },
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Purple",
+            //            IsRight = true
+            //        },
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Pink",
+            //            IsRight = false
+            //        }
 
-            };
+            //    }
+
+            //};
 
             questionScore = new GameQuestionsConnection()
             {
                 Score = 200
-             };
+            
+
+
+        };
 
 
             availleblQuestions = new List<Question>()

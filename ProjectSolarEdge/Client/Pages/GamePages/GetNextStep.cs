@@ -29,11 +29,10 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected override async Task OnInitializedAsync()
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-
             string gameGamification = GamePlaying.IsGamified.ToString();
 
             // we need to get all the question didacting the questions the user had all ready answerd.
-            // השאילתה שלירון ועדי כתבו
+
 
             availleblQuestions = new List<Question>()
             {
@@ -52,34 +51,28 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                     Type= QuestionType.MultipleChoice
                 },
 
-                new Question(){
-                    ID = 4,
+                new Question(){ID = 4,
                     Type= QuestionType.TrueFalse
                 }
 
             };
 
+            
 
+            //if (GamePlaying.IsGamified == 1)
+            //{
+            //    // First check if gamification is needed
+            //    // Check how many times gamification is required 
+            //    int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
 
-            if (GamePlaying.IsGamified == 1)
-            {
-                // First check if gamification is needed
-                // Check how many times gamification is required 
-                int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
+            //    if (GamePlaying.WheelIteration > numberOftimesWheelPresented)
+            //    {
+            //        // Here we need to redirect the user to the wheel...
+            //        // we need to do a random to see what question get gamification
+            //        NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
+            //    }
+            //}
 
-                if (GamePlaying.WheelIteration > numberOftimesWheelPresented)
-                {
-                    // Here we need to redirect the user to the wheel...
-                    // we need to do a random to see what question get gamification
-                    NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
-                }
-            }
-
-            if (availleblQuestions.Count() == 0)
-            {
-                NavigationManager.NavigateTo($"End/{GameId}/{UserId}");
-
-            }
 
             Question SelectedQuestion = getRandomQuestion();
 
@@ -96,13 +89,13 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                         NavigationManager.NavigateTo($"YesNoQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
                         break;
                     }
-                //case QuestionType.MultipleChoice:
-                //    {
-                //        NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
-                //        break;
-                //    }
-                    
-            };
+                case QuestionType.MultipleChoice:
+                    {
+                        NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                        break;
+                    }
+                    break;
+            }
         }
 
         private Question getRandomQuestion()
