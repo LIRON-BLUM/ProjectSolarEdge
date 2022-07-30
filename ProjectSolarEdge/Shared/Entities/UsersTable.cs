@@ -28,7 +28,7 @@ namespace ProjectSolarEdge.Shared.Entities
 
     public enum UserType
     {
-        Learnre = 1,
+        Learner = 1,
         QuestionEditor = 2,
         GameEditor = 3
     }

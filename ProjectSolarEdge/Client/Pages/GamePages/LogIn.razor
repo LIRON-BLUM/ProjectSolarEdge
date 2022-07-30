@@ -1,41 +1,58 @@
 ﻿@layout SeconderyLayout
 @page "/LogIn"
-
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
 @inject IJSRuntime JSRuntime;
 
 <link href="/css/styles/LogIn.css" rel="stylesheet" />
 
 <div class="container">
-        <div class="flex-center flex-column">
-            <h1> Welcome</h1>
-            <p id="ErrorHelp"> </p>
-            <form>
-                
-                <p>Enter your Email</p>
-                <input type="text" name="employeeEmail" id="employeeEmail" placeholder="employee Email" value="@UserEmail" @onchange="@(e=>{UserEmail=e.Value.ToString();})" />
-                <p>Enter game code</p>
-                <input type="text" name="GameCode" id="GameCode" placeholder="Game code" value="@GameCode" @onchange="@(e=>{GameCode=e.Value.ToString();})" />
-                <button type="submit" id="StartGame" class="btn" @onclick="StartTheGame" disabled> Enter the game</button>
-               
-            </form>
-           
-        </div>
+    <div class="flex-center flex-column">
+        <h1> Welcome</h1>
+        <p id="ErrorHelp"> </p>
+        <form>
 
-        
+            @*<p>Enter your Email</p>
+        <input type="text" name="employeeEmail" id="employeeEmail" placeholder="employee Email" value="@UserEmail" @onchange="@(e=>{UserEmail=e.Value.ToString();})" />
+        <p>Enter game code</p>
+        <input type="text" name="GameCode" id="GameCode" placeholder="Game code" value="@GameCode" @onchange="@(e=>{GameCode=e.Value.ToString();})" />
+        <button type="submit" id="StartGame" class="btn" @onclick="StartTheGame" disabled> Enter the game</button>*@
+        </form>
+
+            <p>Enter your Email</p>
+            <input type="text"  placeholder="employee Email" @bind-value="@UserEmail" />
+            <p>Enter game code</p>
+            <input type="text"  placeholder="Game code" @bind-value="@GameCode" />
+            <button type="button" id="StartGame" class="btn" @onclick="StartTheGame"> Enter the game</button>
+       
+
     </div>
+    @*<MudGrid>
+            <MudItem xs="12">
+                <MudPaper Class="pa-4">
+                    <MudForm @ref="form">
 
-@code {
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if(firstRender)
-        {
-            CallJSMethod();
+                    </MudForm>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>*@
+
+
+</div>
+
+
+        @code {
+            //protected override void OnAfterRender(bool firstRender)
+            //{
+            //    if (firstRender)
+            //    {
+            //        CallJSMethod();
+            //    }
+            //}
+
+            //private async Task CallJSMethod()
+            //{
+            //    await JSRuntime.InvokeVoidAsync("logInPage");
+            //}
+
         }
-    }
-
-    private async Task CallJSMethod()
-    {
-        await JSRuntime.InvokeVoidAsync("logInPage");
-    }
-
-}

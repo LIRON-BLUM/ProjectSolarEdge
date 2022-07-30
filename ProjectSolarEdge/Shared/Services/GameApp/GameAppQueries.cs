@@ -56,6 +56,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 													from GameQuestionsConnections as GQ 
 													inner join Questions as q ON GQ.QuestionID = q.ID
 													WHERE GQ.GameID = @GameID AND GQ.QuestionID NOT IN (SELECT gs.QuestionID FROM GameScore as gs WHERE gs.GameID = @GameID AND gs.UserID = @UserID AND gs.GameElement = 2)";
+
+
+		public static string GetPlayerByID => @"select ID, UserFirstName, UserLastName, UserName from UsersTable WHERE ID = @ID";
 																
 	}
 }

@@ -18,9 +18,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
 	    }
 
-        public IEnumerable<UsersGameRecord> GetAllUsersGameRecordByGameID(int ID)
+        public IEnumerable<UsersGameRecord> GetUsersGameRecordByGameId(int ID)
         {
-            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecordByGameID, new { GameID = ID }).ToList();
+            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecordByGameID, new { GameID = ID });
             return _data;
         }
 
@@ -31,5 +31,17 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
         }
 
 
+        public IEnumerable<UsersGameRecord> AvailableQuestions(int gameID, int userID)
+        {
+            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.AvailableQuestions, new { GameID = gameID, UserID = userID }).ToList();
+            return _data;
+        }
+
+        public UsersTable GetPlayerByID(int userID)
+        {
+            UsersTable _user = GetRecords<UsersTable>(GameAppQueries.GetPlayerByID, new { ID = userID }).FirstOrDefault();
+
+            return _user;
+        }
     }
 }

@@ -41,10 +41,10 @@ namespace ProjectSolarEdge.Server.Controllers
 
 
         [HttpGet]
-        [Route("GetAllUsersGameRecord/{Id}")]
-        public IActionResult UsersGameRecordByGameID(int Id)
+        [Route("GetAllUsersGameRecordByGameID/{gameId}")]
+        public IActionResult UsersGameRecordByGameID(int gameId)
         {
-            IEnumerable<UsersGameRecord> _data = _gameAppRepository.GetAllUsersGameRecordByGameID(Id);
+            IEnumerable<UsersGameRecord> _data = _gameAppRepository.GetUsersGameRecordByGameId(gameId);
 
             if (_data == null)
             {
@@ -55,6 +55,44 @@ namespace ProjectSolarEdge.Server.Controllers
             }
 
             return Ok(_data);
+
+        }
+
+
+        [HttpGet]
+        [Route("AvailableQuestions/{GameID}/{UserID}")]
+        public IActionResult AvailableQuestions(int GameID, int UserID)
+        {
+            IEnumerable<UsersGameRecord> _data = _gameAppRepository.AvailableQuestions(GameID, UserID);
+
+            if (_data == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_data);
+
+        }
+
+
+        [HttpGet]
+        [Route("GetUserByID/{ID}")]
+        public IActionResult GetPlayerByID(int ID)
+        {
+            UsersTable _player = _gameAppRepository.GetPlayerByID(ID);
+
+            if (_player == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_player);
 
         }
 

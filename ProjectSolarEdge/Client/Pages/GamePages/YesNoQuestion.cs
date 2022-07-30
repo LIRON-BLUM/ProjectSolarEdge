@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Games;
+using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
@@ -17,7 +19,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public Game GamePlaying { get; set; }
 
-        public UsersTable player { get; set; }
+        public UsersTable Player { get; set; }
 
         public Question currentQuestion { get; set; }
 
@@ -33,7 +35,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public IGamesDataService GameDataService { get; set; }
 
         [Inject]
+        public IGameAppService GameAppDataService { get; set; }
+
+        [Inject]
+        public IQuestionsDataService QuestionDataService { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
+
 
         protected async Task saveAnawer()
         {
@@ -41,7 +50,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             questionScoreToInsert = new GameScore()
             {
-                UserID = player.ID,
+                UserID = Player.ID,
                 GameID = GamePlaying.ID,
                 QuestionID = currentQuestion.ID,
                 IsRight = Convert.ToBoolean(chosenanswer),
@@ -61,54 +70,60 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected override async Task OnInitializedAsync()
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-
-            player = new UsersTable()
-            {
-                ID = 8,
-                UserFirstName = "Limor",
-                UserLastName = "Avrahami",
-                UserName = "LimorAvrahami",
-            };
+            Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
+            //Player = new UsersTable()
+            //{
+            //    ID = 8,
+            //    UserFirstName = "Limor",
+            //    UserLastName = "Avrahami",
+            //    UserName = "LimorAvrahami",
+            //};
 
             // Get question by id from question service
 
-            currentQuestion = new Question()
-            {
-                QuestionBody = "Does Liron miss me?",
-                Difficulty = QuestionDifficulty.Medium,
-                Answers = new List<QuestionAnswer>()
-                {
-                    new QuestionAnswer() {
-                        AnswerBody= "Yes",
-                        IsRight = false
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "No",
-                        IsRight = true
-                    }
-                }
+            currentQuestion = await QuestionDataService.GetQuestionByIdAsync(int.Parse(QuestionId));
 
-            };
+            //currentQuestion = new Question()
+            //{
+            //    QuestionBody = "Does Liron miss me?",
+            //    Difficulty = QuestionDifficulty.Medium,
+            //    Answers = new List<QuestionAnswer>()
+            //    {
+            //        new QuestionAnswer() {
+            //            AnswerBody= "Yes",
+            //            IsRight = false
+            //        },
+            //        new QuestionAnswer() {
+            //            AnswerBody= "No",
+            //            IsRight = true
+            //        }
+            //    }
+
+            //};
 
             questionScore = new GameQuestionsConnection()
             {
                 Score = 200
             };
 
-            availleblQuestions = new List<Question>()
-            {
-                new Question()
-                {
-                    ID = 1,
-                    Type= QuestionType.SingleChoice
-                },
-                  new Question() {
-                    ID = 2,
-                    Type= QuestionType.TrueFalse
-                },
+            int.TryParse(GameId, out var gameId);
+            int.TryParse(UserId, out var userId);
+            availleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
+
+            //availleblQuestions = new List<Question>()
+            //{
+            //    new Question()
+            //    {
+            //        ID = 1,
+            //        Type= QuestionType.SingleChoice
+            //    },
+            //      new Question() {
+            //        ID = 2,
+            //        Type= QuestionType.TrueFalse
+            //    },
 
 
-            };
+            //};
         }
 
     }

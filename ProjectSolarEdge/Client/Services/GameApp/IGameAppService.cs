@@ -6,7 +6,17 @@ namespace ProjectSolarEdge.Client.Services.GameApp
     {
         Task<UsersGameRecord> GetUsersGameRecordById(int Id);
 
+        Task<IEnumerable<UsersGameRecord>> GetUsersGameRecordByGameId(int gameId);
+
         Task<UsersGameRecord> GetUsersGameRecord();
+
+        //Task<IEnumerable<Subject>> GetSubjectsAsync();
+
+        Task<UsersTable> GetPlayerByID(int UserID);
+
+        Task<IEnumerable<Question>> AvailableQuestions(int GameID, int UserID);
+
+
 
     }
 }

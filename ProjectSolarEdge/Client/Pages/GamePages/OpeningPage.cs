@@ -10,6 +10,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 {
     public partial class OpeningPage : ComponentBase, IDisposable
     {
+
+    
         [Parameter]
         public string GameId { get; set; }
 
@@ -38,53 +40,55 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             int.TryParse(GameId, out var GId);
 
-            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+            GamePlaying = await GameDataService.GetGameByIdAsync(GId);
           
 
+            Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
 
-
-            Player = new UsersTable()
-            {
-                ID = 8,
-                UserFirstName = "Limor",
-                UserLastName = "Avrahami",
-                UserName = "LimorAvrahami",
-            };
+            //Player = new UsersTable()
+            //{
+            //    ID = 8,
+            //    UserFirstName = "Limor",
+            //    UserLastName = "Avrahami",
+            //    UserName = "LimorAvrahami",
+            //};
 
             //TopPlayers = await GameAppDataService.GetUsersGameRecord();
 
-            PlayrsByGameID = await GameAppDataService.GetUsersGameRecordById(int.Parse(GameId));
+            //PlayrsByGameID = await GameAppDataService.GetUsersGameRecordById(int.Parse(GameId));
+
+            TopPlayers = await GameAppDataService.GetUsersGameRecordByGameId(int.Parse(GameId));
 
             //  Liron - delete this after querise
 
-            TopPlayers = new List<UsersGameRecord>()
-            {
-                new UsersGameRecord()
-                {
-                    UserFirstName = "Adi",
-                    ID =1,
-                    UserLastName ="Silagy",
-                    UserName ="AdiSilagi",
-                    TotalScore=3000
-                },
+            //TopPlayers = new List<UsersGameRecord>()
+            //{
+            //    new UsersGameRecord()
+            //    {
+            //        UserFirstName = "Adi",
+            //        ID =1,
+            //        UserLastName ="Silagy",
+            //        UserName ="AdiSilagi",
+            //        TotalScore=3000
+            //    },
 
-                new UsersGameRecord()
-                {
-                    UserFirstName = "Moti",
-                    ID =2,
-                    UserLastName ="Elnekave",
-                    UserName ="MotiElnekave",
-                    TotalScore=2000
-                },
-                  new UsersGameRecord()
-                {
-                    UserFirstName = "Liron",
-                    ID =3,
-                    UserLastName ="Blum",
-                    UserName ="LironBlum",
-                    TotalScore=2500
-                }
-            };
+            //    new UsersGameRecord()
+            //    {
+            //        UserFirstName = "Moti",
+            //        ID =2,
+            //        UserLastName ="Elnekave",
+            //        UserName ="MotiElnekave",
+            //        TotalScore=2000
+            //    },
+            //      new UsersGameRecord()
+            //    {
+            //        UserFirstName = "Liron",
+            //        ID =3,
+            //        UserLastName ="Blum",
+            //        UserName ="LironBlum",
+            //        TotalScore=2500
+            //    }
+            //};
 
             //Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
             //selectedQuestionToUpdate.Add(q);
