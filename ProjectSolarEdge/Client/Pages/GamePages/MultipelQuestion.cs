@@ -50,30 +50,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         
 
-        protected async Task saveAnawer()
-        {
-            //  Liron check if the is a row for this question in gameScore table if ther is Update the game score table with this if not insert
-            //is the Query supposed to be - update Game score table?
-           
-            questionScoreToInsert = new GameScore()
-            {
-                UserID = Player.ID,
-                GameID = GamePlaying.ID,
-                QuestionID = currentQuestion.ID,
-                IsRight= Convert.ToBoolean(chosenanswer),
-                ElementScore = questionScore.Score,
-                IsAnswered= true
-            };
-
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
-
-        }
-
-        protected async Task SkipAnawer()
-        {
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
-
-        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -81,46 +57,10 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
             Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
-            //player = new UsersTable()
-            //{
-            //    ID = 8,
-            //    UserFirstName = "Limor",
-            //    UserLastName = "Avrahami",
-            //    UserName = "LimorAvrahami",
-            //};
-
-
-            // Get question by id from question service
+           
 
             currentQuestion = await QuestionDataService.GetQuestionByIdAsync(int.Parse(QuestionId));
 
-            //currentQuestion = new Question()
-            //{
-            //    ID=1,
-            //    QuestionBody = "What is your favorite color?",
-            //    Difficulty = QuestionDifficulty.Medium,
-            //    Answers = new List<QuestionAnswer>()
-            //    {
-            //        new QuestionAnswer() {
-            //            AnswerBody= "Red",
-            //            IsRight = false
-            //        },
-            //        new QuestionAnswer() {
-            //            AnswerBody= "Blue",
-            //            IsRight = false
-            //        },
-            //        new QuestionAnswer() {
-            //            AnswerBody= "Purple",
-            //            IsRight = true
-            //        },
-            //        new QuestionAnswer() {
-            //            AnswerBody= "Pink",
-            //            IsRight = false
-            //        }
-
-            //    }
-
-            //};
 
             questionScore = new GameQuestionsConnection()
             {
@@ -128,7 +68,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             
 
 
-        };
+            };
 
 
             int.TryParse(GameId, out var gameId);
@@ -175,6 +115,36 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             //{
             //    currentScore += score.;
             //}
+
+        }
+
+
+        protected async Task saveAnawer()
+        {
+            //  Liron check if the is a row for this question in gameScore table if ther is Update the game score table with this if not insert
+            //is the Query supposed to be - update Game score table?
+
+            questionScoreToInsert = new GameScore()
+            {
+                UserID = int.Parse(UserId),
+                GameID = int.Parse(GameId),
+                QuestionID = int.Parse(QuestionId),   
+                
+                //In the DB IsRight id bit not bool
+                IsRight = Convert.ToBoolean(chosenanswer),
+                ElementScore = questionScore.Score,
+                IsAnswered = true
+            };
+
+            await GameAppDataService.UpdateScoreElement(questionScoreToInsert);
+
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
+        }
+
+        protected async Task SkipAnawer()
+        {
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
 
         }
 

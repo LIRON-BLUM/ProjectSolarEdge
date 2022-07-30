@@ -18,5 +18,7 @@ namespace ProjectSolarEdge.Client.Services.GameApp
 
         Task<int> AddScoreElement(GameScore gameScore);
 
+        Task<bool> UpdateScoreElement(GameScore gameScore);
+
     }
 }

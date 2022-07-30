@@ -19,5 +19,7 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
         int AddScoreElement(GameScore GameScore);
 
+        bool UpdateScoreElenent(GameScore GameScore);
+
     }
 }

@@ -116,6 +116,21 @@ namespace ProjectSolarEdge.Server.Controllers
 
         }
 
+        [HttpPut]
+        [Route("UpdateScoreElenent")]
+        public IActionResult UpdateScoreElenent(GameScore gameScore)
+        {
+            if (gameScore == null)
+            {
+
+                return BadRequest();
+            }
+
+            bool _gameScore = _gameAppRepository.UpdateScoreElenent(gameScore);
+
+            return Ok(_gameScore); //success
+        }
+
 
 
     }

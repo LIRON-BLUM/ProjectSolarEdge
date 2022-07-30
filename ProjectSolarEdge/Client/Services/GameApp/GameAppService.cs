@@ -64,5 +64,20 @@ namespace ProjectSolarEdge.Client.Services.GameApp
 
             return 0;
         }
+
+        public async Task<bool> UpdateScoreElement(GameScore gameScore)
+        {
+            var gameScoreJson =
+             new StringContent(JsonSerializer.Serialize(gameScore), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync("api/Questions/UpdateScoreElenent", gameScoreJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
     }
 }

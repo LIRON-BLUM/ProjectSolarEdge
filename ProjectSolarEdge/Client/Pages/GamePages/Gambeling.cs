@@ -33,22 +33,29 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        protected async Task goToNext()
-        {
-            string check = GambelScore;
 
-        }
         protected override async Task OnInitializedAsync()
         {
             //  liron - we need to insert this in the GameScore table
-           GambelingScoreToInsert = new GameScore()
+
+
+        }
+
+
+        protected async Task GoToNext()
+        {
+
+            GambelingScoreToInsert = new GameScore()
             {
-                UserID = player.ID,
-                GameID = GamePlaying.ID,
+                UserID = int.Parse(UserId),
+                GameID = int.Parse(GameId),
                 GameElement = 2,
                 ElementScore = Convert.ToUInt16(GambelScore),
             };
 
+            string check = GambelScore;
+
+            await GameAppDataService.AddScoreElement(GambelingScoreToInsert);
         }
 
     }

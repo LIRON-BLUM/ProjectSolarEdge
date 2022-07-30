@@ -38,26 +38,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected override async Task OnInitializedAsync()
         {
+          //I think We can Use the parameter variables
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-
-
             Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
-            //player = new UsersTable()
-            //{
-            //    ID = 8,
-            //    UserFirstName = "Limor",
-            //    UserLastName = "Avrahami",
-            //    UserName = "LimorAvrahami",
-            //};
-
-            // for liron - we need to insert this in the GameScore table
-
-
 
 
         }
 
-        protected async Task goToNext()
+        protected async Task GoToNext()
         {
             string check = WheelScore;
 

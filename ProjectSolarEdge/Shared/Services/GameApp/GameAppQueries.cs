@@ -64,5 +64,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 													  VALUES (@UserID,@GameID,0,@GameElement,0,0,@ElementScore,0)";
 
 
+		public static string UpdateScoreElenent => @"UPDATE GameScore
+													SET QuestionID = @QuestionID, IsRight = @IsRight, GamblingScore = @GamblingScore, ElementScore= @ElementScore, IsAnswered = @IsAnswered
+													WHERE ID = (SELECT MAX(ID) FROM GameScore WHERE UserID = @UserID AND GameID = @GameID)";
+
 	}
 }

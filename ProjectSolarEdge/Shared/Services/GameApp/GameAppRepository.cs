@@ -51,5 +51,14 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
             return results;
         }
+
+        public bool UpdateScoreElenent(GameScore GameScore)
+        {
+
+            bool results = ExecuteAll(GameAppQueries.UpdateScoreElenent, GameScore);
+
+
+            return results;
+        }
     }
 }

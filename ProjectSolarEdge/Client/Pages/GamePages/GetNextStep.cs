@@ -37,7 +37,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             int.TryParse(UserId, out var userId);
 
 
-            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+            GamePlaying = await GameDataService.GetGameByIdAsync(gameId);
             string gameGamification = GamePlaying.IsGamified.ToString();
 
             // we need to get all the question didacting the questions the user had all ready answerd.
@@ -71,7 +71,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             if (GamePlaying.IsGamified == 1)
             {
-                NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
+                NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
                
                 
                 //// First check if gamification is needed
@@ -90,7 +90,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             Question SelectedQuestion = getRandomQuestion();
 
-            NavigationManager.NavigateTo($"MultipelQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+            NavigationManager.NavigateTo($"MultipelQuestion/{gameId}/{userId}/{SelectedQuestion.ID}");
             }
 
 
