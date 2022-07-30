@@ -17,5 +17,7 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
         UsersTable GetPlayerByID(int userID);
 
+        int AddScoreElement(GameScore GameScore);
+
     }
 }

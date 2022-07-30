@@ -16,7 +16,7 @@ namespace ProjectSolarEdge.Client.Services.GameApp
 
         Task<IEnumerable<Question>> AvailableQuestions(int GameID, int UserID);
 
-
+        Task<int> AddScoreElement(GameScore gameScore);
 
     }
 }

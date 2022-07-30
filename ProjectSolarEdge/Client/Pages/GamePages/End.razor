@@ -24,11 +24,11 @@
                         </th>
                     </tr>   
 
-                @foreach (var user in allPlayers)
+                @foreach (var user in AllPlayers)
                 {
                    userIncreaseCount();
                     <tr>
-                        @if(@user.ID == @player.ID)
+                        @if(@user.ID == @Player.ID)
                         {
                        <td class="currentUser">@userCount</td>
                        <td class="currentUser" >@user.UserFirstName @user.UserLastName</td>

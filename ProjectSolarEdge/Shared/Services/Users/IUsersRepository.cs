@@ -10,7 +10,7 @@ namespace ProjectSolarEdge.Shared.Services.Users
     public interface IUsersRepository
     {
         IEnumerable<UsersTable> GetAllUsers();
-
+        UsersTable GetUserByID(int userID);
         UsersTable GetUserIdByUserName(string userName);
     }
 }

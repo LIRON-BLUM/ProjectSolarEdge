@@ -29,10 +29,28 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
         [HttpGet]
-        [Route("GetUserIdByUserName/{UserName}")]
-        public IActionResult GetUserIdByUserName(string UserName)
+        [Route("GetUserByID/{UserID}")]
+        public IActionResult GetUserByID(int UserID)
         {
-            UsersTable _UserID = _usersRepository.GetUserIdByUserName(UserName);
+            UsersTable _UserID = _usersRepository.GetUserByID(UserID);
+
+            if (_UserID == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_UserID);
+        }
+
+
+        [HttpGet]
+        [Route("GetUserIdByUserName/{UserName}")]
+        public IActionResult GetUserIdByUserName(string userName)
+        {
+            UsersTable _UserID = _usersRepository.GetUserIdByUserName(userName);
 
             if (_UserID == null)
             {

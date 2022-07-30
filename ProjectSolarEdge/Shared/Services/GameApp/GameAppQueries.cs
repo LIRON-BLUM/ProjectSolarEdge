@@ -59,6 +59,10 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
 
 		public static string GetPlayerByID => @"select ID, UserFirstName, UserLastName, UserName from UsersTable WHERE ID = @ID";
-																
+
+		public static string AddScoreElement => @"Insert INTO GameScore (UserID,GameID,QuestionID,GameElement,IsRight,GamblingScore,ElementScore,IsAnswered)
+													  VALUES (@UserID,@GameID,0,@GameElement,0,0,@ElementScore,0)";
+
+
 	}
 }

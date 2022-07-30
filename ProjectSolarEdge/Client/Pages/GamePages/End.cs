@@ -15,9 +15,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public Game GamePlaying { get; set; }
 
-        public UsersTable player { get; set; }
+        public UsersTable Player { get; set; }
         public IEnumerable<UsersGameRecord> TopPlayers { get; set; }
-        public IEnumerable<UsersGameRecord> allPlayers { get; set; }
+        public IEnumerable<UsersGameRecord> AllPlayers { get; set; }
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -40,103 +40,22 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
 
-            player = new UsersTable()
-            {
-                ID = 8,
-                UserFirstName = "Limor",
-                UserLastName = "Avrahami",
-                UserName = "LimorAvrahami",
-            };
+            int.TryParse(GameId, out var GId);
 
-            TopPlayers = new List<UsersGameRecord>()
-            {
-                new UsersGameRecord()
-                {
-                    UserFirstName = "Adi",
-                    ID =1,
-                    UserLastName ="Silagy",
-                    UserName ="AdiSilagi",
-                    TotalScore=3000
-                },
+            GamePlaying = await GameDataService.GetGameByIdAsync(GId);
 
-                new UsersGameRecord()
-                {
-                    UserFirstName = "Moti",
-                    ID =2,
-                    UserLastName ="Elnekave",
-                    UserName ="MotiElnekave",
-                    TotalScore=2000
-                },
-                  new UsersGameRecord()
-                {
-                    UserFirstName = "Liron",
-                    ID =3,
-                    UserLastName ="Blum",
-                    UserName ="LironBlum",
-                    TotalScore=2500
-                },
 
-            };
+            Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
 
-            TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
+            AllPlayers = await GameAppDataService.GetUsersGameRecordByGameId(int.Parse(GameId));
 
-            //allPlayers = (IEnumerable<UsersGameRecord>)await GameAppDataService.GetUsersGameRecordById(int.Parse(GameId));
+            TopPlayers = AllPlayers.OrderByDescending(e => e.TotalScore).Take(3);
 
-            allPlayers = new List<UsersGameRecord>()
-            {
-                new UsersGameRecord()
-                {
-                    UserFirstName = "Adi",
-                    ID =1,
-                    UserLastName ="Silagy",
-                    UserName ="AdiSilagi",
-                    TotalScore=3000
-                },
+            int allUsersCount = AllPlayers.Count();
 
-                new UsersGameRecord()
-                {
-                    UserFirstName = "Moti",
-                    ID =2,
-                    UserLastName ="Elnekave",
-                    UserName ="MotiElnekave",
-                    TotalScore=2000
-                },
-                  new UsersGameRecord()
-                {
-                    UserFirstName = "Liron",
-                    ID =3,
-                    UserLastName ="Blum",
-                    UserName ="LironBlum",
-                    TotalScore=2500
-                },
-                     new UsersGameRecord()
-                {
-                    UserFirstName = "Yotam",
-                    ID =4,
-                    UserLastName ="Avrahami",
-                    UserName ="YotamAvrahami",
-                    TotalScore=2400
-                },
-                        new UsersGameRecord()
-                {
-                    UserFirstName = "Roi",
-                    ID =3,
-                    UserLastName ="Ben-Zvi",
-                    UserName ="RoiBenZVI",
-                    TotalScore=2100
-                },
-                        new UsersGameRecord()
-                {
-                    UserFirstName = "Limor",
-                    ID = 8,
-                    UserLastName = "Avrahami",
-                    UserName = "LimorAvrahami",
-                    TotalScore=2000
-                }
-            };
-            int allUsersCount = allPlayers.Count();
+            AllPlayers = AllPlayers.OrderByDescending(e => e.TotalScore).Take(allUsersCount);
 
-            allPlayers = allPlayers.OrderByDescending(e => e.TotalScore).Take(allUsersCount);
+         
 
 
         }

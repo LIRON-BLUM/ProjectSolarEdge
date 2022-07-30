@@ -45,72 +45,12 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
 
-            //Player = new UsersTable()
-            //{
-            //    ID = 8,
-            //    UserFirstName = "Limor",
-            //    UserLastName = "Avrahami",
-            //    UserName = "LimorAvrahami",
-            //};
-
-            //TopPlayers = await GameAppDataService.GetUsersGameRecord();
-
-            //PlayrsByGameID = await GameAppDataService.GetUsersGameRecordById(int.Parse(GameId));
-
             TopPlayers = await GameAppDataService.GetUsersGameRecordByGameId(int.Parse(GameId));
 
-            //  Liron - delete this after querise
-
-            //TopPlayers = new List<UsersGameRecord>()
-            //{
-            //    new UsersGameRecord()
-            //    {
-            //        UserFirstName = "Adi",
-            //        ID =1,
-            //        UserLastName ="Silagy",
-            //        UserName ="AdiSilagi",
-            //        TotalScore=3000
-            //    },
-
-            //    new UsersGameRecord()
-            //    {
-            //        UserFirstName = "Moti",
-            //        ID =2,
-            //        UserLastName ="Elnekave",
-            //        UserName ="MotiElnekave",
-            //        TotalScore=2000
-            //    },
-            //      new UsersGameRecord()
-            //    {
-            //        UserFirstName = "Liron",
-            //        ID =3,
-            //        UserLastName ="Blum",
-            //        UserName ="LironBlum",
-            //        TotalScore=2500
-            //    }
-            //};
-
-            //Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-            //selectedQuestionToUpdate.Add(q);
-
-            //UsersGameRecord p = TopPlayers.Where(p => p.GameID == GId).SingleOrDefault();
-
-            //TopThreePlayers = new List<UsersGameRecord>()
-            //{
-            //    new UsersGameRecord()
-            //    {
-            //    ID = p.ID,
-            //    UserFirstName = p.UserFirstName,
-            //    UserLastName = p.UserLastName,
-            //    UserName = p.UserName,
-            //    TotalScore = p.TotalScore
-            //    }
-            //};
-
-
-
-
             TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
+
+
+
         }
 
 

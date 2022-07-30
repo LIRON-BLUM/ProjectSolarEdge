@@ -1,4 +1,5 @@
 ﻿using ProjectSolarEdge.Shared.Entities;
+using System.Text;
 using System.Text.Json;
 
 namespace ProjectSolarEdge.Client.Services.GameApp
@@ -11,6 +12,8 @@ namespace ProjectSolarEdge.Client.Services.GameApp
         {
             this._httpClient = client;
         }
+
+  
 
         public async Task<IEnumerable<Question>> AvailableQuestions(int GameID, int UserID)
         {
@@ -44,6 +47,22 @@ namespace ProjectSolarEdge.Client.Services.GameApp
         {
             Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecord/{Id}");
             return await JsonSerializer.DeserializeAsync<UsersGameRecord>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
+
+        public async Task<int> AddScoreElement(GameScore gameScore)
+        {
+            var gameScoreJson =
+                new StringContent(JsonSerializer.Serialize(gameScore), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/GameApps/AddScoreElement", gameScoreJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<int>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return 0;
         }
     }
 }

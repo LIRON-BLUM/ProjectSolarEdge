@@ -43,5 +43,13 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
             return _user;
         }
+
+        public int AddScoreElement(GameScore GameScore)
+        {
+            int results = InsertAndreturnInt(GameAppQueries.AddScoreElement, GameScore);
+
+
+            return results;
+        }
     }
 }

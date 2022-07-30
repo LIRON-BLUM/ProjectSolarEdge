@@ -96,7 +96,25 @@ namespace ProjectSolarEdge.Server.Controllers
 
         }
 
+        [HttpPost]
+        [Route("AddScoreElement")]
+        public async Task<IActionResult> AddScoreElement(GameScore gameScore)
+        {
 
+            int _gameScore = _gameAppRepository.AddScoreElement(gameScore);
+
+
+            if (_gameScore == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_gameScore);
+
+        }
 
 
 
