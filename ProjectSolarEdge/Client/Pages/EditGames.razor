@@ -36,7 +36,7 @@
                 <MudNumericField @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />
 
 
-                <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Primary" DisableElevation="true">Save</MudButton>
+                <MudButton Variant="Variant.Filled" @onclick="SaveGame" Color="Color.Primary" DisableElevation="true">Save</MudButton>
 
 
             </EditForm>
@@ -100,20 +100,13 @@
                         <HeaderContent>
                             <MudTh>Type</MudTh>
                             <MudTh>Question</MudTh>
-                            <MudTh>Delete</MudTh>
+                            
 
                         </HeaderContent>
                         <RowTemplate>
                             <MudTd DataLabel="Type">@context.Type</MudTd>
                             <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
-                            <MudTd DataLabel="Delete">
-
-                                <MudTooltip Text="Delete Question">
-                                
-                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteQuestion(context.ID))" Color="Color.Primary" />
-
-                                </MudTooltip>
-                            </MudTd>
+                           
 
                         </RowTemplate>
                     </MudTable>
@@ -167,15 +160,6 @@
     }
 
 
-    public bool _isOpen = false;
-
-    public void ToggleOpen()
-    {
-        if (_isOpen)
-            _isOpen = false;
-        else
-            _isOpen = true;
-    }
 
 
 

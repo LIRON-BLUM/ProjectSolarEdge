@@ -118,12 +118,12 @@ namespace ProjectSolarEdge.Client.Pages
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
             QuestionsDataToDisplay = QuestionsData;
 
-            //NavigationManager.NavigateTo("Questions");
+            NavigationManager.NavigateTo("Questions");
 
 
 
 
-        }
+            }
 
         public void Dispose()
         {

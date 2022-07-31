@@ -12,6 +12,7 @@ namespace ProjectSolarEdge.Client.Pages
         [Parameter]
         public string Id { get; set; }
 
+        public int NavigationDestination { get; set; }
         public Game GameCRUD { get; set; } = new Game();
       
         public IEnumerable<Game> GameData { get; set; }
@@ -78,42 +79,15 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
-        bool fixed_header = true;
-        bool fixed_footer = false;
-
-        //private string searchString = "";
-        private string searchString = "";
-        private int totalItems;
-        private IEnumerable<Game> pagedData;
-        private MudTable<Game> table;
-        public string SubName = "";
-
-        //private bool FilterFunc(Game Game)
-
-        protected async Task<TableData<Game>> ServerReload(TableState state)
+        protected async Task SaveGame()
         {
+          
 
-            IEnumerable<Game> data = await GameDataService.GetAllGames();
-            //await Task.Delay(300);
-            data = data.Where(Game =>
-
-            {
-                if (string.IsNullOrWhiteSpace(searchString))
-                    return true;
-                if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                    return true;
-
-                if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
-                    return true;
-                return false;
-            }).ToArray();
-            totalItems = data.Count();
-
-
-            pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
-            return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };
-
+            NavigationDestination = 1;
+             AddAndUpdate();
         }
+
+   
 
         protected async Task AddAndUpdate()
         {
@@ -159,7 +133,9 @@ namespace ProjectSolarEdge.Client.Pages
               await GameDataService.UpdateGame(GameCRUD);
              
             }
-               NavigationManager.NavigateTo("/Games");
+
+            Navigation(NavigationDestination);
+            //  NavigationManager.NavigateTo("/Games");
         }
 
         protected async Task DeleteQuestion(int id)
@@ -170,66 +146,96 @@ namespace ProjectSolarEdge.Client.Pages
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
             QuestionsDataToDisplay = QuestionsData;
 
-            //NavigationManager.NavigateTo("Questions");
 
-
+            NavigationManager.NavigateTo($"/EditGame/{Id}");
 
 
         }
+
+
+        protected async Task Navigation(int pageNum)
+        {
+            if (pageNum == 1)
+            {
+                NavigationManager.NavigateTo("/Games");
+            } else
+            NavigationManager.NavigateTo($"/EditGame/{Id}");
+        }
+
+
+
+        public bool _isOpen = false;
+
+        public void ToggleOpen()
+        {
+            if (_isOpen)
+            {
+                _isOpen = false;
+
+
+
+               
+               
+                //NavigationManager.NavigateTo($"/EditGame/{Id}");
+            }
+            //NavigationManager.NavigateTo($"/EditGame/{Id}");
+            else
+            {
+                _isOpen = true;
+                NavigationDestination = 2;
+                AddAndUpdate();
+            }
+                
+
+           
+
+        }
+
 
         public void Dispose()
         {
             throw new NotImplementedException();
         }
-        // 1) Check which answer is the correct one and set it up
-        //foreach (var ans in GameCRUD.Questions)
-        //{
-
-        //    ans.IsRight = false;
-
-        //    if (GameCRUD.Questions.Where(a => a.ID == CheckedQuestionID).Count() > 0)
-        //    {
-        //        GameCRUD.Questions.Where(ans => ans.ID == CheckedQuestionID).FirstOrDefault().IsRight = true;
-        //    }
-        //}
 
 
-        //if (QuestionsCRUD.ID == 0) // Create new question
-        //{
-        //    // 2) Save the question itself into the database and get the question ID back from the database
-        //    int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+        bool fixed_header = true;
+        bool fixed_footer = false;
 
-        //    if (QuestionID != 0) // Question added to the DB
-        //    {
-        //        QuestionsCRUD.ID = QuestionID;
-        //    }
+        //private string searchString = "";
+        private string searchString = "";
+        private int totalItems;
+        private IEnumerable<Game> pagedData;
+        private MudTable<Game> table;
+        public string SubName = "";
 
-        //    // 3) Add the answers on the question to the database using the question ID retunred from the DB 
-        //    foreach (var ans in QuestionsCRUD.Answers)
-        //    {
-        //        ans.QuestionID = QuestionID;
-        //        await QuestionDataService.AddAnswerToDB(ans);
+        //private bool FilterFunc(Game Game)
 
-        //    }
+        protected async Task<TableData<Game>> ServerReload(TableState state)
+        {
 
-        //    //4) If all successful then navigate the user to edit question or list of questions.
-        //    NavigationManager.NavigateTo("/");
+            IEnumerable<Game> data = await GameDataService.GetAllGames();
+            //await Task.Delay(300);
+            data = data.Where(Game =>
 
-        //}
-        //else
-        //{
-        //    //  QuestionsCRUD.Answers = new List<QuestionAnswer>();
+            {
+                if (string.IsNullOrWhiteSpace(searchString))
+                    return true;
+                if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
 
-        //    await QuestionDataService.UpdateQuestion(QuestionsCRUD);
-
-        //    foreach (var ans in QuestionsCRUD.Answers)
-        //    {
-
-        //        await QuestionDataService.UpdateAnswer(ans);
+                if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
+                    return true;
+                return false;
+            }).ToArray();
+            totalItems = data.Count();
 
 
-        //  }  }
+            pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+            return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };
 
+        }
+
+     
 
 
     }
