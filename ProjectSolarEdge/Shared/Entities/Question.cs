@@ -34,9 +34,13 @@ namespace ProjectSolarEdge.Shared.Entities
 
     public enum QuestionType
     {
-        SingleChoice = 1,
-        MultipleChoice = 2,
-        TrueFalse = 3
+        //SingleChoice = 1,
+        //MultipleChoice = 2,
+        //TrueFalse = 3
+
+        MultipleChoice = 1,
+        TrueFalse = 2,
+        Order = 3
     }
 
     public enum QuestionDifficulty

@@ -56,6 +56,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             string check = GambelScore;
 
             await GameAppDataService.AddScoreElement(GambelingScoreToInsert);
+
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
         }
 
     }

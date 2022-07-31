@@ -9,9 +9,9 @@
  <div id="gambelBack"> 
     <div class="container">
         <div class="flex-center flex-column ">
-           
-             <h1> How Much Would You Like To Bet On Your Success </h1>
-    
+
+            <h1> How Much Would You Like To Bet On Your Success </h1>
+
             <p id="colectedScore"></p>
             <form>
                 <select id="gambelOptions" class="btnGreen" onchange="gambelChoice()">
@@ -27,12 +27,18 @@
                 <input id="gambelScoreHidden" type="hidden" value="@GambelScore" @onchange="@(e=>{GambelScore=e.Value.ToString();})" />
 
             </form>
+            <EditForm Model="@GambelingScoreToInsert">
+                <MudSelect Dense="true" T="int" Label="Difficulty" Variant="Variant.Outlined" @bind-Value="@GambelingScoreToInsert.GamblingScore">
+                    <MudSelectItem Value="0" />
+                    <MudSelectItem Value="100" />
+                    <MudSelectItem Value="200" />
+                    <MudSelectItem Value="300" />
+                </MudSelect>
+                </EditForm>
+                <button type="button" id="gambelContinue" class="btnGreen" @onclick="GoToNext"> Continue</button>
+                <a id="GoToGame" href="/GamePage"> </a>
 
-            <button type="button" id="gambelContinue" class="btnGreen" onclick="gambelToContinue()"> Continue</button>
-            <button type="button" id="gambelContinue" class="btnGreen" @onclick="GoToNext"> Continue2</button>
-            <a id="GoToGame" href="/GamePage"> </a>
-
-            </div>
+        </div>
 
         </div>
     </div>

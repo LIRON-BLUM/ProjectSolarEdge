@@ -69,52 +69,51 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
 
-            if (GamePlaying.IsGamified == 1)
-            {
-                NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
+            //if (GamePlaying.IsGamified == 1)
+            //{
+            //    NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
                
                 
-                //// First check if gamification is needed
-                //// Check how many times gamification is required 
-                //int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
+            //    //// First check if gamification is needed
+            //    //// Check how many times gamification is required 
+            //    //int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
 
-                //if (GamePlaying.WheelIteration > numberOftimesWheelPresented)
-                //{
-                //    // Here we need to redirect the user to the wheel...
-                //    // we need to do a random to see what question get gamification
-                //    NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
-                //}
-            }
-            else
-            {
+            //    //if (GamePlaying.WheelIteration > numberOftimesWheelPresented)
+            //    //{
+            //    //    // Here we need to redirect the user to the wheel...
+            //    //    // we need to do a random to see what question get gamification
+            //    //    NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
+            //    //}
+            //}
+         
 
             Question SelectedQuestion = getRandomQuestion();
 
-            NavigationManager.NavigateTo($"MultipelQuestion/{gameId}/{userId}/{SelectedQuestion.ID}");
+            //NavigationManager.NavigateTo($"MultipelQuestion/{gameId}/{userId}/{SelectedQuestion.ID}");
+
+
+
+
+            switch (SelectedQuestion.Type)
+            {
+                case QuestionType.MultipleChoice:
+                    {
+                        NavigationManager.NavigateTo($"MultipelQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                        break;
+                    }
+                default:
+                case QuestionType.TrueFalse:
+                    {
+                        NavigationManager.NavigateTo($"YesNoQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                        break;
+                    }
+                case QuestionType.Order:
+                    {
+                        NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                        break;
+                    }
+                    break;
             }
-
-
-
-            //switch (SelectedQuestion.Type)
-            //{
-            //    case QuestionType.SingleChoice:
-            //        {
-            //            NavigationManager.NavigateTo($"MultipelQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
-            //            break;
-            //        }
-            //    default:
-            //    case QuestionType.TrueFalse:
-            //        {
-            //            NavigationManager.NavigateTo($"YesNoQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
-            //            break;
-            //        }
-            //    case QuestionType.MultipleChoice:
-            //        {
-            //            NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
-            //            break;
-            //        }
-            //        break;
-            //}
         }
 
         private Question getRandomQuestion()
