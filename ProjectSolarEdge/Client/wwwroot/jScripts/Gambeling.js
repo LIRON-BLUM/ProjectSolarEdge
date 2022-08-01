@@ -4,10 +4,10 @@ const gambelOptions = document.getElementById('gambelOptions');
 const gambelContinue = document.getElementById('gambelContinue');
 let choosenGambel = document.getElementById('choosenGambel');
 let gambelScoreHidden = document.getElementById('gambelScoreHidden');
-let score = +localStorage.getItem("mostRecentScore");
+//let score = +localStorage.getItem("mostRecentScore");
 let newScore = document.getElementById('colectedScore');
 
-newScore.innerText = "score: " + score;
+newScore.innerText = "score: " + 200;
 
     gambelChoice = () => {
     let gambelChoice = gambelOptions.options[gambelOptions.selectedIndex].text
