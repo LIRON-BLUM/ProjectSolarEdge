@@ -21,7 +21,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public string UserId { get; set; }
 
         [Parameter]
-        public bool cameFromGambling { get; set; }
+        public string cameFromGambling { get; set; }
 
         [Parameter]
         public string GambelScore { get; set; }
@@ -40,7 +40,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected override async Task OnInitializedAsync()
         {
             //  liron - we need to insert this in the GameScore table
-            cameFromGambling = true;
+            cameFromGambling = "true";
 
         }
 

@@ -14,7 +14,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public string UserId { get; set; }
 
         [Parameter]
-        public bool cameFromGambling { get; set; }
+        public string cameFromGambling { get; set; }
 
         public Game GamePlaying { get; set; }
 
@@ -49,7 +49,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
 
-            if (GamePlaying.IsGamified == 1 && cameFromGambling == false)
+            if (GamePlaying.IsGamified == 1 && cameFromGambling != "true")
             {
                 NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
 
