@@ -13,6 +13,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Parameter]
         public string UserId { get; set; }
 
+        [Parameter]
+        public bool cameFromGambling { get; set; }
+
         public Game GamePlaying { get; set; }
 
         public UsersTable player { get; set; }
@@ -44,34 +47,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             AvailleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
 
-            //availleblQuestions = new List<Question>()
-            //{
-            //    new Question()
-            //    {
-            //        ID = 1,
-            //        Type= QuestionType.SingleChoice
-            //    },
-            //      new Question() {
-            //        ID = 2,
-            //        Type= QuestionType.TrueFalse
-            //    },
-
-            //    new Question()   {
-            //        ID = 3,
-            //        Type= QuestionType.MultipleChoice
-            //    },
-
-            //    new Question(){ID = 4,
-            //        Type= QuestionType.TrueFalse
-            //    }
-
-            //};
 
 
-
-            if (GamePlaying.IsGamified == 1)
+            if (GamePlaying.IsGamified == 1 && cameFromGambling == false)
             {
-                //NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
+                NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
 
 
                 // First check if gamification is needed
@@ -84,12 +64,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                     // we need to do a random to see what question get gamification
                     NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
                 }
-            }
-
-            if (AvailleblQuestions.Count() == 0)
-            {
-                NavigationManager.NavigateTo($"End/{GameId}/{UserId}");
-
             }
 
 

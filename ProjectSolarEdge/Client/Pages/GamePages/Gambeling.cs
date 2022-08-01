@@ -21,6 +21,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public string UserId { get; set; }
 
         [Parameter]
+        public bool cameFromGambling { get; set; }
+
+        [Parameter]
         public string GambelScore { get; set; }
 
         [Inject]
@@ -37,7 +40,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected override async Task OnInitializedAsync()
         {
             //  liron - we need to insert this in the GameScore table
-
+            cameFromGambling = true;
 
         }
 
@@ -57,7 +60,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             await GameAppDataService.AddScoreElement(GambelingScoreToInsert);
 
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}/{cameFromGambling}");
         }
 
     }
