@@ -46,7 +46,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             // we need to get all the question didacting the questions the user had all ready answerd.
 
             AvailleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
-
+            usersRecords = await GameAppDataService.GetAllUserGameScore(gameId, userId);
 
 
             if (GamePlaying.IsGamified == 1 && cameFromGambling != "true")

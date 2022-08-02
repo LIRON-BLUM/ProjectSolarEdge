@@ -60,5 +60,11 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
             return results;
         }
+
+        public IEnumerable<GameScore> GetAllUserGameScore(int gameID, int userID)
+        {
+            IEnumerable<GameScore> _data = GetRecords<GameScore>(GameAppQueries.AvailableQuestions, new { GameID = gameID, UserID = userID }).ToList();
+            return _data;
+        }
     }
 }

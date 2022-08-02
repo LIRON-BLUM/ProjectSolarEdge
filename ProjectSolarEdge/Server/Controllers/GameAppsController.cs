@@ -132,6 +132,24 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetAllUserGameScore/{GameID}/{UserID}")]
+        public IActionResult GetAllUserGameScore(int GameID, int UserID)
+        {
+            IEnumerable<GameScore> _data = _gameAppRepository.GetAllUserGameScore(GameID, UserID);
+
+            if (_data == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_data);
+
+        }
+
 
     }
 }

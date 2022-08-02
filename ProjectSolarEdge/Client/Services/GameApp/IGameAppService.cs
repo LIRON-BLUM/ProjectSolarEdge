@@ -16,6 +16,8 @@ namespace ProjectSolarEdge.Client.Services.GameApp
 
         Task<IEnumerable<Question>> AvailableQuestions(int GameID, int UserID);
 
+        Task<IEnumerable<GameScore>> GetAllUserGameScore(int GameID, int UserID);
+
         Task<int> AddScoreElement(GameScore gameScore);
 
         Task<bool> UpdateScoreElement(GameScore gameScore);

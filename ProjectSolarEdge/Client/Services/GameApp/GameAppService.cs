@@ -79,5 +79,11 @@ namespace ProjectSolarEdge.Client.Services.GameApp
 
             return false;
         }
+
+        public async Task<IEnumerable<GameScore>> GetAllUserGameScore(int GameID, int UserID)
+        {
+            Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUserGameScore/{GameID}/{UserID}");
+            return await JsonSerializer.DeserializeAsync<IEnumerable<GameScore>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
     }
 }

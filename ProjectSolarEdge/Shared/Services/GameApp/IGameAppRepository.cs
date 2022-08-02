@@ -21,5 +21,7 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
         bool UpdateScoreElenent(GameScore GameScore);
 
+        IEnumerable<GameScore> GetAllUserGameScore(int gameID, int userID);
+
     }
 }

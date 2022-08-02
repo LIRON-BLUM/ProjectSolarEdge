@@ -12,6 +12,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
 		public static string GetAllGameScore => @"SELECT ID, UserID, GameID, QuestionID, GameElement, IsRight, GamblingScore, ElementScore, IsAnswered FROM GameScore";
 
+		public static string GetAllUserGameScore => @"SELECT ID, UserID, GameID, QuestionID, GameElement, IsRight, GamblingScore, ElementScore, IsAnswered FROM GameScore 
+													  WHERE UserID=@UserID AND GameID=@GameID";
+
 
 		public static string AddNewGameScore => @"INSERT INTO GameScore
 													(UserID,
