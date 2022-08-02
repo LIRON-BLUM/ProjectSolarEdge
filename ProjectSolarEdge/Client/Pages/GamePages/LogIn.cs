@@ -38,25 +38,25 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
 
-        protected override async Task OnInitializedAsync()
-        {
+        //protected override async Task OnInitializedAsync()
+        //{
 
-            //Select UserID where UserName = UserEmail
+        //    //Select UserID where UserName = UserEmail
 
 
-            //  User = new UsersTable()
-            //{
-            //    ID = 8,
-            //    UserFirstName = "Limor",
-            //    UserLastName = "Avrahami",
-            //    UserName = "LimorAvrahami",
-            //};
+        //    //  User = new UsersTable()
+        //    //{
+        //    //    ID = 8,
+        //    //    UserFirstName = "Limor",
+        //    //    UserLastName = "Avrahami",
+        //    //    UserName = "LimorAvrahami",
+        //    //};
 
-            //GameToPlay = new Game()
-            //{
-            //    ID = 3,
-            //};
-        }
+        //    //GameToPlay = new Game()
+        //    //{
+        //    //    ID = 3,
+        //    //};
+        //}
 
 
         protected async Task StartTheGame()

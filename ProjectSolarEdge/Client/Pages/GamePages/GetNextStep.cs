@@ -48,15 +48,17 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             AvailleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
             usersRecords = await GameAppDataService.GetAllUserGameScore(gameId, userId);
 
+            int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
+
 
             if (GamePlaying.IsGamified == 1 && cameFromGambling != "true")
             {
-                NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
+                //NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
 
 
                 // First check if gamification is needed
                 // Check how many times gamification is required 
-                int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
+                //int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
 
                 if (GamePlaying.WheelIteration > numberOftimesWheelPresented)
                 {
@@ -64,6 +66,12 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                     // we need to do a random to see what question get gamification
                     NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
                 }
+            }
+
+            if (AvailleblQuestions.Count() == 0)
+            {
+                NavigationManager.NavigateTo($"End/{GameId}/{UserId}");
+
             }
 
 
