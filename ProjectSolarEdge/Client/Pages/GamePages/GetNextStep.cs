@@ -5,7 +5,7 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 {
-    public partial class GetNextStep
+    public partial class GetNextStep : ComponentBase, IDisposable
     {
         [Parameter]
         public string GameId { get; set; }
@@ -33,6 +33,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
         protected override async Task OnInitializedAsync()
         {
 
@@ -48,59 +53,67 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             AvailleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
             usersRecords = await GameAppDataService.GetAllUserGameScore(gameId, userId);
 
-            int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
+
 
 
             if (GamePlaying.IsGamified == 1 && cameFromGambling != "true")
             {
+
                 //NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");
 
 
                 // First check if gamification is needed
                 // Check how many times gamification is required 
-                //int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
+                int numberOftimesWheelPresented = usersRecords.Where(r => r.GameElement == 1).Count();
 
                 if (GamePlaying.WheelIteration > numberOftimesWheelPresented)
                 {
                     // Here we need to redirect the user to the wheel...
                     // we need to do a random to see what question get gamification
                     NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
+                    //}
                 }
+
+                if (AvailleblQuestions.Count() == 0)
+                {
+                    NavigationManager.NavigateTo($"End/{GameId}/{UserId}");
+
+                }
+
             }
-
-            if (AvailleblQuestions.Count() == 0)
+            else
             {
-                NavigationManager.NavigateTo($"End/{GameId}/{UserId}");
 
-            }
+                Question SelectedQuestion = getRandomQuestion();
 
-
-            Question SelectedQuestion = getRandomQuestion();
-
-            //NavigationManager.NavigateTo($"MultipelQuestion/{gameId}/{userId}/{SelectedQuestion.ID}");
+                //NavigationManager.NavigateTo($"MultipelQuestion/{gameId}/{userId}/{SelectedQuestion.ID}");
 
 
 
 
-            switch (SelectedQuestion.Type)
-            {
-                case QuestionType.MultipleChoice:
-                    {
-                        NavigationManager.NavigateTo($"MultipelQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+
+
+
+                switch (SelectedQuestion.Type)
+                {
+                    case QuestionType.MultipleChoice:
+                        {
+                            NavigationManager.NavigateTo($"MultipelQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                            break;
+                        }
+                    case QuestionType.TrueFalse:
+                        {
+                            NavigationManager.NavigateTo($"YesNoQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                            break;
+                        }
+                    case QuestionType.Order:
+                        {
+                            NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                            break;
+                        }
                         break;
-                    }
-                default:
-                case QuestionType.TrueFalse:
-                    {
-                        NavigationManager.NavigateTo($"YesNoQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
-                        break;
-                    }
-                case QuestionType.Order:
-                    {
-                        NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
-                        break;
-                    }
-                    break;
+                }
+
             }
         }
 

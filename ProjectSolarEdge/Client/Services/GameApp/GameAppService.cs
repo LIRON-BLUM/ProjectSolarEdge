@@ -70,7 +70,7 @@ namespace ProjectSolarEdge.Client.Services.GameApp
             var gameScoreJson =
              new StringContent(JsonSerializer.Serialize(gameScore), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync("api/Questions/UpdateScoreElenent", gameScoreJson);
+            var response = await _httpClient.PutAsync("api/GameApps/UpdateScoreElement", gameScoreJson);
 
             if (response.IsSuccessStatusCode)
             {

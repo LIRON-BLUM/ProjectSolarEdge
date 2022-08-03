@@ -13,13 +13,13 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
         IEnumerable<UsersGameRecord> GetAllUsersGameRecord();
 
-        IEnumerable<UsersGameRecord> AvailableQuestions(int gameID, int userID);
+        IEnumerable<Question> AvailableQuestions(int gameID, int userID);
 
         UsersTable GetPlayerByID(int userID);
 
         int AddScoreElement(GameScore GameScore);
 
-        bool UpdateScoreElenent(GameScore GameScore);
+        bool UpdateScoreElement(GameScore GameScore);
 
         IEnumerable<GameScore> GetAllUserGameScore(int gameID, int userID);
 

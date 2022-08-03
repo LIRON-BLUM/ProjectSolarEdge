@@ -63,7 +63,7 @@ namespace ProjectSolarEdge.Server.Controllers
         [Route("AvailableQuestions/{GameID}/{UserID}")]
         public IActionResult AvailableQuestions(int GameID, int UserID)
         {
-            IEnumerable<UsersGameRecord> _data = _gameAppRepository.AvailableQuestions(GameID, UserID);
+            IEnumerable<Question> _data = _gameAppRepository.AvailableQuestions(GameID, UserID);
 
             if (_data == null)
             {
@@ -117,8 +117,8 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateScoreElenent")]
-        public IActionResult UpdateScoreElenent(GameScore gameScore)
+        [Route("UpdateScoreElement")]
+        public IActionResult UpdateScoreElement(GameScore gameScore)
         {
             if (gameScore == null)
             {
@@ -126,7 +126,7 @@ namespace ProjectSolarEdge.Server.Controllers
                 return BadRequest();
             }
 
-            bool _gameScore = _gameAppRepository.UpdateScoreElenent(gameScore);
+            bool _gameScore = _gameAppRepository.UpdateScoreElement(gameScore);
 
             return Ok(_gameScore); //success
         }

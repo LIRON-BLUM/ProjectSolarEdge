@@ -54,6 +54,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 UserID = Player.ID,
                 GameID = GamePlaying.ID,
                 GameElement = 1,
+                GamblingScore=0,
                 ElementScore = Convert.ToUInt16(WheelScore),
 
             };

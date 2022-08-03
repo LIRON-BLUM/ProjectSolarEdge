@@ -39,7 +39,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected override async Task OnInitializedAsync()
         {
-            //  liron - we need to insert this in the GameScore table
+           
             cameFromGambling = "true";
 
         }
@@ -53,7 +53,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 UserID = int.Parse(UserId),
                 GameID = int.Parse(GameId),
                 GameElement = 2,
-                ElementScore = Convert.ToUInt16(GambelScore),
+                GamblingScore = Convert.ToUInt16(GambelScore),
+                ElementScore = 0,
             };
 
             string check = GambelScore;

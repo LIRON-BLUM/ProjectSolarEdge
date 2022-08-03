@@ -18,6 +18,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Parameter]
         public string UserId { get; set; }
 
+        [Parameter]
+        public string cameFromGambling { get; set; }
+
         public Game GamePlaying { get; set; }
 
         public UsersTable Player { get; set; }
@@ -49,15 +52,16 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
 
-
+           
 
         }
 
 
         protected async Task STARTGAME()
         {
-           
+            cameFromGambling = "false";
             NavigationManager.NavigateTo($"/GetNextStep/{GameId}/{UserId}");
+            //NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}/{cameFromGambling}");
         }
 
         public void Dispose()

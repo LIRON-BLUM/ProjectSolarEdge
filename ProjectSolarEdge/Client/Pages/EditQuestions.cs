@@ -93,7 +93,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
                     //   ID = 3,
-                    //AnswerBody = " ",
+                   //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false

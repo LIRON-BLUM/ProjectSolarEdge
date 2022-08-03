@@ -55,7 +55,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 		public static string AvailableQuestions => @"select 
 														q.ID,
 														q.QuestionBody,
-														q.Type
+														q.Type,
+														q.Difficulty,
+														q.Feedback
 													from GameQuestionsConnections as GQ 
 													inner join Questions as q ON GQ.QuestionID = q.ID
 													WHERE GQ.GameID = @GameID AND GQ.QuestionID NOT IN (SELECT gs.QuestionID FROM GameScore as gs WHERE gs.GameID = @GameID AND gs.UserID = @UserID AND gs.GameElement = 2)";
@@ -64,12 +66,17 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 		public static string GetPlayerByID => @"select ID, UserFirstName, UserLastName, UserName from UsersTable WHERE ID = @ID";
 
 		public static string AddScoreElement => @"Insert INTO GameScore (UserID,GameID,QuestionID,GameElement,IsRight,GamblingScore,ElementScore,IsAnswered)
-													  VALUES (@UserID,@GameID,0,@GameElement,0,0,@ElementScore,0)";
+													  VALUES (@UserID,@GameID,0,@GameElement,0,@GamblingScore,@ElementScore,0)";
 
 
-		public static string UpdateScoreElenent => @"UPDATE GameScore
+		//public static string UpdateScoreElenent => @"UPDATE GameScore
+		//											SET QuestionID = @QuestionID, IsRight = @IsRight, GamblingScore = @GamblingScore, ElementScore= @ElementScore, IsAnswered = @IsAnswered
+		//											WHERE ID = (SELECT MAX(ID) FROM GameScore WHERE UserID = @UserID AND GameID = @GameID)";
+
+
+		public static string UpdateScoreElement => @"UPDATE GameScore
 													SET QuestionID = @QuestionID, IsRight = @IsRight, GamblingScore = @GamblingScore, ElementScore= @ElementScore, IsAnswered = @IsAnswered
-													WHERE ID = (SELECT MAX(ID) FROM GameScore WHERE UserID = @UserID AND GameID = @GameID)";
+													WHERE UserID = @UserID AND GameID = @GameID AND QuestionID = 0 AND GameElement = 2";
 
 	}
 }

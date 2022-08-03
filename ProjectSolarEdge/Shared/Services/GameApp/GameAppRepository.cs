@@ -31,9 +31,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
         }
 
 
-        public IEnumerable<UsersGameRecord> AvailableQuestions(int gameID, int userID)
+        public IEnumerable<Question> AvailableQuestions(int gameID, int userID)
         {
-            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.AvailableQuestions, new { GameID = gameID, UserID = userID }).ToList();
+            IEnumerable<Question> _data = GetRecords<Question>(GameAppQueries.AvailableQuestions, new { GameID = gameID, UserID = userID }).ToList();
             return _data;
         }
 
@@ -52,10 +52,10 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
             return results;
         }
 
-        public bool UpdateScoreElenent(GameScore GameScore)
+        public bool UpdateScoreElement(GameScore GameScore)
         {
 
-            bool results = ExecuteAll(GameAppQueries.UpdateScoreElenent, GameScore);
+            bool results = ExecuteAll(GameAppQueries.UpdateScoreElement, GameScore);
 
 
             return results;

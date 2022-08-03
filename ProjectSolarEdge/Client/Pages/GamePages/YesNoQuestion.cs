@@ -6,7 +6,7 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 {
-    public partial class YesNoQuestion
+    public partial class YesNoQuestion : ComponentBase, IDisposable
     {
         [Parameter]
         public string GameId { get; set; }
@@ -44,62 +44,15 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public NavigationManager NavigationManager { get; set; }
 
 
-        protected async Task saveAnawer()
-        {
-            //  Liron check if the is a row for this question in gameScore table if ther is Update the game score table with this if not insert
 
-            questionScoreToInsert = new GameScore()
-            {
-                UserID = Player.ID,
-                GameID = GamePlaying.ID,
-                QuestionID = currentQuestion.ID,
-                IsRight = Convert.ToBoolean(chosenanswer),
-                ElementScore = questionScore.Score,
-                IsAnswered = true
-            };
-
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
-
-        }
-
-        protected async Task SkipAnawer()
-        {
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
-
-        }
         protected override async Task OnInitializedAsync()
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
             Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
-            //Player = new UsersTable()
-            //{
-            //    ID = 8,
-            //    UserFirstName = "Limor",
-            //    UserLastName = "Avrahami",
-            //    UserName = "LimorAvrahami",
-            //};
-
-            // Get question by id from question service
+     
 
             currentQuestion = await QuestionDataService.GetQuestionByIdAsync(int.Parse(QuestionId));
 
-            //currentQuestion = new Question()
-            //{
-            //    QuestionBody = "Does Liron miss me?",
-            //    Difficulty = QuestionDifficulty.Medium,
-            //    Answers = new List<QuestionAnswer>()
-            //    {
-            //        new QuestionAnswer() {
-            //            AnswerBody= "Yes",
-            //            IsRight = false
-            //        },
-            //        new QuestionAnswer() {
-            //            AnswerBody= "No",
-            //            IsRight = true
-            //        }
-            //    }
-
-            //};
 
             questionScore = new GameQuestionsConnection()
             {
@@ -110,22 +63,42 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             int.TryParse(UserId, out var userId);
             availleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
 
-            //availleblQuestions = new List<Question>()
-            //{
-            //    new Question()
-            //    {
-            //        ID = 1,
-            //        Type= QuestionType.SingleChoice
-            //    },
-            //      new Question() {
-            //        ID = 2,
-            //        Type= QuestionType.TrueFalse
-            //    },
 
-
-            //};
         }
 
+
+        protected async Task saveAnawer()
+        {
+            //  Liron check if the is a row for this question in gameScore table if ther is Update the game score table with this if not insert
+
+            questionScoreToInsert = new GameScore()
+            {
+                UserID = int.Parse(UserId),
+                GameID = int.Parse(GameId),
+                QuestionID = int.Parse(QuestionId),
+                GameElement = 2,
+                //In the DB IsRight id bit not bool
+                //IsRight = Convert.ToBoolean(chosenanswer),
+                IsRight = true,
+                ElementScore = questionScore.Score,
+                IsAnswered = true
+            };
+
+            await GameAppDataService.UpdateScoreElement(questionScoreToInsert);
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
+        }
+
+        protected async Task SkipAnawer()
+        {
+            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
