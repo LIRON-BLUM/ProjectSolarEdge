@@ -24,7 +24,7 @@ h2 {
     align-items: center;
 }
 
-.container {
+/*.container {
     width: 100vh;
     height: 100vh;
     display: flex;
@@ -42,16 +42,16 @@ h2 {
 .flex-column{
     display:flex;
     flex-direction:column;
-}
+}*/
 
-.flex-center{
+/*.flex-center{
     justify-content:center;
     align-items:center;
 }
 
 .justify-center{
     justify-content:center;
-}
+}*/
 
 .text-center{
     text-align:center;

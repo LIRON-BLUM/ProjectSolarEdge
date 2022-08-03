@@ -6,7 +6,7 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 {
-    public partial class MultipelQuestion : ComponentBase, IDisposable
+    public partial class MultipelQuestion
     {
         [Parameter]
 
@@ -64,11 +64,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             questionScore = new GameQuestionsConnection()
             {
-              
                 Score = 200
-            
-                
-
             };
 
 
@@ -76,7 +72,20 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             int.TryParse(UserId, out var userId);
             availleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
 
-   
+            //availleblQuestions = new List<Question>()
+            //{
+            //    new Question()
+            //    {
+            //        ID = 1,
+            //        Type= QuestionType.SingleChoice
+            //    },
+            //      new Question() {
+            //        ID = 2,
+            //        Type= QuestionType.TrueFalse
+            //    },
+
+
+            //};
 
             gameCurrentScore = new List<GameScore>()
             {
@@ -117,12 +126,10 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 UserID = int.Parse(UserId),
                 GameID = int.Parse(GameId),
                 QuestionID = int.Parse(QuestionId),   
-                GameElement = 2,
+                
                 //In the DB IsRight id bit not bool
                 IsRight = Convert.ToBoolean(chosenanswer),
-                //IsRight = true,
                 ElementScore = questionScore.Score,
-                
                 IsAnswered = true
             };
 
@@ -138,9 +145,5 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

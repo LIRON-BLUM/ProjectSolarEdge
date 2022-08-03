@@ -5,9 +5,10 @@
 @inject IJSRuntime JSRuntime;
 
 <link href="/css/styles/LogIn.css" rel="stylesheet" />
+<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
 <div class="container">
-    <div class="flex-center flex-column">
+    <div class="justify-content-center align-items-center text-center">
         <h1> Welcome</h1>
         <p id="ErrorHelp"> </p>
         <form>
@@ -20,11 +21,12 @@
         </form>
 
             <p>Enter your Email</p>
-            <input type="text"  placeholder="employee Email" @bind-value="@UserEmail" />
+            <input type="text"  placeholder="employee Email" class="col-4" @bind-value="@UserEmail" />
             <p>Enter game code</p>
-            <input type="text"  placeholder="Game code" @bind-value="@GameCode" />
-            <button type="button" id="StartGame" class="btn" @onclick="StartTheGame"> Enter the game</button>
-       
+            <input type="text"  placeholder="Game code" class="col-4" @bind-value="@GameCode" />
+         <div class="col-12">
+            <button type="button" id="StartGame" class="btn btn-primary btn-lg" @onclick="StartTheGame"> Enter the game</button>
+       </div>
 
     </div>
     @*<MudGrid>
