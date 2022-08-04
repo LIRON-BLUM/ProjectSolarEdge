@@ -5,3 +5,16 @@
     color: darkred;
     margin-bottom: 2rem;
 }
+
+input {
+    font-size: 1.8rem;
+    border: 0.1rem solid #001546;
+    border-radius: 10px;
+    background-color: #edf8fe;
+    height:40px;
+}
+
+    input::placeholder {
+        color: #aaa;
+        font-size: 1.8rem;
+    }

@@ -11,11 +11,25 @@
     color: #001546;
 }
 
-h1{
+.container-flex {
+    background-color: #edf8fe;
+    height: 100vh;
+}
+
+/*h1{
     font-size:5.4rem;
     color:royalblue;
     margin-bottom:5rem;
+}*/
+
+.title {
+    background-color: #001546;
+    height: 50px;
 }
+
+    .title h1 {
+        color: aliceblue;
+    }
 
 h2 {
     font-size: 4.2rem;
@@ -67,28 +81,24 @@ p {
 }
 
 /* BUTTONS */
-.btn {
+.btnBlue {
     font-size: 1.8rem;
     font-weight: 900;
-    padding: 1rem 0;
-    width: 20rem;
-    text-align: center;
     border: 0.1rem solid #001546;
-    margin-bottom: 1rem;
-    text-decoration: none;
-    color: white;
     background-color: #001546;
+    color: white;
+    text-decoration: none;
     border-radius: 12px;
 }
 
-    .btn:hover {
+    .btnBlue:hover {
         cursor: pointer;
         box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
         transform: translateY(-0.1rem);
         transition: transform 150ms;
     }
 
-    .btn[disabled]:hover {
+    .btnBlue[disabled]:hover {
         cursor: not-allowed;
         box-shadow: none;
         transform: none;
@@ -97,13 +107,9 @@ p {
 .btnGreen {
     font-size: 1.8rem;
     font-weight: 900;
-    padding: 1rem 0;
-    width: 70%;
-    text-align: center;
     border: 0.1rem solid #4aec96;
     background-color: #4aec96;
     color: #001546;
-    margin-bottom: 1rem;
     text-decoration: none;
     border-radius: 12px;
 }
@@ -125,19 +131,6 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-input{
-    margin-bottom: 1rem;
-    width: 20rem;
-    padding: 1.5rem;
-    font-size: 1.8rem;
-    border:none;
-    box-shadow: 0 0.1rem 1.4rem 0 rgba(86, 185, 235, 0.5);
-}
-
-input::placeholder{
-    color:#aaa;
 }
 
 .score {

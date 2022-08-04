@@ -5,44 +5,45 @@
 
   <link href="/css/styles/End.css" rel="stylesheet" />
   <link href="/css/styles/OpeningPage.css" rel="stylesheet" />
+  <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-<div class="container">
-        <div id="end" class="flex-center  flex-column">
+<div class="container-flex">
+        <div id="end" class="justify-content-center align-items-center text-center">
 
-            <div id="leaderBoard" class="flex-center flex-column">
+            <div id="leaderBoard">
                 <h2 id="allScores">Leaderboard</h2>
-                <table id="winingTable">
-                    <tr>
-                        <th>
+                <table id="winingTable" class="container">
+                    <tr class="row">
+                        <th class="col-4">
                             Place
                         </th>
-                        <th>
+                        <th class="col-4">
                             Name
                         </th>
-                        <th>
+                        <th class="col-4">
                             Score
                         </th>
                     </tr>   
-
+            <div class="w-100"></div>
                 @foreach (var user in AllPlayers)
                 {
                    userIncreaseCount();
-                    <tr>
+                    <tr class="row">
                         @if(@user.ID == @Player.ID)
                         {
-                       <td class="currentUser">@userCount</td>
-                       <td class="currentUser" >@user.UserFirstName @user.UserLastName</td>
-                            <td class="currentUser">@user.TotalScore</td>
+                       <td class="currentUser col-4">@userCount</td>
+                       <td class="currentUser col-4" >@user.UserFirstName @user.UserLastName</td>
+                            <td class="currentUser col-4">@user.TotalScore</td>
                         }
                         else
                         {
                             
                         
-                        <td>@userCount</td>
+                        <td class="col-4">@userCount</td>
                        
-                        <td>@user.UserFirstName @user.UserLastName</td>
+                        <td class="col-4">@user.UserFirstName @user.UserLastName</td>
                         
-                        <td>@user.TotalScore</td>
+                        <td class="col-4">@user.TotalScore</td>
                         }
                          
                     </tr>
@@ -51,34 +52,37 @@
             </div>
 
            
-            <div id="highScores" class="flex-center flex-column">
-                <p class="bestSoFare">The best Players So Far</p>
-                <ul id="highScoreList"> </ul>
-            @foreach (var user in TopPlayers)
-            {
-                <li class="high-score">
-                    @user.UserFirstName @user.UserLastName @user.TotalScore
-                </li>
-            }
-            <div class="podium">
-                    <div class="podium__item">
-                        <div id="secondPlace"></div>
+            <div id="highScores" class="row justify-content-center">
+            <p class="bestSoFare col-6">The best Players So Far</p>
+            <ul id="highScoreList" class="row justify-content-evenly" >
 
-                    </div>
-
-                    <div class="podium__item">
-                        <div id="firstPlace"></div>
-                    </div>
-
-                    <div class="podium__item">
-                        <div id="thirdPlace"></div>
-                    </div>
+                @foreach (var user in TopPlayers)
+                {
+                    <li class="high-score col-4 ">
+                        @user.UserFirstName @user.UserLastName @user.TotalScore
+                    </li>
+                }
+            </ul>
+            <div class="row align-items-end border-bottom justify-content-evenly">
+               
+                <div id="secondPlace" class="col-1">
 
                 </div>
 
-            </div>
+                <div id="firstPlace" class="col-1">
+                </div>
 
-                        <button type="button" class="btn" @onclick="GoToFeedback">Check answers</button>
+                <div id="thirdPlace" class="col-1">
+                </div>
+
+            </div> 
+        </div>
+
+             <div class="row justify-content-center">
+             <button type="button" class="btnBlue col-4" @onclick="GoToFeedback">Check answers</button>
+
+
+          </div>
 
 
         </div>

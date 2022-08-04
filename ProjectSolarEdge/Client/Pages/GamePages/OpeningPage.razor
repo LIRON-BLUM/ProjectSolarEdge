@@ -6,45 +6,50 @@
 
 
 <link href="/css/styles/OpeningPage.css" rel="stylesheet" />
+<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-<div class="container">
-    <div class="flex-center flex-column">
-        <h1> @GamePlaying.GameName</h1>
-        <h2> Hi @Player.UserFirstName @Player.UserLastName</h2>
+<div class="container-flex">
+    <div class="justify-content-center align-items-center text-center">
+        <div class="row align-items-center title">
+         <h1 class="col"> @GamePlaying.GameName</h1>
+        </div>
+      
+        <h2 class="p-3"> Hi @Player.UserFirstName @Player.UserLastName</h2>
         <p>@GamePlaying.GameDescription </p>
 
-        <div id="highScores" class="flex-center flex-column">
-            <p class="bestSoFare">The best Players So Far</p>
-            <ul id="highScoreList">
+        <div id="highScores" class="row justify-content-center">
+            <p class="bestSoFare col-6">The best Players So Far</p>
+            <ul id="highScoreList" class="row justify-content-evenly" >
 
                 @foreach (var user in TopPlayers)
                 {
-                    <li class="high-score">
+                    <li class="high-score col-4 ">
                         @user.UserFirstName @user.UserLastName @user.TotalScore
                     </li>
                 }
             </ul>
-            <div class="podium">
-                <div class="podium__item">
-                    <div id="secondPlace"></div>
+            <div class="row align-items-end border-bottom justify-content-evenly">
+               
+                <div id="secondPlace" class="col-1">
 
                 </div>
 
-                <div class="podium__item">
-                    <div id="firstPlace"></div>
+                <div id="firstPlace" class="col-1">
                 </div>
 
-                <div class="podium__item">
-                    <div id="thirdPlace"></div>
+                <div id="thirdPlace" class="col-1">
                 </div>
 
-            </div>
+            </div> 
         </div>
         <p>
             You have <span id="gameTime">@GamePlaying.GameTimeLimit </span> minutes to give it your best!
         </p>
         <h2> Think You Can Do Better?</h2>
-        <button type="button" id="Continue" class="btnGreen" @onclick="STARTGAME"> START GAME</button>
+        <div class="row justify-content-center">
+          <button type="button" id="Continue" class="btnGreen col-4" @onclick="STARTGAME"> START GAME</button>
+
+        </div>
 
 
 

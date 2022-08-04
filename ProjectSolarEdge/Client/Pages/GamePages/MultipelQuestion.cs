@@ -48,11 +48,13 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
 
-        
+        public int currentQuestionNum { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
+
+
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
 
 
@@ -112,6 +114,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             //{
             //    currentScore += score.;
             //}
+
+
+            currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count();
+
+             
 
         }
 

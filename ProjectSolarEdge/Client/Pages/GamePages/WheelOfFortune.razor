@@ -4,21 +4,30 @@
 @inject IJSRuntime JSRuntime;
 
 <link href="/css/styles/WheelOfFortune.css" rel="stylesheet" />
- 
-    <div class="container">
-        <div class="flex-center flex-column">
-           
-            <h1> Check your luck</h1>
+ <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+
+    <div class="container-flex">
+        <div class="justify-content-center align-items-center text-center">
+                   <div class="row align-items-center title"> 
+                       <h1 class="col"> Check your luck</h1>
+
+                   </div>
+
             <p> Spin the wheel and get your points</p>
             <div id="wheelOfFortune">
                 <div class="arrow"></div>
                 <canvas id="wheel" width="300" height="300"></canvas>
-                <p id="wheelScore"> </p>
-                <input id="wheelScoreHidden" type="hidden" value="@WheelScore" @onchange="@(e=>{WheelScore=e.Value.ToString();})" />
+@*                <p id="wheelScore"> </p>
+*@                <input id="wheelScoreHidden" type="hidden" value="@WheelScore" @onchange="@(e=>{WheelScore=e.Value.ToString();})" />
 
             </div>
-            <button type="button" id="spinBTN" class="btn" onclick="wheelRotate()"> Spin</button>
-            <button type="button" id="Continue" class="btnGreen" @onclick="GoToNext" disabled> Continue</button>
+
+            <div class="row justify-content-center"> 
+            <button type="button" id="spinBTN" class="btnBlue col-4 m-6" onclick="wheelRotate()"> Spin</button>
+            <div class="w-100"></div>
+                        <button type="button" id="Continue" class="btnGreen col-4 m-6" @onclick="GoToNext" disabled> Continue</button>
+
+            </div>
 
         </div>
     </div>
