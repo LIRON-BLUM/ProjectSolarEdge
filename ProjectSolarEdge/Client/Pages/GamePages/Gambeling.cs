@@ -13,6 +13,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public GameScore GambelingScoreToInsert { get; set; }
 
+        public List<int> CorrentGambleScoreToInsert = new List<int>() { 0, 100,200,300};
 
         [Parameter]
         public string GameId { get; set; }

@@ -32,6 +32,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public UserGameScore currentScore { get; set; }
 
+        public int CorrentScoreToInsert { get; set; }
 
         public IEnumerable<Question> availleblQuestions { get; set; }
 
@@ -130,6 +131,18 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             //  Liron check if the is a row for this question in gameScore table if ther is Update the game score table with this if not insert
             //is the Query supposed to be - update Game score table?
 
+          
+
+            if (chosenanswer == "true" || chosenanswer == "True")
+            {
+                CorrentScoreToInsert = questionScore.Score;
+            }
+            else
+            {
+                CorrentScoreToInsert = 0 - questionScoreToInsert.GamblingScore;
+            }
+
+
             questionScoreToInsert = new GameScore()
             {
                 UserID = int.Parse(UserId),
@@ -138,7 +151,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
                 //In the DB IsRight id bit not bool
                 IsRight = Convert.ToBoolean(chosenanswer),
-                ElementScore = questionScore.Score,
+                ElementScore = CorrentScoreToInsert,
                 IsAnswered = true
             };
 

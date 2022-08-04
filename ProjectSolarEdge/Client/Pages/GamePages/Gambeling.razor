@@ -14,6 +14,18 @@
             <h1> How Much Would You Like To Bet On Your Success </h1>
 
             <p id="colectedScore"></p>
+            <!--<form>
+                <select id="gambelOptions" class="btnGreen" @bind="GambelingScoreToInsert.GamblingScore">
+                    @foreach (var Score in CorrentGambleScoreToInsert)
+                    {
+                        <option value=@Score>@Score</option>
+                    }
+                </select>
+                <p> You've chosen to gamble on <span>@GambelingScoreToInsert.GamblingScore</span></p>-->
+                @*<input id="gambelScoreHidden" type="hidden" value="@GambelScore" @onchange="@(e=>{GambelScore=e.Value.ToString();})" />*@
+
+            <!--</form>-->
+
             <form>
                 <select id="gambelOptions" class="btnGreen" onchange="gambelChoice()">
                     <option>0</option>
@@ -28,14 +40,11 @@
                 <input id="gambelScoreHidden" type="hidden" value="@GambelScore" @onchange="@(e=>{GambelScore=e.Value.ToString();})" />
 
             </form>
-            <EditForm Model="@GambelingScoreToInsert">
-                <MudSelect Dense="true" T="int" Label="Difficulty" Variant="Variant.Outlined" @bind-Value="@GambelingScoreToInsert.GamblingScore">
-                    <MudSelectItem Value="0" />
-                    <MudSelectItem Value="100" />
-                    <MudSelectItem Value="200" />
-                    <MudSelectItem Value="300" />
-                </MudSelect>
-            </EditForm>
+
+
+      
+
+
             <button type="button" id="gambelContinue" class="btnGreen" @onclick="GoToNext"> Continue</button>
             <a id="GoToGame" href="/GamePage"> </a>
 
