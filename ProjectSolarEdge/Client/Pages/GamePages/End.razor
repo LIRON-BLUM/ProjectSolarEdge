@@ -33,7 +33,7 @@
                         {
                        <td class="currentUser col-4">@userCount</td>
                        <td class="currentUser col-4" >@user.UserFirstName @user.UserLastName</td>
-                            <td class="currentUser col-4">@user.TotalScore</td>
+                            <td class="currentUser col-4">@user.UserScore</td>
                         }
                         else
                         {
@@ -43,7 +43,7 @@
                        
                         <td class="col-4">@user.UserFirstName @user.UserLastName</td>
                         
-                        <td class="col-4">@user.TotalScore</td>
+                        <td class="col-4">@user.UserScore</td>
                         }
                          
                     </tr>
@@ -59,7 +59,7 @@
                 @foreach (var user in TopPlayers)
                 {
                     <li class="high-score col-4 ">
-                        @user.UserFirstName @user.UserLastName @user.TotalScore
+                        @user.UserFirstName @user.UserLastName @user.UserScore
                     </li>
                 }
             </ul>

@@ -4,13 +4,17 @@ namespace ProjectSolarEdge.Client.Services.GameApp
 {
     public interface IGameAppService
     {
-        Task<UsersGameRecord> GetUsersGameRecordById(int Id);
+        //Task<UsersGameRecord> GetUsersGameRecordById(int Id);
 
-        Task<IEnumerable<UsersGameRecord>> GetUsersGameRecordByGameId(int gameId);
+        //Task<IEnumerable<UsersGameRecord>> GetUsersGameRecordByGameId(int gameId);
 
-        Task<UsersGameRecord> GetUsersGameRecord();
+        //Task<UsersGameRecord> GetUsersGameRecord();
 
-        //Task<IEnumerable<Subject>> GetSubjectsAsync();
+        Task<IEnumerable<UserGameScore>> GetGameUsersScore(int gameId);
+        Task<UserGameScore> GetGameUserScoreByUserID(int GameID, int UserID);
+
+       
+
 
         Task<UsersTable> GetPlayerByID(int UserID);
 

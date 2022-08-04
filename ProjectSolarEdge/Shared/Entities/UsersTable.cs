@@ -24,6 +24,8 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public DateTime GameEndDate { get; set; }
         public byte isDeleted { get; set; }
+
+      
     }
 
     public enum UserType
@@ -32,4 +34,6 @@ namespace ProjectSolarEdge.Shared.Entities
         QuestionEditor = 2,
         GameEditor = 3
     }
+
+
 }

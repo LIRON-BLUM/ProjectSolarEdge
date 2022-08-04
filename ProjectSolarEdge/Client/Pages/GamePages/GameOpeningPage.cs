@@ -19,7 +19,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
     public Game GamePlaying { get; set; }
 
     public UsersTable Player { get; set; }
-    public IEnumerable<UsersGameRecord> TopPlayers { get; set; }
+    public IEnumerable<UserGameScore> TopPlayers { get; set; }
 
     [Inject]
     public IGamesDataService GameDataService { get; set; }
@@ -34,7 +34,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected override async Task OnInitializedAsync()
         {
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-            TopPlayers = await GameAppDataService.GetUsersGameRecordByGameId(int.Parse(GameId));
+            TopPlayers = await GameAppDataService.GetGameUsersScore(int.Parse(GameId));
 
             Player = new UsersTable()
             {
@@ -76,7 +76,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             //    }
             //};
 
-            TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
+            TopPlayers = TopPlayers.OrderByDescending(e => e.UserScore).Take(3);
         }
 
 

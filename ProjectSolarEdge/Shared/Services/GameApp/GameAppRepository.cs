@@ -18,17 +18,20 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
 	    }
 
-        public IEnumerable<UsersGameRecord> GetUsersGameRecordByGameId(int ID)
-        {
-            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecordByGameID, new { GameID = ID });
-            return _data;
-        }
+        //public IEnumerable<UsersGameRecord> GetUsersGameRecordByGameId(int ID)
+        //{
+        //    IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecordByGameID, new { GameID = ID });
+        //    return _data;
+        //}
 
-        public IEnumerable<UsersGameRecord> GetAllUsersGameRecord()
-        {
-            IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecordByGameID, null );
-            return _data;
-        }
+        //public IEnumerable<UsersGameRecord> GetAllUsersGameRecord()
+        //{
+        //    IEnumerable<UsersGameRecord> _data = GetRecords<UsersGameRecord>(GameAppQueries.GetAllUsersGameRecordByGameID, null );
+        //    return _data;
+        //}
+
+
+
 
 
         public IEnumerable<Question> AvailableQuestions(int gameID, int userID)
@@ -64,6 +67,21 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
         public IEnumerable<GameScore> GetAllUserGameScore(int gameID, int userID)
         {
             IEnumerable<GameScore> _data = GetRecords<GameScore>(GameAppQueries.AvailableQuestions, new { GameID = gameID, UserID = userID }).ToList();
+            return _data;
+        }
+
+   
+
+
+        public IEnumerable<UserGameScore> GetUsersScore(int gameID)
+        {
+            IEnumerable<UserGameScore> _data = GetRecords<UserGameScore>(GameAppQueries.GetGameUsersScore, new { GameID = gameID });
+            return _data;
+        }
+
+        public UserGameScore GetGameUserScoreByUserID(int gameID, int userID)
+        {
+            UserGameScore _data = GetRecords<UserGameScore>(GameAppQueries.GetGameUsersScoreByUserID, new { GameID = gameID, UserID = userID }).FirstOrDefault();
             return _data;
         }
     }

@@ -30,21 +30,44 @@ namespace ProjectSolarEdge.Server.Controllers
         //}
 
 
+        //[HttpGet]
+        //[Route("GetAllUsersGameRecord")]
+        //public IActionResult GetQuestions()
+        //{
+        //    IEnumerable<UsersGameRecord> _data = _gameAppRepository.GetAllUsersGameRecord();
+
+        //    return Ok(_data);
+        //}
+
+
+        //[HttpGet]
+        //[Route("GetAllUsersGameRecordByGameID/{gameId}")]
+        //public IActionResult UsersGameRecordByGameID(int gameId)
+        //{
+        //    IEnumerable<UsersGameRecord> _data = _gameAppRepository.GetUsersGameRecordByGameId(gameId);
+
+        //    if (_data == null)
+        //    {
+        //        return NotFound(new ApiResult
+        //        {
+        //            Success = false
+        //        });
+        //    }
+
+        //    return Ok(_data);
+
+        //}
+
+
+     
+        
+
+
         [HttpGet]
-        [Route("GetAllUsersGameRecord")]
-        public IActionResult GetQuestions()
+        [Route("GetUsersScore/{gameId}")]
+        public IActionResult GetUserScore(int gameId)
         {
-            IEnumerable<UsersGameRecord> _data = _gameAppRepository.GetAllUsersGameRecord();
-
-            return Ok(_data);
-        }
-
-
-        [HttpGet]
-        [Route("GetAllUsersGameRecordByGameID/{gameId}")]
-        public IActionResult UsersGameRecordByGameID(int gameId)
-        {
-            IEnumerable<UsersGameRecord> _data = _gameAppRepository.GetUsersGameRecordByGameId(gameId);
+            IEnumerable<UserGameScore> _data = _gameAppRepository.GetUsersScore(gameId);
 
             if (_data == null)
             {
@@ -57,6 +80,27 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_data);
 
         }
+
+        
+
+        [HttpGet]
+        [Route("GetGameUsersScoreByUserID/{GameID}/{UserID}")]
+        public IActionResult GetGameUserScoreByUserID(int GameID, int UserID)
+        {
+            UserGameScore _data = _gameAppRepository.GetGameUserScoreByUserID(GameID, UserID);
+
+            if (_data == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_data);
+
+        }
+
 
 
         [HttpGet]

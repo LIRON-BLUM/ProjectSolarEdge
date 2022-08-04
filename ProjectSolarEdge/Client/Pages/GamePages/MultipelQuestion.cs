@@ -23,14 +23,15 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public UsersTable Player { get; set; }
 
         public Question currentQuestion { get; set; }
-        
+
         public GameQuestionsConnection questionScore { get; set; }
         public string chosenanswer { get; set; }
 
         public GameScore questionScoreToInsert { get; set; }
-        public IEnumerable<GameScore>  gameCurrentScore { get; set; }
+        public IEnumerable<GameScore> gameCurrentScore { get; set; }
 
-        int currentScore = 200;
+        public UserGameScore currentScore { get; set; }
+
 
         public IEnumerable<Question> availleblQuestions { get; set; }
 
@@ -53,16 +54,18 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected override async Task OnInitializedAsync()
         {
-
+            int.TryParse(GameId, out var gameId);
+            int.TryParse(UserId, out var userId);
 
             GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
 
 
             Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
-           
+
 
             currentQuestion = await QuestionDataService.GetQuestionByIdAsync(int.Parse(QuestionId));
 
+            currentScore = await GameAppDataService.GetGameUserScoreByUserID(gameId, userId);
 
             questionScore = new GameQuestionsConnection()
             {
@@ -70,8 +73,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             };
 
 
-            int.TryParse(GameId, out var gameId);
-            int.TryParse(UserId, out var userId);
+
             availleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
 
             //availleblQuestions = new List<Question>()
@@ -118,7 +120,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count();
 
-             
+
 
         }
 
@@ -132,8 +134,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             {
                 UserID = int.Parse(UserId),
                 GameID = int.Parse(GameId),
-                QuestionID = int.Parse(QuestionId),   
-                
+                QuestionID = int.Parse(QuestionId),
+
                 //In the DB IsRight id bit not bool
                 IsRight = Convert.ToBoolean(chosenanswer),
                 ElementScore = questionScore.Score,
@@ -154,3 +156,5 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
     }
 }
+
+

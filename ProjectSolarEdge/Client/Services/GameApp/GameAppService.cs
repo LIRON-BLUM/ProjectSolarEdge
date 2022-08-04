@@ -27,27 +27,27 @@ namespace ProjectSolarEdge.Client.Services.GameApp
             return await JsonSerializer.DeserializeAsync<UsersTable>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
-        public async Task<UsersGameRecord> GetUsersGameRecord()
-        {
-            Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecord");
-            return await JsonSerializer.DeserializeAsync<UsersGameRecord>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-        }
+        //public async Task<UsersGameRecord> GetUsersGameRecord()
+        //{
+        //    Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecord");
+        //    return await JsonSerializer.DeserializeAsync<UsersGameRecord>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        //}
 
-   
 
-        public async Task<IEnumerable<UsersGameRecord>> GetUsersGameRecordByGameId(int gameId)
-        {
-            Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecordByGameID/{gameId}");
-            return await JsonSerializer.DeserializeAsync<IEnumerable<UsersGameRecord>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-        }
 
-  
+        //public async Task<IEnumerable<UsersGameRecord>> GetUsersGameRecordByGameId(int gameId)
+        //{
+        //    Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecordByGameID/{gameId}");
+        //    return await JsonSerializer.DeserializeAsync<IEnumerable<UsersGameRecord>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        //}
 
-        public async Task<UsersGameRecord> GetUsersGameRecordById(int Id)
-        {
-            Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecord/{Id}");
-            return await JsonSerializer.DeserializeAsync<UsersGameRecord>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-        }
+
+
+        //public async Task<UsersGameRecord> GetUsersGameRecordById(int Id)
+        //{
+        //    Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUsersGameRecord/{Id}");
+        //    return await JsonSerializer.DeserializeAsync<UsersGameRecord>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        //}
 
 
         public async Task<int> AddScoreElement(GameScore gameScore)
@@ -84,6 +84,18 @@ namespace ProjectSolarEdge.Client.Services.GameApp
         {
             Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetAllUserGameScore/{GameID}/{UserID}");
             return await JsonSerializer.DeserializeAsync<IEnumerable<GameScore>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<IEnumerable<UserGameScore>> GetGameUsersScore(int gameId)
+        {
+            Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetUsersScore/{gameId}");
+            return await JsonSerializer.DeserializeAsync<IEnumerable<UserGameScore>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<UserGameScore> GetGameUserScoreByUserID(int GameID, int UserID)
+        {
+            Stream stream = await _httpClient.GetStreamAsync($"api/GameApps/GetGameUsersScoreByUserID/{GameID}/{UserID}");
+            return await JsonSerializer.DeserializeAsync<UserGameScore>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
     }
 }

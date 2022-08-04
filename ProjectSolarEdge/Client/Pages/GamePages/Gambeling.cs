@@ -39,7 +39,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected override async Task OnInitializedAsync()
         {
-           
+
             cameFromGambling = "true";
 
         }
@@ -66,3 +66,5 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
     }
 }
+
+

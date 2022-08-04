@@ -16,8 +16,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public Game GamePlaying { get; set; }
 
         public UsersTable Player { get; set; }
-        public IEnumerable<UsersGameRecord> TopPlayers { get; set; }
-        public IEnumerable<UsersGameRecord> AllPlayers { get; set; }
+        public IEnumerable<UserGameScore> TopPlayers { get; set; }
+        public IEnumerable<UserGameScore> AllPlayers { get; set; }
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -38,22 +38,24 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         //  Liron - delete this after querise
         protected override async Task OnInitializedAsync()
         {
-            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+           
 
             int.TryParse(GameId, out var GId);
+
+            int.TryParse(UserId, out var UId);
 
             GamePlaying = await GameDataService.GetGameByIdAsync(GId);
 
 
-            Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
+            Player = await GameAppDataService.GetPlayerByID(UId);
 
-            AllPlayers = await GameAppDataService.GetUsersGameRecordByGameId(int.Parse(GameId));
+            AllPlayers = await GameAppDataService.GetGameUsersScore(GId);
 
-            TopPlayers = AllPlayers.OrderByDescending(e => e.TotalScore).Take(3);
+            TopPlayers = AllPlayers.OrderByDescending(e => e.UserScore).Take(3);
 
             int allUsersCount = AllPlayers.Count();
 
-            AllPlayers = AllPlayers.OrderByDescending(e => e.TotalScore).Take(allUsersCount);
+            AllPlayers = AllPlayers.OrderByDescending(e => e.UserScore).Take(allUsersCount);
 
          
 

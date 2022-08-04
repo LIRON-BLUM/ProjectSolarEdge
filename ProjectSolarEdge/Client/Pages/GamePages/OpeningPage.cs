@@ -11,7 +11,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
     public partial class OpeningPage : ComponentBase, IDisposable
     {
 
-    
+
         [Parameter]
         public string GameId { get; set; }
 
@@ -24,7 +24,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public Game GamePlaying { get; set; }
 
         public UsersTable Player { get; set; }
-        public IEnumerable<UsersGameRecord> TopPlayers { get; set; } 
+        public IEnumerable<UserGameScore> TopPlayers { get; set; }
 
         public UsersGameRecord PlayrsByGameID { get; set; }
 
@@ -44,15 +44,15 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             int.TryParse(GameId, out var GId);
 
             GamePlaying = await GameDataService.GetGameByIdAsync(GId);
-          
+
 
             Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
 
-            TopPlayers = await GameAppDataService.GetUsersGameRecordByGameId(int.Parse(GameId));
+            TopPlayers = await GameAppDataService.GetGameUsersScore(int.Parse(GameId));
 
-            TopPlayers = TopPlayers.OrderByDescending(e => e.TotalScore).Take(3);
+            TopPlayers = TopPlayers.OrderByDescending(e => e.UserScore).Take(3);
 
-           
+
 
         }
 
@@ -65,9 +65,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         }
 
         public void Dispose()
-        { 
-           throw new NotImplementedException();
+        {
+            throw new NotImplementedException();
         }
 
     }
 }
+
+

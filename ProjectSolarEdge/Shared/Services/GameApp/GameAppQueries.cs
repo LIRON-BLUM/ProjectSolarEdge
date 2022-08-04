@@ -46,11 +46,45 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
 
 
-		public static string GetAllUsersGameRecordByGameID => @"SELECT ID, GameID, UserName, UserFirstName, UserLastName, TotalScore, CreationDate FROM UsersGameRecord
-																WHERE GameID = @GameID";
 
 
-		public static string GetAllUsersGameRecord => @"SELECT ID, GameID, UserName, UserFirstName, UserLastName, TotalScore, CreationDate FROM UsersGameRecord";
+        public static string GetGameUsersScore => @"SELECT 
+														u.ID,
+														u.UserFirstName,
+														u.UserLastName,
+														SUM(gs.ElementScore) as UserScore
+													FROM UsersTable as u
+													INNER JOIN  GameScore as gs ON u.ID = gs.UserID
+													WHERE gs.GameID = @GameID 
+													GROUP BY u.ID, u.UserFirstName, u.UserLastName
+													ORDER BY SUM(gs.ElementScore) DESC";
+
+		public static string GetGameUsersScoreByUserID => @"SELECT 
+														u.ID,
+														u.UserFirstName,
+														u.UserLastName,
+														SUM(gs.ElementScore) as UserScore
+													FROM UsersTable as u
+													INNER JOIN  GameScore as gs ON u.ID = gs.UserID
+													WHERE gs.GameID = @GameID AND gs.UserID = @UserID
+													GROUP BY u.ID, u.UserFirstName, u.UserLastName
+													ORDER BY SUM(gs.ElementScore) DESC";
+
+		//public static string UserGameScore => @"SELECT 
+		//											SUM(gs.ElementScore) as UserScore
+		//											FROM UsersTable as u
+		//											INNER JOIN  GameScore as gs ON u.ID = gs.UserID
+		//											WHERE gs.GameID = @GameID 
+		//											GROUP BY u.ID, u.UserFirstName, u.UserLastName
+		//											ORDER BY SUM(gs.ElementScore) DESC";
+
+		//public static string GetUserScoreByID => @"SELECT 
+		//											gs.UserID,
+		//											SUM(gs.ElementScore) as UserScore
+		//										FROM GameScore as gs
+		//										WHERE gs.GameID = @GameID AND gs.UserID = @UserID
+		//										Group by gs.UserID
+		//										ORDER BY SUM(gs.ElementScore) DESC";
 
 		public static string AvailableQuestions => @"select 
 														q.ID,

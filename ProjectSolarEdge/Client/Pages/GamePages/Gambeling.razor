@@ -7,7 +7,7 @@
 <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
 
- <div id="gambelBack"> 
+<div id="gambelBack">
     <div class="container">
         <div class="flex-center flex-column ">
 
@@ -35,26 +35,28 @@
                     <MudSelectItem Value="200" />
                     <MudSelectItem Value="300" />
                 </MudSelect>
-                </EditForm>
-                <button type="button" id="gambelContinue" class="btnGreen" @onclick="GoToNext"> Continue</button>
-                <a id="GoToGame" href="/GamePage"> </a>
+            </EditForm>
+            <button type="button" id="gambelContinue" class="btnGreen" @onclick="GoToNext"> Continue</button>
+            <a id="GoToGame" href="/GamePage"> </a>
 
         </div>
 
-        </div>
     </div>
+</div>
 
 @code {
-     protected override void OnAfterRender(bool firstRender)
+    protected override void OnAfterRender(bool firstRender)
     {
-        if(firstRender)
+        if (firstRender)
         {
             CallJSMethod();
         }
-     }
+    }
 
     private async Task CallJSMethod()
     {
         await JSRuntime.InvokeVoidAsync("gambelingPage");
     }
 }
+
+

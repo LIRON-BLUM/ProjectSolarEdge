@@ -9,9 +9,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 {
     public interface IGameAppRepository
     {
-        IEnumerable<UsersGameRecord> GetUsersGameRecordByGameId(int ID);
+        //IEnumerable<UsersGameRecord> GetUsersGameRecordByGameId(int ID);
 
-        IEnumerable<UsersGameRecord> GetAllUsersGameRecord();
+        //IEnumerable<UsersGameRecord> GetAllUsersGameRecord();
 
         IEnumerable<Question> AvailableQuestions(int gameID, int userID);
 
@@ -22,6 +22,12 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
         bool UpdateScoreElement(GameScore GameScore);
 
         IEnumerable<GameScore> GetAllUserGameScore(int gameID, int userID);
+
+
+        IEnumerable<UserGameScore> GetUsersScore(int gameID);
+
+        UserGameScore GetGameUserScoreByUserID(int gameID, int userID);
+        
 
     }
 }

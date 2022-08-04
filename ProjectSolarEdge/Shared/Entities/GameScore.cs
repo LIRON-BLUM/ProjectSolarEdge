@@ -27,7 +27,9 @@ namespace ProjectSolarEdge.Shared.Entities
         public bool IsAnswered { get; set; }
 
 
-
-
     }
-}
+
+
+
+ 
+    }

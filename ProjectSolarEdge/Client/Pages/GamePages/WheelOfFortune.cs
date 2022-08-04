@@ -38,9 +38,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected override async Task OnInitializedAsync()
         {
-          //I think We can Use the parameter variables
-            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-            Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
+
 
 
         }
@@ -51,8 +49,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             WheelScoreToInsert = new GameScore()
             {
-                UserID = Player.ID,
-                GameID = GamePlaying.ID,
+                UserID = int.Parse(UserId),
+                GameID = int.Parse(GameId),
                 GameElement = 1,
                 GamblingScore=0,
                 ElementScore = Convert.ToUInt16(WheelScore),
