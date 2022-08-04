@@ -13,20 +13,21 @@
 
             <h1> How Much Would You Like To Bet On Your Success </h1>
 
-            <p id="colectedScore"></p>
-            <!--<form>
-                <select id="gambelOptions" class="btnGreen" @bind="GambelingScoreToInsert.GamblingScore">
+            <p>@currentScore</p>
+            @*<p id="colectedScore"></p>*@
+         
+                <select id="gambelOptions" class="btnGreen" @bind="@selectetScore">
                     @foreach (var Score in CorrentGambleScoreToInsert)
                     {
                         <option value=@Score>@Score</option>
                     }
                 </select>
-                <p> You've chosen to gamble on <span>@GambelingScoreToInsert.GamblingScore</span></p>-->
-                @*<input id="gambelScoreHidden" type="hidden" value="@GambelScore" @onchange="@(e=>{GambelScore=e.Value.ToString();})" />*@
+                <p> You've chosen to gamble on <span style="color:white">@selectetScore</span></p>
+              
 
-            <!--</form>-->
+          
 
-            <form>
+            @*<form>
                 <select id="gambelOptions" class="btnGreen" onchange="gambelChoice()">
                     <option>0</option>
                     <option>100</option>
@@ -39,7 +40,7 @@
                 <p> You've chosen to gamble on </p> <p id="choosenGambel"></p>
                 <input id="gambelScoreHidden" type="hidden" value="@GambelScore" @onchange="@(e=>{GambelScore=e.Value.ToString();})" />
 
-            </form>
+            </form>*@
 
 
       

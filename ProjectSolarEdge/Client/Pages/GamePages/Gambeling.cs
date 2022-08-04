@@ -15,6 +15,10 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public List<int> CorrentGambleScoreToInsert = new List<int>() { 0, 100,200,300};
 
+        public int selectetScore = 0;
+
+        public UserGameScore currentScore { get; set; }
+
         [Parameter]
         public string GameId { get; set; }
 
@@ -40,8 +44,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected override async Task OnInitializedAsync()
         {
-
+            int.TryParse(GameId, out var gameId);
+            int.TryParse(UserId, out var userId);
             cameFromGambling = "true";
+
+            currentScore = await GameAppDataService.GetGameUserScoreByUserID(gameId, userId);
 
         }
 
@@ -54,7 +61,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 UserID = int.Parse(UserId),
                 GameID = int.Parse(GameId),
                 GameElement = 2,
-                GamblingScore = Convert.ToUInt16(GambelScore),
+                GamblingScore = selectetScore,
                 ElementScore = 0,
             };
 
