@@ -86,6 +86,19 @@ namespace ProjectSolarEdge.Client.Services.Questions
         }
 
 
+        public async Task<bool> DeleteQuestionConnection(int Id)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Questions/DeleteQuestionConnction/{Id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
+
         ////////----------Subject----------//////////
         public async Task<IEnumerable<Subject>> GetSubjectsAsync()
         {

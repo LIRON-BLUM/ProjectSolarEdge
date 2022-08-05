@@ -125,11 +125,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             if (chosenanswer != "False")
             {
-                CorrentScoreToInsert = questionScore.Score;
+                CorrentScoreToInsert = (questionScore.Score) + (LastGamblingScore.GamblingScore);
             }
             else
             {
-                CorrentScoreToInsert = 0 - LastGamblingScore.GamblingScore;
+                CorrentScoreToInsert = 0 - (LastGamblingScore.GamblingScore);
             }
 
             //CorrentScoreToInsert = questionScore.Score;

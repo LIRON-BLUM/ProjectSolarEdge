@@ -99,6 +99,15 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         //    return results;
         //}
 
+        public bool DeleteQuestionConnction(int ID)
+        {
+            bool results = ExecuteAll(QuestionsQueries.DeleteQuestionFromConnectionTable, new { QuestionID = ID });
+
+
+            return results;
+        }
+
+
         public bool AddAnswerToDB(QuestionAnswer answer)
         {
 

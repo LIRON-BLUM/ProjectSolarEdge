@@ -3,11 +3,12 @@
 }
 
 .box {
+    border-radius: 10px;
     background-color: #001546;
     height: 250px;
 }
 
-p{
+.boxTitle{
     color:white;
 }
 

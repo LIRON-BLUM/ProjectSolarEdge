@@ -49,6 +49,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 												SET isDeleted = 1
 													WHERE ID = @ID";
 
+		public static string DeleteQuestionFromConnectionTable => @"DELETE FROM GameQuestionsConnections WHERE QuestionID = @QuestionID";
+
 
 		//-----------------ANSWERS----------------//
 

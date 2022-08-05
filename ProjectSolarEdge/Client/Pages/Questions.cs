@@ -114,7 +114,7 @@ namespace ProjectSolarEdge.Client.Pages
             {
             QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
             await QuestionDataService.DeleteQuestion(QuestionsToDelete);
-
+            await QuestionDataService.DeleteQuestionConnection(id);
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
             QuestionsDataToDisplay = QuestionsData;
 
