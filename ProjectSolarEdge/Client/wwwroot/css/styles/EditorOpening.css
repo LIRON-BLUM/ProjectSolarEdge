@@ -1,0 +1,17 @@
+﻿.container {
+    height: 100vh;
+}
+
+.box {
+    background-color: #001546;
+    height: 250px;
+}
+
+p{
+    color:white;
+}
+
+img{
+    height:150px;
+    width:150px;
+}

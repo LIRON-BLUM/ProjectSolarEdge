@@ -133,14 +133,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
           
 
-            if (chosenanswer == "true" || chosenanswer == "True")
-            {
-                CorrentScoreToInsert = questionScore.Score;
-            }
-            else
-            {
-                CorrentScoreToInsert = 0 - questionScoreToInsert.GamblingScore;
-            }
+            //if (chosenanswer == "true" || chosenanswer == "True")
+            //{
+            //    CorrentScoreToInsert = questionScore.Score;
+            //}
+            //else
+            //{
+            //    CorrentScoreToInsert = 0 - questionScoreToInsert.GamblingScore;
+            //}
 
 
             questionScoreToInsert = new GameScore()

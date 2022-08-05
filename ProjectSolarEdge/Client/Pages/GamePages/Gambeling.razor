@@ -7,21 +7,24 @@
 <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
 
-<div id="gambelBack">
+<div class="Back">
     <div class="container">
-        <div class="flex-center flex-column ">
+        <div class="justify-content-center align-items-center">
 
             <h1> How Much Would You Like To Bet On Your Success </h1>
 
-            <p>@currentScore</p>
+            <p>@currentScore.UserScore</p>
             @*<p id="colectedScore"></p>*@
-         
-                <select id="gambelOptions" class="btnGreen" @bind="@selectetScore">
+         <div class="row justify-content-center"> 
+
+                <select id="gambelOptions" class="btnGreen col-6 text-center" @bind="@selectetScore">
                     @foreach (var Score in CorrentGambleScoreToInsert)
                     {
                         <option value=@Score>@Score</option>
                     }
                 </select>
+                         </div>
+
                 <p> You've chosen to gamble on <span style="color:white">@selectetScore</span></p>
               
 
@@ -43,10 +46,11 @@
             </form>*@
 
 
-      
+              <div class="row justify-content-center"> 
+                <button type="button" id="gambelContinue" class="btnGreen col-2 mt-4" @onclick="GoToNext"> Continue</button>
 
+              </div>
 
-            <button type="button" id="gambelContinue" class="btnGreen" @onclick="GoToNext"> Continue</button>
             <a id="GoToGame" href="/GamePage"> </a>
 
         </div>

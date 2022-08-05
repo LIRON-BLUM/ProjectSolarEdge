@@ -30,6 +30,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public GameScore questionScoreToInsert { get; set; }
 
         int currentScore = 200;
+        public int currentQuestionNum { get; set; }
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -63,6 +64,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             int.TryParse(UserId, out var userId);
             availleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
 
+            currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count();
 
         }
 

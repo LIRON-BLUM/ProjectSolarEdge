@@ -7,7 +7,7 @@
 <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
 <div class="container">
-        <div id="game" class="flex-center flex-column">
+        <div id="game" class="justify-content-center align-items-center">
 
             <div id="points">
                 <span id="score"> @currentScore </span> <span> Points</span>
@@ -17,7 +17,7 @@
                     <div id="progressBar">
                         <div id="progressBarFull"></div>
                     </div>
-                    <p id="progressText"> <span id="availleblQuestions"> @availleblQuestions.Count() </span> / <span id="maxQuestions"> @GamePlaying.Questions.Count() </span></p>
+                    <p id="progressText"> <span id="availleblQuestions"> @currentQuestionNum </span> / <span id="maxQuestions"> @GamePlaying.Questions.Count() </span></p>
                 </div>
                 <div id="hud-item">
                 </div>
@@ -25,10 +25,10 @@
 
             <div id="QuestionPic"></div>
             <h2 id="question">@currentQuestion.QuestionBody </h2>
-            <div id="answersContainer">
+            <div id="answersContainer" lass="row justify-content-evenly">
                  @foreach (var answer in currentQuestion.Answers)
                     {
-                <div class="choiceContainer">
+                <div class="choiceContainer col-5 mt-8">
                     <p class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</p>
                 </div>
 
@@ -37,8 +37,14 @@
                 <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
 
             </div>
-            <button type="button" id="submitAnswer" class="btn" @onclick="saveAnawer" disabled>submit</button>
+
+             <div class="row justify-content-center">
+
+            <button type="button" id="submitAnswer" class="btnBlue col-4 mt-4" @onclick="saveAnawer">submit</button>
+                       <div class="w-100"></div>
+
             <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
+        </div>
   
         </div>
     </div>
