@@ -193,7 +193,46 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_data);
 
         }
+        
 
+        [HttpGet]
+        [Route("GetQuestionScoreByGameID/{GameID}/{QuestionID}")]
+        public IActionResult GetQuestionScoreByGameID(int gameID, int questionID)
+        {
+            GameQuestionsConnection _data = _gameAppRepository.GetQuestionScoreByGameID(gameID, questionID);
+
+            if (_data == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_data);
+
+        }
+
+
+        
+
+        [HttpGet]
+        [Route("GetGamblingScore/{GameID}/{UserID}")]
+        public IActionResult GetGamblingScore(int gameID, int userID)
+        {
+            GameScore _data = _gameAppRepository.GetGamblingScore(gameID, userID);
+
+            if (_data == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_data);
+
+        }
 
     }
 }

@@ -112,5 +112,12 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 													SET QuestionID = @QuestionID, IsRight = @IsRight, GamblingScore = @GamblingScore, ElementScore= @ElementScore, IsAnswered = @IsAnswered
 													WHERE UserID = @UserID AND GameID = @GameID AND QuestionID = 0 AND GameElement = 2";
 
+
+		public static string GetQuestionScoreByGameID => @"SELECT * FROM GameQuestionsConnections
+															WHERE QuestionID = @QuestionID AND GameID = @GameID";
+
+
+		public static string GetGamblingScore => @"SELECT * FROM GameScore
+															WHERE UserID = @UserID AND GameID = @GameID AND QuestionID = 0 AND GameElement = 2";
 	}
 }

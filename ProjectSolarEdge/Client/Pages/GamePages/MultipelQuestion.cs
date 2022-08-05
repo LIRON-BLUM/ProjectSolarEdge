@@ -10,13 +10,13 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
     {
         [Parameter]
 
-        public string GameId { get; set; }
+        public string GameID { get; set; }
 
         [Parameter]
-        public string UserId { get; set; }
+        public string UserID { get; set; }
 
         [Parameter]
-        public string QuestionId { get; set; }
+        public string QuestionID { get; set; }
 
         public Game GamePlaying { get; set; }
 
@@ -27,7 +27,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public GameQuestionsConnection questionScore { get; set; }
         public string chosenanswer { get; set; }
 
-        public GameScore questionScoreToInsert { get; set; }
+        public GameScore questionScoreToUpdate { get; set; }
         public IEnumerable<GameScore> gameCurrentScore { get; set; }
 
         public UserGameScore currentScore { get; set; }
@@ -35,6 +35,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public int CorrentScoreToInsert { get; set; }
 
         public IEnumerable<Question> availleblQuestions { get; set; }
+
+        public GameScore LastGamblingScore { get; set; }
 
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
@@ -55,62 +57,52 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected override async Task OnInitializedAsync()
         {
-            int.TryParse(GameId, out var gameId);
-            int.TryParse(UserId, out var userId);
+            int.TryParse(GameID, out var gameId);
+            int.TryParse(UserID, out var userId);
+            int.TryParse(QuestionID, out var questionId);
 
-            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-
-
-            Player = await GameAppDataService.GetPlayerByID(int.Parse(UserId));
+            GamePlaying = await GameDataService.GetGameByIdAsync(gameId);
 
 
-            currentQuestion = await QuestionDataService.GetQuestionByIdAsync(int.Parse(QuestionId));
+            Player = await GameAppDataService.GetPlayerByID(userId);
+
+
+            currentQuestion = await QuestionDataService.GetQuestionByIdAsync(questionId);
+
+            questionScore = await GameAppDataService.GetQuestionScoreByGameID(gameId, questionId);
 
             currentScore = await GameAppDataService.GetGameUserScoreByUserID(gameId, userId);
 
-            questionScore = new GameQuestionsConnection()
-            {
-                Score = 200
-            };
+            //questionScore = new GameQuestionsConnection()
+            //{
+            //    Score = 200
+            //};
 
 
 
             availleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
 
-            //availleblQuestions = new List<Question>()
+            LastGamblingScore = await GameAppDataService.GetGamblingScore(gameId,userId);
+
+            //gameCurrentScore = new List<GameScore>()
             //{
-            //    new Question()
+            //    new GameScore()
             //    {
-            //        ID = 1,
-            //        Type= QuestionType.SingleChoice
+            //        ElementScore= 100
             //    },
-            //      new Question() {
-            //        ID = 2,
-            //        Type= QuestionType.TrueFalse
+            //     new GameScore()
+            //    {
+            //        ElementScore= 200
             //    },
-
-
+            //      new GameScore()
+            //    {
+            //        ElementScore= 400
+            //    },
+            //       new GameScore()
+            //    {
+            //        ElementScore= 100
+            //    }
             //};
-
-            gameCurrentScore = new List<GameScore>()
-            {
-                new GameScore()
-                {
-                    ElementScore= 100
-                },
-                 new GameScore()
-                {
-                    ElementScore= 200
-                },
-                  new GameScore()
-                {
-                    ElementScore= 400
-                },
-                   new GameScore()
-                {
-                    ElementScore= 100
-                }
-            };
 
 
             //foreach (int score in gameCurrentScore)
@@ -128,42 +120,41 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         protected async Task saveAnawer()
         {
-            //  Liron check if the is a row for this question in gameScore table if ther is Update the game score table with this if not insert
-            //is the Query supposed to be - update Game score table?
-
-          
-
-            //if (chosenanswer == "true" || chosenanswer == "True")
-            //{
-            //    CorrentScoreToInsert = questionScore.Score;
-            //}
-            //else
-            //{
-            //    CorrentScoreToInsert = 0 - questionScoreToInsert.GamblingScore;
-            //}
 
 
-            questionScoreToInsert = new GameScore()
+
+            if (chosenanswer != "False")
             {
-                UserID = int.Parse(UserId),
-                GameID = int.Parse(GameId),
-                QuestionID = int.Parse(QuestionId),
+                CorrentScoreToInsert = questionScore.Score;
+            }
+            else
+            {
+                CorrentScoreToInsert = 0 - LastGamblingScore.GamblingScore;
+            }
 
-                //In the DB IsRight id bit not bool
+            //CorrentScoreToInsert = questionScore.Score;
+            //CorrentScoreToInsert = 0 - questionScoreToUpdate.GamblingScore;
+
+            questionScoreToUpdate = new GameScore()
+            {
+                UserID = int.Parse(UserID),
+                GameID = int.Parse(GameID),
+                QuestionID = int.Parse(QuestionID),
                 IsRight = Convert.ToBoolean(chosenanswer),
-                ElementScore = CorrentScoreToInsert,
+                GamblingScore = LastGamblingScore.GamblingScore,
+                ElementScore = CorrentScoreToInsert,            
                 IsAnswered = true
             };
 
-            await GameAppDataService.UpdateScoreElement(questionScoreToInsert);
+            await GameAppDataService.UpdateScoreElement(questionScoreToUpdate);
 
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+            NavigationManager.NavigateTo($"GetNextStep/{GameID}/{UserID}");
 
         }
 
         protected async Task SkipAnawer()
         {
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+            NavigationManager.NavigateTo($"GetNextStep/{GameID}/{UserID}");
 
         }
 

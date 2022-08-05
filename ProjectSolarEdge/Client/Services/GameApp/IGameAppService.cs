@@ -26,5 +26,9 @@ namespace ProjectSolarEdge.Client.Services.GameApp
 
         Task<bool> UpdateScoreElement(GameScore gameScore);
 
+        Task<GameQuestionsConnection> GetQuestionScoreByGameID(int GameID, int QuestionID);
+
+        Task<GameScore> GetGamblingScore(int GameID, int UserID);
+
     }
 }

@@ -27,7 +27,12 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
         IEnumerable<UserGameScore> GetUsersScore(int gameID);
 
         UserGameScore GetGameUserScoreByUserID(int gameID, int userID);
-        
+
+        GameQuestionsConnection GetQuestionScoreByGameID (int gameID, int questionID);
+
+        GameScore GetGamblingScore(int gameID, int userID);
+
+
 
     }
 }
