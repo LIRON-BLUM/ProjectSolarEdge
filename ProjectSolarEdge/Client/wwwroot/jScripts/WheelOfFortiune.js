@@ -65,7 +65,7 @@ function frame() {
         angVel = 0; // Bring to stop
         const sector = sectors[getIndex()];
         //score += sector.label;
-        wheelScore.innerText += "Score: " + sector.label;
+        //wheelScore.innerText += "Score: " + sector.label;
         wheelScoreHidden.value = sector.label;
         var event = new Event('change');
         wheelScoreHidden.dispatchEvent(event);

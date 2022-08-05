@@ -39,13 +39,18 @@
 
                <div class="row justify-content-center">
 
-           <button type="button" id="submitAnswer" class="btnBlue col-4 mt-4" @onclick="saveAnawer" >submit</button>
+                 
+              <button type="button" id="submitAnswer" class="btnBlue col-4 mt-4" onclick="getFeedback()">submit</button>
+
                        <div class="w-100"></div>
 
             <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
         </div>
 
            
+                 <asp:Button runat="server" ID="saveAnawerDB" ClientIDMode="Static" Text="" style="display:none;" @onclick="saveAnawer" />
+
+
 
         </div>
         </div>
