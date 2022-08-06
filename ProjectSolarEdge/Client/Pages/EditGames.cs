@@ -21,6 +21,8 @@ namespace ProjectSolarEdge.Client.Pages
 
         public Question QuestionsToDelete { get; set; } = new Question();
 
+        public bool Gamification = true;
+
         public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
 
         //public IEnumerable<Question> selectedQuestions { get; set; } = new HashSet<Question>();
@@ -79,6 +81,19 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
+        protected async Task GamificationTrue()
+        {
+            
+            GameCRUD.IsGamified = 1;
+        }
+
+        protected async Task GamificationFalse()
+        {
+            
+            GameCRUD.IsGamified = 0;
+        }
+
+
         protected async Task SaveGame()
         {
           
@@ -103,12 +118,23 @@ namespace ProjectSolarEdge.Client.Pages
             foreach (var item in selectedQuestions)
             {
 
-
+                int QuestionScore = 0;
                 Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
                 selectedQuestionToUpdate.Add(q);
 
+                if (item.Difficulty == QuestionDifficulty.Easy)
+                {
+                    QuestionScore = 200;
+                }
+                if (item.Difficulty == QuestionDifficulty.Medium)
+                {
+                    QuestionScore = 400;
+                } if (item.Difficulty == QuestionDifficulty.Hard)
+                {
+                    QuestionScore = 600;
+                }
 
-                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score=0 });
+                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score= QuestionScore });
 
             }
             

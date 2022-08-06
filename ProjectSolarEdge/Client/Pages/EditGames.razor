@@ -3,6 +3,7 @@
 @using ProjectSolarEdge.Shared.Entities
 @using System.Net.Http.Json
 @inject HttpClient httpClient
+@*<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />*@
 
 <h3>EditGame @GameCRUD.ID </h3>
 
@@ -10,30 +11,56 @@
 <MudGrid>
 
     <MudItem xs="8" class="d-flex gap-4  ">
-
-        <MudPaper xs="5" Class="d-flex flex-column flex-grow-1  gap-x-8 gap-y-4 " Elevation="0">
-            
-                <EditForm Model="@GameCRUD">
-                    <MudTextField Class="ma-2" T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName" Lines="4" />
-                    <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
-                    <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
-                    <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="enddate" Placeholder="Select Date" />
-                    <MudNumericField Class="ma-2" @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />
-                    <MudButton Class="m-2" Variant="Variant.Filled" @onclick="SaveGame" Color="Color.Primary" DisableElevation="true">Save</MudButton>
-
-                </EditForm>
-         
-        </MudPaper>
+        <EditForm Model="@GameCRUD">
+            <MudPaper xs="5" Class="d-flex flex-column flex-grow-1  gap-x-8 gap-y-4 " Elevation="0">
 
 
-        <MudPaper xs="3" Class="d-flex flex-column flex-grow-1 gap-x-8 gap-y-4" Elevation="0">
-            <MudPaper Class=" ma-2 mud-theme-primary" Width="100%" Height="64px" />
-            <MudPaper Class="ma-2 mud-theme-primary" Width="100%" Height="64px" />
-            <MudPaper Class="ma-2 mud-theme-primary" Width="100%" Height="64px" />
-            <MudPaper Class="ma-2 mud-theme-primary" Width="100%" Height="64px" />
-        </MudPaper>
+                <MudTextField Class="ma-2" T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName" Lines="4" />
+                <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
+                <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="enddate" Placeholder="Select Date" />
+                <MudNumericField Class="ma-2" @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />
+                <MudButton Class="m-2" Variant="Variant.Filled" @onclick="SaveGame" Color="Color.Primary" DisableElevation="true">Save</MudButton>
 
 
+
+            </MudPaper>
+
+
+            <MudPaper xs="3" Class="d-flex flex-column flex-grow-1 gap-x-8 gap-y-4" Elevation="0">
+
+                <MudText Class="ma-2">Include Gambling Fanction?</MudText>
+                @*<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onclick="GamificationTrue" checked>
+            <label class="btn btn-outline-primary" for="btnradio1">Yes</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3"  onclick="GamificationFalse" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio3">No</label>
+        </div>*@
+
+                <MudChipSet @bind-SelectedChip="selected" Filter="true" Mandatory="@mandatory">
+
+                    <MudChip Text="Yes" Color="Color.Primary" @onclick="GamificationTrue">Yes</MudChip>
+                    <MudChip Text="No" Color="Color.Primary" @onclick="GamificationFalse">No</MudChip>
+
+                </MudChipSet>
+
+                <MudNumericField Class="ma-2" @bind-Value="@GameCRUD.WheelIteration" Label="Gamification iteration" Variant="Variant.Outlined" />
+
+
+
+                <MudItem xs="2" md="2">
+                    <MudRadioGroup @bind-SelectedOption="@GameCRUD.ScoreMethod">
+                        <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SpreadEqualy)">Spread Equaly</MudRadio>
+                        <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SpreadByDifficulty)">Spread By Difficulty</MudRadio>
+                        <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SeldSpread)">I’ll Do It Myself</MudRadio>
+
+                    </MudRadioGroup>
+                    <MudPaper Class="ma-2 mud-theme-primary" Width="100%" Height="64px" />
+                </MudItem>
+            </MudPaper>
+
+        </EditForm>
     </MudItem>
 
     <MudItem xs="4" class="d-inline-flex gap-4 ">
@@ -142,25 +169,25 @@
 
         <MudItem xs="12" sm="5">
             <MudPaper Class="d-flex flex-column flex-grow-1 gap-4 ">-->
-                @*<MudTable Items="QuestionsData" MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">*@
+@*<MudTable Items="QuestionsData" MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">*@
 
-                <!--<MudTable Items="GameCRUD.Questions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
-                    <HeaderContent>
-                        <MudTh>Type</MudTh>
-                        <MudTh>Question</MudTh>
-                        <MudTh>Delete</MudTh>
+<!--<MudTable Items="GameCRUD.Questions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+    <HeaderContent>
+        <MudTh>Type</MudTh>
+        <MudTh>Question</MudTh>
+        <MudTh>Delete</MudTh>
 
-                    </HeaderContent>
-                    <RowTemplate>
-                        <MudTd DataLabel="Type">@context.Type</MudTd>
-                        <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
-                        <MudTd DataLabel="Delete">
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Type">@context.Type</MudTd>
+        <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
+        <MudTd DataLabel="Delete">
 
-                            <MudTooltip Text="Delete Question">
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />-->
-                                @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
+            <MudTooltip Text="Delete Question">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />-->
+@*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
 
-                            <!--</MudTooltip>
+<!--</MudTooltip>
                         </MudTd>
 
                     </RowTemplate>
@@ -200,6 +227,9 @@
 
 
 
+
+
+
 @code {
 
     MudMessageBox mbox { get; set; }
@@ -214,7 +244,10 @@
 
 
 
+    bool mandatory = true;
+    MudChip selected;
 
+ 
 
 
 
