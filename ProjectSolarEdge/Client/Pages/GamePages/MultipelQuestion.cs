@@ -117,6 +117,14 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         }
 
+        //protected async Task btnSample_Click()
+        //{
+        //    //NavigationManager.NavigateTo($"GetNextStep/{GameID}/{UserID}");
+
+
+
+        //}
+
 
         protected async Task saveAnawer()
         {

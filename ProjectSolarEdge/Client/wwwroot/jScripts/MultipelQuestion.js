@@ -1,6 +1,5 @@
 ﻿function MultipelQuestion() {
     let questionHidden = document.getElementById("questionHidden");
-    let submitAnswer = document.getElementById("submitAnswer");
     let acceptingAnswers = true;
     let selectedChoice;
     let isRight;
@@ -30,21 +29,22 @@
     // update the progress bar
     progressBarFull.style.width = `${(availleblQuestions / maxQuestions) * 100}%`;
 
-    //submit= () => {
-    //    if (isRight == true) {
-    //        selectedChoice.parentElement.classList.add("correct");
+    getFeedback = () => {
+        selectedChoice.parentElement.classList.remove("chosenAnswer");
 
-    //    }
-    //    else {
-    //        selectedChoice.parentElement.classList.add("chosenAnswer");
-    //    }
+        if (isRight != "False") {
+            selectedChoice.parentElement.classList.add("correct");
 
+        }
+        else {
+            selectedChoice.parentElement.classList.add("incorrect");
+        }
 
-    //    setTimeout(() => {
+        setTimeout(() => {
 
-    //    document.getElementById("submitAnswer").click();
-    //    }, 1000);
-    //}
+            document.getElementById("saveAnawerDB").click();
+        }, 1000);
+    }
 
 }
 
