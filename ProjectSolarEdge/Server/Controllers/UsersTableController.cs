@@ -64,5 +64,25 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
 
+        
+
+        [HttpGet]
+        [Route("GetUserIdByUserPassword/{UserPassword}")]
+        public IActionResult GetUserIdByUserPassword(string userPassword)
+        {
+            UsersTable _UserID = _usersRepository.GetUserIdByUserPassword(userPassword);
+
+            if (_UserID == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_UserID);
+        }
+
+
     }
 }

@@ -3,14 +3,21 @@
 @using ProjectSolarEdge.Shared.Entities
 @using System.Net.Http.Json
 @inject HttpClient httpClient
+@inject IDialogService DialogService
 @*<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />*@
 
-<h3>EditGame @GameCRUD.ID </h3>
+
 
 
 <MudGrid>
 
-    <MudItem xs="8" class="d-flex gap-4  ">
+    <MudItem xs="10" class="d-flex gap-4"><h1>Game @GameCRUD.ID Editor</h1></MudItem>
+
+    <MudItem xs="2" class="d-inline-flex gap-4 ">
+        <MudButton Class="m-2" Variant="Variant.Filled" @onclick="SaveGame" Color="Color.Primary" DisableElevation="true">Save</MudButton>
+    </MudItem>
+
+    <MudItem xs="8" class="d-flex gap-4">
         <EditForm Model="@GameCRUD">
             <MudPaper xs="5" Class="d-flex flex-column flex-grow-1  gap-x-8 gap-y-4 " Elevation="0">
 
@@ -20,7 +27,7 @@
                 <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
                 <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="enddate" Placeholder="Select Date" />
                 <MudNumericField Class="ma-2" @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />
-                <MudButton Class="m-2" Variant="Variant.Filled" @onclick="SaveGame" Color="Color.Primary" DisableElevation="true">Save</MudButton>
+
 
 
 
@@ -31,12 +38,12 @@
 
                 <MudText Class="ma-2">Include Gambling Fanction?</MudText>
                 @*<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onclick="GamificationTrue" checked>
-            <label class="btn btn-outline-primary" for="btnradio1">Yes</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onclick="GamificationTrue" checked>
+                        <label class="btn btn-outline-primary" for="btnradio1">Yes</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3"  onclick="GamificationFalse" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio3">No</label>
-        </div>*@
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3"  onclick="GamificationFalse" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio3">No</label>
+                    </div>*@
 
                 <MudChipSet @bind-SelectedChip="selected" Filter="true" Mandatory="@mandatory">
 
@@ -112,6 +119,8 @@
 
         </MudPaper>
     </MudItem>
+
+
 </MudGrid>
 
 
@@ -226,11 +235,19 @@
 
 
 
-
+<MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
+    Open Simple Dialog
+</MudButton>
 
 
 
 @code {
+
+    private void OpenDialog()
+    {
+        var options = new DialogOptions {  };
+        DialogService.Show<QuestionTableDialog>("Simple Dialog", options);
+    }
 
     MudMessageBox mbox { get; set; }
     string state = "Message box hasn't been opened yet";
@@ -247,7 +264,7 @@
     bool mandatory = true;
     MudChip selected;
 
- 
+
 
 
 

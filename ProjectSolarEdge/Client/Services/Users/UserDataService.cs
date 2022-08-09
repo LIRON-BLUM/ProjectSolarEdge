@@ -20,5 +20,11 @@ namespace ProjectSolarEdge.Client.Services.Users
             Stream stream = await _httpClient.GetStreamAsync($"api/UsersTable/GetUserIdByUserName/{UserName}");
             return await JsonSerializer.DeserializeAsync<UsersTable>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
+
+        public async Task<UsersTable> GetUserIdByUserPassword(string UserPassword)
+        {
+            Stream stream = await _httpClient.GetStreamAsync($"api/UsersTable/GetUserIdByUserPassword/{UserPassword}");
+            return await JsonSerializer.DeserializeAsync<UsersTable>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
     }
 }

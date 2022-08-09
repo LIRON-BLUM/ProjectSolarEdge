@@ -28,7 +28,13 @@ namespace ProjectSolarEdge.Shared.Services.Users
 
         public UsersTable GetUserIdByUserName(string userName)
         {
-            UsersTable _userID = GetRecords<UsersTable>(UsersQueries.GetUserByUserName, new { userName = userName }).FirstOrDefault();
+            UsersTable _userID = GetRecords<UsersTable>(UsersQueries.GetUserByUserName, new { UserName = userName }).FirstOrDefault();
+            return _userID;
+        }
+
+        public UsersTable GetUserIdByUserPassword(string userPassword)
+        {
+            UsersTable _userID = GetRecords<UsersTable>(UsersQueries.GetUserByPassword, new { UserPassword = userPassword }).FirstOrDefault();
             return _userID;
         }
     }

@@ -2,6 +2,13 @@
 
 <MudThemeProvider />
 
+<MudDialogProvider FullWidth="true"
+                   MaxWidth="MaxWidth.ExtraSmall"
+                   CloseButton="true"
+                   DisableBackdropClick="true"
+                   NoHeader="true"
+                   Position="DialogPosition.Center"
+                   CloseOnEscapeKey="true" />
 <MudLayout>
     <MudAppBar Elevation="1" Style="@($"background:#001546;")">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="@($"color:#FF002A;")" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />

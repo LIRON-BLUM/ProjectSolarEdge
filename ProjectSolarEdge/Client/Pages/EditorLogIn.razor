@@ -1,34 +1,54 @@
-﻿@layout SeconderyLayout
+﻿
 @page "/"
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 
-<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+
 <link href="/css/styles/Gambeling.css" rel="stylesheet" />
 <link href="/css/styles/LogIn.css" rel="stylesheet" />
 
-<div class="Back">
 
-<div class="container">
-    <div class="justify-content-center align-items-center text-center">
 
-         <img src="/css/img/solaredge-logo-vector.png" class="rounded mx-auto d-block" alt="Logo">
-     
+    <div class="container">
+        <div class="justify-content-center align-items-center text-center">
+
+            <img src="/Files/SolarEdgeLogoWhite.svg" width="40%" class="rounded mx-auto d-block" alt="Logo">
+            @*<input type="text" placeholder="Email" class="col-4" />
+            <input type="text" placeholder="Passwored" class="col-4" />*@
 
             <p>Enter Email:</p>
-            <input type="text"  placeholder="Email" class="col-4" />
+
+            <MudTextField @bind-Value="@UserEmail" Label="User Name" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
             <p>Passwored:</p>
-            <input type="text"  placeholder="Passwored" class="col-4" />
-         <div class="row justify-content-center p-3">
-            <button type="button" id="StartGame" class="btnGreen col-4" @onclick="EnterEditor"> Enter the editor</button>
-       </div>
+
+            <MudTextField @bind-Value="@UserPassword" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+
+            <div class="row justify-content-center p-3">
+                <button type="button" id="StartGame" class="btnGreen col-4" @onclick="EnterEditor"> Enter the editor</button>
+            </div>
+
+        </div>
+
 
     </div>
-   
 
-</div>
-</div>
 
 @code {
+
+    void ButtonTestclick()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
 
 }

@@ -12,5 +12,7 @@ namespace ProjectSolarEdge.Shared.Services.Users
         IEnumerable<UsersTable> GetAllUsers();
         UsersTable GetUserByID(int userID);
         UsersTable GetUserIdByUserName(string userName);
+
+        UsersTable GetUserIdByUserPassword(string userPassword);
     }
 }

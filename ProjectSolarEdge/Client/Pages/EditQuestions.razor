@@ -4,7 +4,7 @@
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @using Microsoft.AspNetCore.Components.Web.Virtualization
-
+<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
 <h3>Edit Question @QuestionsCRUD.ID </h3>
 
@@ -67,6 +67,20 @@
                 </div>
 
                 <div>
+                    <div class="input-group">
+                        @foreach (var myanswer in QuestionsCRUD.Answers)
+                        {
+                            <div class="input-group-text">
+
+                                <input class="form-check-input mt-0" type="radio" value="@CheckedAnswerID" aria-label="Radio button for following text input">
+
+                            </div>
+                            <input type="text" class="form-control" value="@myanswer.AnswerBody" aria-label="Text input with radio button">
+                        }
+                    </div>
+                </div>
+
+                <div>
                     <label for="QuestionFeedback">Feedback:</label><br />
                     <InputTextArea id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputTextArea><br /><br />
                 </div>
@@ -80,7 +94,7 @@
                 </div>
                 <br />
 
-       
+
                 <div>
                     <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
                         @foreach (var subject in SubjectsData)
@@ -100,7 +114,7 @@
                 <br />
                 <br />
                 <br />
-         
+
 
 
 
@@ -119,7 +133,7 @@
 
         </MudPaper>
     </MudItem>
-    
+
     <MudItem xs="12" sm="5">
         <MudItem>
             <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
