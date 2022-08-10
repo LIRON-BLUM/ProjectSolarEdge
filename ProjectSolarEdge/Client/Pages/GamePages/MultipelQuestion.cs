@@ -6,7 +6,7 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 {
-    public partial class MultipelQuestion
+    public partial class MultipelQuestion : ComponentBase, IDisposable
     {
         [Parameter]
 
@@ -54,6 +54,10 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public int currentQuestionNum { get; set; }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
         protected override async Task OnInitializedAsync()
         {

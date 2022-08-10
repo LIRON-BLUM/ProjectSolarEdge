@@ -6,7 +6,7 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 {
-    public partial class WheelOfFortune
+    public partial class WheelOfFortune : ComponentBase, IDisposable
     {
 
         public Game GamePlaying { get; set; }
@@ -62,6 +62,11 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             NavigationManager.NavigateTo($"Gambeling/{GameId}/{UserId}");
 
 
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

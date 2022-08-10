@@ -7,7 +7,7 @@ using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 { 
-    public partial class GameOpeningPage
+    public partial class GameOpeningPage : ComponentBase, IDisposable
     {
 
     [Parameter]
@@ -30,6 +30,10 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
         protected override async Task OnInitializedAsync()
         {
