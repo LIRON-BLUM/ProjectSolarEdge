@@ -21,5 +21,6 @@ namespace ProjectSolarEdge.Shared.Entities
         public byte isDeleted { get; set; }
 
 
+
     }
 }

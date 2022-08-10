@@ -8,6 +8,7 @@ using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Users;
 
+
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
