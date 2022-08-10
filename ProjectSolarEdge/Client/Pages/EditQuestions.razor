@@ -21,7 +21,7 @@
 
                 <MudItem xs="4">
                     @*<InputFile OnChange="@OnInputFileChanged"></InputFile>*@
-                    <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple />
+                    <InputFile id="fileInput" OnChange="UploadFile" hidden />
 
                     <MudButton HtmlTag="label"
                                Variant="Variant.Filled"
@@ -30,6 +30,7 @@
                                for="fileInput">
                         Upload Image
                     </MudButton>
+                    <img src="@myFileImage" style="width:250px; height:auto;" />
                     <img src="@filePicDataUrl" style="width:250px; height:auto;" />
 
                     @if (files != null)
@@ -196,6 +197,26 @@
     //    }
     //TODO upload the files to the server
 
+    string myFileImage;
+    long maxFileSize = 4194304;
+
+    private async Task UploadFile(InputFileChangeEventArgs e) {
+        var imageFiles = e.GetMultipleFiles();
+        foreach (var file in imageFiles) {
+            if (file.Size <= maxFileSize) {
+                var buffer = new byte[file.Size];
+                await file.OpenReadStream(maxFileSize).ReadAsync(buffer);
+                var imageBase64 = Convert.ToBase64String(buffer);
+                var saveResponse = await Http.PostAsJsonAsync("api/QuestionsController/upload", imageBase64);
+
+                if (saveResponse.IsSuccessStatusCode == true) {
+                    string resizeUrl = saveResponse.Content.ReadAsStringAsync().Result;
+                    myFileImage = resizeUrl;
+                    Console.WriteLine(resizeUrl);
+             	   }
+	     }
+ 	}
+   }
 
 
 }

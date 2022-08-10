@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectSolarEdge.Server.Configuration;
+using ProjectSolarEdge.Server.Helpers;
 using ProjectSolarEdge.Shared.Entities;
 using ProjectSolarEdge.Shared.Services.Questions;
 
@@ -11,10 +12,12 @@ namespace ProjectSolarEdge.Server.Controllers
     {
         //properties
         private IQuestionRepository _questionRepository;
+        private readonly FileStorage _fileStorage;
 
-        public QuestionsController(IQuestionRepository _repo)
+        public QuestionsController(IQuestionRepository _repo, FileStorage fileStorage)
         {
             _questionRepository = _repo;
+            _fileStorage = fileStorage;
         }
 
         [HttpGet]
@@ -298,6 +301,15 @@ namespace ProjectSolarEdge.Server.Controllers
 
             return Ok(_QuesConnection);//success
         }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadFile([FromBody] string imageBase64)
+        {
+            byte[] picture = Convert.FromBase64String(imageBase64);
+            string url = await _fileStorage.SaveFile(picture, "png", "UploadedFiles");
+            return Ok(url);
+        }
+
     }
 }
 

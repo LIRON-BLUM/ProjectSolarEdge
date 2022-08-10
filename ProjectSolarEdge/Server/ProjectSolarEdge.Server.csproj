@@ -26,5 +26,9 @@
     <ProjectReference Include="..\Shared\ProjectSolarEdge.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\UploadedFiles\" />
+  </ItemGroup>
+
 
 </Project>
