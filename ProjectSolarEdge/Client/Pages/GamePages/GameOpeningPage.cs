@@ -5,90 +5,364 @@ using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Shared.Entities;
 
+
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using ProjectSolarEdge.Client.Services.Questions;
+using ProjectSolarEdge.Shared.Entities;
+using MudBlazor;
+using ProjectSolarEdge.Client.Services.Games;
+
 namespace ProjectSolarEdge.Client.Pages.GamePages
 { 
     public partial class GameOpeningPage : ComponentBase, IDisposable
     {
 
-    [Parameter]
-    public string GameId { get; set; }
 
-    [Parameter]
-    public string UserId { get; set; }
 
-    public Game GamePlaying { get; set; }
+            [Parameter]
+            public string Id { get; set; }
 
-    public UsersTable Player { get; set; }
-    public IEnumerable<UserGameScore> TopPlayers { get; set; }
+            public int NavigationDestination { get; set; }
+            public Game GameCRUD { get; set; } = new Game();
 
-    [Inject]
-    public IGamesDataService GameDataService { get; set; }
+            public IEnumerable<Game> GameData { get; set; }
 
-    [Inject]
-    public IGameAppService GameAppDataService { get; set; }
+            public IEnumerable<Question> QuestionsData { get; set; }
 
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
+            public Question QuestionsToDelete { get; set; } = new Question();
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+            public bool Gamification = true;
 
-        protected override async Task OnInitializedAsync()
-        {
-            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-            TopPlayers = await GameAppDataService.GetGameUsersScore(int.Parse(GameId));
+            public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
 
-            Player = new UsersTable()
+            //public IEnumerable<Question> selectedQuestions { get; set; } = new HashSet<Question>();
+
+            public HashSet<Question> selectedQuestions { get; set; } = new HashSet<Question>();
+
+
+            public IEnumerable<Question> Elements = new List<Question>();
+
+            public string DefaultValue { get; set; } = "Select Question";
+
+
+
+            //public IEnumerable<string> SelectedSubjects { get; set; } = new HashSet<string>();
+
+            public List<GameQuestionsConnection> GameQuestionsConnectionsData { get; set; }
+
+
+            public GamesQuestions GameQuestion { get; set; } = new GamesQuestions();
+
+            public IEnumerable<GamesQuestions> GameQuestionData { get; set; }
+
+
+
+            [Inject]
+            public IGamesDataService GameDataService { get; set; }
+
+            [Inject]
+            public NavigationManager NavigationManager { get; set; }
+
+            [Inject]
+            public IQuestionsDataService QuestionDataService { get; set; }
+
+            protected override async Task OnInitializedAsync()
             {
-                ID = 1,
-                UserFirstName = "Limor",
-                UserLastName = "Avrahami",
-                UserName = "LimorAvrahami",
-            };
+                QuestionsData = await QuestionDataService.GetQuestionsAsync();
+                int.TryParse(Id, out var GId);
+
+                if (GId == 0)
+                {
+                    GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1, GameTimeLimit = 10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
+                    GameCRUD.Questions = new List<Question>();
+                }
+                else
+                {
+                    GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
+
+                    selectedQuestions = GameCRUD.Questions.ToHashSet();
 
 
-            //  Liron - delete this after querise
-
-            //TopPlayers = new List<UsersGameRecord>()
-            //{
-            //    new UsersGameRecord()
-            //    {
-            //        UserFirstName = "Adi",
-            //        ID =1,
-            //        UserLastName ="Silagy",
-            //        UserName ="AdiSilagi",
-            //        TotalScore=3000
-            //    },
-
-            //    new UsersGameRecord()
-            //    {
-            //        UserFirstName = "Moti",
-            //        ID =2,
-            //        UserLastName ="Elnekave",
-            //        UserName ="MotiElnekave",
-            //        TotalScore=2000
-            //    },
-            //      new UsersGameRecord()
-            //    {
-            //        UserFirstName = "Liron",
-            //        ID =3,
-            //        UserLastName ="Blum",
-            //        UserName ="LironBlum",
-            //        TotalScore=2500
-            //    }
-            //};
-
-            TopPlayers = TopPlayers.OrderByDescending(e => e.UserScore).Take(3);
-        }
+                }
 
 
-        protected async Task STARTGAME()
-        {
-            int gameId = GamePlaying.ID;
-            NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
-        }
+                QuestionsData = await QuestionDataService.GetQuestionsAsync();
+                Elements = QuestionsData;
 
-    }
+
+            }
+
+            protected async Task GamificationTrue()
+            {
+
+                GameCRUD.IsGamified = 1;
+            }
+
+            protected async Task GamificationFalse()
+            {
+
+                GameCRUD.IsGamified = 0;
+            }
+
+
+            protected async Task SaveGame()
+            {
+
+
+                NavigationDestination = 1;
+                AddAndUpdate();
+            }
+
+
+
+            protected async Task AddAndUpdate()
+            {
+
+                int.TryParse(Id, out var GId);
+
+                List<Question> selectedQuestionToUpdate = new List<Question>();
+
+
+                // Delete the existing subjects 
+                await GameDataService.DeleteQuestionConnection(GId);
+
+                foreach (var item in selectedQuestions)
+                {
+
+                    int QuestionScore = 0;
+                    Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
+                    selectedQuestionToUpdate.Add(q);
+
+                    if (item.Difficulty == QuestionDifficulty.Easy)
+                    {
+                        QuestionScore = 200;
+                    }
+                    if (item.Difficulty == QuestionDifficulty.Medium)
+                    {
+                        QuestionScore = 400;
+                    }
+                    if (item.Difficulty == QuestionDifficulty.Hard)
+                    {
+                        QuestionScore = 600;
+                    }
+
+                    await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score = QuestionScore });
+
+                }
+
+
+
+                GameCRUD.Questions = selectedQuestionToUpdate;
+
+
+                if (GameCRUD.ID == 0) // Create new question
+                {
+
+
+
+                    // 2) Save the question itself into the database and get the question ID back from the database
+                    await GameDataService.AddGameToDB(GameCRUD);
+
+
+
+                }
+                else
+                {
+                    await GameDataService.UpdateGame(GameCRUD);
+
+                }
+
+                Navigation(NavigationDestination);
+                //  NavigationManager.NavigateTo("/Games");
+            }
+
+            protected async Task DeleteQuestion(int id)
+            {
+                QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
+                await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+
+                QuestionsData = await QuestionDataService.GetQuestionsAsync();
+                QuestionsDataToDisplay = QuestionsData;
+
+
+                NavigationManager.NavigateTo($"/EditGame/{Id}");
+
+
+            }
+
+
+            protected async Task Navigation(int pageNum)
+            {
+                if (pageNum == 1)
+                {
+                    NavigationManager.NavigateTo("/Games");
+                }
+                else
+                    NavigationManager.NavigateTo($"/EditGame/{Id}");
+            }
+
+
+
+            public bool _isOpen = false;
+
+            public void ToggleOpen()
+            {
+                if (_isOpen)
+                {
+                    _isOpen = false;
+
+
+
+
+
+                    //NavigationManager.NavigateTo($"/EditGame/{Id}");
+                }
+                //NavigationManager.NavigateTo($"/EditGame/{Id}");
+                else
+                {
+                    _isOpen = true;
+                    NavigationDestination = 2;
+                    AddAndUpdate();
+                }
+
+
+
+
+            }
+
+
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+
+
+            bool fixed_header = true;
+            bool fixed_footer = false;
+
+            //private string searchString = "";
+            private string searchString = "";
+            private int totalItems;
+            private IEnumerable<Game> pagedData;
+            private MudTable<Game> table;
+            public string SubName = "";
+
+            //private bool FilterFunc(Game Game)
+
+            protected async Task<TableData<Game>> ServerReload(TableState state)
+            {
+
+                IEnumerable<Game> data = await GameDataService.GetAllGames();
+                //await Task.Delay(300);
+                data = data.Where(Game =>
+
+                {
+                    if (string.IsNullOrWhiteSpace(searchString))
+                        return true;
+                    if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                        return true;
+
+                    if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
+                        return true;
+                    return false;
+                }).ToArray();
+                totalItems = data.Count();
+
+
+                pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+                return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };
+
+            }
+
+
+
+
+        
+
+    
+
+
+
+    //[Parameter]
+    //public string GameId { get; set; }
+
+    //[Parameter]
+    //public string UserId { get; set; }
+
+    //public Game GamePlaying { get; set; }
+
+    //public UsersTable Player { get; set; }
+    //public IEnumerable<UserGameScore> TopPlayers { get; set; }
+
+    //[Inject]
+    //public IGamesDataService GameDataService { get; set; }
+
+    //[Inject]
+    //public IGameAppService GameAppDataService { get; set; }
+
+    //[Inject]
+    //public NavigationManager NavigationManager { get; set; }
+
+    //    public void Dispose()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    protected override async Task OnInitializedAsync()
+    //    {
+    //        GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+    //        TopPlayers = await GameAppDataService.GetGameUsersScore(int.Parse(GameId));
+
+    //        Player = new UsersTable()
+    //        {
+    //            ID = 1,
+    //            UserFirstName = "Limor",
+    //            UserLastName = "Avrahami",
+    //            UserName = "LimorAvrahami",
+    //        };
+
+
+    //        //  Liron - delete this after querise
+
+    //        //TopPlayers = new List<UsersGameRecord>()
+    //        //{
+    //        //    new UsersGameRecord()
+    //        //    {
+    //        //        UserFirstName = "Adi",
+    //        //        ID =1,
+    //        //        UserLastName ="Silagy",
+    //        //        UserName ="AdiSilagi",
+    //        //        TotalScore=3000
+    //        //    },
+
+    //        //    new UsersGameRecord()
+    //        //    {
+    //        //        UserFirstName = "Moti",
+    //        //        ID =2,
+    //        //        UserLastName ="Elnekave",
+    //        //        UserName ="MotiElnekave",
+    //        //        TotalScore=2000
+    //        //    },
+    //        //      new UsersGameRecord()
+    //        //    {
+    //        //        UserFirstName = "Liron",
+    //        //        ID =3,
+    //        //        UserLastName ="Blum",
+    //        //        UserName ="LironBlum",
+    //        //        TotalScore=2500
+    //        //    }
+    //        //};
+
+    //        TopPlayers = TopPlayers.OrderByDescending(e => e.UserScore).Take(3);
+    //    }
+
+
+    //    protected async Task STARTGAME()
+    //    {
+    //        int gameId = GamePlaying.ID;
+    //        NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
+    //    }
+
+}
 }

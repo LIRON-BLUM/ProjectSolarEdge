@@ -7,15 +7,17 @@ using ProjectSolarEdge.Client.Services.Games;
 
 
 namespace ProjectSolarEdge.Client.Pages
+
 {
-    public partial class EditGames : ComponentBase, IDisposable
+    public partial class QuestionTableDialog : ComponentBase, IDisposable
     {
+
         [Parameter]
         public string Id { get; set; }
 
         public int NavigationDestination { get; set; }
         public Game GameCRUD { get; set; } = new Game();
-      
+
         public IEnumerable<Game> GameData { get; set; }
 
         public IEnumerable<Question> QuestionsData { get; set; }
@@ -30,7 +32,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public HashSet<Question> selectedQuestions { get; set; } = new HashSet<Question>();
 
-      
+
         public IEnumerable<Question> Elements = new List<Question>();
 
         public string DefaultValue { get; set; } = "Select Question";
@@ -46,7 +48,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<GamesQuestions> GameQuestionData { get; set; }
 
- 
+
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -64,9 +66,10 @@ namespace ProjectSolarEdge.Client.Pages
 
             if (GId == 0)
             {
-              GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1,GameTimeLimit=10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
-              GameCRUD.Questions = new List<Question>();
-            } else
+                GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1, GameTimeLimit = 10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
+                GameCRUD.Questions = new List<Question>();
+            }
+            else
             {
                 GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
 
@@ -75,7 +78,7 @@ namespace ProjectSolarEdge.Client.Pages
 
             }
 
-          
+
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
             Elements = QuestionsData;
 
@@ -84,26 +87,26 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task GamificationTrue()
         {
-            
+
             GameCRUD.IsGamified = 1;
         }
 
         protected async Task GamificationFalse()
         {
-            
+
             GameCRUD.IsGamified = 0;
         }
 
 
         protected async Task SaveGame()
         {
-          
+
 
             NavigationDestination = 1;
-             AddAndUpdate();
+            AddAndUpdate();
         }
 
-   
+
 
         protected async Task AddAndUpdate()
         {
@@ -130,15 +133,16 @@ namespace ProjectSolarEdge.Client.Pages
                 if (item.Difficulty == QuestionDifficulty.Medium)
                 {
                     QuestionScore = 400;
-                } if (item.Difficulty == QuestionDifficulty.Hard)
+                }
+                if (item.Difficulty == QuestionDifficulty.Hard)
                 {
                     QuestionScore = 600;
                 }
 
-                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score= QuestionScore });
+                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score = QuestionScore });
 
             }
-            
+
 
 
             GameCRUD.Questions = selectedQuestionToUpdate;
@@ -149,16 +153,16 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-                 // 2) Save the question itself into the database and get the question ID back from the database
-                 await GameDataService.AddGameToDB(GameCRUD);
+                // 2) Save the question itself into the database and get the question ID back from the database
+                await GameDataService.AddGameToDB(GameCRUD);
 
-              
 
-                }
+
+            }
             else
             {
-              await GameDataService.UpdateGame(GameCRUD);
-             
+                await GameDataService.UpdateGame(GameCRUD);
+
             }
 
             Navigation(NavigationDestination);
@@ -185,10 +189,19 @@ namespace ProjectSolarEdge.Client.Pages
             if (pageNum == 1)
             {
                 NavigationManager.NavigateTo("/Games");
-            } else
-            NavigationManager.NavigateTo($"/EditGame/{Id}");
+            }
+            else
+                NavigationManager.NavigateTo($"/EditGame/{Id}");
         }
 
+        public void SaveQuestions()
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            NavigationDestination = 2;
+            AddAndUpdate();
+        }
+
+       
 
 
         public bool _isOpen = false;
@@ -201,8 +214,8 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-               
-               
+
+
                 //NavigationManager.NavigateTo($"/EditGame/{Id}");
             }
             //NavigationManager.NavigateTo($"/EditGame/{Id}");
@@ -212,9 +225,9 @@ namespace ProjectSolarEdge.Client.Pages
                 NavigationDestination = 2;
                 AddAndUpdate();
             }
-                
 
-           
+
+
 
         }
 
@@ -262,10 +275,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
-     
 
 
     }
-
 }
-
