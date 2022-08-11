@@ -1,17 +1,10 @@
-﻿
-
-using Microsoft.AspNetCore.Components;
-using ProjectSolarEdge.Client.Services.GameApp;
-using ProjectSolarEdge.Client.Services.Games;
-using ProjectSolarEdge.Shared.Entities;
-
-
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
 using MudBlazor;
-using ProjectSolarEdge.Client.Services.Games;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
 { 
@@ -19,350 +12,444 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
     {
 
 
+        [Parameter]
+        public string Id { get; set; }
 
-            [Parameter]
-            public string Id { get; set; }
+        public int CheckedAnswerID { get; set; }
 
-            public int NavigationDestination { get; set; }
-            public Game GameCRUD { get; set; } = new Game();
+        public bool CheckedAnswerIsRight { get; set; }
 
-            public IEnumerable<Game> GameData { get; set; }
+        public Question QuestionsCRUD { get; set; } = new Question();
 
-            public IEnumerable<Question> QuestionsData { get; set; }
+        public IEnumerable<Question> QuestionsData { get; set; }
 
-            public Question QuestionsToDelete { get; set; } = new Question();
+        public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
 
-            public bool Gamification = true;
+        public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
 
-            public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
+        public Subject OneSubject { get; set; } = new Subject();
 
-            //public IEnumerable<Question> selectedQuestions { get; set; } = new HashSet<Question>();
-
-            public HashSet<Question> selectedQuestions { get; set; } = new HashSet<Question>();
+        public IEnumerable<Subject> SubjectsData { get; set; }
 
 
-            public IEnumerable<Question> Elements = new List<Question>();
+        //public IEnumerable<SubjectsQuestions> SQConnection { get; set; } = new List<SubjectsQuestions>();
 
-            public string DefaultValue { get; set; } = "Select Question";
+        public IEnumerable<string> SelectedSubjects { get; set; } = new HashSet<string>();
 
 
 
-            //public IEnumerable<string> SelectedSubjects { get; set; } = new HashSet<string>();
+        public IEnumerable<SubjectsQuestionsConnection> SubjectConnectionData { get; set; }
 
-            public List<GameQuestionsConnection> GameQuestionsConnectionsData { get; set; }
-
-
-            public GamesQuestions GameQuestion { get; set; } = new GamesQuestions();
-
-            public IEnumerable<GamesQuestions> GameQuestionData { get; set; }
+        public string DefaultValue { get; set; } = "Select Subject";
 
 
+        [Inject]
+        public IQuestionsDataService QuestionDataService { get; set; }
 
-            [Inject]
-            public IGamesDataService GameDataService { get; set; }
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
-            [Inject]
-            public NavigationManager NavigationManager { get; set; }
+        public Question QuestionsToDelete { get; set; } = new Question();
 
-            [Inject]
-            public IQuestionsDataService QuestionDataService { get; set; }
 
-            protected override async Task OnInitializedAsync()
+
+
+
+        protected override async Task OnInitializedAsync()
+        {
+
+
+
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
+
+
+            int.TryParse(Id, out var QId);
+
+            if (QId == 0) //new Game is being created
             {
-                QuestionsData = await QuestionDataService.GetQuestionsAsync();
-                int.TryParse(Id, out var GId);
+                //add some defaults
+                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1, Feedback = "" };
+                QuestionsCRUD.Answers = new List<QuestionAnswer>();
+                QuestionsCRUD.Subjects = new List<Subject>();
 
-                if (GId == 0)
+
+
+                //ADD ANSWERS
+                QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1, GameTimeLimit = 10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
-                    GameCRUD.Questions = new List<Question>();
-                }
-                else
+                    // ID = 1,
+                    //AnswerBody = " ",
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    IsRight = false
+                });
+                QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
-
-                    selectedQuestions = GameCRUD.Questions.ToHashSet();
-
-
-                }
-
-
-                QuestionsData = await QuestionDataService.GetQuestionsAsync();
-                Elements = QuestionsData;
-
-
-            }
-
-            protected async Task GamificationTrue()
-            {
-
-                GameCRUD.IsGamified = 1;
-            }
-
-            protected async Task GamificationFalse()
-            {
-
-                GameCRUD.IsGamified = 0;
-            }
-
-
-            protected async Task SaveGame()
-            {
-
-
-                NavigationDestination = 1;
-                AddAndUpdate();
-            }
-
-
-
-            protected async Task AddAndUpdate()
-            {
-
-                int.TryParse(Id, out var GId);
-
-                List<Question> selectedQuestionToUpdate = new List<Question>();
-
-
-                // Delete the existing subjects 
-                await GameDataService.DeleteQuestionConnection(GId);
-
-                foreach (var item in selectedQuestions)
+                    //  ID = 2,
+                    //AnswerBody = " ",
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    IsRight = false
+                });
+                QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
+                    //   ID = 3,
+                    //AnswerBody = " ",
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    IsRight = false
+                });
+                QuestionsCRUD.Answers.Add(new QuestionAnswer()
+                {
+                    //    ID = 4,
+                    //AnswerBody = " ",
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    IsRight = false
+                });
+            }
+            else //Edit existing question
+            {
+                //Get question by ID
+                QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
 
-                    int QuestionScore = 0;
-                    Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-                    selectedQuestionToUpdate.Add(q);
 
-                    if (item.Difficulty == QuestionDifficulty.Easy)
+
+                foreach (var myanswer in QuestionsCRUD.Answers)
+                {
+                    if (myanswer.IsRight == true)
                     {
-                        QuestionScore = 200;
+                        CheckedAnswerID = myanswer.ID;
                     }
-                    if (item.Difficulty == QuestionDifficulty.Medium)
-                    {
-                        QuestionScore = 400;
-                    }
-                    if (item.Difficulty == QuestionDifficulty.Hard)
-                    {
-                        QuestionScore = 600;
-                    }
-
-                    await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score = QuestionScore });
-
                 }
-
-
-
-                GameCRUD.Questions = selectedQuestionToUpdate;
-
-
-                if (GameCRUD.ID == 0) // Create new question
-                {
-
-
-
-                    // 2) Save the question itself into the database and get the question ID back from the database
-                    await GameDataService.AddGameToDB(GameCRUD);
-
-
-
-                }
-                else
-                {
-                    await GameDataService.UpdateGame(GameCRUD);
-
-                }
-
-                Navigation(NavigationDestination);
-                //  NavigationManager.NavigateTo("/Games");
-            }
-
-            protected async Task DeleteQuestion(int id)
-            {
-                QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
-                await QuestionDataService.DeleteQuestion(QuestionsToDelete);
-
-                QuestionsData = await QuestionDataService.GetQuestionsAsync();
-                QuestionsDataToDisplay = QuestionsData;
-
-
-                NavigationManager.NavigateTo($"/EditGame/{Id}");
-
-
-            }
-
-
-            protected async Task Navigation(int pageNum)
-            {
-                if (pageNum == 1)
-                {
-                    NavigationManager.NavigateTo("/Games");
-                }
-                else
-                    NavigationManager.NavigateTo($"/EditGame/{Id}");
             }
 
 
 
-            public bool _isOpen = false;
 
-            public void ToggleOpen()
-            {
-                if (_isOpen)
-                {
-                    _isOpen = false;
 
+            SelectedSubjects = new HashSet<string>(QuestionsCRUD.Subjects.Select(s => s.SubjectName));
+
+            QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            QuestionsDataToDisplay = QuestionsData;
 
 
 
+        }
 
-                    //NavigationManager.NavigateTo($"/EditGame/{Id}");
-                }
-                //NavigationManager.NavigateTo($"/EditGame/{Id}");
-                else
-                {
-                    _isOpen = true;
-                    NavigationDestination = 2;
-                    AddAndUpdate();
-                }
+        private async Task OnSearch(string text)
+        {
+            QuestionsDataToDisplay = QuestionsData.Where(q => q.QuestionBody.Contains(text) || q.Creator.ToLower().Contains(text.ToLower()));
 
+        }
 
+        protected async Task AddSubject()
+        {
+            await QuestionDataService.AddSubjectToDB(OneSubject);
+        }
 
-
-            }
-
-
-            public void Dispose()
-            {
-                throw new NotImplementedException();
-            }
+        protected async Task AddAndUpdate()
+        {
 
 
-            bool fixed_header = true;
-            bool fixed_footer = false;
+            List<Subject> selectedSubjectToUpdate = new List<Subject>();
 
-            //private string searchString = "";
-            private string searchString = "";
-            private int totalItems;
-            private IEnumerable<Game> pagedData;
-            private MudTable<Game> table;
-            public string SubName = "";
 
-            //private bool FilterFunc(Game Game)
+            // Delete the existing subjects 
+            await QuestionDataService.DeleteSubjectConnection(QuestionsCRUD.ID);
 
-            protected async Task<TableData<Game>> ServerReload(TableState state)
+
+
+
+
+
+            // 1) Check which answer is the correct one and set it up
+            foreach (var ans in QuestionsCRUD.Answers)
             {
 
-                IEnumerable<Game> data = await GameDataService.GetAllGames();
-                //await Task.Delay(300);
-                data = data.Where(Game =>
+                ans.IsRight = false;
 
+                if (QuestionsCRUD.Answers.Where(a => a.ID == CheckedAnswerID).Count() > 0)
                 {
-                    if (string.IsNullOrWhiteSpace(searchString))
-                        return true;
-                    if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                        return true;
 
-                    if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
-                        return true;
-                    return false;
-                }).ToArray();
-                totalItems = data.Count();
-
-
-                pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
-                return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };
-
+                    QuestionsCRUD.Answers.Where(ans => ans.ID == CheckedAnswerID).FirstOrDefault().IsRight = true;
+                }
             }
 
 
+            if (QuestionsCRUD.ID == 0) // Create new question
+            {
+                // 2) Save the question itself into the database and get the question ID back from the database
+                int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+
+                if (QuestionID != 0) // Question added to the DB
+                {
+                    QuestionsCRUD.ID = QuestionID;
+                }
+
+                // 3) Add the answers on the question to the database using the question ID retunred from the DB 
+                foreach (var ans in QuestionsCRUD.Answers)
+                {
+                    ans.QuestionID = QuestionID;
+                    await QuestionDataService.AddAnswerToDB(ans);
+
+                }
 
 
-        
+                foreach (var item in SelectedSubjects)
+                {
+                    Subject s = SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault();
+                    selectedSubjectToUpdate.Add(s);
+                    await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
+                }
+                QuestionsCRUD.Subjects = selectedSubjectToUpdate;
 
-    
+                //4) If all successful then navigate the user to edit question or list of questions.
+                NavigationManager.NavigateTo("/Questions");
 
+            }
+            else
+            {
+                //  QuestionsCRUD.Answers = new List<QuestionAnswer>();
 
+                await QuestionDataService.UpdateQuestion(QuestionsCRUD);
 
-    //[Parameter]
-    //public string GameId { get; set; }
-
-    //[Parameter]
-    //public string UserId { get; set; }
-
-    //public Game GamePlaying { get; set; }
-
-    //public UsersTable Player { get; set; }
-    //public IEnumerable<UserGameScore> TopPlayers { get; set; }
-
-    //[Inject]
-    //public IGamesDataService GameDataService { get; set; }
-
-    //[Inject]
-    //public IGameAppService GameAppDataService { get; set; }
-
-    //[Inject]
-    //public NavigationManager NavigationManager { get; set; }
-
-    //    public void Dispose()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    protected override async Task OnInitializedAsync()
-    //    {
-    //        GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
-    //        TopPlayers = await GameAppDataService.GetGameUsersScore(int.Parse(GameId));
-
-    //        Player = new UsersTable()
-    //        {
-    //            ID = 1,
-    //            UserFirstName = "Limor",
-    //            UserLastName = "Avrahami",
-    //            UserName = "LimorAvrahami",
-    //        };
+                foreach (var ans in QuestionsCRUD.Answers)
+                {
 
 
-    //        //  Liron - delete this after querise
 
-    //        //TopPlayers = new List<UsersGameRecord>()
-    //        //{
-    //        //    new UsersGameRecord()
-    //        //    {
-    //        //        UserFirstName = "Adi",
-    //        //        ID =1,
-    //        //        UserLastName ="Silagy",
-    //        //        UserName ="AdiSilagi",
-    //        //        TotalScore=3000
-    //        //    },
-
-    //        //    new UsersGameRecord()
-    //        //    {
-    //        //        UserFirstName = "Moti",
-    //        //        ID =2,
-    //        //        UserLastName ="Elnekave",
-    //        //        UserName ="MotiElnekave",
-    //        //        TotalScore=2000
-    //        //    },
-    //        //      new UsersGameRecord()
-    //        //    {
-    //        //        UserFirstName = "Liron",
-    //        //        ID =3,
-    //        //        UserLastName ="Blum",
-    //        //        UserName ="LironBlum",
-    //        //        TotalScore=2500
-    //        //    }
-    //        //};
-
-    //        TopPlayers = TopPlayers.OrderByDescending(e => e.UserScore).Take(3);
-    //    }
+                    await QuestionDataService.UpdateAnswer(ans);
 
 
-    //    protected async Task STARTGAME()
-    //    {
-    //        int gameId = GamePlaying.ID;
-    //        NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
-    //    }
+                }
 
-}
+                foreach (var item in SelectedSubjects)
+                {
+                    Subject s = SubjectsData.Where(s => s.SubjectName == item).SingleOrDefault();
+                    selectedSubjectToUpdate.Add(s);
+                    await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
+                }
+                QuestionsCRUD.Subjects = selectedSubjectToUpdate;
+                NavigationManager.NavigateTo("/");
+            }
+
+        }
+
+
+
+
+
+        public string filePicDataUrl { get; set; }
+
+        private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
+        {
+
+            //get the file
+            var file = inputFileChangeEvent.File;
+
+            var fileInArray = new byte[file.Size];
+
+            await file.OpenReadStream(1512000).ReadAsync(fileInArray);
+
+            filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
+
+
+
+
+        }
+
+
+        IList<IBrowserFile> files = new List<IBrowserFile>();
+        private async Task UploadFiles(InputFileChangeEventArgs e)
+        {
+            foreach (var file in e.GetMultipleFiles())
+            {
+                //var file = inputFileChangeEvent.File;
+
+
+                files.Add(file);
+                var fileInArray = new byte[file.Size];
+                await file.OpenReadStream(1512000).ReadAsync(fileInArray);
+
+                filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
+                //TimeSpan.TicksPerMillisecond
+
+
+            }
+
+        }
+
+        protected async Task DeleteQuestion()
+        {
+
+            await QuestionDataService.DeleteQuestion(QuestionsCRUD);
+
+
+            foreach (var ans in QuestionsCRUD.Answers)
+            {
+
+
+                await QuestionDataService.DeleteAnswer(ans);
+                //await QuestionDataService.DeleteQuestionAnswers(ans.QuestionID);
+
+            }
+
+            NavigationManager.NavigateTo("/");
+
+
+        }
+
+
+
+
+
+
+
+        protected async Task QuestionsToDeleteID(int id)
+        {
+            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
+
+            DeleteTheQuestion();
+
+        }
+        protected async Task DeleteTheQuestion()
+        {
+
+            await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+
+
+
+
+
+        }
+
+        bool fixed_header = true;
+        bool fixed_footer = false;
+
+        //private string searchString = "";
+        private string searchString = "";
+        private int totalItems;
+        private IEnumerable<Question> pagedData;
+        private MudTable<Question> table;
+        public string SubName = "";
+
+        //private bool FilterFunc(Question question)
+
+        protected async Task<TableData<Question>> ServerReload(TableState state)
+        {
+
+            IEnumerable<Question> data = await QuestionDataService.GetQuestionsAsync();
+            //await Task.Delay(300);
+
+            switch (state.SortLabel)
+            {
+                case "ID_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.ID);
+                    break;
+                case "Type_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Type);
+                    break;
+                case "Difficulty_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
+                    break;
+                case "Creator_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Creator);
+                    break;
+                case "Creation_Date_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
+                    break;
+            }
+
+            pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+            return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
+
+        }
+
+        public void Dispose()
+        {
+
+        }
+
+        //[Parameter]
+        //public string GameId { get; set; }
+
+        //[Parameter]
+        //public string UserId { get; set; }
+
+        //public Game GamePlaying { get; set; }
+
+        //public UsersTable Player { get; set; }
+        //public IEnumerable<UserGameScore> TopPlayers { get; set; }
+
+        //[Inject]
+        //public IGamesDataService GameDataService { get; set; }
+
+        //[Inject]
+        //public IGameAppService GameAppDataService { get; set; }
+
+        //[Inject]
+        //public NavigationManager NavigationManager { get; set; }
+
+        //    public void Dispose()
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    protected override async Task OnInitializedAsync()
+        //    {
+        //        GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+        //        TopPlayers = await GameAppDataService.GetGameUsersScore(int.Parse(GameId));
+
+        //        Player = new UsersTable()
+        //        {
+        //            ID = 1,
+        //            UserFirstName = "Limor",
+        //            UserLastName = "Avrahami",
+        //            UserName = "LimorAvrahami",
+        //        };
+
+
+        //        //  Liron - delete this after querise
+
+        //        //TopPlayers = new List<UsersGameRecord>()
+        //        //{
+        //        //    new UsersGameRecord()
+        //        //    {
+        //        //        UserFirstName = "Adi",
+        //        //        ID =1,
+        //        //        UserLastName ="Silagy",
+        //        //        UserName ="AdiSilagi",
+        //        //        TotalScore=3000
+        //        //    },
+
+        //        //    new UsersGameRecord()
+        //        //    {
+        //        //        UserFirstName = "Moti",
+        //        //        ID =2,
+        //        //        UserLastName ="Elnekave",
+        //        //        UserName ="MotiElnekave",
+        //        //        TotalScore=2000
+        //        //    },
+        //        //      new UsersGameRecord()
+        //        //    {
+        //        //        UserFirstName = "Liron",
+        //        //        ID =3,
+        //        //        UserLastName ="Blum",
+        //        //        UserName ="LironBlum",
+        //        //        TotalScore=2500
+        //        //    }
+        //        //};
+
+        //        TopPlayers = TopPlayers.OrderByDescending(e => e.UserScore).Take(3);
+        //    }
+
+
+        //    protected async Task STARTGAME()
+        //    {
+        //        int gameId = GamePlaying.ID;
+        //        NavigationManager.NavigateTo($"/GetNextStep/{gameId}");
+        //    }
+
+    }
 }

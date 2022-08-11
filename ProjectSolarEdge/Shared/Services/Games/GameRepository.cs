@@ -57,6 +57,8 @@ namespace ProjectSolarEdge.Shared.Services.Games
             return results;
         }
 
+
+
         public int AddGameToDB(Game game)
         {
             int results = InsertAndreturnInt(GamesQueries.AddGame, game);

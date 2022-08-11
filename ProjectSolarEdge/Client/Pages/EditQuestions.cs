@@ -16,6 +16,10 @@ namespace ProjectSolarEdge.Client.Pages
 
         public int CheckedAnswerID { get; set; }
 
+        public int _selectedDifficulty = 1;
+
+        public string SelectedDiff = "Easy";
+
         public bool CheckedAnswerIsRight { get; set; }
 
         public Question QuestionsCRUD { get; set; } = new Question();
@@ -134,6 +138,22 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
+        }
+
+        protected async Task DifficultyChanged(int i)
+        {
+            if (i == 1)
+            {
+                SelectedDiff = "Easy";
+            }
+            else if (i == 2)
+            {
+                SelectedDiff = "Medium";
+            }
+            else
+            {
+                SelectedDiff = "Hard";
+            }
         }
 
         private async Task OnSearch(string text)

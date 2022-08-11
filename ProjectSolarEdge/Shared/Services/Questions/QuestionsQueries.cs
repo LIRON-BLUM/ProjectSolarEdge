@@ -53,11 +53,13 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 
 		public static string GetQuestionsThatNotInGameID => @"select 
-															q.ID as QuestionID,
+															q.ID,
 															q.QuestionBody,
 															q.Type,
 															q.Difficulty,
-															q.Feedback
+															q.Feedback,
+															q.Creator,
+															q.isDeleted
 															from Questions as q
 															WHERE q.ID NOT IN (SELECT GQ.QuestionID FROM GameQuestionsConnections as GQ WHERE GQ.GameID = @GameID) and q.isDeleted = 0";
 

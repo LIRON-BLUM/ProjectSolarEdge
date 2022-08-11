@@ -1,75 +1,150 @@
-﻿@layout SeconderyLayout
-@page "/GameOpeningPage/{GameId}/{UserId}"
+﻿@page "/EditQuestionnnn"
+@page "/EditQuestionnnn/{Id}"
 @using ProjectSolarEdge.Shared.Entities
 @using System.Net.Http.Json
 @inject HttpClient httpClient
+@using Microsoft.AspNetCore.Components.Web.Virtualization
 
 
+@*<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />*@
 
-<MudGrid>
+<h3>Edit Question @QuestionsCRUD.ID </h3>
 
-    <MudItem xs="10" class="d-flex gap-4"><h1>Game @GameCRUD.ID Editor</h1></MudItem>
-
-    <MudItem xs="2" class="d-inline-flex gap-4 ">
-        <MudButton Class="m-2" Variant="Variant.Filled" @onclick="SaveGame" Color="Color.Primary" DisableElevation="true">Save</MudButton>
-    </MudItem>
-
-    <MudItem xs="8" class="d-flex gap-4">
-        <EditForm Model="@GameCRUD">
-            <MudPaper xs="5" Class="d-flex flex-column flex-grow-1  gap-x-8 gap-y-4 " Elevation="0">
+<MudGrid Spacing=3>
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+            <EditForm Model="@QuestionsCRUD">
 
 
-                <MudTextField Class="ma-2" T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName"/>
-                <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
-                <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
-                <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="enddate" Placeholder="Select Date" />
-                <MudNumericField Class="ma-2" @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />
+                <MudItem xs="8">
+                    <MudTextField T="string" Label="Question Body" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" />
 
-
-
-
-            </MudPaper>
-
-
-            <MudPaper xs="3" Class="d-flex flex-column flex-grow-1 gap-x-8 gap-y-4" Elevation="0">
-
-                <MudText Class="ma-2">Include Gambling Fanction?</MudText>
-                @*<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onclick="GamificationTrue" checked>
-                        <label class="btn btn-outline-primary" for="btnradio1">Yes</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3"  onclick="GamificationFalse" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio3">No</label>
-                    </div>*@
-
-                <MudChipSet @bind-SelectedChip="selected" Filter="true" Mandatory="@mandatory">
-
-                    <MudChip Text="Yes" Color="Color.Primary" @onclick="GamificationTrue">Yes</MudChip>
-                    <MudChip Text="No" Color="Color.Primary" @onclick="GamificationFalse">No</MudChip>
-
-                </MudChipSet>
-
-                <MudNumericField Class="ma-2" @bind-Value="@GameCRUD.WheelIteration" Label="Gamification iteration" Variant="Variant.Outlined" />
-
-
-
-                <MudItem xs="2" md="2">
-                    <MudRadioGroup @bind-SelectedOption="@GameCRUD.ScoreMethod">
-                        <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SpreadEqualy)" UnCheckedColor="Color.Default">Spread Equaly</MudRadio>
-                        <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SpreadByDifficulty)" UnCheckedColor="Color.Default">Spread By Difficulty</MudRadio>
-                        <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SeldSpread)" UnCheckedColor="Color.Default">I’ll Do It Myself</MudRadio>
-
-                    </MudRadioGroup>
-                    <MudPaper Class="ma-2 mud-theme-primary" Width="100%" Height="64px" />
                 </MudItem>
-            </MudPaper>
 
-        </EditForm>
+                <MudItem xs="4">
+                    @*<InputFile OnChange="@OnInputFileChanged"></InputFile>*@
+                    <InputFile id="fileInput" OnChange="UploadFiles" hidden />
+
+                    <MudButton HtmlTag="label"
+                               Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Filled.Image"
+                               for="fileInput">
+                        Upload Image
+                    </MudButton>
+
+                    <img src="@filePicDataUrl" style="width:250px; height:auto;" />
+
+                    @if (files != null)
+                    {
+                        <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+                        <MudList>
+                            @foreach (var file in files)
+                            {
+                                <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
+                                    @file.Name <code>@file.Size bytes</code>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+                </MudItem>
+
+                <MudItem xs="6">
+                    <MudTextField @bind-Value="@QuestionsCRUD.Creator" Label="Enter Your Name" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                </MudItem>
+
+                <MudItem xs="6">
+
+                </MudItem>
+
+
+                <div>
+                    <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
+                        @foreach (var myanswer in QuestionsCRUD.Answers)
+                        {
+                            <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
+                            <br />
+                            <br />
+                        }
+                    </MudRadioGroup>
+                </div>
+
+                <div>
+                    <div class="input-group">
+                        @foreach (var myanswer in QuestionsCRUD.Answers)
+                        {
+                            <div class="input-group-text">
+
+                                <input class="form-check-input mt-0" type="radio" value="@CheckedAnswerID" aria-label="Radio button for following text input">
+
+                            </div>
+                            <input type="text" class="form-control" value="@myanswer.AnswerBody" aria-label="Text input with radio button">
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    <label for="QuestionFeedback">Feedback:</label><br />
+                    <InputTextArea id="QuestionFeedback" @bind-Value="@QuestionsCRUD.Feedback" placeholder="Enter Your Feedback"></InputTextArea><br /><br />
+                </div>
+
+                <div>
+                    <MudSelect Dense="true" T="QuestionDifficulty" Label="Difficulty" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.Difficulty">
+                        <MudSelectItem Value="@(QuestionDifficulty.Easy)" />
+                        <MudSelectItem Value="@(QuestionDifficulty.Medium)" />
+                        <MudSelectItem Value="@(QuestionDifficulty.Hard)" />
+                    </MudSelect>
+                </div>
+                <br />
+
+
+                <div>
+                    <MudSelect T="string" Label="Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
+                        @foreach (var subject in SubjectsData)
+                        {
+                            <MudSelectItem T="string" Value="@subject.SubjectName">@subject.SubjectName</MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+                <br />
+                <div>
+
+                    <MudTextField @bind-Value="@OneSubject.SubjectName" Label="Subject Name" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+
+                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" @onclick="AddSubject" Class="justify-content-end">Add Subject</MudButton>
+
+                </div>
+                <br />
+                <br />
+                <br />
+
+
+
+
+
+
+                <div>
+                    <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Primary" DisableElevation="true">Save</MudButton>
+                    <MudButton Variant="Variant.Filled" @onclick="DeleteQuestion" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+                </div>
+
+
+            </EditForm>
+
+
+
+
+        </MudPaper>
     </MudItem>
 
-    <MudItem xs="4" class="d-inline-flex gap-4 ">
-        <MudPaper Class="d-flex flex-column flex-grow-1  gap-y-4" Elevation="0">
-            <MudTable Items="GameCRUD.Questions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+    <MudItem xs="12" sm="5">
+        <MudItem>
+            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
+        </MudItem>
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+
+            <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
                 <HeaderContent>
                     <MudTh>Type</MudTh>
                     <MudTh>Question</MudTh>
@@ -82,131 +157,23 @@
                     <MudTd DataLabel="Delete">
 
                         <MudTooltip Text="Delete Question">
-                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />
-                            @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
-
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />
                         </MudTooltip>
                     </MudTd>
 
                 </RowTemplate>
             </MudTable>
 
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" DisableElevation="true" OnClick="@ToggleOpen">@(_isOpen? "Close" : "Add Question")</MudButton>
-            <MudPopover Open="_isOpen" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.CenterLeft" Paper="false">
-                <MudPaper Outlined="true" Class="object-contain">
-                    <MudItem>
-                        <MudTable Items="Elements" MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
-                            <HeaderContent>
-                                <MudTh>Type</MudTh>
-                                <MudTh>Question</MudTh>
-
-
-                            </HeaderContent>
-                            <RowTemplate>
-                                <MudTd DataLabel="Type">@context.Type</MudTd>
-                                <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
-
-
-                            </RowTemplate>
-                        </MudTable>
-                    </MudItem>
-
-                </MudPaper>
-            </MudPopover>
-
         </MudPaper>
     </MudItem>
-
 
 </MudGrid>
 
 
-<!--<link href="/css/styles/OpeningPage.css" rel="stylesheet" />
 
-<div class="container">
-    <div class="flex-center flex-column">
-        <h1> @GamePlaying.GameName</h1>
-        <h2> Hi @Player.UserFirstName @Player.UserLastName</h2>
-        <p>@GamePlaying.GameDescription </p>
-
-        <div id="highScores" class="">
-            <p class="bestSoFare">The best Players So Far</p>
-            <ul id="highScoreList">
-
-                @foreach (var user in TopPlayers)
-                {
-                    <li class="high-score">
-                        @user.UserFirstName @user.UserLastName @user.UserScore
-                    </li>
-                }
-            </ul>
-            <div class="podium">
-                <div class="podium__item">
-                    <div id="secondPlace"></div>
-
-                </div>
-
-                <div class="podium__item">
-                    <div id="firstPlace"></div>
-                </div>
-
-                <div class="podium__item">
-                    <div id="thirdPlace"></div>
-                </div>
-
-            </div>
-        </div>
-        <p>
-            You have <span id="gameTime">@GamePlaying.GameTimeLimit </span> minutes to give it your best!
-        </p>
-        <h2> Think You Can Do Better?</h2>
-        <button type="button" id="Continue" class="btnGreen" @onclick="STARTGAME"> START GAME</button>-->
-@*<a class="btnGreen" href="/WheelOfFortune">START GAME</a>*@
-<!--<a class="btn" href="/OrderQuestion">Order question</a>
-
-    </div>
-
-</div>
-
--->
 
 @code {
-
-    public string ReadOnly { get; set; } = "Can't change me";
-    string sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-    public int IntValue { get; set; }
-
-    public int ScoreEasy { get; set; }
-
-
-
-    MudMessageBox mbox { get; set; }
-    string state = "Message box hasn't been opened yet";
-
-    private async void OnButtonClicked()
-    {
-        bool? result = await mbox.Show();
-        state = result == null ? "Cancelled" : "Deleted!";
-        StateHasChanged();
-    }
-
-
-
-    bool mandatory = true;
-    MudChip selected;
-
-
-
-
-
-    DateTime? startdate = DateTime.Today;
-
-    DateTime? enddate = DateTime.Today;
-
-
-
-
-    //public bool Dense_Radio { get; set; } = true;
+    public bool Dense_Radio { get; set; } = true;
 
     private IEnumerable<string> MaxCharacters(string ch)
     {
@@ -235,3 +202,9 @@
 
 
 }
+
+
+
+
+
+

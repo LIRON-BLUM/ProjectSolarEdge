@@ -87,25 +87,33 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task DeleteQuestionFromGame(int Qid)
         {
             QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(Qid);
-            await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+          
             await GameDataService.DeleteQuestionIDConnction(Qid);
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
             QuestionsDataToDisplay = QuestionsData;
 
             int.TryParse(Id, out var GId);
-            NavigationManager.NavigateTo($"/EditGame/{GId}");
+            //NavigationManager.NavigateTo($"/EditGame/{GId}");
         }
 
 
-  
 
-        protected void OpenDialog()
+
+        protected async Task OpenDialog(int GameID)
         {
             int.TryParse(Id, out var GId);
             var options = new DialogOptions { };
             var parameters = new DialogParameters();
+            
             parameters.Add("GameID", GId);
-            DialogService.Show<QuestionTableDialog>("Simple Dialog", parameters, options);
+            parameters.Add("ReloadGameID", GameID);
+            var dialog = DialogService.Show<QuestionTableDialog>("Simple Dialog", parameters, options);
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                NavigationManager.NavigateTo($"/EditGame/{GId}");
+            }
         }
 
         protected async Task GamificationTrue()
@@ -134,40 +142,13 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task AddAndUpdate()
         {
 
-            int.TryParse(Id, out var GId);
+      
 
-            List<Question> selectedQuestionToUpdate = new List<Question>();
-
-
-            // Delete the existing subjects 
-            await GameDataService.DeleteQuestionConnection(GId);
-
-            foreach (var item in selectedQuestions)
-            {
-
-                int QuestionScore = 0;
-                Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-                selectedQuestionToUpdate.Add(q);
-
-                if (item.Difficulty == QuestionDifficulty.Easy)
-                {
-                    QuestionScore = 200;
-                }
-                if (item.Difficulty == QuestionDifficulty.Medium)
-                {
-                    QuestionScore = 400;
-                } if (item.Difficulty == QuestionDifficulty.Hard)
-                {
-                    QuestionScore = 600;
-                }
-
-                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score= QuestionScore });
-
-            }
+   
             
 
 
-            GameCRUD.Questions = selectedQuestionToUpdate;
+            //GameCRUD.Questions = selectedQuestionToUpdate;
 
 
             if (GameCRUD.ID == 0) // Create new question
@@ -187,24 +168,13 @@ namespace ProjectSolarEdge.Client.Pages
              
             }
 
-            Navigation(NavigationDestination);
-            //  NavigationManager.NavigateTo("/Games");
+         
+            NavigationManager.NavigateTo("/Games");
         }
 
-        //protected async Task DeleteQuestion(int id)
-        //{
-        //    QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
-        //    await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+   
 
-        //    QuestionsData = await QuestionDataService.GetQuestionsAsync();
-        //    QuestionsDataToDisplay = QuestionsData;
-
-
-        //    NavigationManager.NavigateTo($"/EditGame/{Id}");
-
-
-        //}
-
+  
 
         protected async Task Navigation(int pageNum)
         {
@@ -217,32 +187,9 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-        public bool _isOpen = false;
+     
 
-        public void ToggleOpen()
-        {
-            if (_isOpen)
-            {
-                _isOpen = false;
-
-
-
-               
-               
-                //NavigationManager.NavigateTo($"/EditGame/{Id}");
-            }
-            //NavigationManager.NavigateTo($"/EditGame/{Id}");
-            else
-            {
-                _isOpen = true;
-                NavigationDestination = 2;
-                AddAndUpdate();
-            }
-                
-
-           
-
-        }
+      
 
 
         public void Dispose()
@@ -263,30 +210,30 @@ namespace ProjectSolarEdge.Client.Pages
 
         //private bool FilterFunc(Game Game)
 
-        protected async Task<TableData<Game>> ServerReload(TableState state)
-        {
+        //protected async Task<TableData<Game>> ServerReload(TableState state)
+        //{
 
-            IEnumerable<Game> data = await GameDataService.GetAllGames();
-            //await Task.Delay(300);
-            data = data.Where(Game =>
+        //    IEnumerable<Game> data = await GameDataService.GetAllGames();
+        //    //await Task.Delay(300);
+        //    data = data.Where(Game =>
 
-            {
-                if (string.IsNullOrWhiteSpace(searchString))
-                    return true;
-                if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                    return true;
+        //    {
+        //        if (string.IsNullOrWhiteSpace(searchString))
+        //            return true;
+        //        if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //            return true;
 
-                if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
-                    return true;
-                return false;
-            }).ToArray();
-            totalItems = data.Count();
+        //        if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
+        //            return true;
+        //        return false;
+        //    }).ToArray();
+        //    totalItems = data.Count();
 
 
-            pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
-            return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };
+        //    pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
+        //    return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };
 
-        }
+        //}
 
      
 

@@ -17,7 +17,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         [Parameter] public int GameID { get; set; }
 
- 
+        [Parameter] public int ReloadGameID { get; set; }
 
         public int NavigationDestination { get; set; }
         public Game GameCRUD { get; set; } = new Game();
@@ -37,7 +37,7 @@ namespace ProjectSolarEdge.Client.Pages
         public HashSet<Question> selectedQuestions { get; set; } = new HashSet<Question>();
 
 
-        public IEnumerable<Question> Elements = new List<Question>();
+        public IEnumerable<Question> QuestionsNotInGame = new List<Question>();
 
         public string DefaultValue { get; set; } = "Select Question";
 
@@ -51,7 +51,7 @@ namespace ProjectSolarEdge.Client.Pages
         public GamesQuestions GameQuestion { get; set; } = new GamesQuestions();
 
         public IEnumerable<GamesQuestions> GameQuestionData { get; set; }
-
+        public GameQuestionsConnection questionToUpdate { get; set; }
 
 
         [Inject]
@@ -77,16 +77,16 @@ namespace ProjectSolarEdge.Client.Pages
             {
                 GameCRUD = await GameDataService.GetGameByIdAsync(GameID);
 
-                selectedQuestions = GameCRUD.Questions.ToHashSet();
-
+                //selectedQuestions = GameCRUD.Questions.ToHashSet();
+                QuestionsNotInGame = await QuestionDataService.GetQuestionsThatNotInGameID(GameID);
+                //QuestionsNotInGame = QuestionsData;
 
             }
 
 
             
 
-            QuestionsData = await QuestionDataService.GetQuestionsThatNotInGameID(GameID);
-            Elements = QuestionsData;
+   
 
 
 
@@ -118,24 +118,59 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-        public void SaveQuestions()
+        protected async Task SaveQuestions()
         {
-            MudDialog.Close(DialogResult.Ok(true));
-            NavigationDestination = 2;
-            AddAndUpdate();
-        }
+
+            //int gameId = GameID;
+
+            //List<Question> selectedQuestionToUpdate = new List<Question>();
 
 
-        protected async Task AddAndUpdate()
-        {
+
+
+            //// Delete the existing subjects 
+            //await GameDataService.DeleteQuestionConnection(gameId);
+
+            //foreach (var item in selectedQuestions)
+            //{
+
+            //    int QuestionScore = 0;
+            //    Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
+            //    selectedQuestionToUpdate.Add(q);
+
+            //    if (item.Difficulty == QuestionDifficulty.Easy)
+            //    {
+            //        QuestionScore = 200;
+            //    }
+            //    if (item.Difficulty == QuestionDifficulty.Medium)
+            //    {
+            //        QuestionScore = 400;
+            //    }
+            //    if (item.Difficulty == QuestionDifficulty.Hard)
+            //    {
+            //        QuestionScore = 600;
+            //    }
+
+
+
+            //    questionToUpdate = new GameQuestionsConnection()
+            //    {
+            //        QuestionID = q.ID,
+            //        GameID = gameId,
+            //        Score = QuestionScore
+            //    };
+
+
+            //    await GameDataService.AddQuestionConnection(questionToUpdate);
+            //}
 
             int gameId = GameID;
 
             List<Question> selectedQuestionToUpdate = new List<Question>();
-           
-  
-            
-            
+
+
+            selectedQuestionToUpdate = GameCRUD.Questions;
+
             //// Delete the existing subjects 
             //await GameDataService.DeleteQuestionConnection(gameId);
 
@@ -144,24 +179,37 @@ namespace ProjectSolarEdge.Client.Pages
 
                 int QuestionScore = 0;
                 Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-                selectedQuestionToUpdate.Add(q);
 
-                if (item.Difficulty == QuestionDifficulty.Easy)
+
+                if (q.Difficulty == QuestionDifficulty.Easy)
                 {
                     QuestionScore = 200;
                 }
-                if (item.Difficulty == QuestionDifficulty.Medium)
+                if (q.Difficulty == QuestionDifficulty.Medium)
                 {
                     QuestionScore = 400;
                 }
-                if (item.Difficulty == QuestionDifficulty.Hard)
+                if (q.Difficulty == QuestionDifficulty.Hard)
                 {
                     QuestionScore = 600;
                 }
 
-                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
+                selectedQuestionToUpdate.Add(q);
+                //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
 
+                questionToUpdate = new GameQuestionsConnection()
+                {
+                    QuestionID = q.ID,
+                    GameID = gameId,
+                    Score = QuestionScore
+                };
+
+                await GameDataService.AddQuestionConnection(questionToUpdate);
             }
+
+
+
+
 
 
 
@@ -185,7 +233,91 @@ namespace ProjectSolarEdge.Client.Pages
 
             }
 
-            NavigationManager.NavigateTo($"/EditGame/{GameID}");
+            NavigationDestination = 0;
+
+            ReloadGameID = gameId;
+            //AddAndUpdate();
+
+            //MudDialog.Close(DialogResult.Ok(true));
+            MudDialog.Close(DialogResult.Ok(gameId));
+        //    NavigationManager.NavigateTo($"/EditGame/{GameID}");
+        }
+         
+    
+
+        protected async Task AddAndUpdate()
+        {
+
+        //    int gameId = GameID;
+
+        //    List<Question> selectedQuestionToUpdate = new List<Question>();
+
+
+        //    selectedQuestionToUpdate = GameCRUD.Questions;
+
+        //    //// Delete the existing subjects 
+        //    //await GameDataService.DeleteQuestionConnection(gameId);
+
+        //    foreach (var item in selectedQuestions)
+        //    {
+
+        //        int QuestionScore = 0;
+        //        Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
+               
+
+        //        if (q.Difficulty == QuestionDifficulty.Easy)
+        //        {
+        //            QuestionScore = 200;
+        //        }
+        //        if (q.Difficulty == QuestionDifficulty.Medium)
+        //        {
+        //            QuestionScore = 400;
+        //        }
+        //        if (q.Difficulty == QuestionDifficulty.Hard)
+        //        {
+        //            QuestionScore = 600;
+        //        }
+                
+        //        selectedQuestionToUpdate.Add(q);
+        //        //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
+
+        //        questionToUpdate = new GameQuestionsConnection()
+        //        {
+        //            QuestionID = q.ID,
+        //            GameID = gameId,
+        //            Score = QuestionScore
+        //        };
+
+        //        await GameDataService.AddQuestionConnection(questionToUpdate);
+        //    }
+
+
+
+          
+        
+
+
+        //GameCRUD.Questions = selectedQuestionToUpdate;
+
+
+        //    if (GameCRUD.ID == 0) // Create new question
+        //    {
+
+
+
+        //        // 2) Save the question itself into the database and get the question ID back from the database
+        //        await GameDataService.AddGameToDB(GameCRUD);
+
+
+
+        //    }
+        //    else
+        //    {
+        //        await GameDataService.UpdateGame(GameCRUD);
+
+        //    }
+
+            
             //Navigation(NavigationDestination);
             //  NavigationManager.NavigateTo("/Games");
         }
@@ -219,35 +351,7 @@ namespace ProjectSolarEdge.Client.Pages
 
   
 
-       
 
-
-        public bool _isOpen = false;
-
-        public void ToggleOpen()
-        {
-            if (_isOpen)
-            {
-                _isOpen = false;
-
-
-
-
-
-                //NavigationManager.NavigateTo($"/EditGame/{Id}");
-            }
-            //NavigationManager.NavigateTo($"/EditGame/{Id}");
-            else
-            {
-                _isOpen = true;
-                NavigationDestination = 2;
-                AddAndUpdate();
-            }
-
-
-
-
-        }
 
 
         public void Dispose()
