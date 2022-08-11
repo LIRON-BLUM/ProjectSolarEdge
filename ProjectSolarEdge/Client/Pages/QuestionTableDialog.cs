@@ -15,6 +15,11 @@ namespace ProjectSolarEdge.Client.Pages
         [Parameter]
         public string Id { get; set; }
 
+        [Parameter] public int GameID { get; set; }
+
+        [Parameter]
+        public int Num { get; set; }
+
         public int NavigationDestination { get; set; }
         public Game GameCRUD { get; set; } = new Game();
 
@@ -79,9 +84,15 @@ namespace ProjectSolarEdge.Client.Pages
             }
 
 
-            QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            
+
+            QuestionsData = await QuestionDataService.GetQuestionsThatNotInGameID(GameID);
             Elements = QuestionsData;
 
+
+
+            //QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            //Elements = QuestionsData;
 
         }
 

@@ -32,6 +32,17 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(questions);
         }
 
+       
+
+        [HttpGet]
+        [Route("GetQuestionsThatNotInGameID/{GameID}")]
+        public IActionResult GetQuestionsThatNotInGameID(int GameID)
+        {
+            IEnumerable<Question> questions = _questionRepository.GetQuestionsThatNotInGameID(GameID);
+
+            return Ok(questions);
+        }
+
         [HttpGet]
         [Route("GetSubjects")]
         public IActionResult GetSubjects()

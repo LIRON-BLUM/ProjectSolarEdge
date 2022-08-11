@@ -62,6 +62,14 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return _question;
         }
 
+
+        public IEnumerable<Question> GetQuestionsThatNotInGameID(int gameID)
+        {
+            IEnumerable<Question> _question = GetRecords<Question>(QuestionsQueries.GetQuestionsThatNotInGameID, new { GameID = gameID });
+
+            return _question;
+        }
+
         //string QuestionBody, DateTime CreationDate, DateTime UpdateDate, QuestionType Type, QuestionDifficulty Difficulty, string Feedback, string Creator
         public int AddQuestionToDB(Question question)
         {
@@ -187,7 +195,9 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return results;
         }
 
-    
+
+
+
 
         //public bool DeleteSubjectConnctionn(SubjectsQuestionsConnection SubjectsQuestionsConnection)
         //{

@@ -14,6 +14,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
         Question GetQuestionById(int ID, bool IncludeOptions = true);
 
+        IEnumerable<Question> GetQuestionsThatNotInGameID(int GameID);
+
         int AddQuestionToDB(Question question);
         int AddSubjectToDB(Subject subject);
 

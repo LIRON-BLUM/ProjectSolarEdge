@@ -52,6 +52,16 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 		public static string DeleteQuestionFromConnectionTable => @"DELETE FROM GameQuestionsConnections WHERE QuestionID = @QuestionID";
 
 
+		public static string GetQuestionsThatNotInGameID => @"select 
+															q.ID as QuestionID,
+															q.QuestionBody,
+															q.Type,
+															q.Difficulty,
+															q.Feedback
+															from Questions as q
+															WHERE q.ID NOT IN (SELECT GQ.QuestionID FROM GameQuestionsConnections as GQ WHERE GQ.GameID = @GameID) and q.isDeleted = 0";
+
+
 		//-----------------ANSWERS----------------//
 
 		public static string AddAnswer => @"INSERT INTO QuestionAnswers

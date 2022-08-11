@@ -33,7 +33,11 @@ namespace ProjectSolarEdge.Client.Services.Questions
             return await JsonSerializer.DeserializeAsync<IEnumerable<Question>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
-
+        public async Task<IEnumerable<Question>> GetQuestionsThatNotInGameID(int GameID)
+        {
+            Stream stream = await _httpClient.GetStreamAsync($"api/Questions/GetQuestionsThatNotInGameID/{GameID}");
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Question>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
 
 
         public async Task<int> AddQuestionToDB(Question newQuestion)
@@ -226,7 +230,9 @@ namespace ProjectSolarEdge.Client.Services.Questions
             return false;
         }
 
-      
+   
+
+
 
         //public Task InsertSubjectConnction(List<Subject> selectedSubjectToUpdate)
         //{

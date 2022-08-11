@@ -395,9 +395,6 @@
 
 
 
-<MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
-    Open Simple Dialog
-</MudButton>
 
 
 
@@ -411,11 +408,7 @@
     public int ScoreMedium { get; set; }
     public int ScoreHard { get; set; }
 
-    private void OpenDialog()
-    {
-        var options = new DialogOptions {  };
-        DialogService.Show<QuestionTableDialog>("Simple Dialog", options);
-    }
+  
 
     MudMessageBox mbox { get; set; }
     string state = "Message box hasn't been opened yet";

@@ -82,6 +82,15 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
+        protected void OpenDialog()
+        {
+            int.TryParse(Id, out var GId);
+            var options = new DialogOptions { };
+            var parameters = new DialogParameters();
+            parameters.Add("GameID", GId);
+            DialogService.Show<QuestionTableDialog>("Simple Dialog", parameters, options);
+        }
+
         protected async Task GamificationTrue()
         {
             
