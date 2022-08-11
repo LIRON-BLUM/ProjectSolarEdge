@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using ProjectSolarEdge.Client.Services.Users;
+using ProjectSolarEdge.Client.Shared;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages
@@ -23,6 +24,12 @@ namespace ProjectSolarEdge.Client.Pages
 
         public UsersTable IdFromPassword { get; set; }
 
+        [CascadingParameter]
+        public MainLayout MainLayout { get; set; }
+
+        [CascadingParameter]
+        public NavMenu NavLayout { get; set; }
+
         InputType PasswordInput = InputType.Password;
         bool isShow;
         string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
@@ -44,16 +51,21 @@ namespace ProjectSolarEdge.Client.Pages
             {
                 if (IdFromUserName.UserType != UserType.Learner )
                 {
-                EditorID = IdFromUserName.ToString();
+                EditorID = (IdFromUserName.ID).ToString();
                 NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
                 }
 
             }
+            else
+            {
+                EditorID = (IdFromUserName.ID).ToString();
+                NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
+            }
 
 
 
-        //(QuestionsCRUD.Subjects.Select(s => s.SubjectName)
-    }
+            //(QuestionsCRUD.Subjects.Select(s => s.SubjectName)
+        }
 
 
 

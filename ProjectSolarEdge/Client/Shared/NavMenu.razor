@@ -1,7 +1,7 @@
 ﻿<MudNavMenu Style="@($"background-color:#F1F1F1; color:#001546;")">
-    <MudNavLink Href="/Questions" Match="NavLinkMatch.All">Questions</MudNavLink>
-    <MudNavLink Href="/Games" Match="NavLinkMatch.Prefix">Games</MudNavLink>
-    <MudNavLink Href="/users" Match="NavLinkMatch.Prefix">Users</MudNavLink>
+    <MudNavLink  @onclick="NavQuestion" Match="NavLinkMatch.All">Questions</MudNavLink>
+    <MudNavLink @onclick="NavGames" Match="NavLinkMatch.Prefix">Games</MudNavLink>
+    <MudNavLink  @onclick="NavUsers" Match="NavLinkMatch.Prefix">Users</MudNavLink>
 </MudNavMenu>
 
 
@@ -47,6 +47,29 @@
 </div>-->
 
 @code {
+
+
+    [Parameter]
+    public string EditorID { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private void NavQuestion()
+    {
+        NavigationManager.NavigateTo($"/Questions/{EditorID}");
+    }
+
+    private void NavGames()
+    {
+        NavigationManager.NavigateTo($"/Games/{EditorID}");
+    }
+
+    private void NavUsers()
+    {
+        NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
+    }
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

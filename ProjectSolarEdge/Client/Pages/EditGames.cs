@@ -4,12 +4,18 @@ using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
 using MudBlazor;
 using ProjectSolarEdge.Client.Services.Games;
-
+using ProjectSolarEdge.Client.Shared;
 
 namespace ProjectSolarEdge.Client.Pages
 {
     public partial class EditGames : ComponentBase, IDisposable
     {
+        [CascadingParameter]
+        public MainLayout MainLayout { get; set; }
+
+        [CascadingParameter]
+        public NavMenu NavLayout { get; set; }
+
         [Parameter]
         public string Id { get; set; }
 

@@ -4,7 +4,6 @@
 @inherits LayoutComponentBase
 
 
-
 @*<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />*@
 <link href="/css/styles/EditorOpening.css" rel="stylesheet" />
 
@@ -43,72 +42,102 @@
 
 
 
-@*<div class="container">
-    <div class=""></div>
-    <div class="row text-center">
-        <h3>Creat a new question? Edit a old game? Add more users?</h3>
-        <h1>Start by clicking on the button </h1>
-
-    </div>
-
-    <nav class="navbar bg-light">
-        <div class="container-fluid row mt-lg-15">
-
-            <a class="box navbar-brand justify-content-center text-center col-3" href="/Questions">
-                <img src="/css/img/Questions 1.svg" alt="Questions button" class="mt-4">
-                <p>Questions</p>
-            </a>
-
-            <a class="box navbar-brand justify-content-center text-center col-3" href="/Games">
-                <img src="/css/img/Game 1.png" alt="game button" class="mt-4">
-                <p>Games</p>
-
-            </a>
-
-            <a class="box navbar-brand justify-content-center text-center col-3" href="/Users">
-                <img src="/css/img/Users 1.png" alt="user button" class="mt-4">
-                <p>Users</p>
-            </a>
-        </div>
-    </nav>
 
 
-</div>*@
-
-@*<MudPaper Outlined="true" Class="border-dashed">
-        <MudStack Justify="Center" Row="true">
-            <a href="#"> <MudPaper Class="pa-3 mud-theme-primary">Item 1</MudPaper></a>
-            <MudPaper Class="pa-3 mud-theme-primary">Item 2</MudPaper>
-            <MudPaper Class="pa-3 mud-theme-primary">Item 3</MudPaper>
-        </MudStack>
-    </MudPaper>*@
-
-@*<MudGrid>
-    <a href="/Questions">
-        <MudItem xs="12" sm="4">
-            <MudPaper Class="box d-flex align-center justify-center mud-width-full py-8">
-                <img src="/css/img/Questions 1.svg" alt="Questions button" class="mt-4">
-                <MudText Class="boxTitle">Questions</MudText>
-            </MudPaper>
+<MudContainer Class="mt-16">
+    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Pricing</MudText>
+    <MudText Align="Align.Center">Some long pricing text should go here maybe? who knows what text you would want here, i guess i cant fill it in for you.</MudText>
+    <MudGrid Class="mt-8">
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Beginner</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center">
+                        <MudText Typo="Typo.h3">$5</MudText>
+                        <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/Monthly</MudText>
+                    </div>
+                    <MudList Class="mx-auto mt-4" Style="width:300px;">
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            Unlimited something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            10 something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            No something
+                        </MudListItem>
+                    </MudList>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Start Now</MudButton>
+                </MudCardActions>
+            </MudCard>
         </MudItem>
-    </a>
-    <a href="/Games">
-        <MudItem xs="12" sm="4">
-            <MudPaper Class="box d-flex align-center justify-center mud-width-full py-8">
-                <img src="/css/img/Game 1.png" alt="game button" class="mt-4">
-                <MudText Class="boxTitle">Games</MudText>
-            </MudPaper>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Starter</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center">
+                        <MudText Typo="Typo.h3">$10</MudText>
+                        <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/Monthly</MudText>
+                    </div>
+                    <MudList Class="mx-auto mt-4" Style="width:300px;">
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            Unlimited something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            10 something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            No something
+                        </MudListItem>
+                    </MudList>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Start Now</MudButton>
+                </MudCardActions>
+            </MudCard>
         </MudItem>
-    </a>
-    <a href="/Users">
-        <MudItem xs="12" sm="4">
-            <MudPaper Class="box d-flex align-center justify-center mud-width-full py-8">
-                <img src="/css/img/Users 1.png" alt="user button" class="mt-4">
-                <MudText Class="boxTitle">Users</MudText>
-            </MudPaper>
+        <MudItem xs="12" sm="12" md="4">
+            <MudCard Elevation="25" Class="rounded-lg pb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Professional</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center">
+                        <MudText Typo="Typo.h3">$15</MudText>
+                        <MudText Typo="Typo.h5" Class="ml-1 mt-5" Color="Color.Secondary">/Monthly</MudText>
+                    </div>
+                    <MudList Class="mx-auto mt-4" Style="width:300px;">
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            Unlimited something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            10 something
+                        </MudListItem>
+                        <MudListItem Icon="@Icons.Material.Filled.LiveHelp">
+                            No something
+                        </MudListItem>
+                    </MudList>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Style="width:50%;">Start Now</MudButton>
+                </MudCardActions>
+            </MudCard>
         </MudItem>
-    </a>
-</MudGrid>*@
+    </MudGrid>
+</MudContainer>
+
 
 @code {
 

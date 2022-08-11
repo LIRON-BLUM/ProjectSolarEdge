@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using ProjectSolarEdge.Client.Services;
+using ProjectSolarEdge.Client.Shared;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -29,7 +30,11 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<SubjectsQuestions> SubjectsData { get; set; }
 
+        [CascadingParameter]
+        public MainLayout MainLayout { get; set; }
 
+        [CascadingParameter]
+        public NavMenu NavLayout { get; set; }
 
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
@@ -50,7 +55,7 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task NewQuestion()
         {
            
-            NavigationManager.NavigateTo("/EditQuestion");
+            NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
 
         }
 

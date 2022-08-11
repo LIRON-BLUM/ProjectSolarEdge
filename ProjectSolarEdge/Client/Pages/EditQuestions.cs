@@ -6,6 +6,7 @@ using MudBlazor;
 using System.Linq;
 using System.Collections.Generic;
 using ProjectSolarEdge.Client.Services.Users;
+using ProjectSolarEdge.Client.Shared;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -63,7 +64,11 @@ namespace ProjectSolarEdge.Client.Pages
 
         public Question QuestionsToDelete { get; set; } = new Question();
 
+        [CascadingParameter]
+        public MainLayout MainLayout { get; set; }
 
+        [CascadingParameter]
+        public NavMenu NavLayout { get; set; }
 
 
 
@@ -261,7 +266,7 @@ namespace ProjectSolarEdge.Client.Pages
                     await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
                 }
                 QuestionsCRUD.Subjects = selectedSubjectToUpdate;
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo($"/Questions/{EditorID}");
             }
                            
         }
