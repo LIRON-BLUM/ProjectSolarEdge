@@ -49,7 +49,7 @@ namespace ProjectSolarEdge.Shared.Services.Games
         public static string DeleteQuestionFromConnectionTable => @"DELETE FROM GameQuestionsConnections WHERE GameID = @GameID";
 
 
-
+        public static string DeleteQuestionIDFromConnectionTable => @"DELETE FROM GameQuestionsConnections WHERE QuestionID = @QuestionID";
 
         //Returns Questions by QuestionID
         public static string GetQuestionByGameID => @"SELECT 

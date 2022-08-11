@@ -73,7 +73,13 @@ namespace ProjectSolarEdge.Shared.Services.Games
             return results;
         }
 
+       public bool DeleteQuestionIDConnction(int QuestionID)
+        {
+            bool results = ExecuteAll(GamesQueries.DeleteQuestionIDFromConnectionTable, new { QuestionID = QuestionID });
 
+
+            return results;
+        }
 
         int IGameRepository.AddQuestionToConnection(GameQuestionsConnection gameQuestionsConnection)
         {
@@ -81,5 +87,7 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
             return results;
         }
+
+ 
     }
 }

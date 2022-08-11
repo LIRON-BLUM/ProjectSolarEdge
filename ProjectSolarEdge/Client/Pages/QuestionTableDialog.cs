@@ -17,8 +17,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         [Parameter] public int GameID { get; set; }
 
-        [Parameter]
-        public int Num { get; set; }
+ 
 
         public int NavigationDestination { get; set; }
         public Game GameCRUD { get; set; } = new Game();
@@ -67,16 +66,16 @@ namespace ProjectSolarEdge.Client.Pages
         protected override async Task OnInitializedAsync()
         {
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
-            int.TryParse(Id, out var GId);
+            //int.TryParse(Id, out var GId);
 
-            if (GId == 0)
+            if (GameID == 0)
             {
                 GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1, GameTimeLimit = 10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
                 GameCRUD.Questions = new List<Question>();
             }
             else
             {
-                GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
+                GameCRUD = await GameDataService.GetGameByIdAsync(GameID);
 
                 selectedQuestions = GameCRUD.Questions.ToHashSet();
 
@@ -119,16 +118,26 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
+        public void SaveQuestions()
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            NavigationDestination = 2;
+            AddAndUpdate();
+        }
+
+
         protected async Task AddAndUpdate()
         {
 
-            int.TryParse(Id, out var GId);
+            int gameId = GameID;
 
             List<Question> selectedQuestionToUpdate = new List<Question>();
-
-
-            // Delete the existing subjects 
-            await GameDataService.DeleteQuestionConnection(GId);
+           
+  
+            
+            
+            //// Delete the existing subjects 
+            //await GameDataService.DeleteQuestionConnection(gameId);
 
             foreach (var item in selectedQuestions)
             {
@@ -150,7 +159,7 @@ namespace ProjectSolarEdge.Client.Pages
                     QuestionScore = 600;
                 }
 
-                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = GId, Score = QuestionScore });
+                await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
 
             }
 
@@ -176,7 +185,8 @@ namespace ProjectSolarEdge.Client.Pages
 
             }
 
-            Navigation(NavigationDestination);
+            NavigationManager.NavigateTo($"/EditGame/{GameID}");
+            //Navigation(NavigationDestination);
             //  NavigationManager.NavigateTo("/Games");
         }
 
@@ -189,10 +199,12 @@ namespace ProjectSolarEdge.Client.Pages
             QuestionsDataToDisplay = QuestionsData;
 
 
-            NavigationManager.NavigateTo($"/EditGame/{Id}");
+            NavigationManager.NavigateTo($"/EditGame/{GameID}");
 
 
         }
+
+
 
 
         protected async Task Navigation(int pageNum)
@@ -202,15 +214,10 @@ namespace ProjectSolarEdge.Client.Pages
                 NavigationManager.NavigateTo("/Games");
             }
             else
-                NavigationManager.NavigateTo($"/EditGame/{Id}");
+                NavigationManager.NavigateTo($"/EditGame/{GameID}");
         }
 
-        public void SaveQuestions()
-        {
-            MudDialog.Close(DialogResult.Ok(true));
-            NavigationDestination = 2;
-            AddAndUpdate();
-        }
+  
 
        
 

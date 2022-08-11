@@ -123,6 +123,23 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
 
+        
+
+        [HttpDelete]
+        [Route("DeleteQuestionIDConnction/{QuestionID}")]
+        public IActionResult DeleteQuestionIDConnction(int QuestionID)
+        {
+            if (QuestionID == 0)
+                return BadRequest();
+
+            //var questionToDelete = _questionRepository.GetQuestionById(Id);
+            if (QuestionID == null)
+                return NotFound();
+
+            bool _QuesConnection = _GameRepository.DeleteQuestionIDConnction(QuestionID);
+
+            return Ok(_QuesConnection);//success
+        }
     }
 
 

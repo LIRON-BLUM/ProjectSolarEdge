@@ -91,6 +91,18 @@ namespace ProjectSolarEdge.Client.Services.Games
             return false;
         }
 
+        public async Task<bool> DeleteQuestionIDConnction(int QuestionID)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Games/DeleteQuestionIDConnction/{QuestionID}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
+
         public async Task<int> AddQuestionConnection(GameQuestionsConnection gameQuestionsConnection)
         {
             var AnswerJson =
@@ -107,9 +119,7 @@ namespace ProjectSolarEdge.Client.Services.Games
 
             return 0;
         }
-    
 
-
-    
+ 
     }
 }

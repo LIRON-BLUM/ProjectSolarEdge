@@ -125,7 +125,7 @@
                 <MudTd DataLabel="Delete">
                   
                     <MudTooltip Text="Delete Question">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Primary" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete"  @onclick="(() =>DeleteQuestionFromGame(context.ID))" Color="Color.Primary" />
                         @*<MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />*@
 
                     </MudTooltip>

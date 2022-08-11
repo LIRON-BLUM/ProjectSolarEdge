@@ -26,6 +26,8 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
 
+
+
         //public IEnumerable<Question> selectedQuestions { get; set; } = new HashSet<Question>();
 
         public HashSet<Question> selectedQuestions { get; set; } = new HashSet<Question>();
@@ -81,6 +83,21 @@ namespace ProjectSolarEdge.Client.Pages
 
 
         }
+
+        protected async Task DeleteQuestionFromGame(int Qid)
+        {
+            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(Qid);
+            await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+            await GameDataService.DeleteQuestionIDConnction(Qid);
+            QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            QuestionsDataToDisplay = QuestionsData;
+
+            int.TryParse(Id, out var GId);
+            NavigationManager.NavigateTo($"/EditGame/{GId}");
+        }
+
+
+  
 
         protected void OpenDialog()
         {
@@ -174,19 +191,19 @@ namespace ProjectSolarEdge.Client.Pages
             //  NavigationManager.NavigateTo("/Games");
         }
 
-        protected async Task DeleteQuestion(int id)
-        {
-            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
-            await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+        //protected async Task DeleteQuestion(int id)
+        //{
+        //    QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
+        //    await QuestionDataService.DeleteQuestion(QuestionsToDelete);
 
-            QuestionsData = await QuestionDataService.GetQuestionsAsync();
-            QuestionsDataToDisplay = QuestionsData;
-
-
-            NavigationManager.NavigateTo($"/EditGame/{Id}");
+        //    QuestionsData = await QuestionDataService.GetQuestionsAsync();
+        //    QuestionsDataToDisplay = QuestionsData;
 
 
-        }
+        //    NavigationManager.NavigateTo($"/EditGame/{Id}");
+
+
+        //}
 
 
         protected async Task Navigation(int pageNum)
