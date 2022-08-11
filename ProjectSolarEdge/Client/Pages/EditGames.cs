@@ -13,6 +13,9 @@ namespace ProjectSolarEdge.Client.Pages
         [Parameter]
         public string Id { get; set; }
 
+        [Parameter]
+        public string EditorID { get; set; }
+
         public int NavigationDestination { get; set; }
         public Game GameCRUD { get; set; } = new Game();
       

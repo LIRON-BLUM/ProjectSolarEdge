@@ -1,5 +1,6 @@
 ﻿@page "/EditQuestion"
 @page "/EditQuestion/{Id}"
+@page "/EditQuestionn/{Id}/{EditorID}"
 @using ProjectSolarEdge.Shared.Entities
 @using System.Net.Http.Json
 @inject HttpClient httpClient
@@ -12,7 +13,7 @@
         <MudItem xs="10" class="d-flex gap-4"><h1>Edit Question @QuestionsCRUD.ID</h1></MudItem>
         <MudItem xs="2" class="d-flex gap-4  ">
 
-            <MudButton Variant="Variant.Filled"  @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
+            <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
 
             <MudButton Variant="Variant.Filled" @onclick="DeleteQuestion" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
         </MudItem>
@@ -21,39 +22,50 @@
 
     <MudItem xs="8" class="gap-4">
         <MudItem xs="12" id="QuestionAnsIMG" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
-            
+
             <MudItem xs="8" id="Question" Width="100%" Height="auto">
                 <MudTextField T="string" Label="Type Your Multiple Question" Width="100%" class="ma-2" Variant="Variant.Outlined" Text="@QuestionsCRUD.QuestionBody" Lines="4" />
             </MudItem>
             <MudItem xs="2" id="IMG" Width="100%" Height="auto">
                 @*<MudPaper Class="mud-theme-secondary ma-2" Width="100px" Height="100px" Elevation="0" />*@
-                <img src="~/Files/QuestionDefaltImage.png"  Class=" ma-2" Width="100px" Height="100px" />
+                <img src="/Files/QuestionDefaltImage.png" Class=" ma-2" Width="100px" Height="100px"/>
+                
             </MudItem>
         </MudItem>
 
         <MudItem xs="12" id="AnswersAndDifficulty" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
             <MudItem xs="8" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
 
-       
+
+
+                @*<MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
+                    @foreach (var myanswer in QuestionsCRUD.Answers)
+                    {
+                        <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
+                        <br />
+                        <br />
+                    }
+                </MudRadioGroup>*@
+
 
                 <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
                     @foreach (var myanswer in QuestionsCRUD.Answers)
                     {
-                    <MudItem xs="12" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
-                        <MudItem xs="10" id="AnswersRadio" class="d-inline-flex" Height="auto">
-                            <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true">
-                                <MudTextField @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" />
-                                @*<InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>*@
-                            </MudRadio>
-                        </MudItem>
+                        <MudItem xs="12" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
+                            <MudItem xs="10" id="AnswersRadio" class="d-inline-flex" Height="auto">
+                                <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true">
+                                    <MudTextField  T="string"  @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" />
+                                    @*<InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>*@
+                                </MudRadio>
+                            </MudItem>
 
-                        <MudItem xs="2" id="Image" class="d-inline-flex" Height="auto">
-                            <MudPaper Class="mud-theme-Primary ma-2" Width="100%" Height="40px" Elevation="0" />
-                            <img src="~/Files/AnswerDefaltImage.png" Class=" ma-2"  Width="100%" Height="40px" />
-                        </MudItem>
+                            <MudItem xs="2" id="Image" class="d-inline-flex" Height="auto">
+                                <MudPaper Class="mud-theme-Primary ma-2" Width="100%" Height="40px" Elevation="0" />
+                                <img src="/Files/AnswerDefaltImage.png" Class=" ma-2" Width="100%" Height="40px">
+                            </MudItem>
 
-                    </MudItem>
-                        }
+                        </MudItem>
+                    }
 
                 </MudRadioGroup>
 
@@ -64,44 +76,44 @@
                     <MudText>Difficulty</MudText>
                 </MudItem>
 
-                <MudPagination Color="Color.Primary" Count="3" T="QuestionDifficulty" @bind-Selected="@_selectedDifficulty" />
+         
 
                 <MudPagination Color="Color.Primary" Count="3" T="QuestionDifficulty" SelectedChanged="DifficultyChanged" />
-              
+
                 <MudText Align="Align.Center">Selected page: @SelectedDiff </MudText>
 
                 @*<MudItem xs="12" class="d-flex gap-4 mb-8 " id="DifficultyEasy" Width="100%" Height="auto">
-                    <MudItem xs="4" class=" gap-4 " id="Difficulty" Width="100%" Height="auto">
-                        <MudFab Color="Color.Primary" Label="1" Size="Size.Small" />
-                        <MudText>Easy</MudText>
-                    </MudItem>
-                    <MudItem xs="4" class=" gap-4 " id="DifficultyMedium" Width="100%" Height="auto">
-                        <MudFab Color="Color.Primary" Label="2" Size="Size.Small" />
-                        <MudText>Medium</MudText>
-                    </MudItem>
-                    <MudItem xs="4" class=" gap-4 " id="DifficultyHard" Width="100%" Height="auto">
-                        <MudFab Color="Color.Primary" Label="3" Size="Size.Small" />
-                        <MudText>Hard</MudText>
-                    </MudItem>
-                </MudItem>*@
+                        <MudItem xs="4" class=" gap-4 " id="Difficulty" Width="100%" Height="auto">
+                            <MudFab Color="Color.Primary" Label="1" Size="Size.Small" />
+                            <MudText>Easy</MudText>
+                        </MudItem>
+                        <MudItem xs="4" class=" gap-4 " id="DifficultyMedium" Width="100%" Height="auto">
+                            <MudFab Color="Color.Primary" Label="2" Size="Size.Small" />
+                            <MudText>Medium</MudText>
+                        </MudItem>
+                        <MudItem xs="4" class=" gap-4 " id="DifficultyHard" Width="100%" Height="auto">
+                            <MudFab Color="Color.Primary" Label="3" Size="Size.Small" />
+                            <MudText>Hard</MudText>
+                        </MudItem>
+                    </MudItem>*@
 
-                <MudItem xs="12" class="flex-column gap-4 " id="Subject" Width="100%" Height="auto">
+                <MudItem xs="12" class="flex-column gap-4 mt-8" id="Subject" Width="100%" Height="auto">
                     <MudText>Subject</MudText>
-             
+
 
                     <MudSelect Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="Select Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
                         @foreach (var subject in SubjectsData)
                         {
                             <MudSelectItem T="string" Value="@subject.SubjectName">
                                 @subject.SubjectName
-                            <MudIconButton Icon="@Icons.Material.Filled.Delete" justify-end aria-label="delete"></MudIconButton>
-                        </MudSelectItem>
-                    }
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" justify-end aria-label="delete"></MudIconButton>
+                            </MudSelectItem>
+                        }
                     </MudSelect>
 
                     <MudItem xs="12" id="AddSubject" class="d-flex " Width="100%" Height="auto">
                         <MudItem xs="8" id="AddSubjectName" Margin="Margin.Dense" Width="100%" Height="auto">
-                            <MudTextField @bind-Value="@OneSubject.SubjectName" class="ma-1" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+                            <MudTextField @bind-Value="@OneSubject.SubjectName" class="ma-1" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" />
                         </MudItem>
                         <MudItem xs="4" class="ma-1" id="AddSubjectNameBtn" Width="100%" Height="auto">
                             <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Class="--mud-palette-gray-default">Add Subject</MudButton>
@@ -120,7 +132,7 @@
 
 
         <MudItem xs="8" id="FeedbackContainer" class="d-flex gap-4 " Width="100%" Height="auto">
-            <MudTextField T="string" Label="Enter Your Feedback" Width="100%" class="ma-2" Variant="Variant.Outlined"  Text="@QuestionsCRUD.Feedback" Lines="4" />
+            <MudTextField T="string" Label="Enter Your Feedback" Width="100%" class="ma-2" Variant="Variant.Outlined" Text="@QuestionsCRUD.Feedback" Lines="4" />
 
         </MudItem>
 
@@ -136,7 +148,7 @@
     <MudItem xs="4" class="d-inline-flex flex-column  gap-4">
 
         @*<MudPaper Class="mud-theme-secondary" Width="100%" Height="320px" Elevation="0" />
-        <MudPaper Class="mud-theme-secondary" Width="100%" Height="64px" Elevation="0" />*@
+            <MudPaper Class="mud-theme-secondary" Width="100%" Height="64px" Elevation="0" />*@
 
         <MudItem>
             <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"

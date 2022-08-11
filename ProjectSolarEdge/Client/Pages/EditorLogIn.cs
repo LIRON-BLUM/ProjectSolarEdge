@@ -11,6 +11,8 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        public string EditorID { get; set; }
+
         public UsersTable UserData { get; set; }
 
         public string UserEmail { get; set; }
@@ -40,15 +42,18 @@ namespace ProjectSolarEdge.Client.Pages
 
             if (IdFromUserName.ID == IdFromPassword.ID)
             {
-                NavigationManager.NavigateTo($"/EditorOpening");
+                if (IdFromUserName.UserType != UserType.Learner )
+                {
+                EditorID = IdFromUserName.ToString();
+                NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
+                }
+
             }
 
 
 
-
-
-            //(QuestionsCRUD.Subjects.Select(s => s.SubjectName)
-        }
+        //(QuestionsCRUD.Subjects.Select(s => s.SubjectName)
+    }
 
 
 

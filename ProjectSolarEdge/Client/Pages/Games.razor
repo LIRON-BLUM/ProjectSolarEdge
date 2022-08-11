@@ -1,4 +1,4 @@
-﻿@page "/Games"
+﻿@page "/Games/{EditorID}"
 @using ProjectSolarEdge.Shared.Entities
 @inject HttpClient httpClient
 @using System.Net.Http.Json
@@ -54,7 +54,7 @@
                 <MudTh DataLabel="Update">@context.UpdateDate</MudTh>
                 <MudTh DataLabel="Published">@context.isPublished</MudTh>
                 <MudTh DataLabel="Edit">
-                    <a href="/EditGame/@context.ID">
+                    <a href="/EditGame/@context.ID/@EditorID">
                        
                             <MudTooltip Text="Edit Game">
                                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />

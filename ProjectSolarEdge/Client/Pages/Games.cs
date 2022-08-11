@@ -15,8 +15,9 @@ namespace ProjectSolarEdge.Client.Pages
     {
 
 
-
-      public IEnumerable<Game> GamesData { get; set; }
+        [Parameter]
+        public string EditorID { get; set; }
+        public IEnumerable<Game> GamesData { get; set; }
 
 
         [Inject]

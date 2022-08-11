@@ -5,6 +5,7 @@ using ProjectSolarEdge.Shared.Entities;
 using MudBlazor;
 using System.Linq;
 using System.Collections.Generic;
+using ProjectSolarEdge.Client.Services.Users;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -13,6 +14,11 @@ namespace ProjectSolarEdge.Client.Pages
 
         [Parameter]
         public string Id { get; set; }
+
+        [Parameter]
+        public string EditorID { get; set; }
+
+        public UsersTable EditorData { get; set; }
 
         public int CheckedAnswerID { get; set; }
 
@@ -50,6 +56,9 @@ namespace ProjectSolarEdge.Client.Pages
         public IQuestionsDataService QuestionDataService { get; set; }
 
         [Inject]
+        public IUsersDataService UsersDataService { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         public Question QuestionsToDelete { get; set; } = new Question();
@@ -60,8 +69,9 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            int.TryParse(EditorID, out var EId);
 
-
+            EditorData = await UsersDataService.GetUsererByID(EId);
 
             SubjectsData = await QuestionDataService.GetSubjectsAsync();
 
@@ -80,7 +90,7 @@ namespace ProjectSolarEdge.Client.Pages
                 //ADD ANSWERS
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    // ID = 1,
+                    ID = 1,
                     //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
@@ -88,7 +98,7 @@ namespace ProjectSolarEdge.Client.Pages
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    //  ID = 2,
+                    ID = 2,
                     //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
@@ -96,15 +106,15 @@ namespace ProjectSolarEdge.Client.Pages
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    //   ID = 3,
-                   //AnswerBody = " ",
+                    ID = 3,
+                    //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    //    ID = 4,
+                    ID = 4,
                     //AnswerBody = " ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
@@ -178,7 +188,7 @@ namespace ProjectSolarEdge.Client.Pages
             await QuestionDataService.DeleteSubjectConnection(QuestionsCRUD.ID);
 
          
-
+            QuestionsCRUD.Creator = EditorData.UserFirstName + " " + EditorData.UserLastName;
 
 
 
@@ -224,7 +234,8 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Subjects = selectedSubjectToUpdate;
 
                 //4) If all successful then navigate the user to edit question or list of questions.
-                NavigationManager.NavigateTo("/Questions");
+                NavigationManager.NavigateTo($"/Questions/{EditorID}");
+              
 
             }
             else

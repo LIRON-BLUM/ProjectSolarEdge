@@ -14,6 +14,10 @@ namespace ProjectSolarEdge.Client.Pages
   
     public partial class Questions : ComponentBase, IDisposable
     {
+
+        [Parameter]
+        public string EditorID { get; set; }
+
         public Question AllQuestions { get; set; } = new Question();
 
         public Question QuestionsToDelete { get; set; } = new Question();
