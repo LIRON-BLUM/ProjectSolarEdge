@@ -12,7 +12,7 @@
                    Position="DialogPosition.Center"
                    CloseOnEscapeKey="true" />
 
-@*<CascadingValue Value="this">*@
+<CascadingValue Value="@EditorID">
     <MudLayout>
         <MudAppBar Elevation="1" Style="@($"background:#001546;")">
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="@($"color:#FF002A;")" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
@@ -30,7 +30,8 @@
         </MudMainContent>
     </MudLayout>
 
-@*</CascadingValue>*@
+
+</CascadingValue>
 
     @code {
         [Parameter]
