@@ -362,3 +362,10 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 ProjectSolarEdge/Server/appsettings.json
+ProjectSolarEdge/Client/Pages/EditQuestions.razor
+ProjectSolarEdge/Server/appsettings.json
+ProjectSolarEdge/Server/Controllers/QuestionsController.cs
+ProjectSolarEdge/Client/Pages/EditQuestions.razor
+*.cs
+ProjectSolarEdge/Client/Pages/GamePages/OrderQuestion.razor
+ProjectSolarEdge/Client/wwwroot/css/styles/OrderQuestion.css
