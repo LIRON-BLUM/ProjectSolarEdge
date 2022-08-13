@@ -17,11 +17,52 @@
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
     </MudItem>
-    <MudItem xs="6" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
-    <MudItem xs="2">
-        @*<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NewQuestion" Icon="@Icons.Filled.Add" Class="d-flex align-center justify-end mud-width-full py-2">ADD QUESTION</MudButton>*@
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" @onclick="NewQuestion" Class="justify-content-end">ADD QUESTION</MudButton>
+    <MudItem xs="4" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
+    <MudItem xs="4" Class="justify-end">
+        @*<MudButton OnClick="@ToggleOpen" Variant="Variant.Filled" Color="Color.Primary" @onclick="NewQuestion" Icon="@Icons.Filled.Add" Class="d-flex align-center justify-end mud-width-full py-2">ADD QUESTION</MudButton>*@
+        @*<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Origin="@AnchorOrigin" Color="Color.Primary" @onclick="NewQuestion" Class="justify-content-end">ADD QUESTION</MudButton>*@
+        @*<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@ToggleOpen" Class="justify-content-end">ADD QUESTION</MudButton>*@
+
+
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@ToggleOpen">
+            @(_isOpen? "ADD QUESTION" : "ADD QUESTION")
+        </MudButton>
+        <MudPopover Open="@_isOpen" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+            <div class="d-flex gap-8 pa-10">
+              
+                <div class="d-flex flex-column justify-center align-center">
+                    <a href="/EditQuestion/{@EditorID}">                    
+                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
+                            <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" />
+                        </MudAvatar>
+                        <MudText>Multiple</MudText>
+                    </a>
+                </div>
+
+                <div class="d-flex flex-column justify-center align-center">
+                    <a href="/EditQuestion/{@EditorID}">
+                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
+                            <MudIcon Icon="@Icons.Material.Filled.Rule" />
+                        </MudAvatar>
+                        <MudText>Yes/No</MudText>
+                    </a>
+                </div>
+
+                <div class="d-flex flex-column justify-center align-center">
+                    <a href="/OrderQuestionEdit/{@EditorID}">
+                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
+                            <MudIcon Icon="@Icons.Material.Filled.FormatListNumbered" />
+                        </MudAvatar>
+                        <MudText>Order</MudText>
+                    </a>
+                </div>
+
+            </div>
+        </MudPopover>
+
+
     </MudItem>
+
 
     <br />
     <MudItem xs="12">
@@ -69,9 +110,9 @@
                 <MudTh DataLabel="Creation Date">@context.CreationDate</MudTh>
                 <MudTh DataLabel="Edit">
                     @*<a href="/EditQuestion/@context.ID/@EditorID">*@
-                        <MudTooltip Text="Edit Question">
-                            <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="(() =>NavigateToEdit(context.ID))" Color="Color.Primary" />
-                        </MudTooltip>
+                    <MudTooltip Text="Edit Question">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="(() =>NavigateToEdit(context.ID))" Color="Color.Primary" />
+                    </MudTooltip>
                     @*</a>*@
                 </MudTh>
                 <MudTh DataLabel="Delete">
@@ -98,6 +139,20 @@
 </MudGrid>
 
 @code {
+
+    public Origin TransformOrigin { get; set; } = Origin.TopRight;
+    public Origin AnchorOrigin { get; set; } = Origin.BottomLeft;
+
+
+    public bool _isOpen;
+
+    public void ToggleOpen()
+    {
+        if (_isOpen)
+            _isOpen = false;
+        else
+            _isOpen = true;
+    }
 
     //bool fixed_header = true;
     //bool fixed_footer = false;
