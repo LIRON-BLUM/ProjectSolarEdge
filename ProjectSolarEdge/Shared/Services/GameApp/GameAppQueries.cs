@@ -119,5 +119,9 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
 		public static string GetGamblingScore => @"SELECT * FROM GameScore
 															WHERE UserID = @UserID AND GameID = @GameID AND QuestionID = 0 AND GameElement = 2";
+
+
+		//Select all the Questions in a specific game with a specific player
+		//public static string GetPlayerGameQuestions => @"SELECT * FROM GameScore WHERE GameID=@GameID AND UserID=@UserID";
 	}
 }

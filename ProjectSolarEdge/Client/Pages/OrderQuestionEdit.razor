@@ -1,6 +1,8 @@
-﻿@page "/EditQuestion/{EditorID}"
+﻿<h3>OrderQuestionEdit</h3>
+
+@page "/OrderQuestionEdit/{EditorID}"
 @*@page "/EditQuestion/{Id}"*@
-@page "/EditQuestion/{Id}/{EditorID}"
+@page "/OrderQuestionEdit/{Id}/{EditorID}"
 @using ProjectSolarEdge.Shared.Entities
 @using System.Net.Http.Json
 @inject HttpClient httpClient
@@ -10,8 +12,8 @@
 
 <MudGrid>
     <MudItem xs="12" class="d-flex gap-4">
-        <MudItem xs="10" class="d-flex gap-4"><h1>Edit Question @QuestionsCRUD.ID</h1></MudItem>
-        <MudItem xs="2" class="d-flex gap-4  ">
+        <MudItem xs="9" class="d-flex gap-4"><h1>Edit Question @QuestionsCRUD.ID</h1></MudItem>
+        <MudItem xs="3" class=" gap-4  ">
 
             <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
 
@@ -28,46 +30,35 @@
             </MudItem>
             <MudItem xs="2" id="IMG" Width="100%" Height="auto">
                 @*<MudPaper Class="mud-theme-secondary ma-2" Width="100px" Height="100px" Elevation="0" />*@
-                <img src="/Files/QuestionDefaltImage.png" Class=" ma-2" Width="100px" Height="100px"/>
-                
+                <img src="/Files/QuestionDefaltImage.png" Class=" ma-2" Width="100px" Height="100px" />
+
             </MudItem>
         </MudItem>
 
         <MudItem xs="12" id="AnswersAndDifficulty" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
-            <MudItem xs="8" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
+            <MudItem xs="8" id="Answers" class="d-flex gap-4 flex-column" Width="100%" Height="auto">
+
+  
 
 
+                @foreach (var ans in QuestionsCRUD.Answers)
+                {
 
-                @*<MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
-                    @foreach (var myanswer in QuestionsCRUD.Answers)
-                    {
-                        <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
-                        <br />
-                        <br />
-                    }
-                </MudRadioGroup>*@
+                    <MudItem xs="12" id="Answers" class="d-flex gap-4 " align-center Width="100%" Height="auto">
+
+                        <MudAvatar class="ma-2" Rounded="true" Color="Color.Default">@ans.QuestionOrder</MudAvatar>
+
+                        <MudTextField @bind-Value="ans.AnswerBody" Margin="Margin.Dense" class="ma-2" Variant="Variant.Outlined" />
 
 
-                <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
-                    @foreach (var myanswer in QuestionsCRUD.Answers)
-                    {
-                        <MudItem xs="12" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
-                            <MudItem xs="10" id="AnswersRadio" class="d-inline-flex" Height="auto">
-                                <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true">
-                                    <MudTextField  T="string"  @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" />
-                                    @*<InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>*@
-                                </MudRadio>
-                            </MudItem>
+                    </MudItem>
 
-                            <MudItem xs="2" id="Image" class="d-inline-flex" Height="auto">
-                                <MudPaper Class="mud-theme-Primary ma-2" Width="100%" Height="40px" Elevation="0" />
-                                <img src="/Files/AnswerDefaltImage.png" Class=" ma-2" Width="100%" Height="40px">
-                            </MudItem>
+                    @*@OrderNum++*@
 
-                        </MudItem>
-                    }
 
-                </MudRadioGroup>
+                }
+
+
 
             </MudItem>
 
@@ -76,7 +67,7 @@
                     <MudText>Difficulty</MudText>
                 </MudItem>
 
-         
+
 
                 <MudPagination Color="Color.Primary" Count="3" T="QuestionDifficulty" SelectedChanged="DifficultyChanged" />
 
@@ -116,7 +107,7 @@
                             <MudTextField @bind-Value="@OneSubject.SubjectName" class="ma-1" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" />
                         </MudItem>
                         <MudItem xs="4" class="ma-1" id="AddSubjectNameBtn" Width="100%" Height="auto">
-                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Class="--mud-palette-gray-default">Add Subject</MudButton>
+                            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Add"  Margin="Margin.Dense" Class="--mud-palette-gray-default">Add</MudButton>
                         </MudItem>
                     </MudItem>
 
@@ -272,6 +263,7 @@
 
 
 }
+
 
 
 

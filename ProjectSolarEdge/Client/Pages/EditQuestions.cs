@@ -138,6 +138,7 @@ namespace ProjectSolarEdge.Client.Pages
                     if (myanswer.IsRight == true)
                     {
                         CheckedAnswerID = myanswer.ID;
+                      
                     }
                 }
             }

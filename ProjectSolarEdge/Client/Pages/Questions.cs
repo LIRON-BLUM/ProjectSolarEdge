@@ -23,6 +23,8 @@ namespace ProjectSolarEdge.Client.Pages
 
         public Question QuestionsToDelete { get; set; } = new Question();
 
+        public Question QuestionsToEdit { get; set; } = new Question();
+
         public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
 
         public IEnumerable<Question> QuestionsData { get; set; }
@@ -61,8 +63,20 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task NavigateToEdit(int qid)
         {
-            if (qid == 4) { 
-            NavigationManager.NavigateTo("/EditQuestion/" + qid);
+
+            QuestionsToEdit = await QuestionDataService.GetQuestionByIdAsync(qid);
+
+            if (QuestionsToEdit.Type == QuestionType.MultipleChoice) 
+            { 
+                NavigationManager.NavigateTo($"/EditQuestion/{qid}/{EditorID}");
+            }
+            else if (QuestionsToEdit.Type == QuestionType.Order)
+            {
+                NavigationManager.NavigateTo($"/OrderQuestionEdit/{qid}/{EditorID}"); 
+            }
+            else
+            {
+                NavigationManager.NavigateTo($"/EditQuestion/{qid}/{EditorID}");
             }
         }
 
