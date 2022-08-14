@@ -121,7 +121,15 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 															WHERE UserID = @UserID AND GameID = @GameID AND QuestionID = 0 AND GameElement = 2";
 
 
-		//Select all the Questions in a specific game with a specific player
-		//public static string GetPlayerGameQuestions => @"SELECT * FROM GameScore WHERE GameID=@GameID AND UserID=@UserID";
-	}
+        //Select all the Questions in a specific game with a specific player and the answer
+        public static string GetPlayerGameQuestionsAnswers => @"SELECT 
+															q.QuestionBody,
+															q.Feedback,
+															gs.IsRight as UserIsRight
+														FROM Questions as q
+														INNER JOIN  GameScore as gs ON q.ID = gs.QuestionID
+														WHERE gs.GameID=@GameID AND gs.UserID=@UserID";
+
+
+    }
 }

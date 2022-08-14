@@ -38,6 +38,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         bool DeleteSubjectConnction(int ID);
         int AddSubjectToConnection(SubjectsQuestionsConnection subjectsQuestionsConnection);
 
+        //IEnumerable<PlayerGameQuestionsAnswers> GetPlayerGameQuestionsAns(int gameID, int userID);
+
 
     }
 }

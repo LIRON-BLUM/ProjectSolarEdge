@@ -11,47 +11,63 @@
 
             <h1>Check your answer</h1>
             <div id="answerCheck">
-            @foreach (var feedback in endFeedback)
-            {
-                if(@feedback.IsRight == true)
-                {
-                <div class="correct">
-                <div class="accordion">@answerdQuestions.QuestionBody
-@*                 <img src="${feedbackAns.currentQuestion.QuestionPic}" style="width:80px" />
-*@                </div>
-                <div class="panel">
-                <div>@answerdQuestions.Feedback</div>
-@*                <img src="${feedbackAns.currentQuestion.choiceImg1}" style="width:80px" />
-*@                
-                        @foreach (var answer in answerdQuestions.Answers)
-                        {
-                            <div>@answer.AnswerBody</div>
-@*                            <img src="${feedbackAns.currentQuestion.choiceImg2}" style="width:80px" />
-*@
-                        }
 
-                </div> </div>                }
-                else
-                {
-                <div class="incorrect">
-                <div class="accordion">@answerdQuestions.QuestionBody
-@*                 <img src="${feedbackAns.currentQuestion.QuestionPic}" style="width:80px" />
-*@                </div>
-                <div class="panel">
-                <div>@answerdQuestions.Feedback</div>
-@*                <img src="${feedbackAns.currentQuestion.choiceImg1}" style="width:80px" />
-*@                
-                        @foreach (var answer in answerdQuestions.Answers)
-                        {
-                            <div>@answer.AnswerBody</div>
-@*                            <img src="${feedbackAns.currentQuestion.choiceImg2}" style="width:80px" />
-*@
-                        }
 
-                </div> </div>
+
+
+
+
+                    @foreach (var feedback in UserQuestionsAnswers)
+                    {
+                        @if (feedback.IsRight == true)
+                        {
+                            <div class="correct">
+                                <div class="accordion">
+                                    @answerdQuestions.QuestionBody
+                                    @*@answerdQuestions.QuestionBody*@
+                                    @*                 <img src="${feedbackAns.currentQuestion.QuestionPic}" style="width:80px" />
+                                    *@
+                                </div>
+                            <div class="panel">
+                                <div>@answerdQuestions.Feedback</div>
+                                @*                <img src="${feedbackAns.currentQuestion.choiceImg1}" style="width:80px" />
+                                *@
+                                @foreach (var answer in answerdQuestions.Answers)
+                                {
+                                    <div>@answer.AnswerBody</div>
+                                    @*                            <img src="${feedbackAns.currentQuestion.choiceImg2}" style="width:80px" />
+                                    *@
+                                }
+
+                            </div>
+                        </div>
+                        }
+                    else
+                    {
+                        <div class="incorrect">
+                            <div class="accordion">
+                                @answerdQuestions.QuestionBody
+                                @*@answerdQuestions.QuestionBody*@
+                                @*                 <img src="${feedbackAns.currentQuestion.QuestionPic}" style="width:80px" />
+                                *@
+                            </div>
+                        <div class="panel">
+                            <div>@answerdQuestions.Feedback</div>
+                            @*                <img src="${feedbackAns.currentQuestion.choiceImg1}" style="width:80px" />
+                            *@
+                            @foreach (var answer in answerdQuestions.Answers)
+                            {
+                                <div>@answer.AnswerBody</div>
+                                @*                            <img src="${feedbackAns.currentQuestion.choiceImg2}" style="width:80px" />
+                                *@
+                            }
+
+                        </div>
+                    </div>
                 }
-             
-                }
+
+            }
+                
             </div> 
             <button type="button" class="btn" @onclick="backToEnd">Go back</button>
 

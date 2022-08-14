@@ -1,37 +1,68 @@
-﻿
+﻿@layout ThirdLayout
+
+
 @page "/"
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 
 
-<link href="/css/styles/Gambeling.css" rel="stylesheet" />
 <link href="/css/styles/LogIn.css" rel="stylesheet" />
 
 
 
-    <div class="container">
-        <div class="justify-content-center align-items-center text-center">
+<!--<div class="container">
+    <div class="justify-content-center align-items-center text-center">
 
-            <img src="/Files/SolarEdgeLogoWhite.png" width="40%" class="rounded mx-auto d-block" alt="Logo">
-            @*<input type="text" placeholder="Email" class="col-4" />
-        <input type="text" placeholder="Passwored" class="col-4" />*@
-
-          
-
-            <MudTextField @bind-Value="@UserEmail" Label="Username" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
-    
-
-            <MudTextField @bind-Value="@UserPassword" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
-
-    
-            <MudButton Variant="Variant.Filled" @onclick="EnterEditor" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
-        </div>
+        <img src="/Files/SolarEdgeLogoWhite.png" width="40%" class="rounded mx-auto d-block" alt="Logo">-->
+@*<input type="text" placeholder="Email" class="col-4" />
+    <input type="text" placeholder="Passwored" class="col-4" />*@
 
 
+
+<!--<MudTextField @bind-Value="@UserEmail" Label="Username" Variant="Variant.Outlined" Margin="Margin.Dense"></MudTextField>
+
+
+        <MudTextField @bind-Value="@UserPassword" Label="Password" Variant="Variant.Outlined" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password" />
+
+
+        <MudButton Variant="Variant.Filled" @onclick="EnterEditor" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
     </div>
 
 
-    @*<MudDialog @bind-IsVisible="visible" Options="dialogOptions">
+</div>-->
+
+
+
+<MudContainer Class="mt-16 justify-center">
+
+    <MudItem xs="12" class="d-flex justify-center">
+        <img Src="/Files/KnowledgeOnWhite.svg" Alt="Questions" width="20%" height="20%">
+    </MudItem>
+    <MudGrid Class="mt-8">
+        <MudItem xs="2" md="3" class="justify-center"></MudItem>
+        <MudItem xs="8" md="6" class=" justify-center">
+            <MudCard Elevation="2" Outlined="true" Class="border-solid border-1 rounded-lg pb-4">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5" Align="Align.Center">Login</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent Class="justify-center">
+                    <MudTextField @bind-Value="@UserEmail" Label="Username" Variant="Variant.Outlined"></MudTextField>
+                    <MudTextField @bind-Value="@UserPassword" Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" Variant="Variant.Outlined" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password"></MudTextField>
+
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" Width="50%" @onclick="EnterEditor" Size="Size.Large">Enter</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="2" md="3" class="justify-center"></MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+@*<MudDialog @bind-IsVisible="visible" Options="dialogOptions">
         <TitleContent>
             <MudText Typo="Typo.h6">
                 <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Login faild - Incorrect username or password

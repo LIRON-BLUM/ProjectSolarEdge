@@ -24,12 +24,14 @@
         <MudItem xs="12" id="QuestionAnsIMG" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
 
             <MudItem xs="8" id="Question" Width="100%" Height="auto">
-                <MudTextField T="string" Label="Type Your Multiple Question" Width="100%" class="ma-2" Variant="Variant.Outlined" Text="@QuestionsCRUD.QuestionBody" Lines="4" />
+                <MudTextField T="string" Label="Type Your Multiple Question" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" />
             </MudItem>
             <MudItem xs="2" id="IMG" Width="100%" Height="auto">
                 @*<MudPaper Class="mud-theme-secondary ma-2" Width="100px" Height="100px" Elevation="0" />*@
-                <img src="/Files/QuestionDefaltImage.png" Class=" ma-2" Width="100px" Height="100px"/>
-                
+                <InputFile OnChange="@OnInputFileChanged"></InputFile>
+                <img src="@QuestionImage" style="width:200px; height:auto;" />
+              
+
             </MudItem>
         </MudItem>
 
@@ -132,7 +134,7 @@
 
 
         <MudItem xs="8" id="FeedbackContainer" class="d-flex gap-4 " Width="100%" Height="auto">
-            <MudTextField T="string" Label="Enter Your Feedback" Width="100%" class="ma-2" Variant="Variant.Outlined" Text="@QuestionsCRUD.Feedback" Lines="4" />
+            <MudTextField T="string" Label="Enter Your Feedback" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.Feedback" Lines="4" />
 
         </MudItem>
 

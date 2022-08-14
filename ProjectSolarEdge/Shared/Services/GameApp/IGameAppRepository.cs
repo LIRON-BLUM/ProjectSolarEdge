@@ -32,7 +32,7 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
 
         GameScore GetGamblingScore(int gameID, int userID);
 
-        //IEnumerable<GameScore> GetPlayerGameQuestions(int gameID, int userID);
+
 
 
 

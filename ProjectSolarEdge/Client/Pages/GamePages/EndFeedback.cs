@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Games;
+using ProjectSolarEdge.Client.Services.Questions;
+using ProjectSolarEdge.Client.Services.Users;
 using ProjectSolarEdge.Shared.Entities;
 
 namespace ProjectSolarEdge.Client.Pages.GamePages
@@ -14,17 +17,35 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public Game GamePlaying { get; set; }
 
-        public UsersTable player { get; set; }
+        public UsersTable Player { get; set; }
 
-        public IEnumerable<GameScore> endFeedback { get; set; }
-       
+        public IEnumerable<GameScore> UserQuestionsAnswers { get; set; }
+
+        public GameScore UserQuestionsIsRight { get; set; }
+
         public Question answerdQuestions { get; set; }
+
+        public IEnumerable<Question> AnswerdQuestions { get; set; }
+
+        public List<Question> selectedQuestionToShow = new List<Question>();
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        public IUsersDataService UserDataService { get; set; }
+
+        [Inject]
+        public IGameAppService GameAppDataService { get; set; }
+
+        [Inject]
+        public IQuestionsDataService QuestionDataService { get; set; }
+
+        public bool QisRight { get; set; }
+
 
         protected async Task backToEnd()
         {
@@ -35,63 +56,79 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         //  Liron - delete this after querise
         protected override async Task OnInitializedAsync()
         {
-            GamePlaying = await GameDataService.GetGameByIdAsync(int.Parse(GameId));
+            int.TryParse(GameId, out var gameID);
+            int.TryParse(UserId, out var userID);
 
-            player = new UsersTable()
-            {
-                ID = 8,
-                UserFirstName = "Limor",
-                UserLastName = "Avrahami",
-                UserName = "LimorAvrahami",
-            };
+            GamePlaying = await GameDataService.GetGameByIdAsync(gameID);
+            Player = await GameAppDataService.GetPlayerByID(userID);
 
-            endFeedback = new List<GameScore>()
+
+            UserQuestionsAnswers =  await GameAppDataService.GetAllUserGameScore(gameID, userID);
+
+            //SELECT * FROM GameScore WHERE GameID=@GameID AND UserID=@UserID
+            //UserQuestionsAnswers = new List<GameScore>()
+            //{
+            //    new GameScore()
+            //    {
+            //        QuestionID = 1,
+            //        IsRight = true
+            //    }
+
+
+            //};
+
+            //List<Question> selectedQuestionToShow = new List<Question>();
+
+            foreach (var question in UserQuestionsAnswers)
             {
-                new GameScore()
+              answerdQuestions =  await QuestionDataService.GetQuestionByIdAsync(question.QuestionID);
+
+                selectedQuestionToShow.Add(answerdQuestions);
+            }
+
+            UserQuestionsAnswers = UserQuestionsAnswers.OrderByDescending(e => e.QuestionID);
+            selectedQuestionToShow = (List<Question>)selectedQuestionToShow.OrderByDescending(q => q.ID);
+
+
+            foreach(var question in selectedQuestionToShow)
+            {
+
+                  
+                    foreach(var ans in question.Answers)
                 {
-                    QuestionID = 1,
-                    IsRight = true
-                }
-                // new GameScore()
-                //{
-                //    QuestionID = 2,
-                //    IsRight = false
-                //},
-                //  new GameScore()
-                //{
-                //    QuestionID = 3,
-                //    IsRight = true
-                //}
-
-            };
-
-            answerdQuestions = new Question()
-            {
-             
-                ID = 1,
-                QuestionBody = "What is your favorite color?",
-                Feedback = "My favorit color is purple",
-                Answers = new List<QuestionAnswer>()
-                {
-                    new QuestionAnswer() {
-                        AnswerBody= "Red",
-                        IsRight = false
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Blue",
-                        IsRight = false
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Purple",
-                        IsRight = true
-                    },
-                    new QuestionAnswer() {
-                        AnswerBody= "Pink",
-                        IsRight = false
-                    }
+                   
                 }
 
-                
+            }
+
+
+                //answerdQuestions = new Question()
+                //{
+
+                //    ID = 1,
+                //    QuestionBody = "What is your favorite color?",
+                //    Feedback = "My favorit color is purple",
+                //    Answers = new List<QuestionAnswer>()
+                //    {
+                //        new QuestionAnswer() {
+                //            AnswerBody= "Red",
+                //            IsRight = false
+                //        },
+                //        new QuestionAnswer() {
+                //            AnswerBody= "Blue",
+                //            IsRight = false
+                //        },
+                //        new QuestionAnswer() {
+                //            AnswerBody= "Purple",
+                //            IsRight = true
+                //        },
+                //        new QuestionAnswer() {
+                //            AnswerBody= "Pink",
+                //            IsRight = false
+                //        }
+                //    }
+
+
 
                 //new Question()
                 //{
@@ -138,9 +175,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
                 //}
 
-            };
-                     
+            }
+
+
 
         }
-    }
 }

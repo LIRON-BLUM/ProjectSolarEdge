@@ -28,6 +28,8 @@ namespace ProjectSolarEdge.Shared.Entities
         public List<Subject> Subjects { get; set; }
         public byte isDeleted { get; set; }
 
+        public string QuestionImagePath { get; set; }
+
 
 
     }
@@ -63,5 +65,7 @@ namespace ProjectSolarEdge.Shared.Entities
         public DateTime UpdateDate { get; set; }
 
         public int GameID { get; set; }
+
+  
     }
 }

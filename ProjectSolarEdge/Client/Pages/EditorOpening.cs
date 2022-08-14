@@ -19,8 +19,23 @@ namespace ProjectSolarEdge.Client.Pages
         [CascadingParameter]
         public NavMenu NavLayout { get; set; }
 
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
+        protected async Task NavQuestion()
+        {
+            NavigationManager.NavigateTo($"/Questions/{EditorID}");
+        }
 
+        protected async Task NavGames()
+        {
+            NavigationManager.NavigateTo($"/Games/{EditorID}");
+        }
+
+        protected async Task NavUsers()
+        {
+            NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
+        }
 
     }
 }

@@ -96,5 +96,7 @@ namespace ProjectSolarEdge.Shared.Services.GameApp
             GameScore _data = GetRecords<GameScore>(GameAppQueries.GetGamblingScore, new { GameID = gameID, UserID = userID }).FirstOrDefault();
             return _data;
         }
+
+
     }
 }

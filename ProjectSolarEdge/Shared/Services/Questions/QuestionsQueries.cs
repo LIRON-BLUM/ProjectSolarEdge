@@ -14,7 +14,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 		public static string GetQuestionAnswers => @"SELECT * FROM QuestionAnswers WHERE QuestionID = @ID AND isDeleted = 0";
 		
-		public static string GetAllQuestions => @"SELECT ID, QuestionBody, Type, Difficulty, CreationDate, UpdateDate, Creator, Feedback FROM Questions WHERE isDeleted = 0";
+		public static string GetAllQuestions => @"SELECT ID, QuestionBody, Type, Difficulty, CreationDate, UpdateDate, Creator, Feedback, QuestionImagePath FROM Questions WHERE isDeleted = 0";
 
 
 		public static string AddNewQuestion => @"INSERT INTO Questions
@@ -25,8 +25,9 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													Difficulty,
 													Feedback,
 													Creator,
-													isDeleted)
-											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator, 0)
+													isDeleted,
+													QuestionImagePath)
+											  VALUES (@QuestionBody, @CreationDate, @UpdateDate, @Type, @Difficulty, @Feedback, @Creator, 0, @QuestionImagePath)
 											  SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
@@ -39,7 +40,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													UpdateDate =  @UpdateDate,
 													Type = @Type,
 													Difficulty = @Difficulty,
-													Feedback =  @Feedback
+													Feedback =  @Feedback,
+													QuestionImagePath = @QuestionImagePath
 											    	WHERE  ID = @ID";
 
 
@@ -128,5 +130,16 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 														SQC.QuestionID
 													FROM SubjectsQuestionsConnection as SQC
 													INNER JOIN Subjects as S ON SQC.SubjectID = S.ID";
+
+
+
+		public static string GetPlayerGameQuestionsAnswers => @"SELECT 
+															q.QuestionBody,
+															q.Feedback,
+															gs.IsRight as UserIsRight
+														FROM Questions as q
+														INNER JOIN  GameScore as gs ON q.ID = gs.QuestionID
+														WHERE gs.GameID=@GameID AND gs.UserID=@UserID";
+
 	}
 }

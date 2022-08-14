@@ -198,17 +198,20 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
 
 
-
-        //public bool DeleteSubjectConnctionn(SubjectsQuestionsConnection SubjectsQuestionsConnection)
+        //public IEnumerable<PlayerGameQuestionsAnswers> GetPlayerGameQuestionsAnswers(int gameID, int userID)
         //{
+        //    IEnumerable<PlayerGameQuestionsAnswers> _question = GetRecords<Question>(QuestionsQueries.GetPlayerGameQuestionsAnswers, new { GameID = gameID, UserID = userID }).ToList();
 
-        //    bool results = ExecuteAll(QuestionsQueries.DeleteSubjectFromConnectionTable, SubjectsQuestionsConnection);
+        //    foreach (Question question in _question)
+        //    {
+        //         _question.An = GetRecords<QuestionAnswer>(QuestionsQueries.GetQuestionAnswers, new { ID = _question.ID });
+        //    }
+
+           
 
 
-        //    return results;
+        //    return _question;
         //}
-
-
 
 
     }

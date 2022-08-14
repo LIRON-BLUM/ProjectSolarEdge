@@ -203,6 +203,9 @@
     --mud-zindex-popover: 1200;
     --mud-zindex-snackbar: 1500;
     --mud-zindex-tooltip: 1600;
+    --solarEdge-light: #D8DDE1;
+    --solarEdge-Verylight: #F2F5F7;
+    --solarEdge-lightest: #FAFAFA;
 }
 
 
