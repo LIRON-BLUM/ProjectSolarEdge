@@ -3,6 +3,7 @@ using MudBlazor;
 using ProjectSolarEdge.Client.Services.Users;
 using ProjectSolarEdge.Client.Shared;
 using ProjectSolarEdge.Shared.Entities;
+using Blazored.LocalStorage;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -11,6 +12,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
 
         public string EditorID { get; set; }
 
@@ -37,22 +39,31 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public IUsersDataService UserDataService { get; set; }
 
+        [Inject]
+        public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
 
         }
-            protected async Task EnterEditor()
+        protected async Task EnterEditor()
         {
 
             IdFromUserName = await UserDataService.GetUserIdByUserName(UserEmail);
-            IdFromPassword =  await UserDataService.GetUserIdByUserPassword(UserPassword);
+            IdFromPassword = await UserDataService.GetUserIdByUserPassword(UserPassword);
 
             if (IdFromUserName.ID == IdFromPassword.ID)
             {
-                if (IdFromUserName.UserType != UserType.Learner )
+                if (IdFromUserName.UserType != UserType.Learner)
                 {
-                EditorID = (IdFromUserName.ID).ToString();
-                NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
+                    EditorID = (IdFromUserName.ID).ToString();
+                    
+
+                    LocalService.SetItem("EditorID", EditorID);
+
+                    string EditorIDNew = LocalService.GetItem<string>("EditorID");
+
+                    NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
                 }
 
             }
@@ -69,7 +80,7 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-      
+
 
     }
 }

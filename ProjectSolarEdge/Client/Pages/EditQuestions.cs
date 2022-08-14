@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using ProjectSolarEdge.Client.Services.Users;
 using ProjectSolarEdge.Client.Shared;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -21,6 +22,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public UsersTable EditorData { get; set; }
 
+        private readonly IHostingEnvironment env;
         public int CheckedAnswerID { get; set; }
 
         public int _selectedDifficulty = 1;
@@ -287,6 +289,17 @@ namespace ProjectSolarEdge.Client.Pages
 
             //get the file
             var file = inputFileChangeEvent.File;
+
+
+            Stream stream = file.OpenReadStream();
+
+            string folderPath = Path.Combine(env.WebRootPath, "QuestionsImages");
+            string FilePath = String.Format("{0}{1}",folderPath,file.Name);
+            FileStream fs = File.Create(FilePath);
+            await stream.CopyToAsync(fs);
+            stream.Close();
+            fs.Close();
+
 
             var fileInArray = new byte[file.Size];
 

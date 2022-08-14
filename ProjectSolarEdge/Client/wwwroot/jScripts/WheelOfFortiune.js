@@ -21,7 +21,6 @@ const rad = dia / 2;
 const PI = Math.PI;
 const TAU = 2 * PI;
 const arc = TAU / sectors.length;
-let score = +localStorage.getItem("mostRecentScore");
 
 const Continue = document.getElementById("Continue");
 const spinBTN = document.getElementById("spinBTN");
@@ -49,6 +48,7 @@ function drawSector(sector, i) {
     wheel.textAlign = "right";
     wheel.fillStyle = "#001546";
     wheel.font = "bold 30px sans-serif";
+    wheel.border = "solid 1px #001546"
     wheel.fillText(sector.label, rad - 10, 10);
     wheel.restore();
 };
