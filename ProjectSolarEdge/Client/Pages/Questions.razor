@@ -30,31 +30,31 @@
         <MudPopover Open="@_isOpen" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
             <div class="d-flex gap-8 pa-10">
               
-                <div class="d-flex flex-column justify-center align-center">
-                    <a href="/EditQuestion/{@EditorID}">                    
+                <div class="d-flex flex-column justify-center align-center  mx-4">
+                    <MudButton  class="d-flex flex-column justify-center align-center"  Variant="Variant.Text" Color="Color.Primary" OnClick="@NavMultipleQuestion">
                         <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
                             <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" />
-                        </MudAvatar>
+                        </MudAvatar><br />
                         <MudText>Multiple</MudText>
-                    </a>
+                    </MudButton>
                 </div>
 
-                <div class="d-flex flex-column justify-center align-center">
-                    <a href="/EditQuestion/{@EditorID}">
+                <div class="d-flex flex-column justify-center align-center mx-4">
+                    <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavYesNoQuestion">
                         <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
                             <MudIcon Icon="@Icons.Material.Filled.Rule" />
-                        </MudAvatar>
+                        </MudAvatar><br />
                         <MudText>Yes/No</MudText>
-                    </a>
-                </div>
+                    </MudButton>
+                    </div>
 
-                <div class="d-flex flex-column justify-center align-center">
-                    <a href="/OrderQuestionEdit/{@EditorID}">
+                <div class="d-flex flex-column justify-center align-center mx-4">
+                    <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavOrderQuestion">
                         <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
                             <MudIcon Icon="@Icons.Material.Filled.FormatListNumbered" />
-                        </MudAvatar>
-                        <MudText>Order</MudText>
-                    </a>
+                        </MudAvatar><br />
+                        <MudText Class="mt-1"  Style="@($"display:block;")" >Order</MudText>
+                    </MudButton>
                 </div>
 
             </div>

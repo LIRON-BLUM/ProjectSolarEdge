@@ -19,6 +19,8 @@ namespace ProjectSolarEdge.Client.Pages
         [Parameter]
         public string EditorID { get; set; }
 
+        public int Eid { get; set; }
+
         public Question AllQuestions { get; set; } = new Question();
 
         public Question QuestionsToDelete { get; set; } = new Question();
@@ -54,15 +56,27 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
-        protected async Task NewQuestion()
-        {
-           
-            NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
 
+        
+
+    protected async Task NavMultipleQuestion()
+        {
+            NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
+        }
+
+    protected async Task NavYesNoQuestion()
+        {
+            NavigationManager.NavigateTo($"/Questions/{EditorID}");
+        }
+
+    protected async Task NavOrderQuestion()
+        {
+            NavigationManager.NavigateTo($"/OrderQuestionEdit/{EditorID}");
         }
 
         protected async Task NavigateToEdit(int qid)
         {
+            Eid = int.Parse(EditorID);
 
             QuestionsToEdit = await QuestionDataService.GetQuestionByIdAsync(qid);
 
@@ -80,6 +94,11 @@ namespace ProjectSolarEdge.Client.Pages
             }
         }
 
+
+        protected async Task NavNewQuestion()
+        {
+            NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
+        }
 
 
         bool fixed_header = true;

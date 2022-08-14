@@ -1,7 +1,8 @@
-﻿@page "/EditorOpening/{EditorID}"
+﻿@layout ThirdLayout
+
+@page "/EditorOpening/{EditorID}"
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
-@inherits LayoutComponentBase
 
 @*<link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />*@
 <link href="/css/styles/EditorOpening.css" rel="stylesheet" />
@@ -37,12 +38,12 @@
                     </MudList>
                 </MudCardContent>
                 <MudCardActions Class="d-flex justify-center">
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary"  @onclick="NavQuestion" Size="Size.Large" Style="width:50%;">Start Now</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NavQuestion" Size="Size.Large" Style="width:50%;">Start Now</MudButton>
                 </MudCardActions>
             </MudCard>
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
+            <MudCard Elevation="25"  Outlined="true" Class="border-solid border-1 mud-border-primary rounded-lg pb-4">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h5" Align="Align.Center">Manage Games</MudText>
@@ -70,7 +71,7 @@
             </MudCard>
         </MudItem>
         <MudItem xs="12" sm="12" md="4">
-            <MudCard Elevation="25" Class="rounded-lg pb-4">
+            <MudCard Elevation="25"  Outlined="true" Class="border-solid border-1 mud-border-primary rounded-lg pb-4">
                 <MudCardHeader>
                     <CardHeaderContent>
                         <MudText Typo="Typo.h5" Align="Align.Center">Manage Users</MudText>
