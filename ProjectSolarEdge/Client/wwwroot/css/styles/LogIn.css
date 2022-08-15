@@ -12,11 +12,11 @@ input {
     border-radius: 10px;
     background-color: #edf8fe;
     height: 40px;
-    padding: 10px;
+    padding: 15px;
 }
 
     input::placeholder {
         color: #aaa;
         font-size: 1.8rem;
-        padding:10px;
+        padding:15px;
     }

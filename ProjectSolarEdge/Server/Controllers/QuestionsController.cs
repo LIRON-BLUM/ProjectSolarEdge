@@ -14,12 +14,21 @@ namespace ProjectSolarEdge.Server.Controllers
         private IQuestionRepository _questionRepository;
 
 
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
 
         public QuestionsController(IQuestionRepository _repo)
         {
             _questionRepository = _repo;
+<<<<<<< HEAD
           
+=======
+        
+
+>>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
         }
 
 
@@ -30,6 +39,17 @@ namespace ProjectSolarEdge.Server.Controllers
         public IActionResult GetQuestions()
         {
             IEnumerable<Question> questions = _questionRepository.getQuestions();
+
+            return Ok(questions);
+        }
+
+       
+
+        [HttpGet]
+        [Route("GetQuestionsThatNotInGameID/{GameID}")]
+        public IActionResult GetQuestionsThatNotInGameID(int GameID)
+        {
+            IEnumerable<Question> questions = _questionRepository.GetQuestionsThatNotInGameID(GameID);
 
             return Ok(questions);
         }
@@ -306,6 +326,8 @@ namespace ProjectSolarEdge.Server.Controllers
 
             return Ok(_QuesConnection);//success
         }
+
+
 
 
     }

@@ -286,15 +286,7 @@ namespace ProjectSolarEdge.Client.Pages
         public int MaxAlloedFiles = int.MaxValue;
         public long maxFileSize = long.MaxValue;
         public List<string> fileNames = new();
-    
-
-        string myFileImage;
-        //long maxFileSize = 4194304;
-        string msg;
-        List<string> DeletedImages = new List<string>();
-
-     
-
+   
         private async Task UploadQuestionFile(InputFileChangeEventArgs e)
         {
             var imageFiles = e.GetMultipleFiles();
