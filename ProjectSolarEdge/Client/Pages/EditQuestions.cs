@@ -7,9 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using ProjectSolarEdge.Client.Services.Users;
 using ProjectSolarEdge.Client.Shared;
-using System.IO;
-
-using System.Net.Http.Json;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -24,6 +22,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public UsersTable EditorData { get; set; }
 
+        private readonly IHostingEnvironment env;
         public int CheckedAnswerID { get; set; }
 
         public int _selectedDifficulty = 1;
@@ -283,82 +282,56 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-        //public int MaxAlloedFiles = int.MaxValue;
-        //public long maxFileSize = long.MaxValue;
-        //public List<string> fileNames = new();
-        //public List<UploadResult> uploadResults = new();
+      
 
-        //private async Task OnInputFileChanged(InputFileChangeEventArgs e)
-        //{
+        private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
+        {
 
-        //    using var content = new MultipartFormDataContent();
-
-        //    foreach (var file in e.GetMultipleFiles(MaxAlloedFiles))
-        //    {
-        //        var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
-        //        fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-        //        fileNames.Add(file.Name);
-
-        //        content.Add(
-        //          content: fileContent,
-        //          name:"\"files\"",
-        //          fileName:file.Name);
-        //    }
-
-        //    var response = await Http.PatchAsync("/api/file", content);
-        //    var newUploadResults = await response.Content.ReadFromJsonAsync<List<UploadResult>>();
-
-        //    if (newUploadResults is not null)
-        //    {
-        //        uploadResults = uploadResults.Concat(newUploadResults).ToList();
-        //    }
-
-        //    ////get the file
-        //    var showfile = e.File;
-
-        //    //// Open Directory
+            //get the file
+            var file = inputFileChangeEvent.File;
 
 
-        //    var fileInArray = new byte[showfile.Size];
+            Stream stream = file.OpenReadStream();
 
-        //   await showfile.OpenReadStream(1512000).ReadAsync(fileInArray);
-
-        //   filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
-
-
-
-
-        //}
-
-        //private string? GetStoredFileName(string fileName)
-        //{
-        //    var uploadResult = uploadResults.SingleOrDefault(f => f.FileName == fileName);
-        //    if (uploadResult is not null)
-        //        return uploadResult.StoredFileName;
-
-        //    return "File not found";
-        //}
+            string folderPath = Path.Combine(env.WebRootPath, "QuestionsImages");
+            string FilePath = String.Format("{0}{1}",folderPath,file.Name);
+            FileStream fs = File.Create(FilePath);
+            await stream.CopyToAsync(fs);
+            stream.Close();
+            fs.Close();
 
 
-        //IList<IBrowserFile> files = new List<IBrowserFile>();
-        //private async Task UploadFiles(InputFileChangeEventArgs e)
-        //{
-        //    foreach (var file in e.GetMultipleFiles())
-        //    {
-        //        //var file = inputFileChangeEvent.File;
+            var fileInArray = new byte[file.Size];
+
+            await file.OpenReadStream(1512000).ReadAsync(fileInArray);
+
+            filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
 
 
-        //        files.Add(file);
-        //        var fileInArray = new byte[file.Size];
-        //        await file.OpenReadStream(1512000).ReadAsync(fileInArray);
+            
 
-        //        filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
-        //        //TimeSpan.TicksPerMillisecond
+        }
 
 
-        //    }
+        IList<IBrowserFile> files = new List<IBrowserFile>();
+        private async Task UploadFiles(InputFileChangeEventArgs e)
+        {
+            foreach (var file in e.GetMultipleFiles())
+            {
+                //var file = inputFileChangeEvent.File;
 
-        //}
+
+                files.Add(file);
+                var fileInArray = new byte[file.Size];
+                await file.OpenReadStream(1512000).ReadAsync(fileInArray);
+
+                filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
+                //TimeSpan.TicksPerMillisecond
+
+
+            }
+
+        }
 
         protected async Task DeleteQuestion()
         {
