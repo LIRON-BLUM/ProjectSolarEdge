@@ -15,7 +15,11 @@ namespace ProjectSolarEdge.Server.Controllers
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
 =======
 
 >>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
@@ -24,7 +28,12 @@ namespace ProjectSolarEdge.Server.Controllers
         {
             _questionRepository = _repo;
 <<<<<<< HEAD
+<<<<<<< HEAD
           
+=======
+        
+
+>>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
 =======
         
 
