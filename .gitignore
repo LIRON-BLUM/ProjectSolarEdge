@@ -369,3 +369,4 @@ ProjectSolarEdge/Client/Pages/EditQuestions.razor
 *.cs
 ProjectSolarEdge/Client/Pages/GamePages/OrderQuestion.razor
 ProjectSolarEdge/Client/wwwroot/css/styles/OrderQuestion.css
+ProjectSolarEdge/Server/Controllers/QuestionsController.cs
