@@ -13,9 +13,14 @@ namespace ProjectSolarEdge.Server.Controllers
         //properties
         private IQuestionRepository _questionRepository;
 
+
+
+
         public QuestionsController(IQuestionRepository _repo)
         {
             _questionRepository = _repo;
+        
+
         }
 
 
