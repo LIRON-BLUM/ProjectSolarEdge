@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectSolarEdge.Server.Configuration;
+
 using ProjectSolarEdge.Shared.Entities;
 using ProjectSolarEdge.Shared.Services.Questions;
 
@@ -12,9 +13,14 @@ namespace ProjectSolarEdge.Server.Controllers
         //properties
         private IQuestionRepository _questionRepository;
 
+
+
+
         public QuestionsController(IQuestionRepository _repo)
         {
             _questionRepository = _repo;
+        
+
         }
 
         [HttpGet]
@@ -22,6 +28,17 @@ namespace ProjectSolarEdge.Server.Controllers
         public IActionResult GetQuestions()
         {
             IEnumerable<Question> questions = _questionRepository.getQuestions();
+
+            return Ok(questions);
+        }
+
+       
+
+        [HttpGet]
+        [Route("GetQuestionsThatNotInGameID/{GameID}")]
+        public IActionResult GetQuestionsThatNotInGameID(int GameID)
+        {
+            IEnumerable<Question> questions = _questionRepository.GetQuestionsThatNotInGameID(GameID);
 
             return Ok(questions);
         }
@@ -298,6 +315,8 @@ namespace ProjectSolarEdge.Server.Controllers
 
             return Ok(_QuesConnection);//success
         }
+
+
 
 
     }

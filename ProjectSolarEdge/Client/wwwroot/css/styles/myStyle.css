@@ -1,9 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
-
-body {
-    font-family: 'Ubuntu', sans-serif !important;
-}
-:root{
+﻿:root{
     background-color:whitesmoke;
     font-size:62.5%;
 }
@@ -21,9 +16,11 @@ body {
     height: 100vh;
 }
 
-h1{
+/*h1{
     font-size:5.4rem;
-}
+    color:royalblue;
+    margin-bottom:5rem;
+}*/
 
 .title {
     background-color: #001546;
@@ -40,6 +37,35 @@ h2 {
     font-weight: 700;
     align-items: center;
 }
+
+/*.container {
+    width: 100vh;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 80rem;
+    margin: auto;
+}
+
+#container > * {
+    width:100%;
+    padding:2rem;
+}
+
+.flex-column{
+    display:flex;
+    flex-direction:column;
+}*/
+
+/*.flex-center{
+    justify-content:center;
+    align-items:center;
+}
+
+.justify-center{
+    justify-content:center;
+}*/
 
 .text-center{
     text-align:center;
@@ -62,8 +88,7 @@ p {
     background-color: #001546;
     color: white;
     text-decoration: none;
-    border-radius: 8px;
-    height: 50px;
+    border-radius: 12px;
 }
 
     .btnBlue:hover {
@@ -86,8 +111,7 @@ p {
     background-color: #4aec96;
     color: #001546;
     text-decoration: none;
-    border-radius: 8px;
-    height: 50px;
+    border-radius: 12px;
 }
 
     .btnGreen:hover {
@@ -100,6 +124,13 @@ p {
 #SkipAnswer {
     font-size: 1.8rem;
     font-weight: 900;
+}
+/* form */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .score {
