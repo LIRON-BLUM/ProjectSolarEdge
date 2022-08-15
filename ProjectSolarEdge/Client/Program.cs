@@ -22,5 +22,6 @@ builder.Services.AddHttpClient<IUsersDataService, UserDataService>(client => cli
 builder.Services.AddBlazoredLocalStorage();
 
 
+
 builder.Services.AddMudServices();
 await builder.Build().RunAsync();

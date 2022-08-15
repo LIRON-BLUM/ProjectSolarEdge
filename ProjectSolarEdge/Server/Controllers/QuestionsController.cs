@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectSolarEdge.Server.Configuration;
+
 using ProjectSolarEdge.Shared.Entities;
 using ProjectSolarEdge.Shared.Services.Questions;
 
@@ -12,10 +13,17 @@ namespace ProjectSolarEdge.Server.Controllers
         //properties
         private IQuestionRepository _questionRepository;
 
+
+ 
+
         public QuestionsController(IQuestionRepository _repo)
         {
             _questionRepository = _repo;
+          
         }
+
+
+
 
         [HttpGet]
         [Route("GetQuestions")]

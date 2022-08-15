@@ -79,7 +79,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            filePicDataUrl = "/Files/QuestionDefaltImage.png";
+            QuestionImage = "/Files/QuestionDefaltImage.png";
 
             int.TryParse(EditorID, out var EId);
 
@@ -283,52 +283,39 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-        //public int MaxAlloedFiles = int.MaxValue;
-        //public long maxFileSize = long.MaxValue;
-        //public List<string> fileNames = new();
-        //public List<UploadResult> uploadResults = new();
+        public int MaxAlloedFiles = int.MaxValue;
+        public long maxFileSize = long.MaxValue;
+        public List<string> fileNames = new();
+    
 
-        //private async Task OnInputFileChanged(InputFileChangeEventArgs e)
-        //{
+        string myFileImage;
+        //long maxFileSize = 4194304;
+        string msg;
+        List<string> DeletedImages = new List<string>();
 
-        //    using var content = new MultipartFormDataContent();
+     
 
-        //    foreach (var file in e.GetMultipleFiles(MaxAlloedFiles))
-        //    {
-        //        var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
-        //        fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-        //        fileNames.Add(file.Name);
+        private async Task UploadQuestionFile(InputFileChangeEventArgs e)
+        {
+            var imageFiles = e.GetMultipleFiles();
+            foreach (var file in imageFiles)
+            {
+                if (file.Size <= maxFileSize)
+                {
+                    var buffer = new byte[file.Size];
+                    await file.OpenReadStream(maxFileSize).ReadAsync(buffer);
+                    var imageBase64 = Convert.ToBase64String(buffer);
 
-        //        content.Add(
-        //          content: fileContent,
-        //          name:"\"files\"",
-        //          fileName:file.Name);
-        //    }
+                    QuestionsCRUD.QuestionImagePath = imageBase64;
 
-        //    var response = await Http.PatchAsync("/api/file", content);
-        //    var newUploadResults = await response.Content.ReadFromJsonAsync<List<UploadResult>>();
+                    var showfile = imageBase64;
+                    filePicDataUrl = $"data:image/png;base64,{showfile}";
 
-        //    if (newUploadResults is not null)
-        //    {
-        //        uploadResults = uploadResults.Concat(newUploadResults).ToList();
-        //    }
+                    QuestionImage = filePicDataUrl;
 
-        //    ////get the file
-        //    var showfile = e.File;
-
-        //    //// Open Directory
-
-
-        //    var fileInArray = new byte[showfile.Size];
-
-        //   await showfile.OpenReadStream(1512000).ReadAsync(fileInArray);
-
-        //   filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
-
-
-
-
-        //}
+                }
+            }
+        }
 
         //private string? GetStoredFileName(string fileName)
         //{

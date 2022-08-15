@@ -1,0 +1,62 @@
+﻿@page "/ImageUpload"
+@inject HttpClient Http
+
+@using ProjectSolarEdge.Client.Services.Questions
+
+<MudButton Class="ma-2" Variant="Variant.Filled" EndIcon="@Icons.Material.Outlined.Image" Color="Color.Primary" for="FileInputID" HtmlTag="label">Upload</MudButton>
+
+<InputFile id="FileInputID" OnChange="UploadFile" hidden />
+
+<img src="@filePicDataUrl" width="150px" height="150px" />
+
+
+
+<MudButton Class="ma-2" Variant="Variant.Filled" EndIcon="@Icons.Material.Outlined.Delete" Color="Color.Primary" @onclick="DeleteImage" HtmlTag="label">Delete</MudButton>
+
+<p>@msg</p>
+
+
+@code {
+    string myFileImage;
+    long maxFileSize = 4194304;
+    string msg;
+    List<string> DeletedImages = new List<string>();
+
+    public string filePicDataUrl { get; set; }
+
+    [Inject]
+    public IQuestionsDataService QuestionDataService { get; set; }
+
+    private async Task UploadFile(InputFileChangeEventArgs e)
+    {
+        var imageFiles = e.GetMultipleFiles();
+        foreach (var file in imageFiles)
+        {
+            if (file.Size <= maxFileSize)
+            {
+                var buffer = new byte[file.Size];
+                await file.OpenReadStream(maxFileSize).ReadAsync(buffer);
+                var imageBase64 = Convert.ToBase64String(buffer);
+
+                var showfile = imageBase64;
+
+
+                filePicDataUrl = $"data:image/png;base64,{showfile}";
+
+            }
+        }
+    }
+
+
+    private async Task DeleteImage()
+    {
+        DeletedImages.Add(myFileImage);
+        var saveResponse = await Http.PostAsJsonAsync("api/Questions/deleteImages", DeletedImages);
+
+        if (saveResponse.IsSuccessStatusCode == true)
+        {
+            msg = "התמונה נמחקה בהצלחה";
+            myFileImage = "";
+        }
+    }
+}

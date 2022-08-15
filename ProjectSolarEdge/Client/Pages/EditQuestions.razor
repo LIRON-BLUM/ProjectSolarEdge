@@ -4,7 +4,7 @@
 @using ProjectSolarEdge.Shared.Entities
 @using System.Net.Http.Json
 @using System.Net.Http.Headers
-@inject HttpClient Http
+@inject HttpClient httpClient
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 
 
@@ -29,24 +29,9 @@
             </MudItem>
             <MudItem xs="2" id="IMG" Width="100%" Height="auto">
                 @*<MudPaper Class="mud-theme-secondary ma-2" Width="100px" Height="100px" Elevation="0" />*@
-                <InputFile OnChange="@OnInputFileChanged"></InputFile>
-                @*<img src="@QuestionImage" style="width:200px; height:auto;" />*@
-              @if (fileNames.Count > 0)
-                            {
-                                <ul>
-                                    @foreach (var fileName in fileNames)
-                                {
+                <InputFile OnChange="@UploadQuestionFile"></InputFile>
+                <img src="@QuestionImage" style="width:200px; height:auto;" />
 
-                               
-                                    <li>
-                                        File: @fileName
-                                        <br/>
-                                        <span> Stored File Name: @GetStoredFileName(fileName)</span>
-                                    </li>
-
-                                    }
-                                </ul>
-              }
 
             </MudItem>
         </MudItem>
@@ -57,13 +42,13 @@
 
 
                 @*<MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
-                    @foreach (var myanswer in QuestionsCRUD.Answers)
-                    {
-                        <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
-                        <br />
-                        <br />
-                    }
-                </MudRadioGroup>*@
+                        @foreach (var myanswer in QuestionsCRUD.Answers)
+                        {
+                            <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true"> <InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText></MudRadio>
+                            <br />
+                            <br />
+                        }
+                    </MudRadioGroup>*@
 
 
                 <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
@@ -72,7 +57,7 @@
                         <MudItem xs="12" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
                             <MudItem xs="10" id="AnswersRadio" class="d-inline-flex" Height="auto">
                                 <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true">
-                                    <MudTextField  T="string"  @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" />
+                                    <MudTextField T="string" @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" />
                                     @*<InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>*@
                                 </MudRadio>
                             </MudItem>
@@ -94,7 +79,7 @@
                     <MudText>Difficulty</MudText>
                 </MudItem>
 
-         
+
 
                 <MudPagination Color="Color.Primary" Count="3" T="QuestionDifficulty" SelectedChanged="DifficultyChanged" />
 
@@ -169,12 +154,12 @@
             <MudPaper Class="mud-theme-secondary" Width="100%" Height="64px" Elevation="0" />*@
 
         <MudItem>
-            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
+            <MudTextField T="string" ValueChanged="@(s => OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
                           AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
         </MudItem>
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
 
-            <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
+            <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ? "400px" : "")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
                 <HeaderContent>
                     <MudTh>Type</MudTh>
                     <MudTh>Question</MudTh>
@@ -187,7 +172,7 @@
                     <MudTd DataLabel="Delete">
 
                         <MudTooltip Text="Delete Question">
-                            <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() => QuestionsToDeleteID(context.ID))" Color="Color.Primary" />
                         </MudTooltip>
                     </MudTd>
 
@@ -236,115 +221,43 @@
 @code {
 
 
-    private int MaxAlloedFiles = int.MaxValue;
-    private long maxFileSize = long.MaxValue;
-    private List<string> fileNames = new();
-    private List<UploadResult> uploadResults = new();
 
-    private async Task OnInputFileChanged(InputFileChangeEventArgs e)
-    {
 
-        using var content = new MultipartFormDataContent();
+        private bool visible;
+        private int rating;
+        private void OpenDialog() => visible = true;
+        void Submit() => visible = false;
 
-        foreach (var file in e.GetMultipleFiles(MaxAlloedFiles))
+        private DialogOptions dialogOptions = new() { FullWidth = true };
+
+
+        public bool _isOpen;
+
+        public void ToggleOpen()
         {
-            var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
-            fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
-            fileNames.Add(file.Name);
-
-            content.Add(
-              content: fileContent,
-              name: "\"files\"",
-              fileName: file.Name);
+            if (_isOpen)
+                _isOpen = false;
+            else
+                _isOpen = true;
         }
 
-        var response = await Http.PostAsync("/api/File", content);
-        var newUploadResults = await response.Content.ReadFromJsonAsync<List<UploadResult>>();
+        public string ReadOnly { get; set; } = "Can't change me";
+        string sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
-        if (newUploadResults is not null)
+        string mAnswer = "Answer";
+        public int IntValue { get; set; }
+
+        public int ScoreEasy { get; set; }
+
+        public bool Dense_Radio { get; set; } = true;
+
+        private IEnumerable<string> MaxCharacters(string ch)
         {
-            uploadResults = uploadResults.Concat(newUploadResults).ToList();
+            if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
+                yield return "Max 25 characters";
         }
 
-        //////get the file
-        //var showfile = e.File;
-
-        ////// Open Directory
-
-
-        //var fileInArray = new byte[showfile.Size];
-
-        //await showfile.OpenReadStream(1512000).ReadAsync(fileInArray);
-
-        //filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
-
-
-
-
-    }
-
-    private string? GetStoredFileName(string fileName)
-    {
-        var uploadResult = uploadResults.SingleOrDefault(f => f.FileName == fileName);
-        if (uploadResult is not null)
-            return uploadResult.StoredFileName;
-
-        return "File not found";
-    }
-
-
-
-    private bool visible;
-    private int rating;
-    private void OpenDialog() => visible = true;
-    void Submit() => visible = false;
-
-    private DialogOptions dialogOptions = new() { FullWidth = true };
-
-
-    public bool _isOpen;
-
-    public void ToggleOpen()
-    {
-        if (_isOpen)
-            _isOpen = false;
-        else
-            _isOpen = true;
-    }
-
-    public string ReadOnly { get; set; } = "Can't change me";
-    string sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-
-    string mAnswer = "Answer";
-    public int IntValue { get; set; }
-
-    public int ScoreEasy { get; set; }
-
-    public bool Dense_Radio { get; set; } = true;
-
-    private IEnumerable<string> MaxCharacters(string ch)
-    {
-        if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
-            yield return "Max 25 characters";
-    }
-
-    //IList<IBrowserFile> files = new List<IBrowserFile>();
-    //private void UploadFiles(InputFileChangeEventArgs e)
-    //{
-    //    foreach (var file in e.GetMultipleFiles())
-    //    {
-    //        //var file = inputFileChangeEvent.File;
-
-
-    //        files.Add(file);
-    //        var fileInArray = new byte[file.Size];
-    //        await file.OpenReadStream(1512000).ReadAsync(fileInArray);
-
-    //        filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
-
-
-    //    }
-    //TODO upload the files to the server
+      
 
 
 

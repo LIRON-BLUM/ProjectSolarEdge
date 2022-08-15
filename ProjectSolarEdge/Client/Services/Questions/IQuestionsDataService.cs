@@ -6,6 +6,9 @@ namespace ProjectSolarEdge.Client.Services.Questions
 {
     public interface IQuestionsDataService
     {
+
+  
+
         Task<IEnumerable<Question>> GetQuestionsAsync();
 
         Task<IEnumerable<Question>> GetQuestionsThatNotInGameID(int GameID);

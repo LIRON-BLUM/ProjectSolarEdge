@@ -13,7 +13,6 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-
         public string EditorID { get; set; }
 
         public UsersTable UserData { get; set; }
@@ -42,28 +41,27 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
 
+
         protected override async Task OnInitializedAsync()
         {
 
         }
-        protected async Task EnterEditor()
+            protected async Task EnterEditor()
         {
 
             IdFromUserName = await UserDataService.GetUserIdByUserName(UserEmail);
-            IdFromPassword = await UserDataService.GetUserIdByUserPassword(UserPassword);
+            IdFromPassword =  await UserDataService.GetUserIdByUserPassword(UserPassword);
 
             if (IdFromUserName.ID == IdFromPassword.ID)
             {
-                if (IdFromUserName.UserType != UserType.Learner)
+                if (IdFromUserName.UserType != UserType.Learner )
                 {
-                    EditorID = (IdFromUserName.ID).ToString();
-                    
+                EditorID = (IdFromUserName.ID).ToString();
+                
+                string EditorIDNew = LocalService.GetItem<string>("EditorID");
 
-                    LocalService.SetItem("EditorID", EditorID);
-
-                    string EditorIDNew = LocalService.GetItem<string>("EditorID");
-
-                    NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
+                
+                    NavigationManager.NavigateTo($"/EditorOpening/{EditorIDNew}");
                 }
 
             }
@@ -80,7 +78,7 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-
+      
 
     }
 }

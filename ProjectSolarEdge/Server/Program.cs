@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
 string connectionString = builder.Configuration.GetConnectionString("SolarEdgeDB");
 builder.Services.AddSingleton<IQuestionRepository>(new QuestionRepository(connectionString));
 builder.Services.AddSingleton<IGameRepository>(new GameRepository(connectionString));
@@ -42,3 +44,5 @@ app.MapControllers();
 app.UseWebAssemblyDebugging();
 
 app.Run();
+
+

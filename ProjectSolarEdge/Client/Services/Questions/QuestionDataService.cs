@@ -27,6 +27,9 @@ namespace ProjectSolarEdge.Client.Services.Questions
         }
 
 
+    
+
+
         public async Task<IEnumerable<Question>> GetQuestionsAsync()
         {
             Stream stream = await _httpClient.GetStreamAsync($"api/Questions/GetQuestions");
