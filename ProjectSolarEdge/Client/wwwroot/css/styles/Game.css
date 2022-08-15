@@ -107,3 +107,9 @@
 .SkipAnswer:hover {
     color: #4aec96;
 }
+
+.QuestionDescription {
+    background-color: #edf8fe;
+    height: 2.5rem;
+    font-size:1.5rem;
+}
