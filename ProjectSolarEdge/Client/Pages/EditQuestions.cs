@@ -79,7 +79,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            QuestionImage = "/Files/QuestionDefaltImage.png";
+            
 
             int.TryParse(EditorID, out var EId);
 
@@ -97,7 +97,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
                 QuestionsCRUD.Subjects = new List<Subject>();
 
-
+                QuestionImage = "/Files/QuestionDefaltImage.png";
 
                 //ADD ANSWERS
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
@@ -245,6 +245,7 @@ namespace ProjectSolarEdge.Client.Pages
                     await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
                 }
                 QuestionsCRUD.Subjects = selectedSubjectToUpdate;
+                QuestionsCRUD.QuestionImagePath = QuestionImage;
 
                 //4) If all successful then navigate the user to edit question or list of questions.
                 NavigationManager.NavigateTo($"/Questions/{EditorID}");
@@ -280,13 +281,10 @@ namespace ProjectSolarEdge.Client.Pages
         }
 
 
-
-
-
         public int MaxAlloedFiles = int.MaxValue;
         public long maxFileSize = long.MaxValue;
         public List<string> fileNames = new();
-   
+
         private async Task UploadQuestionFile(InputFileChangeEventArgs e)
         {
             var imageFiles = e.GetMultipleFiles();
@@ -308,6 +306,34 @@ namespace ProjectSolarEdge.Client.Pages
                 }
             }
         }
+
+
+
+        //public int MaxAlloedFiles = int.MaxValue;
+        //public long maxFileSize = long.MaxValue;
+        //public List<string> fileNames = new();
+
+        //private async Task UploadQuestionFile(InputFileChangeEventArgs e)
+        //{
+        //    var imageFiles = e.GetMultipleFiles();
+        //    foreach (var file in imageFiles)
+        //    {
+        //        if (file.Size <= maxFileSize)
+        //        {
+        //            var buffer = new byte[file.Size];
+        //            await file.OpenReadStream(maxFileSize).ReadAsync(buffer);
+        //            var imageBase64 = Convert.ToBase64String(buffer);
+
+        //            QuestionsCRUD.QuestionImagePath = imageBase64;
+
+        //            var showfile = imageBase64;
+        //            filePicDataUrl = $"data:image/png;base64,{showfile}";
+
+        //            QuestionImage = filePicDataUrl;
+
+        //        }
+        //    }
+        //}
 
         //private string? GetStoredFileName(string fileName)
         //{

@@ -38,8 +38,8 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public IUsersDataService UserDataService { get; set; }
 
-        [Inject]
-        public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
+        //[Inject]
+        //public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
 
 
         protected override async Task OnInitializedAsync()
@@ -58,10 +58,10 @@ namespace ProjectSolarEdge.Client.Pages
                 {
                 EditorID = (IdFromUserName.ID).ToString();
                 
-                string EditorIDNew = LocalService.GetItem<string>("EditorID");
+                //string EditorIDNew = LocalService.GetItem<string>("EditorID");
 
                 
-                    NavigationManager.NavigateTo($"/EditorOpening/{EditorIDNew}");
+                    NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
                 }
 
             }

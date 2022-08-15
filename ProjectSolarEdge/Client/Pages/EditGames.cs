@@ -178,7 +178,7 @@ namespace ProjectSolarEdge.Client.Pages
             }
 
          
-            NavigationManager.NavigateTo("/Games");
+            NavigationManager.NavigateTo($"/Games/{EditorID}");
         }
 
    
@@ -189,7 +189,7 @@ namespace ProjectSolarEdge.Client.Pages
         {
             if (pageNum == 1)
             {
-                NavigationManager.NavigateTo("/Games");
+                NavigationManager.NavigateTo($"/Games/{EditorID}");
             } else
             NavigationManager.NavigateTo($"/EditGame/{Id}");
         }
