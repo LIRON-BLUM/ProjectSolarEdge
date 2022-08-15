@@ -14,30 +14,11 @@ namespace ProjectSolarEdge.Server.Controllers
         private IQuestionRepository _questionRepository;
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
- 
-=======
-
->>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
-=======
-
->>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
 
         public QuestionsController(IQuestionRepository _repo)
         {
             _questionRepository = _repo;
-<<<<<<< HEAD
-<<<<<<< HEAD
-          
-=======
-        
 
->>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
-=======
-        
-
->>>>>>> parent of 473112c (Merge branch 'master' of https://github.com/LIRON-BLUM/ProjectSolarEdge)
         }
 
 
