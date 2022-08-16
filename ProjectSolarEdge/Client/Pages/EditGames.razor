@@ -27,7 +27,7 @@
             <MudItem xs="6" id="GameDateAndTime" Width="100%" Height="auto">
                 <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
                 <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="enddate" Placeholder="Select Date" />
-                <MudNumericField Class="ma-2" @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />
+                @*<MudNumericField Class="ma-2" @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />*@
             </MudItem>
         </MudItem>
 
@@ -70,7 +70,7 @@
 
                     </MudItem>
                     <MudItem xs="3" id="IterWheelNum" Width="100%" Height="auto">
-                        <MudNumericField @bind-Value="@GameCRUD.WheelIteration" Label="Hard" Variant="Variant.Text" Min="0" Max="10" />
+                        <MudNumericField @bind-Value="@GameCRUD.WheelIteration" Label="" Variant="Variant.Text" Min="0" Max="10" />
 
 
                     </MudItem>
@@ -80,7 +80,7 @@
                     </MudItem>
                 </MudItem>
 
-                <MudItem xs="12" id="GambleContainer" class="d-flex gap-4 " Width="100%" Height="auto">
+              @*  <MudItem xs="12" id="GambleContainer" class="d-flex gap-4 " Width="100%" Height="auto">
                     <MudItem xs="6" id="GambleTitle" class="d-flex gap-4 " Width="100%" Height="auto">
 
                         <MudText>Gamble points every</MudText>
@@ -94,7 +94,7 @@
 
                         <MudText>Questions</MudText>
                     </MudItem>
-                </MudItem>
+                </MudItem>*@
 
             </MudItem>
         </MudItem>

@@ -75,6 +75,7 @@ namespace ProjectSolarEdge.Client.Pages
 
             if (GId == 0)
             {
+                //get all questions in the dialog 
               GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1,GameTimeLimit=10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
               GameCRUD.Questions = new List<Question>();
             } else

@@ -138,7 +138,7 @@ namespace ProjectSolarEdge.Client.Pages
                 //Get question by ID
                 QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
 
-                QuestionImage = QuestionsCRUD.QuestionImagePath;
+                QuestionImage = "data:image/png;base64," + QuestionsCRUD.QuestionImagePath;
 
                 foreach (var myanswer in QuestionsCRUD.Answers)
                 {
