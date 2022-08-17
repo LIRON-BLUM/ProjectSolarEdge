@@ -6,21 +6,6 @@
     --text-color: #34444f;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-    margin: 0;
-    font-family: 'Lato', sans-serif;
-}
-
 .draggable-list {
     border: 1px solid var(--border-color);
     color: var(--text-color);
@@ -30,8 +15,8 @@ body {
 
     .draggable-list li {
         background-color: #fff;
-        display: flex;
-        flex: 1;
+ /*       display: flex;
+        flex: 1;*/
     }
 
         .draggable-list li:not(:last-of-type) {
@@ -40,12 +25,12 @@ body {
 
     .draggable-list .number {
         background-color: var(--background-color);
-        display: flex;
+   /*     display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: center*/;
         font-size: 28px;
-        height: 60px;
-        width: 60px;
+     /*   height: 60px;
+        width: 60px;*/
     }
 
     .draggable-list li.over .draggable {
@@ -56,24 +41,24 @@ body {
         margin: 0 20px 0 0;
     }
 
-    .draggable-list li.right .person-name {
+  /*  .draggable-list li.right .person-name {
         color: #3ae374;
     }
 
     .draggable-list li.wrong .person-name {
         color: #ff3838;
-    }
+    }*/
 
 .draggable {
-    cursor: pointer;
+/*    cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    flex: 1;
+    justify-content: space-between;*/
+    /*padding: 15px;
+    flex: 1;*/
 }
 
-.check-btn {
+./*check-btn {
     background-color: var(--background-color);
     border: none;
     color: var(--text-color);
@@ -88,4 +73,4 @@ body {
 
     .check-btn:focus {
         outline: none;
-    }
+    }*/

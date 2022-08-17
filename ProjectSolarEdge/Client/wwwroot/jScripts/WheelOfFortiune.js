@@ -69,7 +69,7 @@ function frame() {
         wheelScoreHidden.value = sector.label;
         var event = new Event('change');
         wheelScoreHidden.dispatchEvent(event);
-        score += sector.label;
+        //score += sector.label;
         Continue.disabled = false;
         spinBTN.disabled = true;
 

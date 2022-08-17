@@ -12,7 +12,7 @@
 
             <div id="leaderBoard">
                 <h2 id="allScores">Leaderboard</h2>
-                <table id="winingTable" class="container">
+                <table id="winingTable" class="container col-10">
                     <tr class="row">
                         <th class="col-4">
                             Place
@@ -54,32 +54,32 @@
            
             <div id="highScores" class="row justify-content-center">
             <p class="bestSoFare col-6">The best Players So Far</p>
-            <ul id="highScoreList" class="row justify-content-evenly" >
+             <ul id="highScoreList" class="row justify-content-evenly" >
 
                 @foreach (var user in TopPlayers)
                 {
                     <li class="high-score col-4 ">
-                        @user.UserFirstName @user.UserLastName @user.UserScore
+                        @user.UserFirstName @user.UserLastName  @user.UserScore
                     </li>
                 }
             </ul>
-            <div class="row align-items-end border-bottom justify-content-evenly">
+            <div class="row col-8 align-items-end border-bottom justify-content-evenly gx-5">
                
-                <div id="secondPlace" class="col-1">
+                <div id="secondPlace" class="col-2 rounded-bottom">
 
                 </div>
 
-                <div id="firstPlace" class="col-1">
+                <div id="firstPlace" class="col-2 rounded-bottom">
                 </div>
 
-                <div id="thirdPlace" class="col-1">
+                <div id="thirdPlace" class="col-2 rounded-bottom">
                 </div>
 
             </div> 
         </div>
 
-             <div class="row justify-content-center">
-             <button type="button" class="btnBlue col-4" @onclick="GoToFeedback">Check answers</button>
+             <div class="row justify-content-center mt-5">
+             <button type="button" class="btnBlue col-8" @onclick="GoToFeedback">Check answers</button>
 
 
           </div>

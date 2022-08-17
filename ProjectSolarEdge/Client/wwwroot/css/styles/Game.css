@@ -1,11 +1,9 @@
 ﻿.choiceContainer {
-    /*display: flex;
-    margin-bottom: 0.5rem;
-    width: 100%;*/
     font-size: 1.8rem;
     border: 0.1rem solid #001546;
     border-radius: 10px;
     background-color: #edf8fe;
+    height:100px;
 }
 
     .choiceContainer:hover {
@@ -15,9 +13,9 @@
         transition: transform 150ms;
     }
 
-.choice-text {
-    padding: 1.5rem;
-    width: 100%;
+*.choice-text {
+    /*padding: 1.5rem;*/
+    /*width: 100%;*/
 }
 
 /* feedback */
@@ -31,14 +29,13 @@
 }
 
 .chosenAnswer {
-    background-color: darkgray;
+    border: 0.5rem solid #001546;
 }
 
-/* progresbar */
-#hud {
-    display: flow;
-    /*justify-content: space-between;*/
-    /*flex-direction:row;*/
+.QuestionDescription {
+    background-color: #edf8fe;
+    height: 2.5rem;
+    font-size: 1.5rem;
 }
 
 .hud-prefix {

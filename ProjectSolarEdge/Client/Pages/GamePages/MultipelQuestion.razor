@@ -6,7 +6,7 @@
 <link href="/css/styles/Game.css" rel="stylesheet" />
 <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-<div class="container">
+<div class="container mt-4">
         <div id="game" class="justify-content-center align-items-center">
             <div id="points">
                 <span class="score"> @currentScore.UserScore  </span> <span class="score"> Points</span>
@@ -22,13 +22,25 @@
                 </div>
             </div>
 
+            <h3 class="text-center">Questions @currentQuestionNum</h3>
+
             <div id="QuestionPic"></div>
             <h2 id="question" class="text-center"> @currentQuestion.QuestionBody </h2>
-            <div id="answersContainer" class="row justify-content-evenly">
+
+            <div class="container text-center">
+
+                  <div class="row gx-5 justify-content-center">
+                  <div class="col-10">
+                  <div class="QuestionDescription mt-4">Choose The Correct Answer</div>
+                  </div>
+                  </div>
+                  </div>
+
+            <div id="answersContainer" class="row row-cols-2 justify-content-evenly align-items-center text-center">
                  @foreach (var answer in currentQuestion.Answers)
                     {
                 <div class="choiceContainer col-5 mt-8">
-                    <p class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</p>
+                    <p class="mt-8" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</p>
                 </div>
 
                
@@ -40,11 +52,11 @@
                <div class="row justify-content-center">
 
                  
-              <button type="button" id="submitAnswer" class="btnBlue col-4 mt-4" onclick="getFeedback()">submit</button>
+              <button type="button" id="submitAnswer" class="btnBlue col-6 mt-8" onclick="getFeedback()">submit</button>
 
                        <div class="w-100"></div>
 
-            <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
+            <button type="button" id="SkipAnswer" class="mt-2" @onclick="SkipAnawer">Skip</button>
         </div>
 
            
