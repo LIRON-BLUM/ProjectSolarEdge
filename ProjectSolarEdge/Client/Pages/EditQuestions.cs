@@ -77,23 +77,32 @@ namespace ProjectSolarEdge.Client.Pages
 
         public string QuestionImage { get; set; }
 
+        [Inject]
+        public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
+
+        string EditorIDSessiom = "";
+
+        string CreatorName = "";
+
         protected override async Task OnInitializedAsync()
         {
-            
+            EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
+  
 
-            int.TryParse(EditorID, out var EId);
+            int.TryParse(EditorIDSessiom, out var EId);
 
             EditorData = await UsersDataService.GetUsererByID(EId);
 
             SubjectsData = await QuestionDataService.GetSubjectsAsync();
 
+            CreatorName = (EditorData.UserFirstName + " " + EditorData.UserLastName);
 
             int.TryParse(Id, out var QId);
 
             if (QId == 0) //new Game is being created
             {
                 //add some defaults
-                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1, Feedback="" };
+                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)1, Difficulty = (QuestionDifficulty)1, Feedback="", Creator= CreatorName };
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
                 QuestionsCRUD.Subjects = new List<Subject>();
 

@@ -4,6 +4,7 @@ using MudBlazor;
 using ProjectSolarEdge.Client.Services.Users;
 using ProjectSolarEdge.Shared.Entities;
 using ProjectSolarEdge.Client.Shared;
+using Blazored.LocalStorage;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -22,6 +23,20 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+
+        [Inject]
+        public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
+
+        string EditorIDSessiom = "";
+
+        protected override async Task OnInitializedAsync()
+        {
+            EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
+            //EditorIDSessiom = LocalService.GetItem<string>("EditorID");
+
+    
+        }
+
         protected async Task NavQuestion()
         {
             NavigationManager.NavigateTo($"/Questions/{EditorID}");
@@ -29,7 +44,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task NavGames()
         {
-            NavigationManager.NavigateTo($"/Games/{EditorID}");
+            NavigationManager.NavigateTo("./Games");
         }
 
         protected async Task NavUsers()

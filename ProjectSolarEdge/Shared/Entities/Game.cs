@@ -48,6 +48,8 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public byte isDeleted { get; set; }
 
+        public string Creator { get; set; }
+
         public List<Question>? Questions { get; set; }
 
         public static implicit operator Game(Question v)

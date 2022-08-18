@@ -15,11 +15,11 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         //public static string GetAllGames => @"SELECT * FROM Games WHERE isDeleted = 0";
 
-        public static string GetAllGames => @"SELECT ID,  GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration FROM Games WHERE isDeleted = 0";
+        public static string GetAllGames => @"SELECT ID,  GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, Creator FROM Games WHERE isDeleted = 0";
 
 
-        public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted)
-                                        VALUES (@GameName,@GameDescription, @CreationDate, @UpdateDate, 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0)";
+        public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted, Creator)
+                                        VALUES (@GameName,@GameDescription, @CreationDate, @UpdateDate, 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0, @Creator)";
 
 
         //public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted)

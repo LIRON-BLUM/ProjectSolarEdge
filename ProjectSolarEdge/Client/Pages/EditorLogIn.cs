@@ -4,6 +4,9 @@ using ProjectSolarEdge.Client.Services.Users;
 using ProjectSolarEdge.Client.Shared;
 using ProjectSolarEdge.Shared.Entities;
 using Blazored.LocalStorage;
+using System.Net.NetworkInformation;
+using System;
+
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -12,6 +15,8 @@ namespace ProjectSolarEdge.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+
 
         public string EditorID { get; set; }
 
@@ -38,15 +43,17 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public IUsersDataService UserDataService { get; set; }
 
-        //[Inject]
-        //public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
+        [Inject]
+        public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
 
+        string EditorIDSessiom = "";
 
         protected override async Task OnInitializedAsync()
         {
-
+            EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
+           
         }
-            protected async Task EnterEditor()
+            private async void EnterEditor()
         {
 
             IdFromUserName = await UserDataService.GetUserIdByUserName(UserEmail);
@@ -56,12 +63,20 @@ namespace ProjectSolarEdge.Client.Pages
             {
                 if (IdFromUserName.UserType != UserType.Learner )
                 {
-                EditorID = (IdFromUserName.ID).ToString();
-                
-                //string EditorIDNew = LocalService.GetItem<string>("EditorID");
+                    EditorIDSessiom = (IdFromUserName.ID).ToString();
 
-                
-                    NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
+                    
+
+                   
+                    //EditorIDSessiom = LocalService.GetItem<string>("EditorID");
+                    //EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
+
+
+                    LocalService.SetItemAsString("SessionValue", EditorIDSessiom);
+
+                    string test = EditorIDSessiom;
+                    //NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
+                    NavigationManager.NavigateTo($"/EditorOpening");
                 }
 
             }

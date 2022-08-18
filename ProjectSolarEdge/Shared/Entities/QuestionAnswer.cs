@@ -23,7 +23,7 @@ namespace ProjectSolarEdge.Shared.Entities
         public int QuestionOrder { get; set;}
 
       
-
+        public string AnswerImagePath { get; set; }
 
 
 

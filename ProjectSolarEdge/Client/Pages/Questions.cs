@@ -46,13 +46,24 @@ namespace ProjectSolarEdge.Client.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-       
+
+
+        [Inject]
+        public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
+
+        string EditorIDSessiom = "";
+
+
         protected override async Task OnInitializedAsync()
         {
           QuestionsData = await QuestionDataService.GetQuestionsAsync();
             QuestionsDataToDisplay = QuestionsData;
             //SubjectsData = await QuestionDataService.GetSubjectsAsync();
             //  QuestionsData = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
+
+            EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
+
+            string test = EditorIDSessiom;
 
         }
 

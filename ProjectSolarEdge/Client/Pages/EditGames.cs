@@ -5,6 +5,7 @@ using ProjectSolarEdge.Shared.Entities;
 using MudBlazor;
 using ProjectSolarEdge.Client.Services.Games;
 using ProjectSolarEdge.Client.Shared;
+using ProjectSolarEdge.Client.Services.Users;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -57,7 +58,9 @@ namespace ProjectSolarEdge.Client.Pages
 
         public IEnumerable<GamesQuestions> GameQuestionData { get; set; }
 
- 
+        public UsersTable EditorData { get; set; }
+
+        public string CreatorName = " ";
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -68,15 +71,34 @@ namespace ProjectSolarEdge.Client.Pages
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
 
+        [Inject]
+        public IUsersDataService UsersDataService { get; set; }
+
+        [Inject]
+        public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
+
+        string EditorIDSessiom = "";
+
         protected override async Task OnInitializedAsync()
         {
-            QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
+
+            int.TryParse(EditorIDSessiom, out var EId);
             int.TryParse(Id, out var GId);
+            EditorData = await UsersDataService.GetUsererByID(EId);
+
+
+
+            CreatorName = (EditorData.UserFirstName + " " + EditorData.UserLastName);
+
+            QuestionsData = await QuestionDataService.GetQuestionsAsync();
+           
+           
 
             if (GId == 0)
             {
                 //get all questions in the dialog 
-              GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1,GameTimeLimit=10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
+              GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1,GameTimeLimit=10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1, Creator = CreatorName };
               GameCRUD.Questions = new List<Question>();
             } else
             {
@@ -174,12 +196,13 @@ namespace ProjectSolarEdge.Client.Pages
                 }
             else
             {
+                GameCRUD.Creator = CreatorName;
               await GameDataService.UpdateGame(GameCRUD);
              
             }
 
          
-            NavigationManager.NavigateTo($"/Games/{EditorID}");
+            NavigationManager.NavigateTo("./Games");
         }
 
    
@@ -190,9 +213,9 @@ namespace ProjectSolarEdge.Client.Pages
         {
             if (pageNum == 1)
             {
-                NavigationManager.NavigateTo($"/Games/{EditorID}");
+                NavigationManager.NavigateTo("./Games");
             } else
-            NavigationManager.NavigateTo($"/EditGame/{Id}");
+            NavigationManager.NavigateTo($"./EditGame/{Id}");
         }
 
 

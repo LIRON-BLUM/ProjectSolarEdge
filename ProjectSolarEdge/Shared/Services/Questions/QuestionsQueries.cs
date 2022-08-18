@@ -73,15 +73,16 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 													AnswerBody,
 													CreationDate,
 													UpdateDate,
-													IsRight,isDeleted)
-											  VALUES (@QuestionID, @AnswerBody, @CreationDate, @UpdateDate, @IsRight,0)";
+													IsRight,isDeleted, AnswerImagePath)
+											  VALUES (@QuestionID, @AnswerBody, @CreationDate, @UpdateDate, @IsRight,0, @AnswerImagePath)";
 
 
 		public static string UpdateAnswer => @"UPDATE QuestionAnswers 
 												   SET
 													AnswerBody = @AnswerBody,
 													UpdateDate =  @UpdateDate,
-													IsRight = @IsRight
+													IsRight = @IsRight,
+													AnswerImagePath = @AnswerImagePath
 											    	WHERE  ID = @ID";
 
 
