@@ -231,8 +231,11 @@ namespace ProjectSolarEdge.Client.Pages
 
             if (QuestionsCRUD.ID == 0) // Create new question
             {
+
+               
                 // 2) Save the question itself into the database and get the question ID back from the database
-                int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+           int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+
 
                 if (QuestionID != 0) // Question added to the DB
                 {
@@ -257,7 +260,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Subjects = selectedSubjectToUpdate;
 
                 //4) If all successful then navigate the user to edit question or list of questions.
-                NavigationManager.NavigateTo($"/Questions/{EditorID}");
+                NavigationManager.NavigateTo("./Questions");
 
 
             }
@@ -284,7 +287,7 @@ namespace ProjectSolarEdge.Client.Pages
                     await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
                 }
                 QuestionsCRUD.Subjects = selectedSubjectToUpdate;
-                NavigationManager.NavigateTo($"/Questions/{EditorID}");
+                NavigationManager.NavigateTo("./Questions");
             }
 
         }
@@ -348,7 +351,7 @@ namespace ProjectSolarEdge.Client.Pages
 
             }
 
-            NavigationManager.NavigateTo("/Questions");
+            NavigationManager.NavigateTo("./Questions");
 
 
         }

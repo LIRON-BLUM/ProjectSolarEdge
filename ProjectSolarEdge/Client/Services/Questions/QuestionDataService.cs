@@ -59,6 +59,22 @@ namespace ProjectSolarEdge.Client.Services.Questions
         }
 
 
+        //public async Task<bool> AddQuestionToDB(Question newQuestion)
+        //{
+        //    var QuestionJson =
+        //        new StringContent(JsonSerializer.Serialize(newQuestion), Encoding.UTF8, "application/json");
+
+        //    var response = await _httpClient.PostAsync($"api/Questions/Insert", QuestionJson);
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+        //    }
+
+        //    return false;
+        //}
+
+
 
         public async Task<bool> UpdateQuestion(Question question)
         {

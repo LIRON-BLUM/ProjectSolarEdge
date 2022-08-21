@@ -79,6 +79,9 @@ namespace ProjectSolarEdge.Client.Pages
 
         string EditorIDSessiom = "";
 
+        public List<Question> selectedQuestionToUpdate = new List<Question>();
+
+
         protected override async Task OnInitializedAsync()
         {
             EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
@@ -106,7 +109,7 @@ namespace ProjectSolarEdge.Client.Pages
 
                 selectedQuestions = GameCRUD.Questions.ToHashSet();
 
-
+               // GameCRUD.Questions = selectedQuestionToUpdate;
             }
 
           
@@ -142,9 +145,15 @@ namespace ProjectSolarEdge.Client.Pages
             var dialog = DialogService.Show<QuestionTableDialog>("Simple Dialog", parameters, options);
             var result = await dialog.Result;
 
+           // GameCRUD.Questions = result;
+
             if (!result.Cancelled)
             {
-                NavigationManager.NavigateTo($"/EditGame/{GId}");
+                IEnumerable<Question> q = (IEnumerable<Question>)result.Data;
+                GameCRUD.Questions.AddRange(q);
+                //QuestionsDataToDisplay = GameCRUD.Questions;
+              //  GameCRUD.Questions = result;
+                //NavigationManager.NavigateTo($"/EditGame/{GId}");
             }
         }
 
@@ -169,30 +178,22 @@ namespace ProjectSolarEdge.Client.Pages
              AddAndUpdate();
         }
 
-   
+
+     
+
 
         protected async Task AddAndUpdate()
         {
 
-      
-
-   
-            
-
-
-            //GameCRUD.Questions = selectedQuestionToUpdate;
+       //  GameCRUD.Questions = selectedQuestionToUpdate;
 
 
             if (GameCRUD.ID == 0) // Create new question
             {
 
-
-
-                 // 2) Save the question itself into the database and get the question ID back from the database
-                 await GameDataService.AddGameToDB(GameCRUD);
-
-              
-
+                // 2) Save the question itself into the database and get the question ID back from the database
+               await GameDataService.AddGameToDB(GameCRUD);
+           
                 }
             else
             {

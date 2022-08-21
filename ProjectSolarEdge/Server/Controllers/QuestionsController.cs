@@ -97,6 +97,30 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
 
+        //[HttpPost]
+        //[Route("Insert")]
+        //public async Task<IActionResult> AddQuestionToDB(Question newQuestion)
+        //{
+
+
+        //    bool _question = _questionRepository.AddQuestionToDB(newQuestion);
+
+
+        //    if (_question == null)
+        //    {
+        //        return NotFound(new ApiResult
+        //        {
+        //            Success = false
+        //        });
+        //    }
+
+        //    return Ok(_question);
+
+
+
+        //}
+
+
 
         [HttpPut]
         [Route("Question/{Id}")]
@@ -282,6 +306,26 @@ namespace ProjectSolarEdge.Server.Controllers
 
 
 
+        //[HttpPost]
+        //[Route("InsertSubject")]
+        //public async Task<IActionResult> AddSubjectToDB(Subject subject)
+        //{
+
+        //    int _subject = _questionRepository.AddSubjectToDB(subject);
+
+
+        //    if (_subject == null)
+        //    {
+        //        return NotFound(new ApiResult
+        //        {
+        //            Success = false
+        //        });
+        //    }
+
+        //    return Ok(_subject);
+
+        //}
+
         [HttpPost]
         [Route("InsertSubject")]
         public async Task<IActionResult> AddSubjectToDB(Subject subject)
@@ -301,7 +345,6 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_subject);
 
         }
-
 
         [HttpDelete]
         [Route("DeleteQuestionConnction/{Id}")]

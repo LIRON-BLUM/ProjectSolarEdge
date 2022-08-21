@@ -70,15 +70,25 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return _question;
         }
 
-        //string QuestionBody, DateTime CreationDate, DateTime UpdateDate, QuestionType Type, QuestionDifficulty Difficulty, string Feedback, string Creator
+     //   string QuestionBody, DateTime CreationDate, DateTime UpdateDate, QuestionType Type, QuestionDifficulty Difficulty, string Feedback, string Creator
         public int AddQuestionToDB(Question question)
         {
 
-           int results = InsertAndreturnInt(QuestionsQueries.AddNewQuestion, question);
-        
+            int results = InsertAndreturnInt(QuestionsQueries.AddNewQuestion, question);
+
 
             return results;
         }
+
+
+        //public bool AddQuestionToDB(Question question)
+        //{
+
+        //    bool results = ExecuteAll(QuestionsQueries.UpdateQuestion, question);
+
+
+        //    return results;
+        //}
 
         public bool UpdateQuestion(Question question)
         {
@@ -177,6 +187,16 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
             return results;
         }
+
+
+        //public bool AddSubjectToDB(Subject subject)
+        //{
+
+        //    bool results = ExecuteAll(QuestionsQueries.AddSubject, subject);
+
+
+        //    return results;
+        //}
 
         public int AddSubjectToConnection(SubjectsQuestionsConnection subjectsQuestionsConnection)
         {

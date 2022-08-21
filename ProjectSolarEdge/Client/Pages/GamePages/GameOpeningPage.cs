@@ -180,7 +180,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             if (QuestionsCRUD.ID == 0) // Create new question
             {
                 // 2) Save the question itself into the database and get the question ID back from the database
-                int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+              await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+
+                int QuestionID = QuestionsCRUD.ID;
 
                 if (QuestionID != 0) // Question added to the DB
                 {

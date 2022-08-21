@@ -122,48 +122,7 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task SaveQuestions()
         {
 
-            //int gameId = GameID;
-
-            //List<Question> selectedQuestionToUpdate = new List<Question>();
-
-
-
-
-            //// Delete the existing subjects 
-            //await GameDataService.DeleteQuestionConnection(gameId);
-
-            //foreach (var item in selectedQuestions)
-            //{
-
-            //    int QuestionScore = 0;
-            //    Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-            //    selectedQuestionToUpdate.Add(q);
-
-            //    if (item.Difficulty == QuestionDifficulty.Easy)
-            //    {
-            //        QuestionScore = 200;
-            //    }
-            //    if (item.Difficulty == QuestionDifficulty.Medium)
-            //    {
-            //        QuestionScore = 400;
-            //    }
-            //    if (item.Difficulty == QuestionDifficulty.Hard)
-            //    {
-            //        QuestionScore = 600;
-            //    }
-
-
-
-            //    questionToUpdate = new GameQuestionsConnection()
-            //    {
-            //        QuestionID = q.ID,
-            //        GameID = gameId,
-            //        Score = QuestionScore
-            //    };
-
-
-            //    await GameDataService.AddQuestionConnection(questionToUpdate);
-            //}
+           
 
             int gameId = GameID;
 
@@ -240,7 +199,7 @@ namespace ProjectSolarEdge.Client.Pages
             //AddAndUpdate();
 
             //MudDialog.Close(DialogResult.Ok(true));
-            MudDialog.Close(DialogResult.Ok(gameId));
+            MudDialog.Close(DialogResult.Ok(selectedQuestionToUpdate));
         //    NavigationManager.NavigateTo($"/EditGame/{GameID}");
         }
          
@@ -332,7 +291,7 @@ namespace ProjectSolarEdge.Client.Pages
             QuestionsDataToDisplay = QuestionsData;
 
 
-            NavigationManager.NavigateTo($"/EditGame/{GameID}");
+            NavigationManager.NavigateTo($"./EditGame/{GameID}");
 
 
         }
@@ -344,10 +303,10 @@ namespace ProjectSolarEdge.Client.Pages
         {
             if (pageNum == 1)
             {
-                NavigationManager.NavigateTo("/Games");
+                NavigationManager.NavigateTo("./Games");
             }
             else
-                NavigationManager.NavigateTo($"/EditGame/{GameID}");
+                NavigationManager.NavigateTo($"./EditGame/{GameID}");
         }
 
   

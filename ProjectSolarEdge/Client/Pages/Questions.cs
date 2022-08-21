@@ -72,43 +72,42 @@ namespace ProjectSolarEdge.Client.Pages
 
     protected async Task NavMultipleQuestion()
         {
-            NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
+            NavigationManager.NavigateTo("./EditQuestion");
         }
 
     protected async Task NavYesNoQuestion()
         {
-            NavigationManager.NavigateTo($"/Questions/{EditorID}");
+            NavigationManager.NavigateTo("./Questions");
         }
 
     protected async Task NavOrderQuestion()
         {
-            NavigationManager.NavigateTo($"/OrderQuestionEdit/{EditorID}");
+            NavigationManager.NavigateTo("./OrderQuestionEdit");
         }
 
         protected async Task NavigateToEdit(int qid)
         {
-            Eid = int.Parse(EditorID);
 
             QuestionsToEdit = await QuestionDataService.GetQuestionByIdAsync(qid);
 
             if (QuestionsToEdit.Type == QuestionType.MultipleChoice) 
             { 
-                NavigationManager.NavigateTo($"/EditQuestion/{qid}/{EditorID}");
+                NavigationManager.NavigateTo($"/EditQuestion/{qid}");
             }
             else if (QuestionsToEdit.Type == QuestionType.Order)
             {
-                NavigationManager.NavigateTo($"/OrderQuestionEdit/{qid}/{EditorID}"); 
+                NavigationManager.NavigateTo($"/OrderQuestionEdit/{qid}"); 
             }
             else
             {
-                NavigationManager.NavigateTo($"/EditQuestion/{qid}/{EditorID}");
+                NavigationManager.NavigateTo($"/EditQuestion/{qid}");
             }
         }
 
 
         protected async Task NavNewQuestion()
         {
-            NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
+            NavigationManager.NavigateTo($"./EditQuestion");
         }
 
 
@@ -171,7 +170,7 @@ namespace ProjectSolarEdge.Client.Pages
             QuestionsData = await QuestionDataService.GetQuestionsAsync();
             QuestionsDataToDisplay = QuestionsData;
 
-            NavigationManager.NavigateTo("Questions");
+            NavigationManager.NavigateTo("./Questions");
 
 
 

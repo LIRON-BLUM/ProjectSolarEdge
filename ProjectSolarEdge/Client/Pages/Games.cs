@@ -44,7 +44,7 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task NewGame()
         {
 
-            NavigationManager.NavigateTo($"/EditGame/{EditorID}");
+            NavigationManager.NavigateTo("/EditGame");
 
         }
 

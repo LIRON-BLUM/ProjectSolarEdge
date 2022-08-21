@@ -39,7 +39,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task NavQuestion()
         {
-            NavigationManager.NavigateTo($"/Questions/{EditorID}");
+            NavigationManager.NavigateTo("./Questions");
         }
 
         protected async Task NavGames()
@@ -49,7 +49,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task NavUsers()
         {
-            NavigationManager.NavigateTo($"/EditQuestion/{EditorID}");
+            NavigationManager.NavigateTo("./EditQuestion");
         }
 
     }

@@ -76,14 +76,14 @@ namespace ProjectSolarEdge.Client.Pages
 
                     string test = EditorIDSessiom;
                     //NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
-                    NavigationManager.NavigateTo($"/EditorOpening");
+                    NavigationManager.NavigateTo($"./EditorOpening");
                 }
 
             }
             else
             {
                 EditorID = (IdFromUserName.ID).ToString();
-                NavigationManager.NavigateTo($"/EditorOpening/{EditorID}");
+                NavigationManager.NavigateTo("./EditorOpening");
             }
 
 

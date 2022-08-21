@@ -17,7 +17,12 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         IEnumerable<Question> GetQuestionsThatNotInGameID(int GameID);
 
         int AddQuestionToDB(Question question);
+     //   bool AddQuestionToDB(Question question);
+
+
         int AddSubjectToDB(Subject subject);
+
+        //bool AddSubjectToDB(Subject subject);
 
         bool UpdateQuestion(Question question);
         bool DeleteQuestion(Question question);

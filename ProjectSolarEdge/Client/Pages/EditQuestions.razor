@@ -64,7 +64,7 @@
 
                             <MudItem xs="2" id="Image" class="d-inline-flex" Height="auto">
                                 <MudPaper Class="mud-theme-Primary ma-2" Width="100%" Height="40px" Elevation="0" />
-                                <img src="/Files/AnswerDefaltImage.png" Class=" ma-2" Width="100%" Height="40px">
+                                <img src="./Files/AnswerDefaltImage.png" Class=" ma-2" Width="100%" Height="40px">
                             </MudItem>
 
                         </MudItem>
@@ -104,7 +104,7 @@
                             <MudTextField @bind-Value="@OneSubject.SubjectName" class="ma-1" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" />
                         </MudItem>
                         <MudItem xs="4" class="ma-1" id="AddSubjectNameBtn" Width="100%" Height="auto">
-                            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Add" Margin="Margin.Dense" Class="--mud-palette-gray-default">Add</MudButton>
+                            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Add" Margin="Margin.Dense" OnClick="AddSubject" Class="--mud-palette-gray-default">Add</MudButton>
                         </MudItem>
                     </MudItem>
 
@@ -137,7 +137,7 @@
     <MudItem xs="5" class="d-inline-flex flex-column  gap-4">
 
         @*<MudPaper Class="mud-theme-secondary" Width="100%" Height="320px" Elevation="0" />
-            <MudPaper Class="mud-theme-secondary" Width="100%" Height="64px" Elevation="0" />*@
+        <MudPaper Class="mud-theme-secondary" Width="100%" Height="64px" Elevation="0" />*@
 
         <MudItem>
             <MudTextField T="string" ValueChanged="@(s => OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
@@ -149,12 +149,17 @@
                 <HeaderContent>
                     <MudTh>Type</MudTh>
                     <MudTh>Question</MudTh>
+                    <MudTh>Edit</MudTh>
                     <MudTh>Delete</MudTh>
 
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Type">@context.Type</MudTd>
                     <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
+                    <MudTooltip Text="Edit Question">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="(() =>NavigateToEdit(context.ID))" Color="Color.Primary" />
+                    </MudTooltip>
+
                     <MudTd DataLabel="Delete">
 
                         <MudTooltip Text="Delete Question">
@@ -169,7 +174,7 @@
 
 
 
-        <MudButton @onclick="@OpenDialog" Class="mt-4" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
+        @*<MudButton @onclick="@OpenDialog" Class="mt-4" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
             New Question
         </MudButton>
 
@@ -187,9 +192,48 @@
             <DialogActions>
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit" Class="px-10">Close</MudButton>
             </DialogActions>
-        </MudDialog>
+        </MudDialog>*@
 
 
+    <MudButton @onclick="@ToggleOpen" Class="mt-4" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
+        @(_isOpen? "New Question" : "Cancel") 
+    </MudButton>
+
+        @*<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@ToggleOpen">
+            @(_isOpen? "ADD QUESTION" : "ADD QUESTION")
+        </MudButton>*@
+        <MudPopover Open="@_isOpen" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+            <div class="d-flex gap-8 pa-10">
+
+                <div class="d-flex flex-column justify-center align-center  mx-4">
+                    <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavMultipleQuestion">
+                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
+                            <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" />
+                        </MudAvatar><br />
+                        <MudText>Multiple</MudText>
+                    </MudButton>
+                </div>
+
+                <div class="d-flex flex-column justify-center align-center mx-4">
+                    <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavYesNoQuestion">
+                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
+                            <MudIcon Icon="@Icons.Material.Filled.Rule" />
+                        </MudAvatar><br />
+                        <MudText>Yes/No</MudText>
+                    </MudButton>
+                </div>
+
+                <div class="d-flex flex-column justify-center align-center mx-4">
+                    <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavOrderQuestion">
+                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
+                            <MudIcon Icon="@Icons.Material.Filled.FormatListNumbered" />
+                        </MudAvatar><br />
+                        <MudText Class="mt-1" Style="@($"display:block;")">Order</MudText>
+                    </MudButton>
+                </div>
+
+            </div>
+        </MudPopover>
 
     </MudItem>
 

@@ -24,6 +24,8 @@ namespace ProjectSolarEdge.Client.Services.Questions
 
         Task<int> AddQuestionToDB(Question newQuestion);
 
+       // Task<bool> AddQuestionToDB(Question newQuestion);
+
         Task<bool> UpdateQuestion(Question question);
         Task<bool> DeleteQuestion(Question question);
 
