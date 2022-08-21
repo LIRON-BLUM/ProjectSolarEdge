@@ -28,7 +28,7 @@ namespace ProjectSolarEdge.Shared.Entities
         public List<Subject> Subjects { get; set; }
         public byte isDeleted { get; set; }
 
-        public string QuestionImagePath { get; set; }
+        public string? QuestionImagePath { get; set; }
 
 
 

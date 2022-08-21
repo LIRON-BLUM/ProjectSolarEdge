@@ -22,7 +22,7 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         bool DeleteQuestionConnction(int ID);
 
-        bool DeleteQuestionIDConnction(int QuestionID);
+        bool DeleteQuestionIDConnction(int QuestionID, int gameID);
 
         int AddQuestionToConnection(GameQuestionsConnection gameQuestionsConnection);
 

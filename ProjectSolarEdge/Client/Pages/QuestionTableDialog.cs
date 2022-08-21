@@ -199,7 +199,7 @@ namespace ProjectSolarEdge.Client.Pages
             //AddAndUpdate();
 
             //MudDialog.Close(DialogResult.Ok(true));
-            MudDialog.Close(DialogResult.Ok(selectedQuestionToUpdate));
+            MudDialog.Close(DialogResult.Ok(selectedQuestions));
         //    NavigationManager.NavigateTo($"/EditGame/{GameID}");
         }
          
@@ -208,78 +208,6 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task AddAndUpdate()
         {
 
-        //    int gameId = GameID;
-
-        //    List<Question> selectedQuestionToUpdate = new List<Question>();
-
-
-        //    selectedQuestionToUpdate = GameCRUD.Questions;
-
-        //    //// Delete the existing subjects 
-        //    //await GameDataService.DeleteQuestionConnection(gameId);
-
-        //    foreach (var item in selectedQuestions)
-        //    {
-
-        //        int QuestionScore = 0;
-        //        Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-               
-
-        //        if (q.Difficulty == QuestionDifficulty.Easy)
-        //        {
-        //            QuestionScore = 200;
-        //        }
-        //        if (q.Difficulty == QuestionDifficulty.Medium)
-        //        {
-        //            QuestionScore = 400;
-        //        }
-        //        if (q.Difficulty == QuestionDifficulty.Hard)
-        //        {
-        //            QuestionScore = 600;
-        //        }
-                
-        //        selectedQuestionToUpdate.Add(q);
-        //        //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
-
-        //        questionToUpdate = new GameQuestionsConnection()
-        //        {
-        //            QuestionID = q.ID,
-        //            GameID = gameId,
-        //            Score = QuestionScore
-        //        };
-
-        //        await GameDataService.AddQuestionConnection(questionToUpdate);
-        //    }
-
-
-
-          
-        
-
-
-        //GameCRUD.Questions = selectedQuestionToUpdate;
-
-
-        //    if (GameCRUD.ID == 0) // Create new question
-        //    {
-
-
-
-        //        // 2) Save the question itself into the database and get the question ID back from the database
-        //        await GameDataService.AddGameToDB(GameCRUD);
-
-
-
-        //    }
-        //    else
-        //    {
-        //        await GameDataService.UpdateGame(GameCRUD);
-
-        //    }
-
-            
-            //Navigation(NavigationDestination);
-            //  NavigationManager.NavigateTo("/Games");
         }
 
         protected async Task DeleteQuestion(int id)

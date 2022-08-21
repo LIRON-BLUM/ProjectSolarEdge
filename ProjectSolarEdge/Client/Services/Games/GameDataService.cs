@@ -91,9 +91,9 @@ namespace ProjectSolarEdge.Client.Services.Games
             return false;
         }
 
-        public async Task<bool> DeleteQuestionIDConnction(int QuestionID)
+        public async Task<bool> DeleteQuestionIDConnction(int QuestionID, int GameID)
         {
-            var response = await _httpClient.DeleteAsync($"api/Games/DeleteQuestionIDConnction/{QuestionID}");
+            var response = await _httpClient.DeleteAsync($"api/Games/DeleteQuestionIDConnction/{QuestionID}/{GameID}");
 
             if (response.IsSuccessStatusCode)
             {

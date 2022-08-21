@@ -19,6 +19,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public IEnumerable<UserGameScore> TopPlayers { get; set; }
         public IEnumerable<UserGameScore> AllPlayers { get; set; }
 
+        public List<UserGameScore> RelativePlayers { get; set; }
+
         [Inject]
         public IGamesDataService GameDataService { get; set; }
 
@@ -57,7 +59,16 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             AllPlayers = AllPlayers.OrderByDescending(e => e.UserScore).Take(allUsersCount);
 
-         
+            // Set Relative
+            RelativePlayers = new List<UserGameScore>();
+            var currentPlayerScore = AllPlayers.Where(p => p.ID == UId).FirstOrDefault();
+            RelativePlayers.Add(currentPlayerScore);
+
+            var RelativeBottomPlayers = AllPlayers.Where(p => p.UserScore < currentPlayerScore.UserScore).Take(2);
+
+            var RelativeTopPlayers = AllPlayers.Where(p => p.UserScore < currentPlayerScore.UserScore).Take(4-RelativeBottomPlayers.Count());
+
+
 
 
         }

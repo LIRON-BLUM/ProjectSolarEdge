@@ -108,7 +108,7 @@ namespace ProjectSolarEdge.Client.Pages
                 GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
 
                 selectedQuestions = GameCRUD.Questions.ToHashSet();
-
+                QuestionsDataToDisplay = GameCRUD.Questions;
                // GameCRUD.Questions = selectedQuestionToUpdate;
             }
 
@@ -121,14 +121,13 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task DeleteQuestionFromGame(int Qid)
         {
-            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(Qid);
-          
-            await GameDataService.DeleteQuestionIDConnction(Qid);
-            QuestionsData = await QuestionDataService.GetQuestionsAsync();
-            QuestionsDataToDisplay = QuestionsData;
-
             int.TryParse(Id, out var GId);
-            //NavigationManager.NavigateTo($"/EditGame/{GId}");
+            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(Qid);
+            Question QuesToDelete = await QuestionDataService.GetQuestionByIdAsync(Qid);
+            await GameDataService.DeleteQuestionIDConnction(Qid, GId);
+            //QuestionsData = await QuestionDataService.GetQuestionsAsync();
+            GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));          
+            QuestionsDataToDisplay = GameCRUD.Questions;
         }
 
 
@@ -151,8 +150,10 @@ namespace ProjectSolarEdge.Client.Pages
             {
                 IEnumerable<Question> q = (IEnumerable<Question>)result.Data;
                 GameCRUD.Questions.AddRange(q);
+           
+                QuestionsDataToDisplay = GameCRUD.Questions;
                 //QuestionsDataToDisplay = GameCRUD.Questions;
-              //  GameCRUD.Questions = result;
+                //  GameCRUD.Questions = result;
                 //NavigationManager.NavigateTo($"/EditGame/{GId}");
             }
         }

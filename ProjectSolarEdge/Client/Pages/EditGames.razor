@@ -80,21 +80,7 @@
                     </MudItem>
                 </MudItem>
 
-              @*  <MudItem xs="12" id="GambleContainer" class="d-flex gap-4 " Width="100%" Height="auto">
-                    <MudItem xs="6" id="GambleTitle" class="d-flex gap-4 " Width="100%" Height="auto">
-
-                        <MudText>Gamble points every</MudText>
-                    </MudItem>
-                    <MudItem xs="3" id="GambleNum" Width="100%" Height="auto">
-
-                        <MudNumericField @bind-Value="@GameCRUD.GambleIteration" Label="Hard" Variant="Variant.Text" Min="0" Max="10" />
-
-                    </MudItem>
-                    <MudItem xs="3" id="GambleQ" Width="100%" Height="auto">
-
-                        <MudText>Questions</MudText>
-                    </MudItem>
-                </MudItem>*@
+ 
 
             </MudItem>
         </MudItem>
@@ -112,7 +98,7 @@
     <MudItem xs="5" class="d-inline-flex flex-column  gap-4">
 
         @*<MudPaper Class="mud-theme-secondary" Width="100%" Height="320px" Elevation="0">*@
-        <MudTable Items="GameCRUD.Questions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+        <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
             <HeaderContent>
                 <MudTh>Type</MudTh>
                 <MudTh>Question</MudTh>
