@@ -13,11 +13,6 @@
         transition: transform 150ms;
     }
 
-*.choice-text {
-    /*padding: 1.5rem;*/
-    /*width: 100%;*/
-}
-
 /* feedback */
 
 .correct{
@@ -29,7 +24,7 @@
 }
 
 .chosenAnswer {
-    border: 0.5rem solid #001546;
+    border: 1rem solid #001546;
 }
 
 .QuestionDescription {

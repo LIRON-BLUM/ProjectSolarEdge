@@ -5,35 +5,30 @@
 @inject IJSRuntime JSRuntime;
 
 <link href="/css/styles/LogIn.css" rel="stylesheet" />
+<link href="/css/styles/Gambeling.css" rel="stylesheet" />
 <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-<div class="container-flex">
-    <div class="justify-content-center align-items-center text-center">
-           <div class="row align-items-center title">
-        <h1 class="col"> Welcome</h1>
+<div class="container-flex Back pt-10">
+    <div class="justify-content-center align-items-center gy-10">
+           <div class="row justify-content-center">
+             <img src="/Files/KnowledgeOnBlack.svg" class="col-4" alt="Logo">
         </div>
+        <br />
         <p id="ErrorHelp"> </p>
-        <form>
 
-            @*<p>Enter your Email</p>
-        <input type="text" name="employeeEmail" id="employeeEmail" placeholder="employee Email" value="@UserEmail" @onchange="@(e=>{UserEmail=e.Value.ToString();})" />
-        <p>Enter game code</p>
-        <input type="text" name="GameCode" id="GameCode" placeholder="Game code" value="@GameCode" @onchange="@(e=>{GameCode=e.Value.ToString();})" />
-        <button type="submit" id="StartGame" class="btn" @onclick="StartTheGame" disabled> Enter the game</button>*@
-        </form>
-
-            <p>Enter your Email</p>
-            <input type="text"  placeholder="employee Email" class="col-4" @bind-value="@UserEmail" />
-            <p>Enter game code</p>
-            <input type="text"  placeholder="Game code" class="col-4" @bind-value="@GameCode" />
-         <div class="row justify-content-center p-3">
-            <button type="button" id="StartGame" class="btnBlue col-2" @onclick="StartTheGame"> Enter the game</button>
+           <div class="row justify-content-center gy-10">
+                <p class="col-10">Enter Email:</p>
+            <input type="text" class="col-10"  placeholder="User Email" @bind-value="@UserEmail" />
+            <p class="col-10">Enter game code:</p>
+            <input type="text" class="col-10" placeholder="Game code" @bind-value="@GameCode" />
+          </div>
+             
+         <div class="row justify-content-center pt-10">
+            <button type="button" id="StartGame" class="btnGreen mt-10 col-sm-8 col-xs-8 col-lg-5 col-md-5" @onclick="StartTheGame"> Enter the game</button>
        </div>
 
     </div>
   
-
-
 </div>
 
 
