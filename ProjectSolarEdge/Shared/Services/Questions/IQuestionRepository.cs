@@ -10,8 +10,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
     public interface IQuestionRepository
     {
         IEnumerable<Question> getQuestions();
-        
 
+        IEnumerable<QuestionAnswer> GetQuestionAnswer();
         Question GetQuestionById(int ID, bool IncludeOptions = true);
 
         IEnumerable<Question> GetQuestionsThatNotInGameID(int GameID);

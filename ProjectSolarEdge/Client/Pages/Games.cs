@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using ProjectSolarEdge.Client.Services;
+using ProjectSolarEdge.Client.Services.Questions;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -34,17 +35,23 @@ namespace ProjectSolarEdge.Client.Pages
 
         string EditorIDSessiom = "";
 
+
+        public IEnumerable<Game> GameDataToDisplay { get; set; }
+
+
         protected override async Task OnInitializedAsync()
         {
             GamesData = await GamesDataService.GetAllGames();
             //  GamesData = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
             EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
+
+            GameDataToDisplay = GamesData;
         }
 
         protected async Task NewGame()
         {
 
-            NavigationManager.NavigateTo("/EditGame");
+            NavigationManager.NavigateTo("./EditGame");
 
         }
 
@@ -112,15 +119,21 @@ namespace ProjectSolarEdge.Client.Pages
             table.ReloadServerData();
         }
 
-
+  
         public Game GameToDelete { get; set; } = new Game();
         protected async Task GameToDeleteID(int id)
         {
-            //GameToDelete = await GameDataService.GetGameByIdAsync(id);
-
+           GameToDelete = await GamesDataService.GetGameByIdAsync(id);
+            Game _gametodelete = await GamesDataService.GetGameByIdAsync(id);
+            await GamesDataService.DeleteGame(GameToDelete);
+            GamesData = await GamesDataService.GetAllGames();
+            GameDataToDisplay = GamesData;
             //DeleteGame();
 
         }
+
+
+
 
         protected async Task DeleteQuestion()
         {

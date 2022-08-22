@@ -31,6 +31,12 @@ namespace ProjectSolarEdge.Shared.Entities
         public string? QuestionImagePath { get; set; }
 
 
+        public static implicit operator Question(QuestionAnswer v)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
     }
 

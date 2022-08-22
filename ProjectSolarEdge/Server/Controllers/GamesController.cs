@@ -62,6 +62,24 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
 
+        
+
+        [HttpPut]
+        [Route("DeleteGame/{Id}")]
+        public IActionResult DeleteGame(Game game)
+        {
+            if (game == null)
+            {
+
+                return BadRequest();
+            }
+
+            bool _game = _GameRepository.DeleteGame(game);
+
+            return Ok(_game); //success
+        }
+
+
         [HttpPost]
         [Route("InsertGame")]
         public async Task<IActionResult> AddGameToDB(Game game)

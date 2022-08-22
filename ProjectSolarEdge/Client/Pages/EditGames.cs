@@ -103,12 +103,17 @@ namespace ProjectSolarEdge.Client.Pages
                 //get all questions in the dialog 
               GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1,GameTimeLimit=10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1, Creator = CreatorName };
               GameCRUD.Questions = new List<Question>();
+                foreach (var Ques in GameCRUD.Questions)
+                {
+                    Ques.Answers = new List<QuestionAnswer>();
+                }
             } else
             {
                 GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
 
                 selectedQuestions = GameCRUD.Questions.ToHashSet();
                 QuestionsDataToDisplay = GameCRUD.Questions;
+
                // GameCRUD.Questions = selectedQuestionToUpdate;
             }
 
@@ -174,31 +179,84 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task SaveGame()
         {
           
-
             NavigationDestination = 1;
              AddAndUpdate();
         }
 
 
-     
-
+        public GameQuestionsConnection questionToUpdate { get; set; }
+        int GameIdToAdd { get; set; }
 
         protected async Task AddAndUpdate()
         {
 
-       //  GameCRUD.Questions = selectedQuestionToUpdate;
+            //  GameCRUD.Questions = selectedQuestionToUpdate;
 
+            int.TryParse(Id, out var gameId);
+
+          
+
+            List<Question> selectedQuestionToUpdate = new List<Question>();
+
+
+           
 
             if (GameCRUD.ID == 0) // Create new question
             {
-
+                GameCRUD.Creator = CreatorName;
+                //List<Question> selectedQuestionsToUpdate = new List<Question>();
                 // 2) Save the question itself into the database and get the question ID back from the database
-               await GameDataService.AddGameToDB(GameCRUD);
-           
-                }
+                GameIdToAdd =  await GameDataService.AddGameToDB(GameCRUD);
+
+                //if (GameIdToAdd != 0) // Question added to the DB
+                //{
+                //    GameCRUD.ID = GameIdToAdd;
+               
+
+                  foreach (var item in QuestionsDataToDisplay)
+                  {
+
+
+                  
+                        int QuestionScore = 0;
+                        Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
+                        Question newQ = await QuestionDataService.GetQuestionByIdAsync(q.ID);
+
+                        if (newQ.Difficulty == QuestionDifficulty.Easy)
+                        {
+                            QuestionScore = 200;
+                        }
+                        if (newQ.Difficulty == QuestionDifficulty.Medium)
+                        {
+                            QuestionScore = 400;
+                        }
+                        if (newQ.Difficulty == QuestionDifficulty.Hard)
+                        {
+                            QuestionScore = 600;
+                        }
+
+                       
+                        selectedQuestionToUpdate.Add(newQ);
+                        //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
+
+                        questionToUpdate = new GameQuestionsConnection()
+                        {
+                            QuestionID = newQ.ID,
+                            GameID = GameIdToAdd,
+                            Score = QuestionScore
+                        };
+
+                      //  GameCRUD.Questions = selectedQuestionToUpdate;
+
+                        await GameDataService.AddQuestionConnection(questionToUpdate);
+                  }
+                //}
+            }
             else
             {
-                GameCRUD.Creator = CreatorName;
+
+                
+
               await GameDataService.UpdateGame(GameCRUD);
              
             }

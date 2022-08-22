@@ -23,7 +23,7 @@
 
     <br />
     <MudItem xs="12">
-        <MudTable Items="GamesData" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Game>>>(ServerReload))">
+        <MudTable Items="GameDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Game>>>(ServerReload))">
             <!--<ToolBarContent>-->
             @*<MudText Typo="Typo.h6">Questions</MudText>*@
 

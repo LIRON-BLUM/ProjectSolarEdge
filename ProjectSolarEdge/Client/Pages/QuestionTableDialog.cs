@@ -70,9 +70,9 @@ namespace ProjectSolarEdge.Client.Pages
 
             if (GameID == 0)
             {
-                GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1, GameTimeLimit = 10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
+                //GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1, GameTimeLimit = 10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1 };
                 GameCRUD.Questions = new List<Question>();
-                QuestionsNotInGame = await QuestionDataService.GetAllQuestions();
+                QuestionsNotInGame = await QuestionDataService.GetQuestionsAsync();
             }
             else
             {
@@ -96,76 +96,32 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
-        protected async Task GamificationTrue()
-        {
+        //protected async Task GamificationTrue()
+        //{
 
-            GameCRUD.IsGamified = 1;
-        }
+        //    GameCRUD.IsGamified = 1;
+        //}
 
-        protected async Task GamificationFalse()
-        {
+        //protected async Task GamificationFalse()
+        //{
 
-            GameCRUD.IsGamified = 0;
-        }
-
-
-        protected async Task SaveGame()
-        {
+        //    GameCRUD.IsGamified = 0;
+        //}
 
 
-            NavigationDestination = 1;
-            AddAndUpdate();
-        }
+        //protected async Task SaveGame()
+        //{
+
+
+        //    NavigationDestination = 1;
+        //    AddAndUpdate();
+        //}
 
 
 
         protected async Task SaveQuestions()
         {
 
-           
-
-            int gameId = GameID;
-
-            List<Question> selectedQuestionToUpdate = new List<Question>();
-
-
-            selectedQuestionToUpdate = GameCRUD.Questions;
-
-            //// Delete the existing subjects 
-            //await GameDataService.DeleteQuestionConnection(gameId);
-
-            foreach (var item in selectedQuestions)
-            {
-
-                int QuestionScore = 0;
-                Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-
-
-                if (q.Difficulty == QuestionDifficulty.Easy)
-                {
-                    QuestionScore = 200;
-                }
-                if (q.Difficulty == QuestionDifficulty.Medium)
-                {
-                    QuestionScore = 400;
-                }
-                if (q.Difficulty == QuestionDifficulty.Hard)
-                {
-                    QuestionScore = 600;
-                }
-
-                selectedQuestionToUpdate.Add(q);
-                //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
-
-                questionToUpdate = new GameQuestionsConnection()
-                {
-                    QuestionID = q.ID,
-                    GameID = gameId,
-                    Score = QuestionScore
-                };
-
-                await GameDataService.AddQuestionConnection(questionToUpdate);
-            }
 
 
 
@@ -173,7 +129,8 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-            GameCRUD.Questions = selectedQuestionToUpdate;
+
+            //GameCRUD.Questions = selectedQuestionToUpdate;
 
 
             if (GameCRUD.ID == 0) // Create new question
@@ -182,25 +139,69 @@ namespace ProjectSolarEdge.Client.Pages
 
 
                 // 2) Save the question itself into the database and get the question ID back from the database
-                await GameDataService.AddGameToDB(GameCRUD);
+                //await GameDataService.AddGameToDB(GameCRUD);
 
 
+                MudDialog.Close(DialogResult.Ok(selectedQuestions));
 
             }
             else
             {
+
+
+                int gameId = GameID;
+
+                List<Question> selectedQuestionToUpdate = new List<Question>();
+
+
+                selectedQuestionToUpdate = GameCRUD.Questions;
+
+                //// Delete the existing subjects 
+                //await GameDataService.DeleteQuestionConnection(gameId);
+
+                foreach (var item in selectedQuestions)
+                {
+
+                    int QuestionScore = 0;
+                    Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
+
+
+                    if (q.Difficulty == QuestionDifficulty.Easy)
+                    {
+                        QuestionScore = 200;
+                    }
+                    if (q.Difficulty == QuestionDifficulty.Medium)
+                    {
+                        QuestionScore = 400;
+                    }
+                    if (q.Difficulty == QuestionDifficulty.Hard)
+                    {
+                        QuestionScore = 600;
+                    }
+
+                    selectedQuestionToUpdate.Add(q);
+                    //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
+
+                    questionToUpdate = new GameQuestionsConnection()
+                    {
+                        QuestionID = q.ID,
+                        GameID = gameId,
+                        Score = QuestionScore
+                    };
+
+                    await GameDataService.AddQuestionConnection(questionToUpdate);
+                }
+
                 await GameDataService.UpdateGame(GameCRUD);
 
             }
 
-            NavigationDestination = 0;
 
-            ReloadGameID = gameId;
-            //AddAndUpdate();
 
-            //MudDialog.Close(DialogResult.Ok(true));
+            ////ReloadGameID = gameId;
+
             MudDialog.Close(DialogResult.Ok(selectedQuestions));
-        //    NavigationManager.NavigateTo($"/EditGame/{GameID}");
+       
         }
          
     
@@ -210,32 +211,32 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
-        protected async Task DeleteQuestion(int id)
-        {
-            QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
-            await QuestionDataService.DeleteQuestion(QuestionsToDelete);
+        //protected async Task DeleteQuestion(int id)
+        //{
+        //    QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
+        //    await QuestionDataService.DeleteQuestion(QuestionsToDelete);
 
-            QuestionsData = await QuestionDataService.GetQuestionsAsync();
-            QuestionsDataToDisplay = QuestionsData;
-
-
-            NavigationManager.NavigateTo($"./EditGame/{GameID}");
+        //    QuestionsData = await QuestionDataService.GetQuestionsAsync();
+        //    QuestionsDataToDisplay = QuestionsData;
 
 
-        }
+        //    NavigationManager.NavigateTo($"./EditGame/{GameID}");
+
+
+        //}
 
 
 
 
-        protected async Task Navigation(int pageNum)
-        {
-            if (pageNum == 1)
-            {
-                NavigationManager.NavigateTo("./Games");
-            }
-            else
-                NavigationManager.NavigateTo($"./EditGame/{GameID}");
-        }
+        //protected async Task Navigation(int pageNum)
+        //{
+        //    if (pageNum == 1)
+        //    {
+        //        NavigationManager.NavigateTo("./Games");
+        //    }
+        //    else
+        //        NavigationManager.NavigateTo($"./EditGame/{GameID}");
+        //}
 
   
 

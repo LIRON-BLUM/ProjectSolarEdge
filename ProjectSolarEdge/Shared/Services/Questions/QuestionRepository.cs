@@ -30,6 +30,19 @@ namespace ProjectSolarEdge.Shared.Services.Questions
                 }).ToList();
 
             }
+
+
+            IEnumerable<QuestionAnswer> _answers = GetQuestionAnswer();
+
+            foreach (Question question in _data)
+            {
+                question.Answers = _answers.Where(q => q.QuestionID == question.ID).Select(a => new QuestionAnswer
+                {
+                    ID = a.ID,
+                    AnswerBody = a.AnswerBody
+                }).ToList();
+
+            }
             return _data;
         }
 
@@ -42,6 +55,12 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         public IEnumerable<SubjectsQuestions> GetQuestionSubjects()
         {
             IEnumerable<SubjectsQuestions> _data = GetRecords<SubjectsQuestions>(QuestionsQueries.GetQuestionsSubjects, null);
+            return _data;
+        }
+
+        public IEnumerable<QuestionAnswer> GetQuestionAnswer()
+        {
+            IEnumerable<QuestionAnswer> _data = GetRecords<QuestionAnswer>(QuestionsQueries.GetAllQuestionAnswers, null);
             return _data;
         }
 

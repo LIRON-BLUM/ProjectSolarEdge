@@ -19,7 +19,8 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
 
         public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted, Creator)
-                                        VALUES (@GameName,@GameDescription, @CreationDate, @UpdateDate, 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0, @Creator)";
+                                        VALUES (@GameName,@GameDescription, @CreationDate, @UpdateDate, 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0, @Creator)
+                                        SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
         //public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted)
@@ -43,6 +44,8 @@ namespace ProjectSolarEdge.Shared.Services.Games
         WheelIteration=@WheelIteration,
         GambleIteration=@GambleIteration
         WHERE ID=@ID";
+
+        public static string DeleteGame => @"UPDATE Games SET isDeleted = 1 WHERE ID = @ID";
 
         public static string InsertQuestionToConnectionTable => @"INSERT INTO GameQuestionsConnections (QuestionID, GameID, Score) VALUES (@QuestionID, @GameID, 0)  SELECT CAST(SCOPE_IDENTITY() as int)";
 

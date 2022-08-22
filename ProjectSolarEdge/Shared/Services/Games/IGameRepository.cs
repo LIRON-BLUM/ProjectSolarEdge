@@ -14,7 +14,10 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         Game GetGameById(int Id);
 
+
         bool UpdateGame(Game game);
+
+        bool DeleteGame(Game game);
 
         IEnumerable<GamesQuestions> GetGameQuestions();
 

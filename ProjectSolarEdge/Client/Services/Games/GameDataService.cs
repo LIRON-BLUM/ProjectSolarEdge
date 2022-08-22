@@ -120,6 +120,27 @@ namespace ProjectSolarEdge.Client.Services.Games
             return 0;
         }
 
- 
+        public async Task<bool> DeleteGame(Game game)
+        {
+            try
+            {
+                var gameJson =
+                new StringContent(JsonSerializer.Serialize(game), Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/Games/DeleteGame/{game}", gameJson);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
     }
 }

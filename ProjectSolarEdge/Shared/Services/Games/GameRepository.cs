@@ -90,6 +90,13 @@ namespace ProjectSolarEdge.Shared.Services.Games
             return results;
         }
 
- 
+        public bool DeleteGame(Game game)
+        {
+
+            bool results = ExecuteAll(GamesQueries.DeleteGame, game);
+
+
+            return results;
+        }
     }
 }
