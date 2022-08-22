@@ -69,7 +69,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             await GameAppDataService.AddScoreElement(GambelingScoreToInsert);
 
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}/{cameFromGambling}");
+            NavigationManager.NavigateTo($"./GetNextStep/{GameId}/{UserId}/{cameFromGambling}");
         }
 
         public void Dispose()

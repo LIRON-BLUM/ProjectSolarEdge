@@ -59,7 +59,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             await GameAppDataService.AddScoreElement(WheelScoreToInsert);
 
-            NavigationManager.NavigateTo($"Gambeling/{GameId}/{UserId}");
+            NavigationManager.NavigateTo($"./Gambeling/{GameId}/{UserId}");
 
 
         }

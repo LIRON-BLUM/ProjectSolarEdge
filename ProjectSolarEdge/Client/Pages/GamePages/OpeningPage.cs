@@ -60,7 +60,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected async Task STARTGAME()
         {
             cameFromGambling = "false";
-            NavigationManager.NavigateTo($"/GetNextStep/{GameId}/{UserId}");
+            NavigationManager.NavigateTo($"./GetNextStep/{GameId}/{UserId}");
             //NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}/{cameFromGambling}");
         }
 

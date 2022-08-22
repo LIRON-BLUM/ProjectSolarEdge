@@ -78,7 +78,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             int gameID = int.Parse(GameCode);
             int userID = User.ID;
 
-            NavigationManager.NavigateTo($"/OpeningPage/{gameID}/{userID}");
+            NavigationManager.NavigateTo($"./OpeningPage/{gameID}/{userID}");
 
 
         }

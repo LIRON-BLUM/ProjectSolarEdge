@@ -92,15 +92,15 @@ namespace ProjectSolarEdge.Client.Pages
 
             if (QuestionsToEdit.Type == QuestionType.MultipleChoice) 
             { 
-                NavigationManager.NavigateTo($"/EditQuestion/{qid}");
+                NavigationManager.NavigateTo($"./EditQuestion/{qid}");
             }
             else if (QuestionsToEdit.Type == QuestionType.Order)
             {
-                NavigationManager.NavigateTo($"/OrderQuestionEdit/{qid}"); 
+                NavigationManager.NavigateTo($"./OrderQuestionEdit/{qid}"); 
             }
             else
             {
-                NavigationManager.NavigateTo($"/EditQuestion/{qid}");
+                NavigationManager.NavigateTo($"./EditQuestion/{qid}");
             }
         }
 

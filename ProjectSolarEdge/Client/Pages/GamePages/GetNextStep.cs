@@ -70,13 +70,13 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 {
                     // Here we need to redirect the user to the wheel...
                     // we need to do a random to see what question get gamification
-                    NavigationManager.NavigateTo($"WheelOfFortune/{GameId}/{UserId}");
+                    NavigationManager.NavigateTo($"./WheelOfFortune/{GameId}/{UserId}");
                     //}
                 }
 
                 if (AvailleblQuestions.Count() == 0)
                 {
-                    NavigationManager.NavigateTo($"End/{GameId}/{UserId}");
+                    NavigationManager.NavigateTo($"./End/{GameId}/{UserId}");
 
                 }
 
@@ -98,17 +98,17 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
                 {
                     case QuestionType.MultipleChoice:
                         {
-                            NavigationManager.NavigateTo($"MultipelQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                            NavigationManager.NavigateTo($"./MultipelQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
                             break;
                         }
                     case QuestionType.TrueFalse:
                         {
-                            NavigationManager.NavigateTo($"YesNoQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                            NavigationManager.NavigateTo($"./YesNoQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
                             break;
                         }
                     case QuestionType.Order:
                         {
-                            NavigationManager.NavigateTo($"OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
+                            NavigationManager.NavigateTo($"./OrderQuestion/{GameId}/{UserId}/{SelectedQuestion.ID}");
                             break;
                         }
                         break;

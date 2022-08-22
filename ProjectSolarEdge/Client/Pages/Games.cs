@@ -124,7 +124,6 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task GameToDeleteID(int id)
         {
            GameToDelete = await GamesDataService.GetGameByIdAsync(id);
-            Game _gametodelete = await GamesDataService.GetGameByIdAsync(id);
             await GamesDataService.DeleteGame(GameToDelete);
             GamesData = await GamesDataService.GetAllGames();
             GameDataToDisplay = GamesData;

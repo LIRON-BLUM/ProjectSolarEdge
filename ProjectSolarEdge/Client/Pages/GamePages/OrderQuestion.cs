@@ -152,12 +152,12 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             await GameAppDataService.UpdateScoreElement(questionScoreToUpdate);
 
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+            NavigationManager.NavigateTo($"./GetNextStep/{GameId}/{UserId}");
 
         }
         protected async Task SkipAnawer()
         {
-            NavigationManager.NavigateTo($"GetNextStep/{GameId}/{UserId}");
+            NavigationManager.NavigateTo($"./GetNextStep/{GameId}/{UserId}");
 
         }
     }
