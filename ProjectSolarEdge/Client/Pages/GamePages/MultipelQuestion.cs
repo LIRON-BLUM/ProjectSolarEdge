@@ -38,6 +38,9 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public GameScore LastGamblingScore { get; set; }
 
+        public string QuestionImage { get; set; }
+
+
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
 
@@ -117,6 +120,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
             currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count();
 
+            QuestionImage = "data:image/png;base64," + currentQuestion.QuestionImagePath;
 
 
         }

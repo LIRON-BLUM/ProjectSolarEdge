@@ -44,6 +44,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Inject]
         public IGamesDataService GameDataService { get; set; }
 
+
         [Inject]
         public IGameAppService GameAppDataService { get; set; }
 
@@ -51,7 +52,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public NavigationManager NavigationManager { get; set; }
 
         public int currentQuestionNum { get; set; }
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -121,6 +121,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
             currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count();
+
+
         }
 
         protected async Task saveAnawer()

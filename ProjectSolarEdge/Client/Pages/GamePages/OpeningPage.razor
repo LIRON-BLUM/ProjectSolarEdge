@@ -18,7 +18,16 @@
         <p>@GamePlaying.GameDescription </p>
 
         <div id="highScores" class="row justify-content-center">
-            <p class="bestSoFare col-6">The best Players So Far</p>
+            @if(@TopPlayers.Count() == 0)
+            {
+              <p class="bestSoFare col-6">Think you can be the best?</p>
+
+            }
+            else
+            {
+              <p class="bestSoFare col-6">The best Players So Far</p>
+
+            }
             <ul id="highScoreList" class="row justify-content-evenly" >
 
                 @foreach (var user in TopPlayers)
@@ -26,9 +35,28 @@
                     <li class="high-score col-4 ">
                         @user.UserFirstName @user.UserLastName  @user.UserScore
                     </li>
+
                 }
             </ul>
-            <div class="row col-8 align-items-end border-bottom justify-content-evenly gx-5">
+            @if(@TopPlayers.Count() == 0)
+            {
+                <div hidden" class="row col-8 align-items-end border-bottom justify-content-evenly gx-5">
+               
+                <div id="secondPlace" class="col-2 rounded-bottom">
+
+                </div>
+
+                <div id="firstPlace" class="col-2 rounded-bottom">
+                </div>
+
+                <div id="thirdPlace" class="col-2 rounded-bottom">
+                </div>
+
+                </div>
+            }
+            else
+            {
+                 <div class="row col-8 align-items-end border-bottom justify-content-evenly gx-5">
                
                 <div id="secondPlace" class="col-2 rounded-bottom">
 
@@ -41,6 +69,8 @@
                 </div>
 
             </div> 
+            }
+           
         </div>
         <p>
             You have <span id="gameTime">@GamePlaying.GameTimeLimit </span> minutes to give it your best!

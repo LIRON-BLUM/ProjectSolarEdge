@@ -6,6 +6,7 @@
     const availleblQuestions = document.getElementById("availleblQuestions").innerText;
 
     addEventListeners();
+    random();
 
     function dragStart() {
         console.log("dragStart function");
@@ -48,10 +49,7 @@
         const liList = document.getElementsByTagName("li");
 
         const itemOne = liList[fromIndex - 1].querySelector('.draggable');
-        const itemTwo = liList[toIndex - 1].querySelector('.draggable');
-
-        console.log(itemOne);
-        console.log(itemTwo);
+        const itemTwo = liList[toIndex - 1].querySelector('.draggable'); 
 
         liList[fromIndex - 1].appendChild(itemTwo);
         liList[toIndex - 1].appendChild(itemOne);
@@ -117,75 +115,25 @@
         }, 1000);
     }
 
+    function random() {
+        const liList = document.getElementsByTagName("li");
+
+        const answersNum = 4;
+        let CorrentPosition;
+        for (let i = 0; i < answersNum; i++) {
+
+        CorrentPosition = (Math.floor(Math.random() * answersNum));
+
+        const itemOne = liList[i].querySelector('.draggable');
+        const itemTwo = liList[CorrentPosition].querySelector('.draggable');
+
+
+         liList[i].appendChild(itemTwo);
+         liList[CorrentPosition].appendChild(itemOne);
+         }
+    }
+
 }
-
-//function orderQuestionPage() {
-//    let questionHidden = document.getElementById("questionHidden");
-//    let submitAnswer = document.getElementById("submitAnswer");
-//    //let acceptingAnswers = true;
-//    let selectedChoice;
-//    const maxQuestions = document.getElementById("maxQuestions").innerText;
-//    const availleblQuestions = document.getElementById("availleblQuestions").innerText;
-
-//    addEventListeners();
-
-//    //answerClicked = (answer, e) => {
-
-//    //    if (!acceptingAnswers) {
-//    //        selectedChoice.parentElement.classList.remove("chosenAnswer");
-//    //    }
-
-//    //    acceptingAnswers = false;
-//    //    questionHidden.value = answer;
-//    //    var event = new Event('change');
-//    //    questionHidden.dispatchEvent(event);
-
-//    //    submitAnswer.disabled = false;
-
-//    //    selectedChoice = e.target;
-//    //    selectedChoice.parentElement.classList.add("chosenAnswer");
-
-//    //}
-
-//    function dragStart() {
-//        console.log("dragStart function");
-
-//        dragStartIndex = +this.closest('li').getAttribute('data-index');
-//        submitAnswer.disabled = false;
-//    }
-
-//    function dragEnter() {
-
-//            //function swapItems(fromIndex, toIndex) {
-//            //    console.log(fromIndex);
-//            //    console.log(toIndex);
-//            //    console.log(li[fromIndex]);
-
-//            //    const itemOne = li[fromIndex].querySelector('.draggable');
-//            //    const itemTwo = li[toIndex].querySelector('.draggable');
-//            //    const liList = document.getElementsByTagName("li");
-
-//            //    const itemOne = liList[fromIndex - 1].querySelector('.draggable');
-//            //    const itemTwo = liList[toIndex - 1].querySelector('.draggable');
-
-//            //    li[fromIndex].appendChild(itemTwo);
-//            //    li[toIndex].appendChild(itemOne);
-//            //    console.log(itemOne);
-//            //    console.log(itemTwo);
-
-//            //    liList[fromIndex - 1].appendChild(itemTwo);
-//            //    liList[toIndex - 1].appendChild(itemOne);
-//            //}
-
-//    //    function addEventListeners() {
-//    //        @@ -83, 6 + 67, 49 @@
-//    //        item.addEventListener('dragleave', dragLeave);
-//    //    });
-//    //}
-
-
-
-//}
 
 
 

@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <div class="text-center justify-content-center">
+            <div class="text-center justify-content-center align-items-center">
             <h3>Questions @currentQuestionNum</h3>
           
              <div id="QuestionPic"></div>
@@ -45,22 +45,22 @@
  
             <p id="orderQuestion">@currentQuestion.QuestionBody</p>
 
-            <ul class="draggable-list g-3" id="draggable-list">
+            <ul class="draggable-list row gy-4" id="draggable-list">
           
                  @foreach (var answer in currentQuestion.Answers)
                     {
                         
                     <div hidden>
                       @counterAdd()
-                    </div>
+                  </div>
 
-                <li data-index=@counter class="text-center col-11"> 
+                <li data-index=@counter class="text-center col-12"> 
                     <div class="draggable row" draggable="true" RightOrder=@answer.QuestionOrder>
                                     
                         <img class="col-1 offset-1" src="/Files/OrderIcon.svg" alt="Order icon">
                          <p class="person-name col-9"> @answer.AnswerBody</p>
-                         <i class="fas fa-grip-lines"></i>
-                         </div>
+@*                         <i class="fas fa-grip-lines"></i>
+*@                         </div>
                          </li>
                 @*<div class="choiceContainer">
                     <li class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</li>
@@ -70,37 +70,40 @@
                 <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
 
             </ul>
+
             <button type="button" id="checkAnswer" class="btn" onclick="checkOrder()" ></button>
         </div>
-  
+                 <div class="row justify-content-center">
+
             <button type="button" id="checkOrderAns" class="btnBlue col-4 mt-4" onclick="checkOrder()" >submit</button>
                                    <div class="w-100"></div>
 
              <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
-
+          </div>
                  <asp:Button runat="server" ID="saveOrderAnsDB" ClientIDMode="Static" Text="" style="display:none;" @onclick="saveAnawer" />
         </div>
                
-  @code {
+@code {
 
-                protected override void OnAfterRender(bool firstRender)
-                {
-                    if(firstRender)
-                    {
-                        CallJSMethod();
-                    }
-     }
-    
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender)
+        {
+            CallJSMethod();
+        }
+    }
+
 
     private async Task CallJSMethod()
     {
         await JSRuntime.InvokeVoidAsync("orderQuestionPage");
     }
-        int counter = 0;
+    int counter = 0;
 
     private async Task counterAdd()
     {
-       
+
         counter++;
     }
+
 }
