@@ -287,7 +287,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
 
