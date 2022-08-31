@@ -10,6 +10,7 @@ using ProjectSolarEdge.Client.Shared;
 using System.IO;
 
 using System.Net.Http.Json;
+using System.Security.Cryptography;
 
 namespace ProjectSolarEdge.Client.Pages
 {
@@ -182,14 +183,17 @@ namespace ProjectSolarEdge.Client.Pages
             if (i == 1)
             {
                 SelectedDiff = "Easy";
+                QuestionsCRUD.Difficulty = QuestionDifficulty.Easy;
             }
             else if (i == 2)
             {
                 SelectedDiff = "Medium";
+                QuestionsCRUD.Difficulty = QuestionDifficulty.Medium;
             }
             else
             {
                 SelectedDiff = "Hard";
+                QuestionsCRUD.Difficulty = QuestionDifficulty.Hard;
             }
         }
 
@@ -241,6 +245,14 @@ namespace ProjectSolarEdge.Client.Pages
         protected async Task AddSubject()
         {
             await QuestionDataService.AddSubjectToDB(OneSubject);
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
+
+        }
+
+        protected async Task DeleteSubject(int subjectID)
+        {
+            await QuestionDataService.DeleteSubject(subjectID);
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
         }
 
         protected async Task AddAndUpdate()
@@ -392,7 +404,7 @@ namespace ProjectSolarEdge.Client.Pages
 
             }
 
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("./Questions");
 
 
         }

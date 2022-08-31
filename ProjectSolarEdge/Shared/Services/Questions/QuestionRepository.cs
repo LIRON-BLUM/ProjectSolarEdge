@@ -235,6 +235,17 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         }
 
 
+        public bool DeleteSubject(int subjectID)
+        {
+
+            DeleteSubjectConnction(subjectID);
+            bool results = ExecuteAll(QuestionsQueries.DeleteSubject, new { ID = subjectID });
+
+
+            return results;
+        }
+
+
 
 
         //public IEnumerable<PlayerGameQuestionsAnswers> GetPlayerGameQuestionsAnswers(int gameID, int userID)
@@ -246,7 +257,7 @@ namespace ProjectSolarEdge.Shared.Services.Questions
         //         _question.An = GetRecords<QuestionAnswer>(QuestionsQueries.GetQuestionAnswers, new { ID = _question.ID });
         //    }
 
-           
+
 
 
         //    return _question;

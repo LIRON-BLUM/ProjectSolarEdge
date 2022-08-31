@@ -181,6 +181,17 @@ namespace ProjectSolarEdge.Client.Services.Questions
             return 0;
         }
 
+        public async Task<bool> DeleteSubject(int subjectID)
+        {
+            var response = await _httpClient.DeleteAsync($"api/Questions/DeleteSubject/{subjectID}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+            }
+
+            return false;
+        }
 
 
 
@@ -249,7 +260,8 @@ namespace ProjectSolarEdge.Client.Services.Questions
             return false;
         }
 
-   
+
+
 
 
 

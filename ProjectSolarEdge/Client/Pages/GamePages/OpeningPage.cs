@@ -26,7 +26,6 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         public UsersTable Player { get; set; }
         public IEnumerable<UserGameScore> TopPlayers { get; set; }
 
-        public UsersGameRecord PlayrsByGameID { get; set; }
 
         [Inject]
         public IGamesDataService GameDataService { get; set; }
@@ -36,7 +35,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-        public List<UsersGameRecord> TopThreePlayers { get; private set; }
+ 
 
         protected override async Task OnInitializedAsync()
         {

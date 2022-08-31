@@ -363,6 +363,23 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
 
+        [HttpDelete]
+        [Route("DeleteSubject/{subjectID}")]
+        public IActionResult DeleteSubject(int subjectID)
+        {
+            if (subjectID == 0)
+                return BadRequest();
+
+            //var questionToDelete = _questionRepository.GetQuestionById(Id);
+            if (subjectID == null)
+                return NotFound();
+
+          
+            bool _Subject = _questionRepository.DeleteSubject(subjectID);
+
+            return Ok(_Subject);//success
+        }
+
 
 
     }

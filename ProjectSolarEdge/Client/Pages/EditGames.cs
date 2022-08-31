@@ -187,6 +187,8 @@ namespace ProjectSolarEdge.Client.Pages
         public GameQuestionsConnection questionToUpdate { get; set; }
         int GameIdToAdd { get; set; }
 
+        public int QuestionScore = 200;
+
         protected async Task AddAndUpdate()
         {
 
@@ -218,22 +220,55 @@ namespace ProjectSolarEdge.Client.Pages
 
 
                   
-                        int QuestionScore = 0;
+                       // int QuestionScore = 200;
                         Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
                         Question newQ = await QuestionDataService.GetQuestionByIdAsync(q.ID);
-
+                    if (GameCRUD.ScoreMethod == ScoreMethod.SpreadEqualy)
+                    {
                         if (newQ.Difficulty == QuestionDifficulty.Easy)
                         {
                             QuestionScore = 200;
                         }
                         if (newQ.Difficulty == QuestionDifficulty.Medium)
                         {
-                            QuestionScore = 400;
+                            QuestionScore = 200;
                         }
                         if (newQ.Difficulty == QuestionDifficulty.Hard)
                         {
-                            QuestionScore = 600;
+                            QuestionScore = 200;
                         }
+                    } else if (GameCRUD.ScoreMethod == ScoreMethod.SpreadByDifficulty)
+                    {
+                        if (newQ.Difficulty == QuestionDifficulty.Easy)
+                        {
+                           
+                            QuestionScore = 200;
+                        }
+                        if (newQ.Difficulty == QuestionDifficulty.Medium)
+                        {
+                            QuestionScore = QuestionScore + 200;
+                        }
+                        if (newQ.Difficulty == QuestionDifficulty.Hard)
+                        {
+                            QuestionScore = QuestionScore + 400;
+                        }
+                    } else
+                    {
+                        if (newQ.Difficulty == QuestionDifficulty.Easy)
+                        {
+                            QuestionScore = 200;
+                        }
+                        if (newQ.Difficulty == QuestionDifficulty.Medium)
+                        {
+                            QuestionScore = QuestionScore;
+                        }
+                        if (newQ.Difficulty == QuestionDifficulty.Hard)
+                        {
+                            QuestionScore = QuestionScore;
+                        }
+                    }
+
+                       
 
                        
                         selectedQuestionToUpdate.Add(newQ);

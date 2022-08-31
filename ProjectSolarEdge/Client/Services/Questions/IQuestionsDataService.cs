@@ -50,5 +50,7 @@ namespace ProjectSolarEdge.Client.Services.Questions
 
         Task<int> AddSubjectToDB(Subject subject);
 
+        Task<bool> DeleteSubject(int subjectID);
+
     }
 }
