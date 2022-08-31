@@ -234,11 +234,19 @@ namespace ProjectSolarEdge.Shared.Services.Questions
             return results;
         }
 
+        public bool DeleteSubjectByIDFromConnection(int subjectID)
+        {
+            bool results = ExecuteAll(QuestionsQueries.DeleteSubjectByIDFromConnection, new { SubjectID = subjectID });
+
+
+            return results;
+        }
+
 
         public bool DeleteSubject(int subjectID)
         {
 
-            DeleteSubjectConnction(subjectID);
+            
             bool results = ExecuteAll(QuestionsQueries.DeleteSubject, new { ID = subjectID });
 
 

@@ -251,6 +251,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task DeleteSubject(int subjectID)
         {
+            await QuestionDataService.DeleteSubjectByIDFromConnection(subjectID);
             await QuestionDataService.DeleteSubject(subjectID);
             SubjectsData = await QuestionDataService.GetSubjectsAsync();
         }

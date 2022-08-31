@@ -86,9 +86,11 @@
                     <MudSelect T="string" Variant="Variant.Outlined" Label="Select Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
                         @foreach (var subject in SubjectsData)
                         {
-                            <MudSelectItem T="string" Value="@subject.SubjectName">
-                                @subject.SubjectName
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="(() => DeleteSubject(subject.ID))" justify-end aria-label="delete"></MudIconButton>
+                            <MudSelectItem T="string" Value="@subject.SubjectName" Class="d-inline-flex justify-space-between">
+                              
+                                    @subject.SubjectName
+                               
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="(() => DeleteSubject(subject.ID))" Class="justify-end" aria-label="delete"></MudIconButton>
                             </MudSelectItem>
                         }
                     </MudSelect>

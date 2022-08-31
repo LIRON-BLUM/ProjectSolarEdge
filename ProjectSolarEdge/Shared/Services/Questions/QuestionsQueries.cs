@@ -115,6 +115,8 @@ namespace ProjectSolarEdge.Shared.Services.Questions
 
         public static string DeleteSubject => @"DELETE FROM Subjects WHERE ID = @ID";
 
+        public static string DeleteSubjectByIDFromConnection => @"DELETE FROM SubjectsQuestionsConnection WHERE SubjectID = @SubjectID";
+
 
 
 

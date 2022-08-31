@@ -380,6 +380,19 @@ namespace ProjectSolarEdge.Server.Controllers
             return Ok(_Subject);//success
         }
 
+        [HttpDelete]
+        [Route("DeleteSubjectByIDFromConnection/{subjectID}")]
+        public IActionResult DeleteSubjectByIDFromConnection(int subjectID)
+        {
+            if (subjectID == 0)
+                return BadRequest();
+            if (subjectID == null)
+                return NotFound();
+
+            bool _SubConnection = _questionRepository.DeleteSubjectByIDFromConnection(subjectID);
+
+            return Ok(_SubConnection);//success
+        }
 
 
     }
