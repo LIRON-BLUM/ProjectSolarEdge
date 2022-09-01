@@ -140,6 +140,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task OpenDialog(int GameID)
         {
+            OpenOverlay();
             int.TryParse(Id, out var GId);
             var options = new DialogOptions { };
             var parameters = new DialogParameters();
@@ -163,6 +164,15 @@ namespace ProjectSolarEdge.Client.Pages
             }
         }
 
+        private bool isVisible;
+
+        public void OpenOverlay()
+        {
+            isVisible = true;
+            StateHasChanged();
+        }
+
+
         protected async Task GamificationTrue()
         {
             
@@ -175,12 +185,13 @@ namespace ProjectSolarEdge.Client.Pages
             GameCRUD.IsGamified = 0;
         }
 
-
-        protected async Task SaveGame()
+        public Game GameToDelete { get; set; } = new Game();
+        protected async Task DeleteGame()
         {
-          
-            NavigationDestination = 1;
-             AddAndUpdate();
+            await GameDataService.DeleteGame(GameCRUD);
+            NavigationManager.NavigateTo("./Games");
+            //DeleteGame();
+
         }
 
 

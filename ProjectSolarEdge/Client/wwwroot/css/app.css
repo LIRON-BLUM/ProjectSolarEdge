@@ -1,5 +1,7 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap');
+
 
 :root {
     --mud-palette-black: #000000ff;
@@ -256,6 +258,13 @@ a, .btn-link {
     width: 100%;
     z-index: 1000;
 }
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Ubuntu' !important;
+}
+
+
+
 
     #blazor-error-ui .dismiss {
         cursor: pointer;

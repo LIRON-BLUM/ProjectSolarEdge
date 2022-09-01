@@ -9,20 +9,31 @@
 
 
 <MudGrid>
-    <MudItem xs="12" class="d-flex gap-4">
-        <MudItem xs="10" class="d-flex gap-4"><h1>Game Editor</h1></MudItem>
+    @*<MudItem xs="12" class="d-flex gap-4">
+        <MudItem xs="10" class="d-flex gap-4"><h1>Edit Game @GameCRUD.ID</h1></MudItem>
         <MudItem xs="2" class="d-flex gap-4  ">
 
             <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="AddAndUpdate">Save</MudButton>
         </MudItem>
+    </MudItem>*@
+
+
+    <MudItem xs="12" class="d-flex gap-4 align-center justify-space-between mt-2">
+        <MudItem xs="8" class="justify-start gap-4 ">  <h1 Color="Color.Primary">Edit Game @GameCRUD.ID</h1></MudItem>
+        <MudItem xs="3" class=" gap-4 justify-end mx-2 ">
+
+            <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
+
+            <MudButton Variant="Variant.Filled" @onclick="DeleteGame" Color="Color.Primary" DisableElevation="true">Delete Game</MudButton>
+        </MudItem>
     </MudItem>
 
 
-    <MudItem xs="7" class="gap-5">
+    <MudItem xs="8" class="gap-4 py-8" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
         <MudItem xs="12" id="GameName" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
             <MudItem xs="6" id="GameName" Width="100%" Height="auto">
-                <MudTextField Class="ma-2" T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName" />
-                <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                <MudTextField Class="ma-2" T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName" Lines="4" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+                <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="50" MaxLength="50" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
             </MudItem>
             <MudItem xs="6" id="GameDateAndTime" Width="100%" Height="auto">
                 <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
@@ -33,8 +44,8 @@
 
         <MudItem xs="12" id="ScoreMethodAndGamification" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
 
-            <MudItem xs="6" id="ScoreMethodContainer" Width="100%" Height="auto">
-                <MudText Typo="Typo.h6">How Would you like to spred the points between the game questions?</MudText>
+            <MudItem xs="6" id="ScoreMethodContainer" Width="100%" Height="auto" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
+                <MudText><b>How Would you like to spred the points between the game questions?</b></MudText>
 
                 <MudItem xs="12" id="ScoreMethod" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
 
@@ -50,20 +61,20 @@
                         <MudNumericField @bind-Value="@GameCRUD.ScoreMedium" Label="Medium" Variant="Variant.Text" Min="0" Step="100" Max="1000" />
                         <MudNumericField @bind-Value="@GameCRUD.ScoreHard" Label="Hard" Variant="Variant.Text" Min="0" Step="100" Max="1000" />
 
-                   
-                 
-              
+
+
+
                     </MudItem>
                 </MudItem>
             </MudItem>
 
-            <MudItem xs="6" class="d-flex gap-4 ma-2 flex-column" id="GamificationAndIteration" Width="100%" Height="auto">
+            <MudItem xs="6" class="d-flex gap-4 ma-2 flex-column" id="GamificationAndIteration" Width="100%" Height="auto" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
                 <MudItem xs="12" class="d-flex gap-4 " id="GamificationContainer" Width="100%" Height="auto">
                     <MudItem xs="7" id="GamificationQuestion" Width="100%" Height="auto">
                         <MudText>Include Gambling Fanction?</MudText>
                     </MudItem>
                     <MudItem xs="5" id="GamificationYesNo" Width="100%" Height="auto">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary"  @onclick="GamificationTrue">Yes</MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="GamificationTrue">Yes</MudButton>
                         <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="GamificationFalse">No</MudButton>
                     </MudItem>
                 </MudItem>
@@ -83,7 +94,7 @@
                     </MudItem>
                 </MudItem>
 
- 
+
 
             </MudItem>
         </MudItem>
@@ -98,7 +109,7 @@
     </MudItem>
 
 
-    <MudItem xs="5" class="d-inline-flex flex-column  gap-4">
+    <MudItem xs="3" class="d-inline-flex flex-column  gap-4">
 
         @*<MudPaper Class="mud-theme-secondary" Width="100%" Height="320px" Elevation="0">*@
         <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
@@ -123,8 +134,8 @@
             </RowTemplate>
         </MudTable>
         <MudButton @onclick="(() =>OpenDialog(GameCRUD.ID))" Class="mt-4" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
-                Add Questions
-            </MudButton>
+            Add Questions
+        </MudButton>
 
 
     </MudItem>
@@ -136,12 +147,14 @@
 
 
 
-
+<MudOverlay @bind-Visible="isVisible" DarkBackground="true" AutoClose="true" />
 
 
 
 
 @code {
+
+
 
     public string ReadOnly { get; set; } = "Can't change me";
     string sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -151,7 +164,7 @@
     public int ScoreMedium { get; set; }
     public int ScoreHard { get; set; }
 
-  
+
 
     MudMessageBox mbox { get; set; }
     string state = "Message box hasn't been opened yet";

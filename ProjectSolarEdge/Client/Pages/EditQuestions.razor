@@ -25,11 +25,19 @@
         <MudItem xs="12" id="QuestionAnsIMG" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
 
             <MudItem xs="8" id="Question" Width="100%" Height="auto">
-                <MudTextField T="string" Label="Type Your Multiple Question" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" Counter="100" MaxLength="100" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+                <MudTextField T="string" Label="Type Your Multiple Question" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" Counter="100" MaxLength="100" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersQbody))"/>
             </MudItem>
             <MudItem xs="2" id="IMG" Width="100%" Height="auto">
                 @*<MudPaper Class="mud-theme-secondary ma-2" Width="100px" Height="100px" Elevation="0" />*@
-                <img src="@QuestionImage" style="width:150px; height:150px;" />
+                @if (QuestionsCRUD.ID == 0)
+                {
+                    <img src="@QuestionsCRUD.QuestionImagePath" style="width:150px; height:150px;" class="ml-1"  for="fileInput"/>
+                }
+                else
+                {
+                    <img src="@QuestionImage" style="width:150px; height:150px;"  class="ml-1" for="fileInput"/>
+                }
+
                 <InputFile id="fileInput" OnChange="UploadQuestionFile" hidden multiple />
                 <MudFab HtmlTag="label"
                         Color="Color.Primary"
@@ -51,7 +59,7 @@
                         <MudItem xs="12" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
                             <MudItem xs="10" id="AnswersRadio" class="d-inline-flex" Height="auto">
                                 <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true">
-                                    <MudTextField  Margin="Margin.Dense" T="string" @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" Counter="40" MaxLength="40" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" />
+                                    <MudTextField  Margin="Margin.Dense" T="string" @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" Counter="40" MaxLength="40" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersAns))" />
                                     @*<InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>*@
                                 </MudRadio>
                             </MudItem>
@@ -76,7 +84,7 @@
 
                 <MudPagination Color="Color.Primary" Count="3" T="QuestionDifficulty" SelectedChanged="DifficultyChanged" />
 
-                <MudText Align="Align.Left">Difficulty: @SelectedDiff </MudText>
+                <MudText Align="Align.Left" Class="mt-1" Color="Color.Primary">Difficulty: @SelectedDiff </MudText>
 
 
                 <MudItem xs="12" class="flex-column gap-4 mt-8" id="Subject" Width="100%" Height="auto">
@@ -138,7 +146,7 @@
                     <MudItem xs="3" sm="3"><MudChip Color="Color.Primary">400</MudChip></MudItem>
 
                     <MudItem xs="2" sm="2">
-                        <MudIconButton Icon="@Icons.Filled.Info" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Filled.Help" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
                     </MudItem>
 
                 </MudGrid>
@@ -177,101 +185,7 @@
 
         </MudGrid>
 
-        <!--<MudItem>
-            <MudTextField T="string" ValueChanged="@(s => OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
-        </MudItem>
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-
-            <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ? "400px" : "")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
-                <HeaderContent>
-                    <MudTh>Type</MudTh>
-                    <MudTh>Question</MudTh>
-                    <MudTh>Edit</MudTh>
-                    <MudTh>Delete</MudTh>
-
-                </HeaderContent>
-                <RowTemplate>
-                    <MudTd DataLabel="Type">@context.Type</MudTd>
-                    <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
-                    <MudTooltip Text="Edit Question">
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="(() =>NavigateToEdit(context.ID))" Color="Color.Primary" />
-                    </MudTooltip>
-
-                    <MudTd DataLabel="Delete">
-
-                        <MudTooltip Text="Delete Question">
-                            <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() => QuestionsToDeleteID(context.ID))" Color="Color.Primary" />
-                        </MudTooltip>
-                    </MudTd>
-
-                </RowTemplate>
-            </MudTable>
-
-        </MudPaper>-->
-
-
-
-        @*<MudButton @onclick="@OpenDialog" Class="mt-4" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
-            New Question
-        </MudButton>
-
-
-        <MudDialog @bind-IsVisible="visible" Options="dialogOptions">
-            <TitleContent>
-                <MudText Typo="Typo.h6">
-                    <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Edit rating
-                </MudText>
-            </TitleContent>
-            <DialogContent>
-                <p>How awesome are inline dialogs?</p>
-                <MudRating @bind-SelectedValue="rating" Class="mt-3" />
-            </DialogContent>
-            <DialogActions>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit" Class="px-10">Close</MudButton>
-            </DialogActions>
-        </MudDialog>*@
-
-
-    <!--<MudButton @onclick="@ToggleOpen" Class="mt-4" StartIcon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
-        @(_isOpen? "New Question" : "Cancel") 
-    </MudButton>-->
-
-        @*<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@ToggleOpen">
-            @(_isOpen? "ADD QUESTION" : "ADD QUESTION")
-        </MudButton>*@
-        <!--<MudPopover Open="@_isOpen" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
-            <div class="d-flex gap-8 pa-10">
-
-                <div class="d-flex flex-column justify-center align-center  mx-4">
-                    <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavMultipleQuestion">
-                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
-                            <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" />
-                        </MudAvatar><br />
-                        <MudText>Multiple</MudText>
-                    </MudButton>
-                </div>
-
-                <div class="d-flex flex-column justify-center align-center mx-4">
-                    <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavYesNoQuestion">
-                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
-                            <MudIcon Icon="@Icons.Material.Filled.Rule" />
-                        </MudAvatar><br />
-                        <MudText>Yes/No</MudText>
-                    </MudButton>
-                </div>
-
-                <div class="d-flex flex-column justify-center align-center mx-4">
-                    <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavOrderQuestion">
-                        <MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
-                            <MudIcon Icon="@Icons.Material.Filled.FormatListNumbered" />
-                        </MudAvatar><br />
-                        <MudText Class="mt-1" Style="@($"display:block;")">Order</MudText>
-                    </MudButton>
-                </div>
-
-            </div>
-        </MudPopover>-->
+      
 
     </MudItem>
 
@@ -291,42 +205,53 @@
 
 
 
-        private bool visible;
-        private int rating;
-        private void OpenDialog() => visible = true;
-        void Submit() => visible = false;
+    private bool visible;
+    private int rating;
+    private void OpenDialog() => visible = true;
+    void Submit() => visible = false;
 
-        private DialogOptions dialogOptions = new() { FullWidth = true };
+    private DialogOptions dialogOptions = new() { FullWidth = true };
 
 
-        public bool _isOpen;
+    public bool _isOpen;
 
-        public void ToggleOpen()
-        {
-            if (_isOpen)
-                _isOpen = false;
-            else
-                _isOpen = true;
-        }
+    public void ToggleOpen()
+    {
+        if (_isOpen)
+            _isOpen = false;
+        else
+            _isOpen = true;
+    }
 
-        public string ReadOnly { get; set; } = "Can't change me";
-        string sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+    public string ReadOnly { get; set; } = "Can't change me";
+    string sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 
-        string mAnswer = "Answer";
-        public int IntValue { get; set; }
+    string mAnswer = "Answer";
+    public int IntValue { get; set; }
 
-        public int ScoreEasy { get; set; }
+    public int ScoreEasy { get; set; }
 
-        public bool Dense_Radio { get; set; } = true;
+    public bool Dense_Radio { get; set; } = true;
 
-        private IEnumerable<string> MaxCharacters(string ch)
-        {
-            if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
-                yield return "Max 25 characters";
-        }
+    private IEnumerable<string> MaxCharacters(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 100 < ch?.Length)
+            yield return "Max 100 characters";
+    }
 
-      
+    private IEnumerable<string> MaxCharactersQbody(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 80 < ch?.Length)
+            yield return "Max 80 characters";
+    }
 
+
+    
+            private IEnumerable<string> MaxCharactersAns(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 40 < ch?.Length)
+            yield return "Max 100 characters";
+    }
 
 
 }

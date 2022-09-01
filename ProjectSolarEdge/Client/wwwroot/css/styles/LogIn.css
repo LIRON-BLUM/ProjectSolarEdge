@@ -20,3 +20,10 @@ input {
         font-size: 1.8rem;
         padding:15px;
     }
+
+
+.mud-card-header .mud-card-header-content .mud-typography {
+    margin-bottom: 0;
+    font-family: 'Ubuntu';
+    font-weight: 400;
+}

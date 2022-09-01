@@ -64,7 +64,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             int.TryParse(UserId, out var userId);
             availleblQuestions = await GameAppDataService.AvailableQuestions(gameId, userId);
 
-            currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count();
+            currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count() + 1;
 
         }
 

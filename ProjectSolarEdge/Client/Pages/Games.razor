@@ -36,7 +36,7 @@
 
                 <MudTh><MudTableSortLabel SortLabel="GameName_field" T="Game">Game Name</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Creator_field" T="Game">Creator</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="QuestionNum_field" T="Game">Question No.</MudTableSortLabel></MudTh>
+
 
                 <MudTh><MudTableSortLabel SortLabel="Update_Date_field" T="Game">Last Update</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortLabel="Published_field" T="Game">Published</MudTableSortLabel></MudTh>
@@ -49,8 +49,8 @@
             <RowTemplate>
                 <MudTh DataLabel="ID">@context.ID</MudTh>
                 <MudTh DataLabel="GameName">@context.GameName</MudTh>
-                <MudTh DataLabel="Creator">@context.CreatorID</MudTh>
-                <MudTh DataLabel="SumQuestion">x Question</MudTh>
+                <MudTh DataLabel="Creator">@context.Creator</MudTh>
+
                 <MudTh DataLabel="Update">@context.UpdateDate</MudTh>
                 <MudTh DataLabel="Published">@context.isPublished</MudTh>
                 <MudTh DataLabel="Edit">
