@@ -330,3 +330,7 @@ h1, h2, h3, h4, h5 {
     border-top-left-radius: 4px !important;
     border-top-right-radius: 4px !important;
 }
+
+.mud-dialog-width-xs {
+    max-width: 1080px;
+}
