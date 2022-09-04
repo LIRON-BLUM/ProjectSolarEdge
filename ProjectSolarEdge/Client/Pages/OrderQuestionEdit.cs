@@ -183,16 +183,20 @@ namespace ProjectSolarEdge.Client.Pages
             if (i == 1)
             {
                 SelectedDiff = "Easy";
+                QuestionsCRUD.Difficulty = QuestionDifficulty.Easy;
             }
             else if (i == 2)
             {
                 SelectedDiff = "Medium";
+                QuestionsCRUD.Difficulty = QuestionDifficulty.Medium;
             }
             else
             {
                 SelectedDiff = "Hard";
+                QuestionsCRUD.Difficulty = QuestionDifficulty.Hard;
             }
         }
+
 
         private async Task OnSearch(string text)
         {
