@@ -77,7 +77,7 @@ namespace ProjectSolarEdge.Client.Pages
 
     protected async Task NavYesNoQuestion()
         {
-            NavigationManager.NavigateTo("./Questions");
+            NavigationManager.NavigateTo("./EditYesNoQuestion");
         }
 
     protected async Task NavOrderQuestion()
@@ -100,7 +100,7 @@ namespace ProjectSolarEdge.Client.Pages
             }
             else
             {
-                NavigationManager.NavigateTo($"./EditQuestion/{qid}");
+                NavigationManager.NavigateTo($"./EditYesNoQuestion/{qid}");
             }
         }
 
@@ -145,6 +145,9 @@ namespace ProjectSolarEdge.Client.Pages
                     break;
                 case "Creation_Date_field":
                     data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
+                    break;
+                case "Subject_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Subjects);
                     break;
             }
 

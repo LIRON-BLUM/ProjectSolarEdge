@@ -10,10 +10,10 @@
 
 
 
-<MudGrid>
-    <MudItem xs="12" class="d-flex gap-4">
-        <MudItem xs="9" class="d-flex gap-4"><h1>Edit Question @QuestionsCRUD.ID</h1></MudItem>
-        <MudItem xs="3" class=" gap-4  ">
+<MudGrid Spacing="4">
+    <MudItem xs="12" class="d-flex gap-4 align-center justify-space-between mt-2">
+        <MudItem xs="8" class="justify-start gap-4 ">  <h1 Color="Color.Primary">Edit Question @QuestionsCRUD.ID</h1></MudItem>
+        <MudItem xs="3" class=" gap-4 justify-end mx-2 ">
 
             <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
 
@@ -22,29 +22,45 @@
     </MudItem>
 
 
-    <MudItem xs="7" class="gap-4">
+    <MudItem xs="8" class="gap-4 py-8" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
         <MudItem xs="12" id="QuestionAnsIMG" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
 
             <MudItem xs="8" id="Question" Width="100%" Height="auto">
-                <MudTextField T="string" Label="Type Your Multiple Question" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" />
+                <MudTextField T="string" Label="Type Your Order Question" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" Counter="100" MaxLength="100" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersQbody))" />
             </MudItem>
             <MudItem xs="2" id="IMG" Width="100%" Height="auto">
                 @*<MudPaper Class="mud-theme-secondary ma-2" Width="100px" Height="100px" Elevation="0" />*@
-                <img src="./Files/QuestionDefaltImage.png" Class=" ma-2" Width="100px" Height="100px" />
+                @if (QuestionsCRUD.ID == 0)
+                {
+                    <img src="@QuestionsCRUD.QuestionImagePath" style="width:150px; height:150px;" class="ml-1" for="fileInput" />
+                }
+                else
+                {
+                    <img src="@QuestionImage" style="width:150px; height:150px;" class="ml-1" for="fileInput" />
+                }
+
+                <InputFile id="fileInput" OnChange="UploadQuestionFile" hidden multiple />
+                <MudFab HtmlTag="label"
+                        Color="Color.Primary"
+                        Icon="@Icons.Filled.Image"
+                        Size="Size.Small"
+                        for="fileInput" />
+
+
 
             </MudItem>
         </MudItem>
 
         <MudItem xs="12" id="AnswersAndDifficulty" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
-            <MudItem xs="8" id="Answers" class="d-flex gap-4 flex-column" Width="100%" Height="auto">
+            <MudItem xs="8" id="Answers" class="d-flex gap-4 flex-column pr-15" Width="100%" Height="auto">
 
-  
+
 
 
                 @foreach (var ans in QuestionsCRUD.Answers)
                 {
 
-                    <MudItem xs="12" id="Answers" class="d-flex gap-4 " align-center Width="100%" Height="auto">
+                    <MudItem xs="12" id="Answers" class="d-flex gap-4 align-center"  Width="100%" Height="auto">
 
                         <MudAvatar class="ma-2" Rounded="true" Color="Color.Default">@ans.QuestionOrder</MudAvatar>
 
@@ -63,27 +79,28 @@
             </MudItem>
 
             <MudItem xs="4" id="DifficultyContainer" class=" gap-4 " Width="100%" Height="auto">
-                <MudItem xs="12" class=" gap-4 " id="Difficulty" Width="100%" Height="auto">
-                    <MudText>Difficulty</MudText>
+                <MudItem xs="12" id="Difficulty" Width="100%" Height="auto">
+                    <MudText class=" ma-1"><b>Difficulty</b></MudText>
                 </MudItem>
-
 
 
                 <MudPagination Color="Color.Primary" Count="3" T="QuestionDifficulty" SelectedChanged="DifficultyChanged" />
 
-                <MudText Align="Align.Center">Selected page: @SelectedDiff </MudText>
+                <MudText Align="Align.Left" Class="mt-1" Color="Color.Primary">Difficulty: @SelectedDiff </MudText>
 
 
                 <MudItem xs="12" class="flex-column gap-4 mt-8" id="Subject" Width="100%" Height="auto">
-                    <MudText>Subject</MudText>
+                    <MudText><b>Subject</b></MudText>
 
 
-                    <MudSelect Margin="Margin.Dense" T="string" Variant="Variant.Outlined" Label="Select Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
+                    <MudSelect T="string" Variant="Variant.Outlined" Label="Select Subjects" MultiSelection="true" @bind-Value="DefaultValue" @bind-SelectedValues="SelectedSubjects">
                         @foreach (var subject in SubjectsData)
                         {
-                            <MudSelectItem T="string" Value="@subject.SubjectName">
+                            <MudSelectItem T="string" Value="@subject.SubjectName" Class="d-inline-flex justify-space-between">
+
                                 @subject.SubjectName
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" justify-end aria-label="delete"></MudIconButton>
+
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="(() => DeleteSubject(subject.ID))" Class="justify-end" aria-label="delete"></MudIconButton>
                             </MudSelectItem>
                         }
                     </MudSelect>
@@ -93,7 +110,7 @@
                             <MudTextField @bind-Value="@OneSubject.SubjectName" class="ma-1" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" />
                         </MudItem>
                         <MudItem xs="4" class="ma-1" id="AddSubjectNameBtn" Width="100%" Height="auto">
-                            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Add"  Margin="Margin.Dense" Class="--mud-palette-gray-default">Add</MudButton>
+                            <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Add" Margin="Margin.Dense" OnClick="AddSubject" Class="--mud-palette-gray-default">Add</MudButton>
                         </MudItem>
                     </MudItem>
 
@@ -121,61 +138,52 @@
 
     </MudItem>
 
+    <MudItem xs="3" class="d-inline-flex flex-column  gap-4 py-8" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
 
-    <MudItem xs="5" class="d-inline-flex flex-column  gap-4">
+        <MudGrid>
+            <MudItem xs="12" sm="12">
+                <MudGrid Justify="Justify.SpaceBetween" class="align-center">
+                    <MudItem xs="3" sm="3"><MudChip Color="Color.Primary" Label="true">400</MudChip></MudItem>
 
-        @*<MudPaper Class="mud-theme-secondary" Width="100%" Height="320px" Elevation="0" />
-            <MudPaper Class="mud-theme-secondary" Width="100%" Height="64px" Elevation="0" />*@
+                    <MudItem xs="2" sm="2">
+                        <MudIconButton Icon="@Icons.Filled.Help" Color="Color.Secondary" aria-label="add to favorite"></MudIconButton>
+                    </MudItem>
 
-        <MudItem>
-            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
-        </MudItem>
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                </MudGrid>
+            </MudItem>
+            <MudItem xs="12" sm="12">
+                <MudProgressLinear Color="Color.Primary" Size="Size.Medium" Value="10" />
+                <MudText>1/10</MudText>
+            </MudItem>
 
-            <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")" ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))">
-                <HeaderContent>
-                    <MudTh>Type</MudTh>
-                    <MudTh>Question</MudTh>
-                    <MudTh>Delete</MudTh>
+            <MudItem xs="12" sm="12">
+                <MudText Class="d-flex align-center justify-center" Typo="Typo.h4" Color="Color.Primary"><b>Question 1</b></MudText>
+            </MudItem>
 
-                </HeaderContent>
-                <RowTemplate>
-                    <MudTd DataLabel="Type">@context.Type</MudTd>
-                    <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
-                    <MudTd DataLabel="Delete">
+            <MudItem xs="12" sm="12">
+                <MudText Class="d-flex align-center justify-center" Align="Align.Center" Typo="Typo.h6" Color="Color.Primary" @bind-Value="@QuestionsCRUD.QuestionBody">@QuestionsCRUD.QuestionBody</MudText>
+            </MudItem>
 
-                        <MudTooltip Text="Delete Question">
-                            <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>QuestionsToDeleteID(context.ID))" Color="Color.Primary" />
-                        </MudTooltip>
-                    </MudTd>
+            <MudItem xs="12" sm="12">
+                <MudPaper Class="d-flex align-center mud-width-full py-1" Style="@($"color:{Color.Primary}; background:#EDF8FE;")"><b Color="Color.Primary">Choose The Correct Answer</b></MudPaper>
+            </MudItem>
 
-                </RowTemplate>
-            </MudTable>
-
-        </MudPaper>
-
-
-
-        <MudButton @onclick="@OpenDialog" Class="mt-4" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
-            New Question
-        </MudButton>
+            @foreach (var QuesAns in QuestionsCRUD.Answers)
+            {
+                <MudItem xs="12" sm="12">
+                    <MudPaper Class="d-flex align-center justify-center mud-width-full" Outlined="true" Style="@($"color:{Color.Primary}; background:#EDF8FE; border: 1px solid #001546;")"> <img  class="col-1 offset-1" src="./Files/OrderIcon.svg" style=" margin-right: 25px; margin-left: 10px; width: 20px; " alt="Order icon">@QuesAns.AnswerBody</MudPaper>
+                </MudItem>
+            }
 
 
-        <MudDialog @bind-IsVisible="visible" Options="dialogOptions">
-            <TitleContent>
-                <MudText Typo="Typo.h6">
-                    <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Edit rating
-                </MudText>
-            </TitleContent>
-            <DialogContent>
-                <p>How awesome are inline dialogs?</p>
-                <MudRating @bind-SelectedValue="rating" Class="mt-3" />
-            </DialogContent>
-            <DialogActions>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit" Class="px-10">Close</MudButton>
-            </DialogActions>
-        </MudDialog>
+            <MudItem xs="12" sm="12" Class=" align-center justify-center">
+                <MudButton Class=" align-center justify-center mud-width-full mt-2 py-3" Align="Align.Center" Variant="Variant.Filled" Color="Color.Primary" Disabled="false">CHECK</MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="12">
+                <MudButton Class="align-center justify-center mud-width-full " Variant="Variant.Text" Color="Color.Primary">SKIP</MudButton>
+            </MudItem>
+
+        </MudGrid>
 
 
 
@@ -224,8 +232,22 @@
 
     private IEnumerable<string> MaxCharacters(string ch)
     {
-        if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
-            yield return "Max 25 characters";
+        if (!string.IsNullOrEmpty(ch) && 100 < ch?.Length)
+            yield return "Max 100 characters";
+    }
+
+    private IEnumerable<string> MaxCharactersQbody(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 80 < ch?.Length)
+            yield return "Max 80 characters";
+    }
+
+
+
+    private IEnumerable<string> MaxCharactersAns(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 40 < ch?.Length)
+            yield return "Max 100 characters";
     }
 
     //IList<IBrowserFile> files = new List<IBrowserFile>();

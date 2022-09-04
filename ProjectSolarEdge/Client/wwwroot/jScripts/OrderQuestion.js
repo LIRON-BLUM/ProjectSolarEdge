@@ -1,16 +1,94 @@
 ﻿function orderQuestionPage() {
+
+    /**
+ * Lightweight script to convert touch handlers to mouse handlers
+ * credit: http://stackoverflow.com/a/6141093
+ */
+    //(function () {
+    //    function touchHandler(e) {
+    //        var touches = e.changedTouches;
+    //        var first = touches[0];
+    //        var type = "";
+
+    //        switch (e.type) {
+    //            case "touchstart":
+    //                type = "mousedown";
+    //                break;
+    //            case "touchmove":
+    //                type = "mousemove";
+    //                break;
+    //            case "touchend":
+    //                type = "mouseup";
+    //                break;
+    //            default:
+    //                return;
+    //        }
+
+    //        var simulatedEvent = document.createEvent("MouseEvent");
+    //        simulatedEvent.initMouseEvent(type, true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false, 0, null);
+
+    //        first.target.dispatchEvent(simulatedEvent);
+    //        e.preventDefault();
+    //    }
+
+    //    function init() {
+    //        document.addEventListener("touchstart", touchHandler, true);
+    //        document.addEventListener("touchmove", touchHandler, true);
+    //        document.addEventListener("touchend", touchHandler, true);
+    //        document.addEventListener("touchcancel", touchHandler, true);
+    //    }
+
+    //    init();
+    //})();
+
+
     let questionHidden = document.getElementById("questionHidden");
     //let acceptingAnswers = true;
     /*    let selectedChoice;*/
     const maxQuestions = document.getElementById("maxQuestions").innerText;
     const availleblQuestions = document.getElementById("availleblQuestions").innerText;
 
+
     addEventListeners();
     random();
+
+    //function touchHandler(event) {
+    //    var touches = event.changedTouches,
+    //        first = touches[0],
+    //        type = "";
+
+    //    switch (event.type) {
+    //        case "touchstart": type = "mousedown"; break;
+    //        case "touchmove": type = "mousemove"; break;
+    //        case "touchend": type = "mouseup"; break;
+    //        default: return;
+    //    }
+
+    //    // initMouseEvent(type, canBubble, cancelable, view, clickCount,
+    //    //                screenX, screenY, clientX, clientY, ctrlKey,
+    //    //                altKey, shiftKey, metaKey, button, relatedTarget);
+
+    //    var simulatedEvent = document.createEvent("MouseEvent");
+    //    simulatedEvent.initMouseEvent(type, true, true, window, 1,
+    //        first.screenX, first.screenY,
+    //        first.clientX, first.clientY, false,
+    //        false, false, false, 0/*left*/, null);
+
+    //    first.target.dispatchEvent(simulatedEvent);
+    //    event.preventDefault();
+    //}
+
+    //function init() {
+    //    document.addEventListener("touchstart", touchHandler, true);
+    //    document.addEventListener("touchmove", touchHandler, true);
+    //    document.addEventListener("touchend", touchHandler, true);
+    //    document.addEventListener("touchcancel", touchHandler, true);
+    //}
 
     function dragStart() {
         console.log("dragStart function");
 
+    
         dragStartIndex = +this.closest('li').getAttribute('data-index');
         //submitAnswer.disabled = false;
     }
@@ -23,6 +101,7 @@
 
     function dragLeave() {
         console.log("dragLeave function");
+
         this.classList.remove('over');
     }
 
@@ -33,6 +112,8 @@
 
     function dragDrop() {
         console.log("dragDrop function");
+      
+
         const dragEndIndex = +this.getAttribute('data-index');
         swapItems(dragStartIndex, dragEndIndex);
 
@@ -61,6 +142,8 @@
 
         draggables.forEach(draggable => {
             draggable.addEventListener('dragstart', dragStart);
+
+          
         });
 
         dragListItems.forEach(item => {
@@ -133,6 +216,42 @@
          }
     }
 
+    (function () {
+        function touchHandler(e) {
+            var touches = e.changedTouches;
+            var first = touches[0];
+            var type = "";
+
+            switch (e.type) {
+                case "touchstart":
+                    type = "mousedown";
+                    break;
+                case "touchmove":
+                    type = "mousemove";
+                    break;
+                case "touchend":
+                    type = "mouseup";
+                    break;
+                default:
+                    return;
+            }
+
+            var simulatedEvent = document.createEvent("MouseEvent");
+            simulatedEvent.initMouseEvent(type, true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false, 0, null);
+
+            first.target.dispatchEvent(simulatedEvent);
+            e.preventDefault();
+        }
+
+        function init() {
+            document.addEventListener("touchstart", touchHandler, true);
+            document.addEventListener("touchmove", touchHandler, true);
+            document.addEventListener("touchend", touchHandler, true);
+            document.addEventListener("touchcancel", touchHandler, true);
+        }
+
+        init();
+    })();
 }
 
 

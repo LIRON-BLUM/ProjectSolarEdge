@@ -1,28 +1,61 @@
-﻿
+﻿@using ProjectSolarEdge.Shared.Entities
+@inject HttpClient httpClient
+@using System.Net.Http.Json
 
 <MudDialog>
     <DialogContent>
         <MudItem>
-            <MudTable Items="QuestionsNotInGame" MultiSelection="true" @bind-SelectedItems="selectedQuestions" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+            <MudTable ServerData="@(new Func<TableState, Task<TableData<Question>>>(ServerReload))" Items="QuestionsNotInGame" MultiSelection="true" @bind-SelectedItems="selectedQuestions" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"600px":"")" Hover="true" SortLabel="Sort By">
                 <HeaderContent>
-                    <MudTh>ID</MudTh>
-                    <MudTh>Question</MudTh>
-                    <MudTh>Type</MudTh>
-                    <MudTh>Difficulty</MudTh>
-                    <MudTh>Creator</MudTh>
-                    <MudTh>Update Date</MudTh>
+       
+                    <MudTh><MudTableSortLabel SortLabel="ID_field" T="Question">ID</MudTableSortLabel></MudTh>
+                    <MudTh>Question Body</MudTh>
+                    <MudTh><MudTableSortLabel SortLabel="Subject_field" T="Question">Subject</MudTableSortLabel></MudTh>
 
+                    <MudTh><MudTableSortLabel SortLabel="Type_field" T="Question">Type</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortLabel="Difficulty_field" T="Question">Difficulty</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortLabel="Creator_field" T="Question">Creator</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortLabel="Update_Date_field" T="Question">Update Date</MudTableSortLabel></MudTh>
 
                     @*<MudTh>Type</MudTh>
-                    <MudTh>Question</MudTh>
-                    <MudTh>Difficulty</MudTh>*@
+        <MudTh>Question</MudTh>
+        <MudTh>Difficulty</MudTh>*@
 
 
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="ID">@context.ID</MudTd>
                     <MudTd DataLabel="QuestionBody">@context.QuestionBody</MudTd>
-                    <MudTd DataLabel="Type">@context.Type</MudTd>
+
+                    <MudTh DataLabel="Subject">
+                        @foreach (var QuestionSub in @context.Subjects)
+                        {
+                            <MudChip>@QuestionSub.SubjectName</MudChip>
+                        }
+                    </MudTh>
+
+                    <MudTd DataLabel="Type" Style="padding-left:0px !important">
+
+                        @if (context.Type == QuestionType.MultipleChoice)
+                        {
+                            <MudTooltip Text="Multiple Question">
+                                <img src="./Files/MultipleTable.svg" width="60px" />
+                            </MudTooltip>
+                        }
+                        else if (context.Type == QuestionType.Order)
+                        {
+                            <MudTooltip Text="Order Question">
+                                <img src="./Files/OrderTable.svg" width="60px" />
+                            </MudTooltip>
+                        }
+                        else
+                        {
+                            <MudTooltip Text="Order Question">
+                                <img src="./Files/YesNoTable.svg" width="60px" />
+                            </MudTooltip>
+                        }
+
+                    </MudTd>
                     <MudTd DataLabel="Difficulty">@context.Difficulty</MudTd>
                     <MudTd DataLabel="Creator">@context.Creator</MudTd>
                     <MudTd DataLabel="UpdateDate">@context.UpdateDate</MudTd>
@@ -44,7 +77,7 @@
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-  
+
 
     //void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();

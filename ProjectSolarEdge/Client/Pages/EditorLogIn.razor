@@ -48,6 +48,7 @@
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent Class="justify-center">
+                    @*<MudForm @bind-Errors="@errors"></MudForm>*@
                     <MudTextField @bind-Value="@UserEmail" Label="Username" Variant="Variant.Outlined"></MudTextField>
                     <MudTextField @bind-Value="@UserPassword" Label="Password" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" Variant="Variant.Outlined" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password"></MudTextField>
 

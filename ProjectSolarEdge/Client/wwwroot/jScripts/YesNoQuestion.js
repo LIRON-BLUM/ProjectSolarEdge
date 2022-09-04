@@ -26,6 +26,27 @@
 
     // update the progress bar
     progressBarFull.style.width = `${(availleblQuestions / maxQuestions) * 100}%`;
+
+
+
+    getFeedback = () => {
+        selectedChoice.parentElement.classList.remove("chosenAnswer");
+
+        if (isRight != "False") {
+            selectedChoice.parentElement.classList.add("correct");
+
+        }
+        else {
+            selectedChoice.parentElement.classList.add("incorrect");
+        }
+
+        setTimeout(() => {
+
+            document.getElementById("saveAnawerDB").click();
+        }, 1000);
+    }
+
+
 }
 ////    const question = document.getElementById("question");
 ////    const submitAnswer = document.getElementById("submitAnswer");

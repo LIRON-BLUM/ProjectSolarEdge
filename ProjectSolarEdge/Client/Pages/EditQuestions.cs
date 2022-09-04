@@ -20,8 +20,6 @@ namespace ProjectSolarEdge.Client.Pages
         [Parameter]
         public string Id { get; set; }
 
-        [Parameter]
-        public string EditorID { get; set; }
 
         public UsersTable EditorData { get; set; }
 
@@ -31,30 +29,21 @@ namespace ProjectSolarEdge.Client.Pages
 
         public string SelectedDiff = "Easy";
 
-        public bool CheckedAnswerIsRight { get; set; }
-
         public Question QuestionsCRUD { get; set; } = new Question();
 
-        public Question NewQuestion { get; set; } = new Question();
 
         public IEnumerable<Question> QuestionsData { get; set; }
 
         public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
 
-        public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
 
         public Subject OneSubject { get; set; } = new Subject();
 
         public IEnumerable<Subject> SubjectsData { get; set; }
 
 
-        public IEnumerable<SubjectsQuestions> SQConnection { get; set; } = new List<SubjectsQuestions>();
-
         public IEnumerable<string> SelectedSubjects { get; set; } = new HashSet<string>();
 
-
-
-        public IEnumerable<SubjectsQuestionsConnection> SubjectConnectionData { get; set; }
 
         public string DefaultValue { get; set; } = "Select Subject";
 
@@ -70,11 +59,6 @@ namespace ProjectSolarEdge.Client.Pages
 
         public Question QuestionsToDelete { get; set; } = new Question();
 
-        [CascadingParameter]
-        public MainLayout MainLayout { get; set; }
-
-        [CascadingParameter]
-        public NavMenu NavLayout { get; set; }
 
         public string filePicDataUrl { get; set; }
 

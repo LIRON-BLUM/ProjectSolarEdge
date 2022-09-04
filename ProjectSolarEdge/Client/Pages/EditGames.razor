@@ -29,34 +29,44 @@
     </MudItem>
 
 
-    <MudItem xs="8" class="gap-4 py-8" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
+    <MudItem xs="7" class="gap-4 py-1" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
         <MudItem xs="12" id="GameName" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
             <MudItem xs="6" id="GameName" Width="100%" Height="auto">
-                <MudTextField Class="ma-2" T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName" Lines="4" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
-                <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Margin="Margin.Dense" Counter="50" MaxLength="50" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                <MudTextField Class="ma-2" T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName" Lines="2" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" />
+                <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Lines="4" Counter="50" MaxLength="50" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
             </MudItem>
             <MudItem xs="6" id="GameDateAndTime" Width="100%" Height="auto">
-                <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
-                <MudDatePicker Class="ma-2" Label="Editable with Placeholder" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="enddate" Placeholder="Select Date" />
-                @*<MudNumericField Class="ma-2" @bind-Value="@GameCRUD.GameTimeLimit" Label="Enter an int" Variant="Variant.Outlined" />*@
+                <MudDatePicker Class="ma-2 mx-10" Label="Game Start Date" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
+                <MudDatePicker Class="ma-2 mx-10" Label="Game End Date" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="enddate" Placeholder="Select Date" />
+                <MudNumericField Class="ma-2 mx-10 mt-4" @bind-Value="@GameCRUD.GameTimeLimit" Label="Game Time Limit" Variant="Variant.Outlined" />
             </MudItem>
         </MudItem>
+        @*<MudText Typo="Typo.body1" Class="ml-4 mb-n3"><b>Score Method</b></MudText>*@
 
-        <MudItem xs="12" id="ScoreMethodAndGamification" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
 
-            <MudItem xs="6" id="ScoreMethodContainer" Width="100%" Height="auto" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
-                <MudText><b>How Would you like to spred the points between the game questions?</b></MudText>
+    <MudItem xs="12" id="ScoreMethodAndGamification" class="d-flex gap-4 ma-2 flex-column" Width="100%" Height="auto">
+        <MudItem id="titles" xs="12" class="ml-4 mb-n1 d-flex">
+            <MudItem xs="6">
+                <MudText Typo="Typo.body1"><b>Score Method</b></MudText>
+            </MudItem>
+            <MudItem xs="6">
+                <MudText Typo="Typo.body1"><b>Gamification</b></MudText>
+            </MudItem>
+        </MudItem>
+        <MudItem xs="12" class="d-flex">
+            <MudItem xs="6" id="ScoreMethodContainer" Class="pa-4 ma-2" Width="100%" Height="auto" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 8px !important;")">
+                <MudText Typo="Typo.body2"><b>How Would you like to spred the points between the game questions?</b></MudText>
 
                 <MudItem xs="12" id="ScoreMethod" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
 
-                    <MudItem xs="6" id="ScoreMethodChoose" class="d-flex gap-4 ma-2 flex-column" Width="100%" Height="auto">
+                    <MudItem xs="8" id="ScoreMethodChoose" class="d-flex ml-n5 flex-column" Width="100%" Height="auto">
                         <MudRadioGroup @bind-SelectedOption="@GameCRUD.ScoreMethod" class="d-flex flex-column">
-                            <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SpreadEqualy)" UnCheckedColor="Color.Default">Spread Equaly</MudRadio>
-                            <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SpreadByDifficulty)" UnCheckedColor="Color.Default">Spread By Difficulty</MudRadio>
-                            <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SeldSpread)" UnCheckedColor="Color.Default">I’ll Do It Myself</MudRadio>
+                            <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SpreadEqualy)" Typo="Typo.body2" UnCheckedColor="Color.Default">Spread Equaly</MudRadio>
+                            <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SpreadByDifficulty)" Typo="Typo.body2" UnCheckedColor="Color.Default">Spread By Difficulty</MudRadio>
+                            <MudRadio Color="Color.Primary" Option="@(ScoreMethod.SeldSpread)" Typo="Typo.body2" UnCheckedColor="Color.Default">I’ll Do It Myself</MudRadio>
                         </MudRadioGroup>
                     </MudItem>
-                    <MudItem xs="6" id="ScoreSpread" class="d-flex gap-4 ma-2 flex-column" Width="100%" Height="auto">
+                    <MudItem xs="4" id="ScoreSpread" class="d-flex ml-10 flex-column" Width="100%" Height="auto">
                         <MudNumericField @bind-Value="@GameCRUD.ScoreEasy" Label="Easy" Variant="Variant.Text" Min="0" Step="100" Max="1000" />
                         <MudNumericField @bind-Value="@GameCRUD.ScoreMedium" Label="Medium" Variant="Variant.Text" Min="0" Step="100" Max="1000" />
                         <MudNumericField @bind-Value="@GameCRUD.ScoreHard" Label="Hard" Variant="Variant.Text" Min="0" Step="100" Max="1000" />
@@ -68,28 +78,44 @@
                 </MudItem>
             </MudItem>
 
-            <MudItem xs="6" class="d-flex gap-4 ma-2 flex-column" id="GamificationAndIteration" Width="100%" Height="auto" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
-                <MudItem xs="12" class="d-flex gap-4 " id="GamificationContainer" Width="100%" Height="auto">
-                    <MudItem xs="7" id="GamificationQuestion" Width="100%" Height="auto">
-                        <MudText>Include Gambling Fanction?</MudText>
+
+            <MudItem xs="6" class="d-flex gap-4 ma-2 flex-column pa-4" id="GamificationAndIteration" Width="100%" Height="auto" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 8px !important;")">
+                <MudItem xs="12" class="d-flex align-center" id="GamificationContainer" Width="100%" Height="auto" style="border-bottom: 1px solid #D8DDE1;">
+
+
+                    <MudItem xs="8" id="GamificationQuestion" Width="100%" Height="auto">
+                        <MudText Typo="Typo.body2"><b>Include Gambling Fanction?</b></MudText>
                     </MudItem>
-                    <MudItem xs="5" id="GamificationYesNo" Width="100%" Height="auto">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="GamificationTrue">Yes</MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="GamificationFalse">No</MudButton>
-                    </MudItem>
-                </MudItem>
-                <MudItem xs="12" id="IterationContainer" class="d-flex gap-4 " Width="100%" Height="auto">
-                    <MudItem xs="6" id="IterWheelTitle" class="d-flex gap-4 " Width="100%" Height="auto">
-                        <MudText>Wheel of Fortune every</MudText>
+                    <MudItem xs="4" id="GamificationYesNo" Width="100%" Height="auto">
+                        @*<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="GamificationTrue">Yes</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="GamificationFalse">No</MudButton>*@
+
+                        <MudChipSet @bind-SelectedChip="selected" Filter="true" Mandatory="@mandatory">
+                            <MudSwitch @bind-Checked="@GameIsGamified" Color="Color.Secondary"> @GameIsGamified</MudSwitch>
+                            @*<MudChip Text="Yes" Color="Color.Primary" Default="@GamificationON">Yes</MudChip>
+                            <MudChip Text="No" Color="Color.Primary" Default="@GamificationOFF">No</MudChip>*@
+                        </MudChipSet>
+
 
                     </MudItem>
-                    <MudItem xs="3" id="IterWheelNum" Width="100%" Height="auto">
-                        <MudNumericField @bind-Value="@GameCRUD.WheelIteration" Label="" Variant="Variant.Text" Min="0" Max="10" />
+                </MudItem>
+                <MudItem xs="12" id="IterationContainer" class="d-flex gap-4 align-center" Width="100%" Height="auto">
+                    <MudItem xs="7" id="IterWheelTitle" class="d-flex gap-4 " Width="100%" Height="auto">
+                        <MudText Typo="Typo.body2"> <b>Wheel of Fortune every</b></MudText>
+
+                    </MudItem>
+                    <MudItem xs="2" id="IterWheelNum" Width="100%" Height="auto" Class="mx-2 mb-5">
+                        <MudNumericField @bind-Value="@GameCRUD.WheelIteration" Label="" Variant="Variant.Text" Min="0" Max="10" style="
+                                                                                                                                    border: 1px solid #D8DDE1;
+                                                                                                                                    border-radius: 5px;
+                                                                                                                                    padding: 2px;
+                                                                                                                                    padding-left: 7px;
+                                                                                                                                " />
 
 
                     </MudItem>
                     <MudItem xs="3" id="IterWheelQ" Width="100%" Height="auto">
-                        <MudText>Questions</MudText>
+                        <MudText Typo="Typo.body2"><b>Questions</b></MudText>
 
                     </MudItem>
                 </MudItem>
@@ -98,7 +124,7 @@
 
             </MudItem>
         </MudItem>
-
+    </MudItem>
 
 
 
@@ -109,30 +135,52 @@
     </MudItem>
 
 
-    <MudItem xs="3" class="d-inline-flex flex-column  gap-4">
+    <MudItem xs="4" class="d-inline-flex flex-column  gap-4">
+        <MudItem  Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important; height:520;")">
+            @*<MudPaper Class="mud-theme-secondary" Width="100%" Height="320px" Elevation="0">*@
+            <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"520px":"")" Style="border-radius: 10px;">
+                <HeaderContent>
+                    <MudTh>Type</MudTh>
+                    <MudTh>Question</MudTh>
+                    <MudTh>Delete</MudTh>
 
-        @*<MudPaper Class="mud-theme-secondary" Width="100%" Height="320px" Elevation="0">*@
-        <MudTable Items="QuestionsDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
-            <HeaderContent>
-                <MudTh>Type</MudTh>
-                <MudTh>Question</MudTh>
-                <MudTh>Delete</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Type" Style="padding-left:10px !important; ">
 
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Type">@context.Type</MudTd>
-                <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
-                <MudTd DataLabel="Delete">
+                        @if (context.Type == QuestionType.MultipleChoice)
+                        {
+                            <MudTooltip Text="Multiple Question">
+                                <img src="./Files/MultipleTable.svg" width="50px" />
+                            </MudTooltip>
+                        }
+                        else if (context.Type == QuestionType.Order)
+                        {
+                            <MudTooltip Text="Order Question">
+                                <img src="./Files/OrderTable.svg" width="50px" />
+                            </MudTooltip>
+                        }
+                        else
+                        {
+                            <MudTooltip Text="Order Question">
+                                <img src="./Files/YesNoTable.svg" width="50px" />
+                            </MudTooltip>
+                        }
 
-                    <MudTooltip Text="Delete Question">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteQuestionFromGame(context.ID))" Color="Color.Primary" />
+                    </MudTd>
+                    <MudTd DataLabel="Question">@context.QuestionBody <br /> <MudChip>@context.Difficulty</MudChip>  <MudChip>@context.UpdateDate</MudChip> </MudTd>
+                    <MudTd DataLabel="Delete">
+
+                        <MudTooltip Text="Delete Question">
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteQuestionFromGame(context.ID))" Color="Color.Primary" />
 
 
-                    </MudTooltip>
-                </MudTd>
+                        </MudTooltip>
+                    </MudTd>
 
-            </RowTemplate>
-        </MudTable>
+                </RowTemplate>
+            </MudTable>
+        </MudItem>
         <MudButton @onclick="(() =>OpenDialog(GameCRUD.ID))" Class="mt-4" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">
             Add Questions
         </MudButton>
@@ -154,7 +202,8 @@
 
 @code {
 
-
+    bool mandatory = true;
+    MudChip selected;
 
     public string ReadOnly { get; set; } = "Can't change me";
     string sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -177,9 +226,6 @@
     }
 
 
-
-    bool mandatory = true;
-    MudChip selected;
 
 
 

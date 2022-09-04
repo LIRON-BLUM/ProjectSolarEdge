@@ -76,37 +76,31 @@ namespace ProjectSolarEdge.Client.Pages
 
             IEnumerable<Game> data = await GamesDataService.GetAllGames();
             //await Task.Delay(300);
-            data = data.Where(Game =>
+            //data = data.Where(Game =>
 
-            {
-                if (string.IsNullOrWhiteSpace(searchString))
-                    return true;
-                if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                    return true;
-               
-                if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
-                    return true;
-                return false;
-            }).ToArray();
-            totalItems = data.Count();
-            //switch (state.SortLabel)
             //{
-            //    case "ID_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.ID);
-            //        break;
-            //    case "Type_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.Type);
-            //        break;
-            //    case "Difficulty_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
-            //        break;
-            //    case "Creator_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.Creator);
-            //        break;
-            //    case "Creation_Date_field":
-            //        data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
-            //        break;
-            //}
+            //    if (string.IsNullOrWhiteSpace(searchString))
+            //        return true;
+            //    if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            //        return true;
+               
+            //    if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
+            //        return true;
+            //    return false;
+            //}).ToArray();
+            //totalItems = data.Count();
+            switch (state.SortLabel)
+            {
+                case "ID_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.ID);
+                    break;
+                case "Type_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Creator);
+                    break;
+                case "Difficulty_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.isPublished);
+                    break;
+            }
 
             pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
             return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };
@@ -115,11 +109,14 @@ namespace ProjectSolarEdge.Client.Pages
 
         private async Task OnSearch(string text)
         {
-            searchString = text;
-            table.ReloadServerData();
+       
+                GameDataToDisplay = GamesData.Where(q => q.GameName.Contains(text) || q.Creator.ToLower().Contains(text.ToLower()));
+                //searchString = text;
+                //table.ReloadServerData();
+            
         }
 
-  
+
         public Game GameToDelete { get; set; } = new Game();
         protected async Task GameToDeleteID(int id)
         {

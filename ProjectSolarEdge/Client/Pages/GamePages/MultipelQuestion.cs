@@ -57,6 +57,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
         public int currentQuestionNum { get; set; }
 
+        public int currentQuestionProgressNum { get; set; }
+
         public void Dispose()
         {
             throw new NotImplementedException();
@@ -119,6 +121,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
             currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count() + 1;
+
+            currentQuestionProgressNum = currentQuestionNum * 10;
 
             QuestionImage = "data:image/png;base64," + currentQuestion.QuestionImagePath;
 

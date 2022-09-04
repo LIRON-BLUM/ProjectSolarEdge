@@ -120,7 +120,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
             //}
 
 
-            currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count();
+            currentQuestionNum = GamePlaying.Questions.Count() - availleblQuestions.Count() + 1;
 
 
         }

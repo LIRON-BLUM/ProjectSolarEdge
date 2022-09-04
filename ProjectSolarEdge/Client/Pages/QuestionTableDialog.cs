@@ -124,22 +124,10 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-
-
-
-
-
-
-            //GameCRUD.Questions = selectedQuestionToUpdate;
-
-
             if (GameCRUD.ID == 0) // Create new question
             {
 
 
-
-                // 2) Save the question itself into the database and get the question ID back from the database
-                //await GameDataService.AddGameToDB(GameCRUD);
 
 
                 MudDialog.Close(DialogResult.Ok(selectedQuestions));
@@ -211,35 +199,6 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
-        //protected async Task DeleteQuestion(int id)
-        //{
-        //    QuestionsToDelete = await QuestionDataService.GetQuestionByIdAsync(id);
-        //    await QuestionDataService.DeleteQuestion(QuestionsToDelete);
-
-        //    QuestionsData = await QuestionDataService.GetQuestionsAsync();
-        //    QuestionsDataToDisplay = QuestionsData;
-
-
-        //    NavigationManager.NavigateTo($"./EditGame/{GameID}");
-
-
-        //}
-
-
-
-
-        //protected async Task Navigation(int pageNum)
-        //{
-        //    if (pageNum == 1)
-        //    {
-        //        NavigationManager.NavigateTo("./Games");
-        //    }
-        //    else
-        //        NavigationManager.NavigateTo($"./EditGame/{GameID}");
-        //}
-
-  
-
 
 
 
@@ -255,34 +214,46 @@ namespace ProjectSolarEdge.Client.Pages
         //private string searchString = "";
         private string searchString = "";
         private int totalItems;
-        private IEnumerable<Game> pagedData;
-        private MudTable<Game> table;
+        private IEnumerable<Question> pagedData;
+        private MudTable<Question> table;
         public string SubName = "";
 
         //private bool FilterFunc(Game Game)
 
-        protected async Task<TableData<Game>> ServerReload(TableState state)
+
+
+
+
+        protected async Task<TableData<Question>> ServerReload(TableState state)
         {
 
-            IEnumerable<Game> data = await GameDataService.GetAllGames();
-            //await Task.Delay(300);
-            data = data.Where(Game =>
+            IEnumerable<Question> data = await QuestionDataService.GetQuestionsAsync();
 
+
+            switch (state.SortLabel)
             {
-                if (string.IsNullOrWhiteSpace(searchString))
-                    return true;
-                if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                    return true;
-
-                if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
-                    return true;
-                return false;
-            }).ToArray();
-            totalItems = data.Count();
-
+                case "ID_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.ID);
+                    break;
+                case "Type_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Type);
+                    break;
+                case "Difficulty_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
+                    break;
+                case "Creator_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Creator);
+                    break;
+                case "Creation_Date_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
+                    break;
+                case "Subject_field":
+                    data = data.OrderByDirection(state.SortDirection, o => o.Subjects);
+                    break;
+            }
 
             pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
-            return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };
+            return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
 
         }
 

@@ -10,7 +10,19 @@
     color:white;
 }
 
-img{
-    height:150px;
-    width:150px;
+img {
+    height: 120px;
+    width: 120px;
+}
+
+.pageDescription{
+    margin-top: 10px;
+}
+
+.mud-card-content {
+    padding-bottom: 4px !important;
+}
+
+.mud-list-item-icon {
+    color: #FF3232;
 }

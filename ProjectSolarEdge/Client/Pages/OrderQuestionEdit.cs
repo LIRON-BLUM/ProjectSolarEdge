@@ -81,6 +81,11 @@ namespace ProjectSolarEdge.Client.Pages
 
         string EditorIDSessiom = "";
 
+        public string filePicDataUrl { get; set; }
+
+        public string QuestionImage { get; set; }
+
+
         protected override async Task OnInitializedAsync()
         {
             EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
@@ -98,7 +103,7 @@ namespace ProjectSolarEdge.Client.Pages
             if (QId == 0) //new Game is being created
             {
                 //add some defaults
-                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)3, Difficulty = (QuestionDifficulty)1, Feedback = "", Creator = CreatorName };
+                QuestionsCRUD = new Question { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, Type = (QuestionType)3, Difficulty = (QuestionDifficulty)1, Feedback = "", Creator = CreatorName, QuestionImagePath = "./Files/QuestionDefaltImage.png" };
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
                 QuestionsCRUD.Subjects = new List<Subject>();
 
@@ -108,7 +113,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
                     ID = 1,
-                    //AnswerBody = " ",
+                    AnswerBody = "Order 1",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false,
@@ -117,7 +122,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
                     ID = 2,
-                    //AnswerBody = " ",
+                    AnswerBody = "Order 2",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false,
@@ -126,7 +131,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
                     ID = 3,
-                    //AnswerBody = " ",
+                    AnswerBody = "Order 3",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false,
@@ -135,7 +140,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
                     ID = 4,
-                    //AnswerBody = " ",
+                    AnswerBody = "Order 4",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                     IsRight = false,
@@ -148,6 +153,7 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
 
 
+                QuestionImage = "data:image/png;base64," + QuestionsCRUD.QuestionImagePath;
 
                 foreach (var myanswer in QuestionsCRUD.Answers)
                 {
@@ -194,10 +200,6 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
-        protected async Task AddSubject()
-        {
-            await QuestionDataService.AddSubjectToDB(OneSubject);
-        }
 
         protected async Task AddAndUpdate()
         {
@@ -296,45 +298,6 @@ namespace ProjectSolarEdge.Client.Pages
 
 
 
-        public string filePicDataUrl { get; set; }
-
-        private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
-        {
-
-            //get the file
-            var file = inputFileChangeEvent.File;
-
-            var fileInArray = new byte[file.Size];
-
-            await file.OpenReadStream(1512000).ReadAsync(fileInArray);
-
-            filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
-
-
-
-
-        }
-
-
-        IList<IBrowserFile> files = new List<IBrowserFile>();
-        private async Task UploadFiles(InputFileChangeEventArgs e)
-        {
-            foreach (var file in e.GetMultipleFiles())
-            {
-                //var file = inputFileChangeEvent.File;
-
-
-                files.Add(file);
-                var fileInArray = new byte[file.Size];
-                await file.OpenReadStream(1512000).ReadAsync(fileInArray);
-
-                filePicDataUrl = $"data:image/png;base64,{Convert.ToBase64String(fileInArray)}";
-                //TimeSpan.TicksPerMillisecond
-
-
-            }
-
-        }
 
         protected async Task DeleteQuestion()
         {
@@ -357,7 +320,18 @@ namespace ProjectSolarEdge.Client.Pages
         }
 
 
+        protected async Task AddSubject()
+        {
+            await QuestionDataService.AddSubjectToDB(OneSubject);
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
+        }
 
+        protected async Task DeleteSubject(int subjectID)
+        {
+            await QuestionDataService.DeleteSubjectByIDFromConnection(subjectID);
+            await QuestionDataService.DeleteSubject(subjectID);
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
+        }
 
 
 
@@ -420,6 +394,34 @@ namespace ProjectSolarEdge.Client.Pages
             pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
             return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
 
+        }
+
+
+
+        public int MaxAlloedFiles = int.MaxValue;
+        public long maxFileSize = long.MaxValue;
+        public List<string> fileNames = new();
+
+        private async Task UploadQuestionFile(InputFileChangeEventArgs e)
+        {
+            var imageFiles = e.GetMultipleFiles();
+            foreach (var file in imageFiles)
+            {
+                if (file.Size <= maxFileSize)
+                {
+                    var buffer = new byte[file.Size];
+                    await file.OpenReadStream(maxFileSize).ReadAsync(buffer);
+                    var imageBase64 = Convert.ToBase64String(buffer);
+
+                    QuestionsCRUD.QuestionImagePath = imageBase64;
+
+                    var showfile = imageBase64;
+                    filePicDataUrl = $"data:image/png;base64,{showfile}";
+
+                    QuestionImage = filePicDataUrl;
+
+                }
+            }
         }
 
         public void Dispose()

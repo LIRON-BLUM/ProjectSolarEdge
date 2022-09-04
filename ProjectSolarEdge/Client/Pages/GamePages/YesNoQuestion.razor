@@ -25,11 +25,11 @@
 
             <div id="QuestionPic"></div>
             <h2 id="question">@currentQuestion.QuestionBody </h2>
-            <div id="answersContainer" lass="row justify-content-evenly">
+            <div id="answersContainer" class="row row-cols-2 justify-content-evenly align-items-center text-center">
                  @foreach (var answer in currentQuestion.Answers)
                     {
-                <div class="choiceContainer col-5 mt-8">
-                    <p class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</p>
+                <div class="choiceContainer col-5 mt-8"  onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight">
+                    <p class="choice-text"> @answer.AnswerBody</p>
                 </div>
 
                
@@ -38,7 +38,7 @@
 
             </div>
 
-             <div class="row justify-content-center">
+             <div class="row justify-content-center row row-cols-2 justify-content-evenly align-items-center text-center">
 
             <button type="button" id="submitAnswer" class="btnBlue col-4 mt-4" @onclick="saveAnawer">submit</button>
                        <div class="w-100"></div>

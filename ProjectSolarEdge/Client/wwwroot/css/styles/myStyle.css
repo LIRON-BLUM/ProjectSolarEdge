@@ -82,14 +82,14 @@ p {
 
 /* BUTTONS */
 .btnBlue {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 900;
     border: 0.1rem solid #001546;
     background-color: #001546;
     color: white;
     text-decoration: none;
     border-radius: 10px;
-    height: 50px;
+    height: 35px;
 }
 
     .btnBlue:hover {
@@ -159,7 +159,7 @@ highScoresList {
 
 /* progresbar */
 #hud {
-    margin-top: 2rem;
+ 
     display: flow;
     width: 100%;
 

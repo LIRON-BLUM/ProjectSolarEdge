@@ -81,6 +81,11 @@ namespace ProjectSolarEdge.Client.Pages
 
         public List<Question> selectedQuestionToUpdate = new List<Question>();
 
+        public bool GamificationON { get; set; } = false;
+
+        public bool GamificationOFF { get; set; } = false;
+
+        public bool GameIsGamified { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -100,13 +105,20 @@ namespace ProjectSolarEdge.Client.Pages
 
             if (GId == 0)
             {
+
+                GameIsGamified = true;
+                GamificationON = true;
+                GamificationOFF = false;
+
                 //get all questions in the dialog 
-              GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1,GameTimeLimit=10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1, Creator = CreatorName };
+                GameCRUD = new Game { CreationDate = DateTime.Now, UpdateDate = DateTime.Now, GameTheme = (GameTheme)1, GameStartDate = DateTime.Now, GameEndDate = DateTime.Now, CreatorID = 1,GameTimeLimit=10, ScoreMethod = (ScoreMethod)1, ScoreEasy = 200, ScoreMedium = 300, ScoreHard = 400, IsGamified = 1, WheelIteration = 1, GambleIteration = 1, Creator = CreatorName };
               GameCRUD.Questions = new List<Question>();
                 foreach (var Ques in GameCRUD.Questions)
                 {
                     Ques.Answers = new List<QuestionAnswer>();
                 }
+
+
             } else
             {
                 GameCRUD = await GameDataService.GetGameByIdAsync(int.Parse(Id));
@@ -114,6 +126,19 @@ namespace ProjectSolarEdge.Client.Pages
                 selectedQuestions = GameCRUD.Questions.ToHashSet();
                 QuestionsDataToDisplay = GameCRUD.Questions;
 
+                if (GameCRUD.IsGamified == 1)
+                {
+                    GameIsGamified = true;
+                    GamificationON = true;
+                    GamificationOFF = false;
+                 
+                } else if (GameCRUD.IsGamified == 0)
+                {
+                    GameIsGamified = false;
+                    GamificationON = false;
+                    GamificationOFF = true;
+                  
+                }
                // GameCRUD.Questions = selectedQuestionToUpdate;
             }
 
@@ -158,6 +183,8 @@ namespace ProjectSolarEdge.Client.Pages
                 GameCRUD.Questions.AddRange(q);
            
                 QuestionsDataToDisplay = GameCRUD.Questions;
+                isVisible = true;
+                StateHasChanged();
                 //QuestionsDataToDisplay = GameCRUD.Questions;
                 //  GameCRUD.Questions = result;
                 //NavigationManager.NavigateTo($"/EditGame/{GId}");
@@ -217,6 +244,7 @@ namespace ProjectSolarEdge.Client.Pages
             if (GameCRUD.ID == 0) // Create new question
             {
                 GameCRUD.Creator = CreatorName;
+                GameCRUD.IsGamified =Convert.ToByte(GameIsGamified);
                 //List<Question> selectedQuestionsToUpdate = new List<Question>();
                 // 2) Save the question itself into the database and get the question ID back from the database
                 GameIdToAdd =  await GameDataService.AddGameToDB(GameCRUD);
@@ -229,7 +257,7 @@ namespace ProjectSolarEdge.Client.Pages
                   foreach (var item in QuestionsDataToDisplay)
                   {
 
-
+                  
                   
                        // int QuestionScore = 200;
                         Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
@@ -300,10 +328,18 @@ namespace ProjectSolarEdge.Client.Pages
             }
             else
             {
+                GameCRUD.IsGamified = Convert.ToByte(GameIsGamified);
+                if (selected.Text == "Yes")
+                {
+                    GameCRUD.IsGamified = 1;
+                }
+                else
+                {
+                    GameCRUD.IsGamified = 0;
+                }
 
                 
-
-              await GameDataService.UpdateGame(GameCRUD);
+                await GameDataService.UpdateGame(GameCRUD);
              
             }
 
