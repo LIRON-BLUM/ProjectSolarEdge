@@ -60,8 +60,10 @@
             <div id="answersContainer" class="row row-cols-2 justify-content-evenly align-items-center text-center">
                 @foreach (var answer in currentQuestion.Answers)
                 {
-                    <div class="choiceContainer d-flex align-center col-5 mt-4" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight">
-                        <p class="AnswerText ma-2"> @answer.AnswerBody</p>
+                    <div class="choiceContainer col-5 mt-8">
+                       
+                            <p class=" mt-8" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight" > @answer.AnswerBody</p>
+                      
                     </div>
 
 

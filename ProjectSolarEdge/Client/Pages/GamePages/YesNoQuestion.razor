@@ -6,7 +6,91 @@
 <link href="./css/styles/Game.css" rel="stylesheet" />
 <link href="./css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-<div class="container">
+
+
+
+<div class="container mt-4">
+    <div id="game" class="justify-content-center align-items-center">
+
+        <MudGrid>
+            <MudItem xs="12" sm="12">
+                <MudGrid Justify="Justify.SpaceBetween" class="align-center">
+                    <MudItem xs="4" sm="4"><MudChip Icon="TotalPoints" Color="Color.Primary" Label="true" Style="color:white !important;"><span id="TotalPoints"> @currentScore.UserScore Points</span></MudChip></MudItem>
+
+                    <MudItem xs="2" sm="2">
+                        <MudIconButton Icon="@Icons.Filled.Help" Color="Color.Secondary" aria-label="add to favorite" Size="Size.Large"></MudIconButton>
+                    </MudItem>
+
+                </MudGrid>
+            </MudItem>
+
+        </MudGrid>
+
+        <div id="hud">
+            <div id="hud-item">
+                <div id="progressBar">
+                    <div id="progressBarFull"></div>
+                </div>
+                <p id="progressText"> <span id="availleblQuestions">@currentQuestionNum  </span> / <span id="maxQuestions"> @GamePlaying.Questions.Count() </span></p>
+            </div>
+            <div id="hud-item">
+            </div>
+        </div>
+
+        <h3 class="text-center">Questions @currentQuestionNum</h3>
+
+        <div class="row justify-content-center">
+            <img src="@QuestionImage" style="width:100px; height:auto;" class="col-5 align-self-center" />
+
+        </div>
+
+        <h2 id="question" class="text-center"> @currentQuestion.QuestionBody </h2>
+
+        <div class="container text-center">
+
+            <div class="row gx-5 justify-content-center">
+                <div class="col-10">
+                    <div class="QuestionDescription mt-4">Choose The Correct Answer</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="answersContainer" class="row row-cols-2 justify-content-evenly align-items-center text-center">
+            @foreach (var answer in currentQuestion.Answers)
+            {
+                <div class="choiceContainer col-5 mt-8">
+
+                    <p class=" mt-8" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</p>
+
+                </div>
+
+
+            }
+            <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
+
+        </div>
+
+
+        <div class="row justify-content-center">
+
+            <button type="button" id="submitAnswer" class="btnBlue col-6 mt-4" onclick="getFeedback()">submit</button>
+
+            <div class="w-100"></div>
+
+            <button type="button" id="SkipAnswer" class="mt-2" @onclick="SkipAnawer">Skip</button>
+        </div>
+
+
+        <asp:Button runat="server" ID="saveAnawerDB" ClientIDMode="Static" Text="" style="display:none;" @onclick="saveAnawer" />
+
+
+
+    </div>
+</div>
+
+
+
+@*<div class="container">
         <div id="game" class="justify-content-center align-items-center">
 
             <div id="points">
@@ -32,7 +116,7 @@
                     <p class="choice-text"> @answer.AnswerBody</p>
                 </div>
 
-               
+
                 }
                 <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
 
@@ -45,18 +129,18 @@
 
             <button type="button" id="SkipAnswer" @onclick="SkipAnawer">Skip</button>
         </div>
-  
+
         </div>
-    </div>
+    </div>*@
 
 @code {
-     protected override void OnAfterRender(bool firstRender)
+    protected override void OnAfterRender(bool firstRender)
     {
-        if(firstRender)
+        if (firstRender)
         {
             CallJSMethod();
         }
-     }
+    }
 
     private async Task CallJSMethod()
     {

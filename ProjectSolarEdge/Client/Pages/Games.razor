@@ -54,12 +54,11 @@
                 <MudTh DataLabel="Update">@context.UpdateDate</MudTh>
                 <MudTh DataLabel="Published">@context.isPublished</MudTh>
                 <MudTh DataLabel="Edit">
-                    <a href="/EditGame/@context.ID">
+               
                        
                             <MudTooltip Text="Edit Game">
-                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" />
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="(() =>NavigateToEdit(context.ID))" Color="Color.Primary" />
                             </MudTooltip>
-                        </a>
                 </MudTh>
                 <MudTh DataLabel="Delete">
 

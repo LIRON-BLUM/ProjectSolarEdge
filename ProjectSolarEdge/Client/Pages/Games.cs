@@ -55,6 +55,11 @@ namespace ProjectSolarEdge.Client.Pages
 
         }
 
+        protected async Task NavigateToEdit(int Gid)
+        {
+            NavigationManager.NavigateTo($"./EditGame/{Gid}");
+        }
+
 
 
 

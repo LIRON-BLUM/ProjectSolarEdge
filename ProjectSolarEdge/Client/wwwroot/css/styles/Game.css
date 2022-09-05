@@ -24,6 +24,7 @@
 
 p.AnswerText {
     font-size: 1.5rem;
+    height: 65px;
 }
 
 /* feedback */

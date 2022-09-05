@@ -1,33 +1,32 @@
 ﻿function YesNoQuestion() {
-        let questionHidden = document.getElementById("questionHidden");
-        let submitAnswer = document.getElementById("submitAnswer");
-        let acceptingAnswers = true;
-        let selectedChoice;
+    let questionHidden = document.getElementById("questionHidden");
+    let acceptingAnswers = true;
+    let selectedChoice;
+    let isRight;
     const maxQuestions = document.getElementById("maxQuestions").innerText;
     const availleblQuestions = document.getElementById("availleblQuestions").innerText;
 
-        answerClicked = (answer, e) => {
+    answerClicked = (answer, e) => {
 
-            if (!acceptingAnswers) {
-                selectedChoice.parentElement.classList.remove("chosenAnswer");
-            }
-
-            acceptingAnswers = false;
-            questionHidden.value = answer;
-            var event = new Event('change');
-            questionHidden.dispatchEvent(event);
-
-            submitAnswer.disabled = false;
-
-            selectedChoice = e.target;
-            selectedChoice.parentElement.classList.add("chosenAnswer");
-
+        if (!acceptingAnswers) {
+            selectedChoice.parentElement.classList.remove("chosenAnswer");
         }
+
+        acceptingAnswers = false;
+        questionHidden.value = answer;
+        isRight = answer;
+        var event = new Event('change');
+        questionHidden.dispatchEvent(event);
+
+        //submitAnswer.disabled = false;
+
+        selectedChoice = e.target;
+        selectedChoice.parentElement.classList.add("chosenAnswer");
+
+    }
 
     // update the progress bar
     progressBarFull.style.width = `${(availleblQuestions / maxQuestions) * 100}%`;
-
-
 
     getFeedback = () => {
         selectedChoice.parentElement.classList.remove("chosenAnswer");
@@ -45,8 +44,6 @@
             document.getElementById("saveAnawerDB").click();
         }, 1000);
     }
-
-
 }
 ////    const question = document.getElementById("question");
 ////    const submitAnswer = document.getElementById("submitAnswer");
