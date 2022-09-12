@@ -1,0 +1,71 @@
+﻿@using ProjectSolarEdge.Shared.Entities
+@inject HttpClient httpClient
+@using System.Net.Http.Json
+
+
+<MudDialog>
+    <DialogContent>
+        <MudItem Class="flex-column">
+            <MudText Align="Align.Center">אודות</MudText>
+            <MudItem xs="12" class="d-flex justify-center">
+                <img Src="./Files/KnowledgeOnWhite.svg" Alt="Questions" width="20%" height="20%">
+            </MudItem>
+            <MudText Align="Align.Center">מחולל משחקים המיועדים למכשיר הנייד</MudText>
+
+
+
+            <MudText Align="Align.Center">פרויקט גמר, תשפ"ב</MudText>
+            <MudText Align="Align.Center"> <a target="_blank" href="https://www.hit.ac.il/telem/overview">הפקולטה לטכנולגיות למידה</a>פרויקט גמר, תשפ"ב</MudText>
+        </MudItem>
+        <div id="inAbout">
+            <img id="aboutLogo" src="./Files/KnowledgeOnWhite.svg" alt="tortor game logo">
+            <p id="aboutProject">
+                מחולל משחקים המיועדים למכשיר הנייד עבור אנשי המכירות של SolarEdge
+            </p>
+            <p id="aboutContent">
+                פרויקט גמר, תשפ"א
+            </p>
+            <a id="linkTelem" href="https://www.hit.ac.il/telem/overview" target="_blank">הפקולטה לטכנולוגיות למידה</a>
+            <div id="infoAbout">
+                <div class="aboutFlex">
+                    <div class="spaceLogoText">
+                        <img id="hitlogo" class="logo" src="./Files/logoTelem.gif" alt="HIT logo">
+                    </div>
+                    <div>
+                        <p>
+                            <b>צוות הפרויקט:</b><br>
+                            שירה כהן ויובל גולדשטיין
+                        </p>
+                        <p>
+                            <b>מנחות:</b><br>
+                            ד"ר דורותי לנגלי וגב' רעות טייטלר
+                        </p>
+                    </div>
+                </div>
+                <div class="aboutFlex">
+                    <div class="spaceLogoText">
+                        <img id="mesilotLogo" class="logo" src="images/aboutPopup/mesilotLogo.png" alt="school logo">
+                    </div>
+                    <div>
+                        <p>
+                            <b>בשיתוף בית הספר 'מסילות'</b><br>
+                            נציגת הארגון גב' אורלי אלשיך
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </DialogContent>
+    <DialogActions>
+
+        <MudButton Color="Color.Primary" OnClick="Submit">close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+}

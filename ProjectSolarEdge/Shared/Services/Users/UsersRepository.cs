@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProjectSolarEdge.Shared.Data;
 using ProjectSolarEdge.Shared.Entities;
+using ProjectSolarEdge.Shared.Services.Questions;
 
 namespace ProjectSolarEdge.Shared.Services.Users
 {
@@ -13,6 +14,7 @@ namespace ProjectSolarEdge.Shared.Services.Users
         public UsersRepository(string connectionString) : base(connectionString)
         {
         }
+
 
         public IEnumerable<UsersTable> GetAllUsers()
         {
@@ -37,5 +39,36 @@ namespace ProjectSolarEdge.Shared.Services.Users
             UsersTable _userID = GetRecords<UsersTable>(UsersQueries.GetUserByPassword, new { UserPassword = userPassword }).FirstOrDefault();
             return _userID;
         }
+
+
+        public int AddUser(UsersTable user)
+        {
+
+            int results = InsertAndreturnInt(UsersQueries.AddNewUser, user);
+
+
+            return results;
+        }
+
+        public bool DeleteUser(UsersTable user)
+        {
+            bool results = ExecuteAll(UsersQueries.DeleteUser, user);
+
+
+            return results;
+        }
+
+
+        public bool UpdateUser(UsersTable user)
+        {
+            bool results = ExecuteAll(UsersQueries.UpdateUser, user);
+
+
+            return results;
+        }
+
+
+
+
     }
 }

@@ -1,0 +1,111 @@
+﻿
+
+
+@page "/Users"
+@using ProjectSolarEdge.Shared.Entities
+@inject HttpClient httpClient
+@using System.Net.Http.Json
+
+<MudGrid>
+
+
+    <MudItem xs="12">
+        <h1 Class="d-flex align-center justify-start mud-width-full py-8">Users</h1>
+    </MudItem>
+
+
+    <MudItem xs="4">
+        <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
+    </MudItem>
+    <MudItem xs="6" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
+    <MudItem xs="2" Class="justify-end">
+     
+
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@NavNewUser">Add User</MudButton>
+      
+
+
+    </MudItem>
+
+
+    <br />
+    <MudItem xs="12">
+        <MudTable ServerData="@(new Func<TableState, Task<TableData<UsersTable>>>(ServerReload))" Items="UsersDataToDisplay" Hover="true" FixedHeader="@fixed_header" FixedFooter="@fixed_footer" Height="@(fixed_header || fixed_footer ?"400px":"")">
+            <!--<ToolBarContent>-->
+            @*<MudText Typo="Typo.h6">Questions</MudText>*@
+
+            @*<MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>*@
+            <!--</ToolBarContent>-->
+            <HeaderContent>
+                <MudTh><MudTableSortLabel SortLabel="ID_field" T="UsersTable">ID</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="FirstName_field" T="UsersTable">First Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="LastName_field" T="UsersTable">Last Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="UserType_field" T="UsersTable">User Type</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortLabel="Creation_Date_field" T="UsersTable">Creation Date</MudTableSortLabel></MudTh>
+                <MudTh>Edit</MudTh>
+                <MudTh>Delete</MudTh>
+
+
+                @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+
+            </HeaderContent>
+            <RowTemplate>
+                <MudTh DataLabel="ID">@context.ID</MudTh>
+                <MudTh DataLabel="First Name">@context.UserFirstName</MudTh>
+                <MudTh DataLabel="Difficulty">@context.UserLastName</MudTh>
+                <MudTh DataLabel="Creator">@context.UserType</MudTh>
+                <MudTh DataLabel="Creation Date">@context.CreationDate</MudTh>
+                <MudTh DataLabel="Edit">
+                    @*<a href="/EditQuestion/@context.ID/@EditorID">*@
+                    <MudTooltip Text="Edit User">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="(() =>NavigateToEdit(context.ID))" Color="Color.Primary" />
+                    </MudTooltip>
+                    @*</a>*@
+                </MudTh>
+                <MudTh DataLabel="Delete">
+
+                    <MudTooltip Text="Delete User">
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteUser(context.ID))" Color="Color.Primary" />
+                    </MudTooltip>
+
+                </MudTh>
+
+            </RowTemplate>
+            <NoRecordsContent>
+                <MudText>No matching records found</MudText>
+            </NoRecordsContent>
+            <LoadingContent>
+                <MudText>Loading...</MudText>
+            </LoadingContent>
+
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[]{5,10,20}"></MudTablePager>
+            </PagerContent>
+        </MudTable>
+    </MudItem>
+</MudGrid>
+
+@code {
+
+    public Origin TransformOrigin { get; set; } = Origin.TopRight;
+    public Origin AnchorOrigin { get; set; } = Origin.BottomLeft;
+
+
+    public bool _isOpen;
+
+    public void ToggleOpen()
+    {
+        if (_isOpen)
+            _isOpen = false;
+        else
+            _isOpen = true;
+    }
+
+
+
+}

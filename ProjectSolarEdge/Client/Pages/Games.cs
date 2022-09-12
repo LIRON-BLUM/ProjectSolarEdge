@@ -81,19 +81,20 @@ namespace ProjectSolarEdge.Client.Pages
 
             IEnumerable<Game> data = await GamesDataService.GetAllGames();
             //await Task.Delay(300);
-            //data = data.Where(Game =>
+            data = data.Where(Game =>
 
-            //{
-            //    if (string.IsNullOrWhiteSpace(searchString))
-            //        return true;
-            //    if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            //        return true;
-               
-            //    if ($"{Game.GameTimeLimit} {Game.UpdateDate}".Contains(searchString))
-            //        return true;
-            //    return false;
-            //}).ToArray();
-            //totalItems = data.Count();
+            {
+                if (string.IsNullOrWhiteSpace(searchString))
+                    return true;
+                if (Game.GameName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (Game.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if ($" {Game.UpdateDate}".Contains(searchString))
+                    return true;
+                return false;
+            }).ToArray();
+            totalItems = data.Count();
             switch (state.SortLabel)
             {
                 case "ID_field":

@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap');
+
+* {
+    font-family: Assistant;
+}
+
+.fontAssistant {
+    font-family: Assistant !important;
+}
+
+.aboutContent {
+    direction: rtl !important;
+    font-family: Assistant !important;
+}
+
+.logo {
+    margin-left:20px !important;
+    float:left;
+  
+}
+
+
+
+
+#inAbout {
+    width: 80%;
+    margin-right: 10%;
+    margin-top: 2rem;
+    margin-top: 2.3rem;
+}
+
+#aboutProject {
+    margin: 0rem 3.6rem 1.6rem 0rem;
+}
+
+#linkTelem {
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+#infoAbout {
+    margin-top: 1.6rem;
+    margin-right: 4rem;
+    font-size: .9rem;
+}
+
+.spaceLogoText {
+    margin-left: 3rem;
+}
+
+#aboutContent {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.aboutFlex p {
+    margin: 0;
+}
+
+.aboutFlex {
+    display: inline-flex;
+    text-align: right;
+    width: 23rem;
+    align-items: center;
+}

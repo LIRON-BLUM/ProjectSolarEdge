@@ -20,9 +20,9 @@ namespace ProjectSolarEdge.Shared.Entities
         
         public UserType UserType { get; set; }
 
-        public DateTime GameStartDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public DateTime GameEndDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public byte isDeleted { get; set; }
 
       
@@ -31,8 +31,8 @@ namespace ProjectSolarEdge.Shared.Entities
     public enum UserType
     {
         Learner = 1,
-        QuestionEditor = 2,
-        GameEditor = 3
+        Editor = 2,
+        Admin = 3
     }
 
 

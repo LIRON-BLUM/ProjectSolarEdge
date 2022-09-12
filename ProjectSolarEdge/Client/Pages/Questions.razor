@@ -5,7 +5,8 @@
 @using System.Net.Http.Json
 
 <MudGrid>
-
+    
+   
 
     <MudItem xs="12">
         <h1 Class="d-flex align-center justify-start mud-width-full py-8">Questions</h1>
@@ -16,24 +17,24 @@
         <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Immediate="false" Placeholder="Search" Adornment="Adornment.Start"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 d-flex align-center justify-start mud-width-full py-2"></MudTextField>
     </MudItem>
-    <MudItem xs="4" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
-    <MudItem xs="4" Class="justify-end">
+    <MudItem xs="6" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
+    <MudItem xs="2" Class="justify-end">
         @*<MudButton OnClick="@ToggleOpen" Variant="Variant.Filled" Color="Color.Primary" @onclick="NewQuestion" Icon="@Icons.Filled.Add" Class="d-flex align-center justify-end mud-width-full py-2">ADD QUESTION</MudButton>*@
         @*<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Origin="@AnchorOrigin" Color="Color.Primary" @onclick="NewQuestion" Class="justify-content-end">ADD QUESTION</MudButton>*@
         @*<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@ToggleOpen" Class="justify-content-end">ADD QUESTION</MudButton>*@
 
 
-        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@ToggleOpen">
+        <MudButton Class="justify-end" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@ToggleOpen">
             @(_isOpen? "ADD QUESTION" : "ADD QUESTION")
         </MudButton>
         <MudPopover Open="@_isOpen" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
             <div class="d-flex gap-8 pa-10">
-              
+
                 <div class="d-flex flex-column justify-center align-center  mx-4">
                     <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavMultipleQuestion">
                         @*<MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
-            <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" />
-        </MudAvatar>*@
+                                <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" />
+                            </MudAvatar>*@
                         <span style=" display: block !important;">
                             <img src="./Files/MultipleTable.svg" width="40px" style=" display: block !important;" />
                             <MudText style=" display: block !important;">Multiple</MudText>
@@ -44,20 +45,20 @@
                 <div class="d-flex flex-column justify-center align-center mx-4">
                     <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavYesNoQuestion">
                         @*<MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
-            <MudIcon Icon="@Icons.Material.Filled.Rule" />
-        </MudAvatar><br />*@
+                                <MudIcon Icon="@Icons.Material.Filled.Rule" />
+                            </MudAvatar><br />*@
                         <span style=" display: block !important;">
                             <img src="./Files/YesNoTable.svg" width="40px" style=" display: block !important;" />
                             <MudText style=" display: block !important;">Yes/No</MudText>
                         </span>
                     </MudButton>
-                    </div>
+                </div>
 
                 <div class="d-flex flex-column justify-center align-center mx-4">
                     <MudButton class="d-flex flex-column justify-center align-center" Variant="Variant.Text" Color="Color.Primary" OnClick="@NavOrderQuestion">
                         @*<MudAvatar Color="Color.Secondary" Variant="Variant.Outlined">
-                            <MudIcon Icon="@Icons.Material.Filled.FormatListNumbered" />
-                        </MudAvatar><br />*@
+                                <MudIcon Icon="@Icons.Material.Filled.FormatListNumbered" />
+                            </MudAvatar><br />*@
                         <span style=" display: block !important;">
                             <img src="./Files/OrderTable.svg" width="40px" style=" display: block !important;" />
                             <MudText Class="mt-1" style=" display: block !important;">Order</MudText>
@@ -94,10 +95,10 @@
 
 
                 @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
-                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+            <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
 
             </HeaderContent>
             <RowTemplate>
@@ -160,17 +161,19 @@
             </LoadingContent>
 
             <PagerContent>
-                <MudTablePager PageSizeOptions="new int[]{5,10,20}"></MudTablePager>
+                <MudTablePager PageSizeOptions="new int[]{20,50, 100}" />
             </PagerContent>
         </MudTable>
     </MudItem>
 </MudGrid>
 
 @code {
-
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
     public Origin TransformOrigin { get; set; } = Origin.TopRight;
     public Origin AnchorOrigin { get; set; } = Origin.BottomLeft;
-
+    private bool hidePageNumber;
+    private bool hidePagination;
+    private bool hideRowsPerPage;
 
     public bool _isOpen;
 
@@ -182,65 +185,6 @@
             _isOpen = true;
     }
 
-    //bool fixed_header = true;
-    //bool fixed_footer = false;
 
-    ////private string searchString = "";
-    //private string searchString = "";
-    //private int totalItems;
-    //private IEnumerable<Question> pagedData;
-    //private MudTable<Question> table;
-
-
-    ////private bool FilterFunc(Question question)
-
-    //private async Task<TableData<Question>> ServerReload(TableState state)
-    //{
-
-    //    IEnumerable<Question> data = await QuestionsDataService.GetQuestionsAsync();
-    //    await Task.Delay(300);
-    //    data = data.Where(question =>
-
-    //    {
-    //        if (string.IsNullOrWhiteSpace(searchString))
-    //            return true;
-    //        if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-    //            return true;
-    //        if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-    //            return true;
-    //        if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
-    //            return true;
-    //        return false;
-    //    }).ToArray();
-    //    totalItems = data.Count();
-    //    switch (state.SortLabel)
-    //    {
-    //        case "ID_field":
-    //            data = data.OrderByDirection(state.SortDirection, o => o.ID);
-    //            break;
-    //        case "Type_field":
-    //            data = data.OrderByDirection(state.SortDirection, o => o.Type);
-    //            break;
-    //        case "Difficulty_field":
-    //            data = data.OrderByDirection(state.SortDirection, o => o.Difficulty);
-    //            break;
-    //        case "Creator_field":
-    //            data = data.OrderByDirection(state.SortDirection, o => o.Creator);
-    //            break;
-    //        case "Creation_Date_field":
-    //            data = data.OrderByDirection(state.SortDirection, o => o.CreationDate);
-    //            break;
-    //    }
-
-    //    pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
-    //    return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
-
-    //}
-
-    //private void OnSearch(string text)
-    //{
-    //    searchString = text;
-    //    table.ReloadServerData();
-    //}
 
 }

@@ -49,7 +49,7 @@ namespace ProjectSolarEdge.Client.Pages
 
         protected async Task NavUsers()
         {
-            NavigationManager.NavigateTo("./EditQuestion");
+            NavigationManager.NavigateTo("./Users");
         }
 
     }

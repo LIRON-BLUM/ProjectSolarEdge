@@ -33,7 +33,7 @@
         <MudItem xs="12" id="GameName" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
             <MudItem xs="6" id="GameName" Width="100%" Height="auto">
                 <MudTextField Class="ma-2" T="string" Label="Game Name" Variant="Variant.Outlined" @bind-Value="@GameCRUD.GameName" Lines="2" Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" />
-                <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Lines="4" Counter="50" MaxLength="50" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"></MudTextField>
+                <MudTextField Class="ma-2" @bind-Value="@GameCRUD.GameDescription" Label="Game Description" Variant="Variant.Outlined" Lines="4" Counter="50" MaxLength="50" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersdescription))"></MudTextField>
             </MudItem>
             <MudItem xs="6" id="GameDateAndTime" Width="100%" Height="auto">
                 <MudDatePicker Class="ma-2 mx-10" Label="Game Start Date" Editable="true" DateFormat="dd/MM/yyyy" @bind-Date="startdate" Placeholder="Select Date" />
@@ -244,6 +244,12 @@
     {
         if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
             yield return "Max 25 characters";
+    }
+
+    private IEnumerable<string> MaxCharactersdescription(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 50 < ch?.Length)
+            yield return "Max 50 characters";
     }
 
     //IList<IBrowserFile> files = new List<IBrowserFile>();

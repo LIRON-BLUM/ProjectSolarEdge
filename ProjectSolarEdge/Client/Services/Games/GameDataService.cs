@@ -47,7 +47,7 @@ namespace ProjectSolarEdge.Client.Services.Games
                 var gameJson =
                 new StringContent(JsonSerializer.Serialize(game), Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PutAsync($"api/Games/UpdateGame/{game.ID}", gameJson);
+                var response = await _httpClient.PutAsync($"api/Games/UpdateGame/{game}", gameJson);
 
                 if (response.IsSuccessStatusCode)
                 {

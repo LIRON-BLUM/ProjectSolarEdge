@@ -2,7 +2,12 @@
 .bestSoFare {
     background-color: #001546;
     color: aliceblue;
-    border-radius: 10px
+    border-radius: 6px;
+    font-size: 1.5rem;
+}
+
+.GameDescription {
+    font-size: 1.5rem;
 }
 
 /*top 3 podium*/
@@ -12,7 +17,6 @@
     border-radius: 12px;
     border: 0.1rem solid #001546;
 }*/
-
 /*podium:nth-of-type(1) {
     background-color: #4aec96;
     height: 130px;
@@ -33,39 +37,63 @@ podium:nth-of-type(3) {
     border: 0.1rem solid #001546;
 }*/
 
+
+.backgroundOpening, body {
+    background-color: #EDF8FE;
+
+}
+
 #firstPlace {
     background-color: #4aec96;
     height: 150px;
-    border-radius: 12px;
+    border-radius: 6px !important;
     border: 0.1rem solid #001546;
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom: 0px !important;
 }
 
 #secondPlace {
     background-color: #4aec96;
     height: 130px;
-    border-radius: 12px;
-    border: 0.1rem solid #001546;
+    border-radius: 6px !important;
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border: 1px solid #001546;
+    border-bottom: 0px !important;
 }
 
 #thirdPlace {
     background-color: #4aec96;
     height: 100px;
-    border-radius: 12px;
+    border-radius: 6px !important;
     border: 0.1rem solid #001546;
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom: 0px !important;
 }
 
 
 .high-score:nth-of-type(1) {
+    font-size: 1.5rem !important;
     /*    position:relative;
     margin-left:350px;
 }*/
 }
 
 .high-score:nth-of-type(2) {
-/*    position: relative;
+    font-size: 1.5rem !important;
+    /*    position: relative;
     margin-right: 450px;*/
 }
 
 .high-score:nth-of-type(3) {
-/*    position: relative;*/
+    font-size: 1.5rem !important;
+    /*    position: relative;*/
 }
+
+
+.topThreeContainer {
+    border-bottom: 2px solid #001546 !important;
+}
+

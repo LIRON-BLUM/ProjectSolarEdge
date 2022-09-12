@@ -8,79 +8,79 @@
 <link href="./css/styles/OpeningPage.css" rel="stylesheet" />
 <link href="./css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-<div class="container-flex">
+<div class="backgroundOpening container-flex">
     <div class="justify-content-center align-items-center text-center">
         <div class="row align-items-center title">
-         <h1 class="col"> @GamePlaying.GameName</h1>
+            <h1 class="col"> @GamePlaying.GameName</h1>
         </div>
-      
+
         <h2 class="p-3"> Hi @Player.UserFirstName @Player.UserLastName</h2>
-        <p>@GamePlaying.GameDescription </p>
+        <p class="GameDescription">@GamePlaying.GameDescription </p>
 
         <div id="highScores" class="row justify-content-center">
-            @if(@TopPlayers.Count() == 0)
+            @if (@TopPlayers.Count() == 0)
             {
-              <p class="bestSoFare col-6">Think you can be the best?</p>
+                <p class="bestSoFare col-6">Think you can be the best?</p>
 
             }
             else
             {
-              <p class="bestSoFare col-6">The best Players So Far</p>
+                <p class="bestSoFare col-8">The best Players So Far</p>
 
             }
-            <ul id="highScoreList" class="row justify-content-evenly" >
+            <ul id="highScoreList" class="row justify-content-evenly">
 
                 @foreach (var user in TopPlayers)
                 {
-                    <li class="high-score col-4 ">
+                    <li class="high-score col-3 ">
                         @user.UserFirstName @user.UserLastName  @user.UserScore
                     </li>
 
                 }
             </ul>
-            @if(@TopPlayers.Count() == 0)
+            @if (@TopPlayers.Count() == 0)
             {
-                <div hidden" class="row col-8 align-items-end border-bottom justify-content-evenly gx-5">
-               
-                <div id="secondPlace" class="col-2 rounded-bottom">
+                <div class="topThreeContainer row col-10 align-items-end justify-content-evenly gx-5">
 
-                </div>
+                    <div id="firstPlace" class="col-3 rounded-bottom">
 
-                <div id="firstPlace" class="col-2 rounded-bottom">
-                </div>
+                    </div>
 
-                <div id="thirdPlace" class="col-2 rounded-bottom">
-                </div>
+                    <div id="secondPlace" class="col-3 rounded-bottom">
+                    </div>
+
+                    <div id="thirdPlace" class="col-3 rounded-bottom">
+                    </div>
 
                 </div>
             }
             else
             {
-                 <div class="row col-8 align-items-end border-bottom justify-content-evenly gx-5">
-               
-                <div id="secondPlace" class="col-2 rounded-bottom">
+                <div class="topThreeContainer row col-10 align-items-end border-bottom justify-content-evenly gx-5">
+
+                    <div id="firstPlace" class="col-3 rounded-bottom">
+
+                    </div>
+
+                    <div id="secondPlace" class="col-3 rounded-bottom">
+                    </div>
+
+                    <div id="thirdPlace" class="col-3 rounded-bottom">
+                    </div>
 
                 </div>
-
-                <div id="firstPlace" class="col-2 rounded-bottom">
-                </div>
-
-                <div id="thirdPlace" class="col-2 rounded-bottom">
-                </div>
-
-            </div> 
             }
-           
+
         </div>
-        <p>
+        @*<p >
             You have <span id="gameTime">@GamePlaying.GameTimeLimit </span> minutes to give it your best!
-        </p>
-        <h2> Think You Can Do Better?</h2>
+        </p>*@
+        <h2 mt-15> Think You Can Do Better?</h2>
         <div class="row justify-content-center">
-          <button type="button" id="Continue" class="btnGreen col-sm-8 col-xs-8 col-lg-5 col-md-5" @onclick="STARTGAME"> START GAME</button>
+            <button type="button" id="Continue" class="btnGreen col-sm-8 col-xs-8 col-lg-5 col-md-5" @onclick="STARTGAME"> START GAME</button>
 
         </div>
-
+        <div style="height:200px"></div>
 
 
     </div>

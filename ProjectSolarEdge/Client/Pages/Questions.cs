@@ -127,8 +127,22 @@ namespace ProjectSolarEdge.Client.Pages
         {
 
             IEnumerable<Question> data = await QuestionDataService.GetQuestionsAsync();
-          
-        
+
+            data = data.Where(question =>
+
+            {
+                if (string.IsNullOrWhiteSpace(searchString))
+                    return true;
+                if (question.Creator.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (question.QuestionBody.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if ($"{question.Difficulty} {question.Type} {question.UpdateDate}".Contains(searchString))
+                    return true;
+                return false;
+            }).ToArray();
+            totalItems = data.Count();
+
             switch (state.SortLabel)
             {
                 case "ID_field":

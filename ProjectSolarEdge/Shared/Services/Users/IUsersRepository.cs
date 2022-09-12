@@ -14,5 +14,10 @@ namespace ProjectSolarEdge.Shared.Services.Users
         UsersTable GetUserIdByUserName(string userName);
 
         UsersTable GetUserIdByUserPassword(string userPassword);
+
+        int AddUser(UsersTable user);
+
+        bool UpdateUser(UsersTable user);
+        bool DeleteUser(UsersTable user);
     }
 }

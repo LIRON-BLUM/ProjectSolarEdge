@@ -1,5 +1,13 @@
 ﻿@inherits LayoutComponentBase
 
+@using ProjectSolarEdge.Shared.Entities
+@using System.Net.Http.Json
+@using MudBlazor
+@inject HttpClient httpClient
+@inject IDialogService DialogService
+@using ProjectSolarEdge.Client.Shared
+
+<link href="./css/styles/about.css" rel="stylesheet" />
 <MudThemeProvider />
 
 @*<MudDialogProvider />*@
@@ -9,8 +17,7 @@
                    CloseButton="true"
                    DisableBackdropClick="true"
                    NoHeader="true"
-                   Position="DialogPosition.Center"
-                    />
+                   Position="DialogPosition.Center" />
 
 <CascadingValue Value="@EditorID">
     <MudLayout>
@@ -18,10 +25,71 @@
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="@($"color:#FF002A;")" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <img src="./Files/KnowledgeOnBlack.svg" alt="Home" width="10%" />
             <MudSpacer />
-            @*<MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />*@
             <MudButton Variant="Variant.Text" Style="color: white;" @onclick="NavGame">Go To Game</MudButton>
-            <MudButton Variant="Variant.Text" Style="@($"font-family: 'Assistant', sans-serif !important; color: white;")">אודות</MudButton>
+            <MudButton Variant="Variant.Text" Style="@($"font-family: 'Assistant', sans-serif !important; color: white;")" @onclick="OpenDialog">אודות</MudButton>
+
         </MudAppBar>
+
+        <MudDialog @bind-IsVisible="visible" Options="dialogOptions">
+            <TitleContent>
+                <MudText Typo="Typo.h6">
+                    <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> אודות
+                </MudText>
+            </TitleContent>
+
+            <DialogContent>
+                <MudGrid class="aboutContent" style="direction:rtl;">
+
+                    <MudItem xs="12" Class="flex-column aboutContent">
+                        <MudText Class="fontAssistant mb-1" Align="Align.Center">אודות</MudText>
+                        <MudItem xs="12" class="d-flex justify-center">
+                            <img Src="./Files/KnowledgeOnWhite.svg" Alt="Questions" width="20%" height="20%">
+                        </MudItem>
+                        <MudText  Class="fontAssistant" Align="Align.Center">מחולל משחקים המיועדים למכשיר הנייד</MudText>
+                        <MudText  Class="fontAssistant" Align="Align.Center">פרויקט גמר, תשפ"ב</MudText>
+                        <MudText  Class="fontAssistant" Align="Align.Center"> <a target="_blank" href="https://www.hit.ac.il/telem/overview">הפקולטה לטכנולגיות למידה</a></MudText>
+                    </MudItem>
+                    <MudItem xs="3"></MudItem>
+                    <MudItem xs="6">
+                        <MudItem xs="12" Class="d-flex">
+                            <MudItem xs="6">
+                                <img id="hitlogo" class="logo" src="./Files/logoTelem.gif" width="45%" alt="HIT logo">
+                            </MudItem>
+                            <MudItem xs="7" class="flex-column">
+                                <MudText  Class="fontAssistant">
+                                    <b>צוות הפרויקט:</b><br>
+                                    לירון בלום ולימור אברהמי
+                                </MudText>
+                                <MudText  Class="fontAssistant">
+                                    <b>מנחים:</b><br>
+                                    מוטי אלנקווה ועדי סילגי
+                                </MudText>
+                            </MudItem>
+                        </MudItem>
+
+                    </MudItem>
+                    <MudItem xs="3"></MudItem>
+                    <MudItem xs="3"></MudItem>
+                    <MudItem xs="6">
+                        <MudItem xs="12" Class="d-flex">
+                            <MudItem xs="6">
+                                <img class="logo" src="./Files/SolarEdgeLogoblack.png" width="60%" alt="SolarEdge logo">
+                            </MudItem>
+                            <MudItem xs="7" class="flex-column">
+                                <MudText  Class="fontAssistant">
+                                    <b>בשיתוף חברת SolarEdge</b><br>
+                                    נציג הארגון: מוטי אלנקווה
+                                </MudText>
+                            </MudItem>
+                        </MudItem>
+                    </MudItem>
+                    <MudItem xs="3"></MudItem>
+                </MudGrid>
+            </DialogContent>
+            <DialogActions>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Submit" Class="px-10">Close</MudButton>
+            </DialogActions>
+        </MudDialog>
         <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
             <NavMenu />
         </MudDrawer>
@@ -31,96 +99,104 @@
             </MudContainer>
         </MudMainContent>
     </MudLayout>
-
-
 </CascadingValue>
 
-    @code {
-        [Parameter]
-        public string EditorID { get; set; }
+@code {
 
+
+    private bool visible;
+    private int rating;
+    private void OpenDialog() => visible = true;
+    void Submit() => visible = false;
+
+    private DialogOptions dialogOptions = new() { FullWidth = true };
+
+
+    [Parameter]
+    public string EditorID { get; set; }
+
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private void NavGame()
+    {
+        NavigationManager.NavigateTo($"./Login");
+    }
+}
+
+
+
+
+
+@*<MudThemeProvider />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
+
+    <MudLayout>
+        <MudAppBar Style="@($"background:#f2f7fb;")">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="@($"color:#FF002A;")" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <img src="https://www.solaredge.com/themes/solaredge_2018/img/SolarEdge_logo_header_new_0.svg" alt="Home" width="10%" />
+        </MudAppBar>
+        <MudDrawer @bind-Open="@_drawerOpen">
+            <NavMenu />
+        </MudDrawer>
+        <MudMainContent>
+            <MudContainer MaxWidth="MaxWidth.Medium">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    </MudLayout>
+
+    @code {
         bool _drawerOpen = true;
 
         void DrawerToggle()
         {
             _drawerOpen = !_drawerOpen;
         }
-
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
-        private void NavGame()
-        {
-            NavigationManager.NavigateTo($"./Login");
-        }
-    }
+    }*@
 
 
 
 
-
-    @*<MudThemeProvider />
+@*@inherits LayoutComponentBase
+    <MudRTLProvider RightToLeft="true">
+        <MudThemeProvider />
         <MudDialogProvider />
         <MudSnackbarProvider />
-
         <MudLayout>
-            <MudAppBar Style="@($"background:#f2f7fb;")">
-                <MudIconButton Icon="@Icons.Material.Filled.Menu" Style="@($"color:#FF002A;")" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-                <img src="https://www.solaredge.com/themes/solaredge_2018/img/SolarEdge_logo_header_new_0.svg" alt="Home" width="10%" />
-            </MudAppBar>
-            <MudDrawer @bind-Open="@_drawerOpen">
-                <NavMenu />
-            </MudDrawer>
             <MudMainContent>
-                <MudContainer MaxWidth="MaxWidth.Medium">
-                    @Body
-                </MudContainer>
+                @Body
             </MudMainContent>
         </MudLayout>
-
-        @code {
-            bool _drawerOpen = true;
-
-            void DrawerToggle()
-            {
-                _drawerOpen = !_drawerOpen;
-            }
-        }*@
-
-
-
-
-    @*@inherits LayoutComponentBase
-        <MudRTLProvider RightToLeft="true">
-            <MudThemeProvider />
-            <MudDialogProvider />
-            <MudSnackbarProvider />
-            <MudLayout>
-                <MudMainContent>
-                    @Body
-                </MudMainContent>
-            </MudLayout>
-        </MudRTLProvider>*@
+    </MudRTLProvider>*@
 
 
 
 
 
 
-    @*@inherits LayoutComponentBase
+@*@inherits LayoutComponentBase
 
-        <div class="page">
-            <div class="sidebar">
-                <NavMenu />
+    <div class="page">
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+
+        <main>
+            <div class="top-row px-4">
+                <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
             </div>
 
-            <main>
-                <div class="top-row px-4">
-                    <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-                </div>
-
-                <article class="content px-4">
-                    @Body
-                </article>
-            </main>
-        </div>*@
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </div>*@

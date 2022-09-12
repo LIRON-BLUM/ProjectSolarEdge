@@ -1,0 +1,74 @@
+﻿@page "/EditUser"
+@page "/EditUser/{Id}"
+@using ProjectSolarEdge.Shared.Entities
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+
+
+<MudGrid>
+
+    <MudItem xs="12">
+        <MudGrid Justify="Justify.Center">
+            @if (UserCRUD.ID == 0)
+            {
+                <h3>New User </h3>
+            }
+            else
+            {
+                <h3>EditUser @UserCRUD.ID</h3>
+            }
+            <MudItem xs="6" Class="d-flex">
+                <MudPaper Class="d-flex flex-column align-center justify-center mud-width-full py-8">
+                    <MudTextField T="string" Class="ma-2" Label="User First Name" Align="Align.Center" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserFirstName">@UserCRUD.UserFirstName</MudTextField>
+                    <MudTextField T="string" Class="ma-2" Label="User Last Name" Align="Align.Center" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserLastName">@UserCRUD.UserLastName</MudTextField>
+                    <MudTextField T="string" Class="ma-2" Label="User Username" Align="Align.Center" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserName">@UserCRUD.UserName</MudTextField>
+                    <MudTextField T="string"  Class="ma-2" Label="User Password" @bind-Value="@UserCRUD.UserPassword" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" Variant="Variant.Outlined" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password"></MudTextField>
+
+                    <MudSelect Dense="true"  Class="ma-2" T="UserType" Label="User Type" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserType">
+                        <MudSelectItem Value="@(UserType.Learner)" />
+                        <MudSelectItem Value="@(UserType.Editor)" />
+                        <MudSelectItem Value="@(UserType.Admin)" />
+                    </MudSelect>
+                    <MudItem xs="12" Class="d-flex">
+                        <MudButton  Class="ma-2" Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
+
+                        <MudButton  Class="ma-2" Variant="Variant.Filled" @onclick="DeleteUser" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+                    </MudItem>
+                </MudPaper>
+
+            </MudItem>
+
+        </MudGrid>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private bool visible;
+    private int rating;
+    private void OpenDialog() => visible = true;
+    void Submit() => visible = false;
+
+    private DialogOptions dialogOptions = new() { FullWidth = true };
+
+
+
+    void ButtonTestclick()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+
+}

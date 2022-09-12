@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using ProjectSolarEdge.Client.Services.Questions;
 using ProjectSolarEdge.Shared.Entities;
@@ -9,16 +8,14 @@ using System.Collections.Generic;
 using ProjectSolarEdge.Client.Services.Users;
 using ProjectSolarEdge.Client.Shared;
 
-
 namespace ProjectSolarEdge.Client.Pages
 {
-    public partial class OrderQuestionEdit
+    public partial class EditYesNoQuestion : ComponentBase, IDisposable
     {
+
         [Parameter]
         public string Id { get; set; }
 
-        [Parameter]
-        public string EditorID { get; set; }
 
         public UsersTable EditorData { get; set; }
 
@@ -28,15 +25,12 @@ namespace ProjectSolarEdge.Client.Pages
 
         public string SelectedDiff = "Easy";
 
-        public bool CheckedAnswerIsRight { get; set; }
-
         public Question QuestionsCRUD { get; set; } = new Question();
+
 
         public IEnumerable<Question> QuestionsData { get; set; }
 
         public IEnumerable<Question> QuestionsDataToDisplay { get; set; }
-
-        public QuestionAnswer Answer { get; set; } = new QuestionAnswer();
 
 
         public Subject OneSubject { get; set; } = new Subject();
@@ -44,17 +38,11 @@ namespace ProjectSolarEdge.Client.Pages
         public IEnumerable<Subject> SubjectsData { get; set; }
 
 
-        //public IEnumerable<SubjectsQuestions> SQConnection { get; set; } = new List<SubjectsQuestions>();
-
         public IEnumerable<string> SelectedSubjects { get; set; } = new HashSet<string>();
 
 
-
-        public IEnumerable<SubjectsQuestionsConnection> SubjectConnectionData { get; set; }
-
         public string DefaultValue { get; set; } = "Select Subject";
 
-        public int OrderNum = 1;
 
         [Inject]
         public IQuestionsDataService QuestionDataService { get; set; }
@@ -67,30 +55,25 @@ namespace ProjectSolarEdge.Client.Pages
 
         public Question QuestionsToDelete { get; set; } = new Question();
 
-        [CascadingParameter]
-        public MainLayout MainLayout { get; set; }
 
-        [CascadingParameter]
-        public NavMenu NavLayout { get; set; }
+        public string filePicDataUrl { get; set; }
 
-
-        public string CreatorName = "";
+        public string QuestionImage { get; set; }
 
         [Inject]
         public Blazored.LocalStorage.ISyncLocalStorageService LocalService { get; set; }
 
         string EditorIDSessiom = "";
 
-        public string filePicDataUrl { get; set; }
+        string CreatorName = "";
 
-        public string QuestionImage { get; set; }
-
+        //public List<Subject> selectedSubjectToUpdate = new List<Subject>();
         public string newQuestionIMG { get; set; }
-
 
         protected override async Task OnInitializedAsync()
         {
             EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
+
 
             int.TryParse(EditorIDSessiom, out var EId);
 
@@ -111,53 +94,34 @@ namespace ProjectSolarEdge.Client.Pages
                 QuestionsCRUD.Answers = new List<QuestionAnswer>();
                 QuestionsCRUD.Subjects = new List<Subject>();
 
-
+                //QuestionImage = "./Files/QuestionDefaltImage.png";
 
                 //ADD ANSWERS
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    ID = 1,
-                    AnswerBody = "Order 1",
+                    //ID = 1,
+                    AnswerBody = "True ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
-                    IsRight = false,
-                    QuestionOrder = 1
+                    IsRight = true
                 });
                 QuestionsCRUD.Answers.Add(new QuestionAnswer()
                 {
-                    ID = 2,
-                    AnswerBody = "Order 2",
+                    //ID = 2,
+                    AnswerBody = "False ",
                     CreationDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
-                    IsRight = false,
-                    QuestionOrder = 2
+                    IsRight = false
                 });
-                QuestionsCRUD.Answers.Add(new QuestionAnswer()
-                {
-                    ID = 3,
-                    AnswerBody = "Order 3",
-                    CreationDate = DateTime.Now,
-                    UpdateDate = DateTime.Now,
-                    IsRight = false,
-                    QuestionOrder = 3
-                });
-                QuestionsCRUD.Answers.Add(new QuestionAnswer()
-                {
-                    ID = 4,
-                    AnswerBody = "Order 4",
-                    CreationDate = DateTime.Now,
-                    UpdateDate = DateTime.Now,
-                    IsRight = false,
-                    QuestionOrder = 4
-                });
+             
             }
             else //Edit existing question
             {
                 //Get question by ID
                 QuestionsCRUD = await QuestionDataService.GetQuestionByIdAsync(int.Parse(Id));
 
-
                 QuestionImage = $"data:image/png;base64,{QuestionsCRUD.QuestionImagePath}";
+
                 foreach (var myanswer in QuestionsCRUD.Answers)
                 {
                     if (myanswer.IsRight == true)
@@ -201,27 +165,74 @@ namespace ProjectSolarEdge.Client.Pages
         }
 
 
+        public Question QuestionsToEdit { get; set; } = new Question();
+
+
+
+        protected async Task NavMultipleQuestion()
+        {
+            NavigationManager.NavigateTo("./EditQuestion");
+        }
+
+        protected async Task NavYesNoQuestion()
+        {
+            NavigationManager.NavigateTo("./Questions");
+        }
+
+        protected async Task NavOrderQuestion()
+        {
+            NavigationManager.NavigateTo("./OrderQuestionEdit");
+        }
+
+        protected async Task NavigateToEdit(int qid)
+        {
+
+            QuestionsToEdit = await QuestionDataService.GetQuestionByIdAsync(qid);
+
+            if (QuestionsToEdit.Type == QuestionType.MultipleChoice)
+            {
+                NavigationManager.NavigateTo($"./EditQuestion/{qid}");
+            }
+            else if (QuestionsToEdit.Type == QuestionType.Order)
+            {
+                NavigationManager.NavigateTo($"./OrderQuestionEdit/{qid}");
+            }
+            else
+            {
+                NavigationManager.NavigateTo($"./EditQuestion/{qid}");
+            }
+        }
+
         private async Task OnSearch(string text)
         {
             QuestionsDataToDisplay = QuestionsData.Where(q => q.QuestionBody.Contains(text) || q.Creator.ToLower().Contains(text.ToLower()));
 
         }
 
+        protected async Task AddSubject()
+        {
+            await QuestionDataService.AddSubjectToDB(OneSubject);
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
+
+        }
+
+        protected async Task DeleteSubject(int subjectID)
+        {
+            await QuestionDataService.DeleteSubjectByIDFromConnection(subjectID);
+            await QuestionDataService.DeleteSubject(subjectID);
+            SubjectsData = await QuestionDataService.GetSubjectsAsync();
+        }
 
         protected async Task AddAndUpdate()
         {
 
 
-
             List<Subject> selectedSubjectToUpdate = new List<Subject>();
 
 
-            // Delete the existing subjects 
-            await QuestionDataService.DeleteSubjectConnection(QuestionsCRUD.ID);
-
-
-            QuestionsCRUD.Creator = EditorData.UserFirstName + " " + EditorData.UserLastName;
-
+            //QuestionsCRUD.Subjects = selectedSubjectToUpdate;
+            //QuestionsCRUD.Creator = EditorData.UserFirstName + " " + EditorData.UserLastName;
+            //  await QuestionDataService.DeleteSubjectConnection(QuestionsCRUD.ID);
 
 
             // 1) Check which answer is the correct one and set it up
@@ -241,9 +252,19 @@ namespace ProjectSolarEdge.Client.Pages
             if (QuestionsCRUD.ID == 0) // Create new question
             {
 
-               
+
+
                 // 2) Save the question itself into the database and get the question ID back from the database
-           int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+                int QuestionID = await QuestionDataService.AddQuestionToDB(QuestionsCRUD);
+
+                //if (QuestionID != 0) // Question added to the DB
+                //{
+                //    QuestionsCRUD.ID = QuestionID;
+                //}
+
+
+
+
 
 
                 if (QuestionID != 0) // Question added to the DB
@@ -267,6 +288,7 @@ namespace ProjectSolarEdge.Client.Pages
                     await QuestionDataService.AddSubjectConnection(new SubjectsQuestionsConnection() { QuestionID = QuestionsCRUD.ID, SubjectID = s.ID });
                 }
                 QuestionsCRUD.Subjects = selectedSubjectToUpdate;
+                QuestionsCRUD.QuestionImagePath = QuestionImage;
 
                 //4) If all successful then navigate the user to edit question or list of questions.
                 NavigationManager.NavigateTo("./Questions");
@@ -275,6 +297,9 @@ namespace ProjectSolarEdge.Client.Pages
             }
             else
             {
+
+                // Delete the existing subjects 
+                await QuestionDataService.DeleteSubjectConnection(QuestionsCRUD.ID);
                 //  QuestionsCRUD.Answers = new List<QuestionAnswer>();
 
                 await QuestionDataService.UpdateQuestion(QuestionsCRUD);
@@ -302,6 +327,32 @@ namespace ProjectSolarEdge.Client.Pages
         }
 
 
+        public int MaxAlloedFiles = int.MaxValue;
+        public long maxFileSize = long.MaxValue;
+        public List<string> fileNames = new();
+
+        private async Task UploadQuestionFile(InputFileChangeEventArgs e)
+        {
+            var imageFiles = e.GetMultipleFiles();
+            foreach (var file in imageFiles)
+            {
+                if (file.Size <= maxFileSize)
+                {
+                    var buffer = new byte[file.Size];
+                    await file.OpenReadStream(maxFileSize).ReadAsync(buffer);
+                    var imageBase64 = Convert.ToBase64String(buffer);
+
+                    QuestionsCRUD.QuestionImagePath = imageBase64;
+
+                    var showfile = imageBase64;
+                    filePicDataUrl = $"data:image/png;base64,{showfile}";
+
+                    QuestionImage = filePicDataUrl;
+
+                }
+            }
+        }
+
 
 
 
@@ -327,18 +378,7 @@ namespace ProjectSolarEdge.Client.Pages
         }
 
 
-        protected async Task AddSubject()
-        {
-            await QuestionDataService.AddSubjectToDB(OneSubject);
-            SubjectsData = await QuestionDataService.GetSubjectsAsync();
-        }
 
-        protected async Task DeleteSubject(int subjectID)
-        {
-            await QuestionDataService.DeleteSubjectByIDFromConnection(subjectID);
-            await QuestionDataService.DeleteSubject(subjectID);
-            SubjectsData = await QuestionDataService.GetSubjectsAsync();
-        }
 
 
 
@@ -402,38 +442,9 @@ namespace ProjectSolarEdge.Client.Pages
             return new TableData<Question>() { TotalItems = totalItems, Items = pagedData };
 
         }
-
-
-
-        public int MaxAlloedFiles = int.MaxValue;
-        public long maxFileSize = long.MaxValue;
-        public List<string> fileNames = new();
-
-        private async Task UploadQuestionFile(InputFileChangeEventArgs e)
-        {
-            var imageFiles = e.GetMultipleFiles();
-            foreach (var file in imageFiles)
-            {
-                if (file.Size <= maxFileSize)
-                {
-                    var buffer = new byte[file.Size];
-                    await file.OpenReadStream(maxFileSize).ReadAsync(buffer);
-                    var imageBase64 = Convert.ToBase64String(buffer);
-
-                    QuestionsCRUD.QuestionImagePath = imageBase64;
-
-                    var showfile = imageBase64;
-                    filePicDataUrl = $"data:image/png;base64,{showfile}";
-
-                    QuestionImage = filePicDataUrl;
-
-                }
-            }
-        }
-
         public void Dispose()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

@@ -84,5 +84,59 @@ namespace ProjectSolarEdge.Server.Controllers
         }
 
 
+        [HttpPost]
+        [Route("AddUser")]
+        public async Task<IActionResult> AddUserToDB(UsersTable newUser)
+        {
+
+            int _user = _usersRepository.AddUser(newUser);
+
+
+            if (_user == null)
+            {
+                return NotFound(new ApiResult
+                {
+                    Success = false
+                });
+            }
+
+            return Ok(_user);
+
+        }
+
+
+
+        [HttpPut]
+        [Route("UpdateUser/{Id}")]
+        public IActionResult UpdateUser(UsersTable user)
+        {
+            if (user == null)
+            {
+
+                return BadRequest();
+            }
+
+            bool _user = _usersRepository.UpdateUser(user);
+
+            return Ok(_user); //success
+        }
+
+        [HttpPut]
+        [Route("DeleteUser/{Id}")]
+        public IActionResult DeleteUser(UsersTable user)
+        {
+            if (user == null)
+            {
+
+                return BadRequest();
+            }
+
+            bool _user = _usersRepository.DeleteUser(user);
+
+            return Ok(_user); //success
+        }
+
+
+
     }
 }

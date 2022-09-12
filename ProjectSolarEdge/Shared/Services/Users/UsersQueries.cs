@@ -16,5 +16,36 @@ namespace ProjectSolarEdge.Shared.Services.Users
         public static string GetUserByUserName => @"SELECT * FROM UsersTable WHERE UserName = @UserName";
 
         public static string GetUserByPassword => @"SELECT * FROM UsersTable WHERE UserPassword = @UserPassword";
+
+        public static string AddNewUser => @"INSERT INTO UsersTable
+													(UserFirstName,
+													UserLastName,
+													UserName,
+													UserPassword,
+													UserType,
+													CreationDate,
+													UpdateDate,											
+													isDeleted)
+											  VALUES (@UserFirstName, @UserLastName, @UserName, @UserPassword, @UserType, @CreationDate, @UpdateDate, 0)
+											  SELECT CAST(SCOPE_IDENTITY() as int)";
+
+
+
+
+        public static string UpdateUser => @"UPDATE UsersTable 
+												   SET
+													UserFirstName = @UserFirstName,
+													UserLastName =  @UserLastName,
+													UserName =  @UserName,
+													UserPassword =  @UserPassword,
+													UserType =  @UserType,
+													UpdateDate = @UpdateDate
+											    	WHERE ID = @ID";
+
+
+
+        public static string DeleteUser => @"UPDATE UsersTable 
+												SET isDeleted = 1
+													WHERE ID = @ID";
     }
 }
