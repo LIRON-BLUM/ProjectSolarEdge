@@ -41,10 +41,12 @@
 
             <h3 class="text-center">Questions @currentQuestionNum</h3>
 
+        @if (currentQuestion.QuestionImagePath != noQuestionIMG) { 
             <div class="row justify-content-center">
                 <img src="@QuestionImage" style="width:100px; height:auto;" class="col-5 align-self-center" />
 
             </div>
+            }
 
             <h2 id="question" class="text-center"> @currentQuestion.QuestionBody </h2>
 
@@ -60,9 +62,9 @@
             <div id="answersContainer" class="row row-cols-2 justify-content-evenly align-items-center text-center">
                 @foreach (var answer in currentQuestion.Answers)
                 {
-                    <div class="choiceContainer col-5 mt-8">
+                    <div class="choiceContainer col-5 d-flex align-items-center mt-4">
                        
-                            <p class=" mt-8" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight" > @answer.AnswerBody</p>
+                            <p class="GameAns align-middle  mt-8" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight" > @answer.AnswerBody</p>
                       
                     </div>
 

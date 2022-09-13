@@ -1,4 +1,6 @@
-﻿
+﻿html, body {
+    background: #EDF8FE !important;
+}
 /*
 .box {
     border-radius: 10px;

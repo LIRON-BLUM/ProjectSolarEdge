@@ -20,12 +20,12 @@ namespace ProjectSolarEdge.Shared.Entities
 
         public QuestionDifficulty Difficulty { get; set; }
 
-        public string Feedback { get; set; }
+        public string? Feedback { get; set; }
 
-        public string Creator { get; set; }
+        public string? Creator { get; set; }
 
-        public List<QuestionAnswer> Answers { get; set; }
-        public List<Subject> Subjects { get; set; }
+        public List<QuestionAnswer>? Answers { get; set; }
+        public List<Subject>? Subjects { get; set; }
         public byte isDeleted { get; set; }
 
         public string? QuestionImagePath { get; set; }

@@ -1,4 +1,5 @@
-﻿function orderQuestionPage() {
+﻿
+function orderQuestionPage() {
 
     /**
  * Lightweight script to convert touch handlers to mouse handlers
@@ -85,13 +86,7 @@
     //    document.addEventListener("touchcancel", touchHandler, true);
     //}
 
-    function dragStart() {
-        console.log("dragStart function");
-
-    
-        dragStartIndex = +this.closest('li').getAttribute('data-index');
-        //submitAnswer.disabled = false;
-    }
+   
 
     function dragEnter() {
         console.log("dragEnter function");
@@ -141,17 +136,25 @@
         const dragListItems = document.querySelectorAll('.draggable-list li');
 
         draggables.forEach(draggable => {
-            draggable.addEventListener('dragstart', dragStart);
+            draggable.addEventListener('dragstart', dragStart, { passive: false });
 
           
         });
 
         dragListItems.forEach(item => {
-            item.addEventListener('dragover', dragOver);
-            item.addEventListener('drop', dragDrop);
-            item.addEventListener('dragenter', dragEnter);
-            item.addEventListener('dragleave', dragLeave);
+            item.addEventListener('dragover', dragOver, { passive: false });
+            item.addEventListener('drop', dragDrop, { passive: false });
+            item.addEventListener('dragenter', dragEnter, { passive: false });
+            item.addEventListener('dragleave', dragLeave, { passive: false });
         });
+    }
+
+    function dragStart() {
+        console.log("dragStart function");
+
+
+        dragStartIndex = +this.closest('li').getAttribute('data-index');
+        //submitAnswer.disabled = false;
     }
 
     // update the progress bar
@@ -244,10 +247,10 @@
         }
 
         function init() {
-            document.addEventListener("touchstart", touchHandler, true);
-            document.addEventListener("touchmove", touchHandler, true);
-            document.addEventListener("touchend", touchHandler, true);
-            document.addEventListener("touchcancel", touchHandler, true);
+            document.addEventListener("touchstart", touchHandler, true, { passive: false });
+            document.addEventListener("touchmove", touchHandler, true, { passive: false });
+            document.addEventListener("touchend", touchHandler, true, { passive: false });
+            document.addEventListener("touchcancel", touchHandler, true, { passive: false });
         }
 
         init();

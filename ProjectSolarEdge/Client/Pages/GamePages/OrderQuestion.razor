@@ -10,33 +10,46 @@
 <body ontouchstart="dragStart(event)"
       ontouchmove="drag(event)"
       ontouchend="drop(event)">
-    <div class="container">
-        <div class="row justify-content-between mt-4">
-            <div id="points" class="col-4">
-                <span class="score"> @currentScore.UserScore  </span> <span class="score">  Points</span>
-            </div>
-            <div class="col-4">
-                <img src="./Files/HowToPlay.svg" class="myToolTip rounded float-end" alt="How to play icon" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tooltip on bottom" />
-            </div>
-        </div>
+    <div class="container mt-4">
+        <div id="game" class="justify-content-center align-items-center">
 
-        <div id="hud">
-            <div id="hud-item">
-                <div id="progressBar">
-                    <div id="progressBarFull"></div>
+            <MudGrid>
+                <MudItem xs="12" sm="12">
+                    <MudGrid Justify="Justify.SpaceBetween" class="align-center">
+                        <MudItem xs="4" sm="4"><MudChip Icon="TotalPoints" Color="Color.Primary" Label="true" Style="color:white !important;"><span id="TotalPoints"> @currentScore.UserScore Points</span></MudChip></MudItem>
+
+                        <MudItem xs="2" sm="2">
+                            <MudIconButton Icon="@Icons.Filled.Help" Color="Color.Secondary" aria-label="add to favorite" Size="Size.Large"></MudIconButton>
+                        </MudItem>
+
+                    </MudGrid>
+                </MudItem>
+
+            </MudGrid>
+
+            <div id="hud">
+                <div id="hud-item">
+                    <div id="progressBar">
+                        <div id="progressBarFull"></div>
+                    </div>
+                    <p id="progressText"> <span id="availleblQuestions">@currentQuestionNum  </span> / <span id="maxQuestions"> @GamePlaying.Questions.Count() </span></p>
                 </div>
-                <p id="progressText"> <span id="availleblQuestions">@currentQuestionNum  </span> / <span id="maxQuestions"> @GamePlaying.Questions.Count() </span></p>
+                <div id="hud-item">
+                </div>
             </div>
-            <div id="hud-item">
-            </div>
-        </div>
 
-        <div class="text-center justify-content-center align-items-center">
-            <h3>Questions @currentQuestionNum</h3>
-
+            <h3 class="text-center">Questions @currentQuestionNum</h3>
             <div id="QuestionPic"></div>
             <h2 id="orderQuestion">@currentQuestion.QuestionBody</h2>
-            <div class="container text-center">
+            @if (currentQuestion.QuestionImagePath != noQuestionIMG)
+            {
+                <div class="row justify-content-center">
+                    <img src="@currentQuestion.QuestionImagePath" style="width:100px; height:auto;" class="col-5 align-self-center" />
+
+                </div>
+            }
+
+            <div class="container text-center mb-4">
 
                 <div class="row gx-5 justify-content-center">
                     <div class="col-10">
@@ -45,9 +58,9 @@
                 </div>
             </div>
 
-            <p id="orderQuestion">@currentQuestion.QuestionBody</p>
 
-            <ul class="draggable-list row gy-4" id="draggable-list">
+
+            <ul class="draggable-list row gy-4 px-4" @ref="questionsContainer" id="draggable-list">
 
                 @foreach (var answer in currentQuestion.Answers)
                 {
@@ -59,15 +72,15 @@
                     <li data-index=@counter class="text-center col-12">
                         <div class="draggable row" draggable="true" RightOrder=@answer.QuestionOrder>
 
-                            <img class="col-1 offset-1" src="./Files/OrderIcon.svg" alt="Order icon">
+                            <img class="col-1 offset-1" width="10%" src="./Files/OrderIcon.svg" alt="Order icon">
                             <p class="person-name col-9"> @answer.AnswerBody</p>
                             @*                         <i class="fas fa-grip-lines"></i>
                             *@
                         </div>
                     </li>
                     @*<div class="choiceContainer">
-                            <li class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</li>
-                        </div>*@
+                        <li class="choice-text" onclick="answerClicked('@answer.IsRight', event)" dataisRight="@answer.IsRight"> @answer.AnswerBody</li>
+                    </div>*@
 
                 }
                 <input id="questionHidden" type="hidden" value="@chosenanswer" @onchange="@(e=>{chosenanswer=e.Value.ToString();})" />
@@ -90,6 +103,10 @@
                
 @code {
 
+    private DotNetObjectReference<OrderQuestion> selfReference;
+    private IJSObjectReference module;
+    private ElementReference questionsContainer;
+
     protected override void OnAfterRender(bool firstRender)
     {
         if(firstRender)
@@ -101,8 +118,16 @@
 
     private async Task CallJSMethod()
     {
+        //selfReference = DotNetObjectReference.Create(this);
+        //module = await JSRuntime.InvokeAsync<IJSObjectReference>(
+            //"import", "./jScripts/OrderQuestion.js");
+
+        //await module.InvokeVoidAsync("enableDragandDrop", questionsContainer, selfReference);
+
         await JSRuntime.InvokeVoidAsync("orderQuestionPage");
     }
+
+
     int counter = 0;
 
     private async Task counterAdd()

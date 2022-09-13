@@ -10,8 +10,8 @@ using ProjectSolarEdge.Client.Services.GameApp;
 using ProjectSolarEdge.Client.Services.Users;
 
 
-//string baseUrl = "https://localhost:7181/";
-string baseUrl = "https://projects.telem-hit.net/2022/KnowlEdge_LironLimor/Server/";
+string baseUrl = "https://localhost:7181/";
+//string baseUrl = "https://projects.telem-hit.net/2022/KnowlEdge_LironLimor/Server/";
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

@@ -2,6 +2,11 @@
     background-color: #edf8fe;
 }
 
+html, body {
+    background: #EDF8FE !important;
+}
+
+
 table {
     border-collapse: collapse;
     width: 100%;

@@ -328,8 +328,8 @@ namespace ProjectSolarEdge.Client.Pages
             }
             else
             {
-                GameCRUD.IsGamified = Convert.ToByte(GameIsGamified);
-                if (selected.Text == "Yes")
+                //GameCRUD.IsGamified = Convert.ToByte(GameIsGamified);
+                if (GameIsGamified == true)
                 {
                     GameCRUD.IsGamified = 1;
                 }
@@ -338,7 +338,7 @@ namespace ProjectSolarEdge.Client.Pages
                     GameCRUD.IsGamified = 0;
                 }
 
-                
+
                 await GameDataService.UpdateGame(GameCRUD);
              
             }

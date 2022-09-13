@@ -1,4 +1,7 @@
-﻿
+﻿html, body {
+    background: #EDF8FE !important;
+}
+
 .bestSoFare {
     background-color: #001546;
     color: aliceblue;

@@ -1,4 +1,9 @@
-﻿.choiceContainer {
+﻿html, body {
+    background: White !important;
+}
+
+
+.choiceContainer {
     font-size: 1.8rem;
     border: 0.1rem solid #001546;
     border-radius: 15px;
@@ -37,7 +42,8 @@ p.AnswerText {
 }
 
 .chosenAnswer {
-    border: 1rem solid #001546;
+    outline: 4px solid #001546;
+    outline-offset: 0px;
 }
 
 .QuestionDescription {
@@ -122,4 +128,10 @@ p.AnswerText {
 
 .SkipAnswer:hover {
     color: #4aec96;
+}
+
+.GameAns {
+    font-size: 1.4rem !important;
+    vertical-align: middle !important;
+    margin: 0 auto !important;
 }

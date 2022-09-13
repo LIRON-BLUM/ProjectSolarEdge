@@ -7,13 +7,13 @@
 }
 
 .draggable-list {
-
     list-style-type: none;
+    padding: 0px;
 }
 
     .draggable-list li {
         border: 0.1rem solid;
-        border-radius: 10px;
+        border-radius: 6px;
         background-color: #edf8fe;
     }
 
@@ -28,7 +28,7 @@
     }
 
     .draggable-list .person-name {
-        margin: 0 20px 0 0;
+        margin: 10px 20px 10px 0;
     }
 
   

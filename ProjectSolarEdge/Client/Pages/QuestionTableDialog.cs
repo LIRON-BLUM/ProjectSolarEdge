@@ -167,6 +167,9 @@ namespace ProjectSolarEdge.Client.Pages
                         QuestionScore = 600;
                     }
 
+
+              
+
                     selectedQuestionToUpdate.Add(q);
                     //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
 
