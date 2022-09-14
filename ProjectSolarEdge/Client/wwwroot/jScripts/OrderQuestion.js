@@ -47,8 +47,9 @@ function orderQuestionPage() {
         let isTrue = 0;
 
         for (let i = 0; i < liList.length; i++) {
+            currentOrder[i] = i + 1 ;
 
-            currentOrder[i] = liList[i].getAttribute("data-index");
+           // currentOrder[i] = liList[i].getAttribute("data-index");
             rightOrder[i] = liList[i].querySelector('.draggable').getAttribute("RightOrder");
 
             if (currentOrder[i] == rightOrder[i]) {
