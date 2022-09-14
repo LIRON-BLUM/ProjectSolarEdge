@@ -10,6 +10,7 @@
 
 
     <MudItem xs="12">
+
         <h1 Class="d-flex align-center justify-start mud-width-full py-8">Users</h1>
     </MudItem>
 
@@ -20,10 +21,10 @@
     </MudItem>
     <MudItem xs="6" Class="mt-0 d-flex align-center justify-center mud-width-full py-2"></MudItem>
     <MudItem xs="2" Class="justify-end">
-     
+
 
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" OnClick="@NavNewUser">Add User</MudButton>
-      
+
 
 
     </MudItem>
@@ -48,10 +49,10 @@
 
 
                 @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
 
             </HeaderContent>
             <RowTemplate>
@@ -70,7 +71,7 @@
                 <MudTh DataLabel="Delete">
 
                     <MudTooltip Text="Delete User">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteUser(context.ID))" Color="Color.Primary" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteWarning(context.ID))" Color="Color.Primary" />
                     </MudTooltip>
 
                 </MudTh>
@@ -88,9 +89,42 @@
             </PagerContent>
         </MudTable>
     </MudItem>
+
+
+    <MudMessageBox Class="DeleteWarning" @ref="mbox" Title="Warning" CancelText="Cancel" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            Deleting this user can not be undone and will delete it from all the games it is assosiated with! <br />
+            <b>  Are you sure you want to continue?</b>
+        </MessageContent>
+        <YesButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Delete!</MudButton>
+        </YesButton>
+    </MudMessageBox>
+
 </MudGrid>
 
 @code {
+
+    MudMessageBox mbox { get; set; }
+    string state = "Message box hasn't been opened yet";
+
+    private async void DeleteWarning(int deleteNum)
+    {
+        bool? result = await mbox.Show();
+        state = result == null ? "Cancelled" : "Deleted!";
+        if (state == "Deleted!")
+        {
+
+            DeleteUser(deleteNum);
+            NavigationManager.NavigateTo("./Users");
+
+        }
+        StateHasChanged();
+
+    }
+
+
 
     public Origin TransformOrigin { get; set; } = Origin.TopRight;
     public Origin AnchorOrigin { get; set; } = Origin.BottomLeft;

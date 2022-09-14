@@ -10,32 +10,55 @@
 
 
 <MudGrid Spacing="4">
-    <MudItem xs="12" class="d-flex gap-4 align-center justify-space-between mt-2" >
+    <MudItem xs="12" class="d-flex gap-4 align-center justify-space-between mt-2">
         <MudItem xs="8" class="justify-start gap-4 ">  <h1 Color="Color.Primary">Edit Question @QuestionsCRUD.ID</h1></MudItem>
         <MudItem xs="3" class=" gap-4 justify-end mx-2 ">
 
-            <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
-
-            <MudButton Variant="Variant.Filled" @onclick="DeleteQuestion" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
-        </MudItem>
+            <MudButton Variant="Variant.Filled" @onclick="(() =>saveNullWarning(1))" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
+            @if (QuestionsCRUD.ID != 0)
+            {
+                <MudButton Class="mx-2" Variant="Variant.Filled" @onclick="(() =>DeleteWarning(1,0))" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+            }
+            </MudItem>
     </MudItem>
 
 
-    <MudItem xs="8" class="gap-4 py-8"  Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
+
+    <MudMessageBox Class="DeleteWarning" @ref="mbox" Title="Warning" CancelText="Cancel" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            @warningText  <br /> <b>Are you sure you want to continue?</b>
+        </MessageContent>
+        <YesButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Delete!</MudButton>
+        </YesButton>
+    </MudMessageBox>
+
+    <MudMessageBox Class="DeleteWarning" @ref="saveNullbox" Title="Warning" CancelText="Back to edit" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            All fields must contain details
+        </MessageContent>
+        <YesButton>
+
+        </YesButton>
+    </MudMessageBox>
+
+    <MudItem xs="8" class="gap-4 py-8" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
         <MudItem xs="12" id="QuestionAnsIMG" class="d-flex gap-4 ma-2" Width="100%" Height="auto">
 
             <MudItem xs="8" id="Question" Width="100%" Height="auto">
-                <MudTextField T="string" Label="Type Your Multiple Question" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" Counter="100" MaxLength="100" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersQbody))"/>
+                <MudTextField T="string" Label="Type Your Multiple Question" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.QuestionBody" Lines="4" Counter="100" MaxLength="100" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersQbody))" />
             </MudItem>
             <MudItem xs="2" id="IMG" Width="100%" Height="auto">
                 @*<MudPaper Class="mud-theme-secondary ma-2" Width="100px" Height="100px" Elevation="0" />*@
                 @if (QuestionsCRUD.ID == 0)
                 {
-                    <img src="@newQuestionIMG" style="width:150px; height:150px;" class="ml-1"  for="fileInput"/>
+                    <img src="@newQuestionIMG" style="width:150px; height:150px;" class="ml-1" for="fileInput" />
                 }
                 else
                 {
-                    <img src="@QuestionImage" style="width:150px; height:150px;"  class="ml-1" for="fileInput"/>
+                    <img src="@QuestionImage" style="width:150px; height:150px;" class="ml-1" for="fileInput" />
                 }
 
                 <InputFile id="fileInput" OnChange="UploadQuestionFile" hidden multiple />
@@ -59,7 +82,7 @@
                         <MudItem xs="12" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
                             <MudItem xs="10" id="AnswersRadio" class="d-inline-flex" Height="auto">
                                 <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true">
-                                    <MudTextField  Margin="Margin.Dense" T="string" @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" Counter="40" MaxLength="40" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersAns))" />
+                                    <MudTextField Margin="Margin.Dense" T="string" @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" Counter="40" MaxLength="40" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersAns))" />
                                     @*<InputText @bind-Value="@myanswer.AnswerBody" placeholder="Enter Your answer"></InputText>*@
                                 </MudRadio>
                             </MudItem>
@@ -95,10 +118,10 @@
                         @foreach (var subject in SubjectsData)
                         {
                             <MudSelectItem T="string" Value="@subject.SubjectName" Class="d-inline-flex justify-space-between">
-                              
-                                    @subject.SubjectName
+
+                                @subject.SubjectName
                                
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="(() => DeleteSubject(subject.ID))" Class="justify-end" aria-label="delete"></MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="(() => DeleteWarning(2,subject.ID))" Class="justify-end" aria-label="delete"></MudIconButton>
                             </MudSelectItem>
                         }
                     </MudSelect>
@@ -125,7 +148,7 @@
 
 
         <MudItem xs="8" id="FeedbackContainer" class="d-flex gap-4 " Width="100%" Height="auto">
-            <MudTextField T="string" Label="Enter Your Feedback - Explain Why the correct Answer is correct" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.Feedback" Lines="4" Counter="100" MaxLength="100" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
+            <MudTextField T="string" Label="Enter Your Feedback - Explain Why the correct Answer is correct" Width="100%" class="ma-2" Variant="Variant.Outlined" @bind-Value="@QuestionsCRUD.Feedback" Lines="4" Counter="100" MaxLength="100" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" />
 
         </MudItem>
 
@@ -138,7 +161,7 @@
     </MudItem>
 
 
-    <MudItem xs="3" class="d-inline-flex flex-column  gap-4 py-8"  Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
+    <MudItem xs="3" class="d-inline-flex flex-column  gap-4 py-8" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
 
         <MudGrid>
             <MudItem xs="12" sm="12">
@@ -185,7 +208,7 @@
 
         </MudGrid>
 
-      
+
 
     </MudItem>
 
@@ -202,7 +225,63 @@
 
 @code {
 
+    MudMessageBox mbox { get; set; }
+    string state = "Message box hasn't been opened yet";
+    string warningText = "Are you sure you want to delete?";
 
+    private async void DeleteWarning(int deleteNum, int subid)
+    {
+        if (deleteNum == 1)
+        {
+            warningText = "Deleting this question can not be undone and will delete it from all the games it is assosiated with!";
+        }
+        else
+        {
+            warningText = "Deleting this subject can not be undone and will delete it from all the questions it is assosiated with!";
+        }
+        bool? result = await mbox.Show();
+        state = result == null ? "Cancelled" : "Deleted!";
+        if (state == "Deleted!")
+        {
+            if (deleteNum == 1 && subid == 0)
+            {
+                DeleteQuestion();
+            }
+            else
+            {
+                DeleteSubject(subid);
+            }
+
+        }
+        StateHasChanged();
+
+    }
+
+
+    MudMessageBox saveNullbox { get; set; }
+    string saveNullstate = "Message box hasn't been opened yet";
+
+    private async void saveNullWarning(int saveNullNum)
+    {
+        if (QuestionsCRUD.QuestionBody == null || QuestionsCRUD.Feedback==null)
+        {
+            bool? result = await saveNullbox.Show();
+            saveNullstate = result == null ? "Cancelled" : "Deleted!";
+            if (saveNullstate == "Deleted!")
+            {
+                if (saveNullNum == 1)
+                {
+                    DeleteQuestion();
+                }
+
+            }
+            StateHasChanged();
+        }
+        else
+        {
+            AddAndUpdate();
+        }
+    }
 
 
     private bool visible;
@@ -246,8 +325,8 @@
     }
 
 
-    
-            private IEnumerable<string> MaxCharactersAns(string ch)
+
+    private IEnumerable<string> MaxCharactersAns(string ch)
     {
         if (!string.IsNullOrEmpty(ch) && 40 < ch?.Length)
             yield return "Max 100 characters";

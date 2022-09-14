@@ -10,7 +10,7 @@
 
 <MudGrid>
 
-    <MudItem xs="12">
+    <MudItem xs="12" Class="mt-8">
         <MudGrid Justify="Justify.Center">
             @if (UserCRUD.ID == 0)
             {
@@ -25,22 +25,46 @@
                     <MudTextField T="string" Class="ma-2" Label="User First Name" Align="Align.Center" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserFirstName">@UserCRUD.UserFirstName</MudTextField>
                     <MudTextField T="string" Class="ma-2" Label="User Last Name" Align="Align.Center" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserLastName">@UserCRUD.UserLastName</MudTextField>
                     <MudTextField T="string" Class="ma-2" Label="User Username" Align="Align.Center" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserName">@UserCRUD.UserName</MudTextField>
-                    <MudTextField T="string"  Class="ma-2" Label="User Password" @bind-Value="@UserCRUD.UserPassword" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" Variant="Variant.Outlined" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password"></MudTextField>
+                    <MudTextField T="string" Class="ma-2" Label="User Password" @bind-Value="@UserCRUD.UserPassword" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" Variant="Variant.Outlined" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password"></MudTextField>
 
-                    <MudSelect Dense="true"  Class="ma-2" T="UserType" Label="User Type" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserType">
+                    <MudSelect Dense="true" Class="ma-2" T="UserType" Label="User Type" Variant="Variant.Outlined" @bind-Value="@UserCRUD.UserType">
                         <MudSelectItem Value="@(UserType.Learner)" />
                         <MudSelectItem Value="@(UserType.Editor)" />
                         <MudSelectItem Value="@(UserType.Admin)" />
                     </MudSelect>
                     <MudItem xs="12" Class="d-flex">
-                        <MudButton  Class="ma-2" Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
 
-                        <MudButton  Class="ma-2" Variant="Variant.Filled" @onclick="DeleteUser" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+                        <MudButton Class="ma-2" Variant="Variant.Filled" @onclick="(() =>saveNullWarning(1))" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
+
+                        @if (UserCRUD.ID != 0)
+                        {
+                            <MudButton Class="ma-2" Variant="Variant.Filled" @onclick="(() =>DeleteWarning(1))" Color="Color.Primary" DisableElevation="true">Delete User</MudButton>
+
+                        }
                     </MudItem>
                 </MudPaper>
 
             </MudItem>
+            <MudMessageBox Class="DeleteWarning" @ref="mbox" Title="Warning" CancelText="Cancel" Style="max-width: 444px !important; ">
+                <MessageContent>
+                    <br />
+                    Deleting can <b><i>not</i></b> be undone! <br />
+                    Are you sure you want to continue?
+                </MessageContent>
+                <YesButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Delete!</MudButton>
+                </YesButton>
+            </MudMessageBox>
 
+            <MudMessageBox Class="DeleteWarning" @ref="saveNullbox" Title="Warning" CancelText="Back to edit" Style="max-width: 444px !important; ">
+                <MessageContent>
+                    <br />
+                    All fields must contain details
+                </MessageContent>
+                <YesButton>
+
+                </YesButton>
+            </MudMessageBox>
         </MudGrid>
     </MudItem>
 </MudGrid>
@@ -51,9 +75,52 @@
     private void OpenDialog() => visible = true;
     void Submit() => visible = false;
 
-    private DialogOptions dialogOptions = new() { FullWidth = true };
+    private DialogOptions dialogOptions = new() { FullWidth = false };
+
+    MudMessageBox mbox { get; set; }
+    string state = "Message box hasn't been opened yet";
+
+    private async void DeleteWarning(int deleteNum)
+    {
+        bool? result = await mbox.Show();
+        state = result == null ? "Cancelled" : "Deleted!";
+        if (state == "Deleted!")
+        {
+            if (deleteNum == 1)
+            {
+                DeleteUser();
+            }
+
+        }
+        StateHasChanged();
+
+    }
 
 
+    MudMessageBox saveNullbox { get; set; }
+    string saveNullstate = "Message box hasn't been opened yet";
+
+    private async void saveNullWarning(int saveNullNum)
+    {
+        if (UserCRUD.UserFirstName == null || UserCRUD.UserLastName == null || UserCRUD.UserName == null || UserCRUD.UserPassword==null)
+        {
+            bool? result = await saveNullbox.Show();
+            saveNullstate = result == null ? "Cancelled" : "Deleted!";
+            if (saveNullstate == "Deleted!")
+            {
+                if (saveNullNum == 1)
+                {
+                    DeleteUser();
+                }
+
+            }
+            StateHasChanged();
+        }
+        else
+        {
+            AddAndUpdate();
+        }
+    }
 
     void ButtonTestclick()
     {

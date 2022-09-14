@@ -5,8 +5,8 @@
 @using System.Net.Http.Json
 
 <MudGrid>
-    
-   
+
+
 
     <MudItem xs="12">
         <h1 Class="d-flex align-center justify-start mud-width-full py-8">Questions</h1>
@@ -95,10 +95,10 @@
 
 
                 @*<MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Number)">Nr</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Sign)">Sign</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Element, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Position)">Position</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Element, object>(x=>x.Molar)">Mass</MudTableSortLabel></MudTh>*@
 
             </HeaderContent>
             <RowTemplate>
@@ -147,7 +147,7 @@
                 <MudTh DataLabel="Delete">
 
                     <MudTooltip Text="Delete Question">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteQuestion(context.ID))" Color="Color.Primary" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteWarning(context.ID))" Color="Color.Primary" />
                     </MudTooltip>
 
                 </MudTh>
@@ -165,9 +165,42 @@
             </PagerContent>
         </MudTable>
     </MudItem>
+
+    <MudMessageBox Class="DeleteWarning" @ref="mbox" Title="Warning" CancelText="Cancel" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            Deleting this question can not be undone and will delete it from all the games it is assosiated with! <br />
+            <b> Are you sure you want to continue?</b>
+        </MessageContent>
+        <YesButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Delete!</MudButton>
+        </YesButton>
+    </MudMessageBox>
 </MudGrid>
 
 @code {
+
+
+
+    MudMessageBox mbox { get; set; }
+    string state = "Message box hasn't been opened yet";
+
+    private async void DeleteWarning(int deleteNum)
+    {
+        bool? result = await mbox.Show();
+        state = result == null ? "Cancelled" : "Deleted!";
+        if (state == "Deleted!")
+        {
+
+            DeleteQuestion(deleteNum);
+            NavigationManager.NavigateTo("./Questions");
+
+        }
+        StateHasChanged();
+
+    }
+
+
     private string infoFormat = "{first_item}-{last_item} of {all_items}";
     public Origin TransformOrigin { get; set; } = Origin.TopRight;
     public Origin AnchorOrigin { get; set; } = Origin.BottomLeft;

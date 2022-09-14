@@ -13,11 +13,35 @@
         <MudItem xs="8" class="justify-start gap-4 ">  <h1 Color="Color.Primary">Edit Question @QuestionsCRUD.ID</h1></MudItem>
         <MudItem xs="3" class=" gap-4 justify-end mx-2 ">
 
-            <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
-
-            <MudButton Variant="Variant.Filled" @onclick="DeleteQuestion" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+            <MudButton Variant="Variant.Filled" @onclick="(() =>saveNullWarning(1))" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
+            @if (QuestionsCRUD.ID != 0)
+            {
+                <MudButton Class="mx-2" Variant="Variant.Filled" @onclick="(() =>DeleteWarning(1,0))" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+            }
         </MudItem>
     </MudItem>
+
+
+
+    <MudMessageBox Class="DeleteWarning" @ref="mbox" Title="Warning" CancelText="Cancel" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            @warningText  <br /> <b>Are you sure you want to continue?</b>
+        </MessageContent>
+        <YesButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Delete!</MudButton>
+        </YesButton>
+    </MudMessageBox>
+
+    <MudMessageBox Class="DeleteWarning" @ref="saveNullbox" Title="Warning" CancelText="Back to edit" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            All fields must contain details
+        </MessageContent>
+        <YesButton>
+
+        </YesButton>
+    </MudMessageBox>
 
 
     <MudItem xs="8" class="gap-4 py-8" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
@@ -53,10 +77,10 @@
             <MudItem xs="8" id="Answers" class="d-flex gap-4 " Width="100%" Height="auto">
 
                 @*<MudRadioGroup @bind-SelectedOption="QuestionsCRUD.Answers" class="d-flex gap-4 flex-column">
-                    <MudRadio Option="1" Color="Color.Primary" Size="Size.Medium">True</MudRadio>
-                    <MudRadio Option="0" Color="Color.Secondary" Size="Size.Medium">False</MudRadio>
-                 
-                </MudRadioGroup>*@
+                        <MudRadio Option="1" Color="Color.Primary" Size="Size.Medium">True</MudRadio>
+                        <MudRadio Option="0" Color="Color.Secondary" Size="Size.Medium">False</MudRadio>
+
+                    </MudRadioGroup>*@
 
 
                 <MudRadioGroup @bind-SelectedOption="@CheckedAnswerID">
@@ -67,14 +91,14 @@
                             <MudItem xs="10" id="AnswersRadio" class="d-inline-flex" Height="auto">
                                 <MudRadio Option="@myanswer.ID" Color="Color.Primary" Dense="true">
                                     <MudTextField Margin="Margin.Dense" T="string" @bind-Value="@myanswer.AnswerBody" Label="Enter Your answer" class="ma-2" Variant="Variant.Outlined" Counter="40" MaxLength="40" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharactersAns))" />
-                                 
+
                                 </MudRadio>
                             </MudItem>
 
                             @*<MudItem xs="2" id="Image" class="d-inline-flex" Height="auto">
-                                <MudPaper Class="mud-theme-Primary ma-2" Width="100%" Height="40px" Elevation="0" />
-                                <img src="./Files/AnswerDefaltImage.png" Class=" ma-2" Width="100%" Height="40px">
-                            </MudItem>*@
+                                    <MudPaper Class="mud-theme-Primary ma-2" Width="100%" Height="40px" Elevation="0" />
+                                    <img src="./Files/AnswerDefaltImage.png" Class=" ma-2" Width="100%" Height="40px">
+                                </MudItem>*@
 
                         </MudItem>
                     }
@@ -105,7 +129,7 @@
 
                                 @subject.SubjectName
 
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="(() => DeleteSubject(subject.ID))" Class="justify-end" aria-label="delete"></MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete"  OnClick="(() => DeleteWarning(2,subject.ID))" Class="justify-end" aria-label="delete"></MudIconButton>
                             </MudSelectItem>
                         }
                     </MudSelect>
@@ -209,7 +233,63 @@
 
 @code {
 
+    MudMessageBox mbox { get; set; }
+    string state = "Message box hasn't been opened yet";
+    string warningText = "Are you sure you want to delete?";
 
+    private async void DeleteWarning(int deleteNum, int subid)
+    {
+        if (deleteNum == 1)
+        {
+            warningText = "Deleting this question can not be undone and will delete it from all the games it is assosiated with!";
+        }
+        else
+        {
+            warningText = "Deleting this subject can not be undone and will delete it from all the questions it is assosiated with!";
+        }
+        bool? result = await mbox.Show();
+        state = result == null ? "Cancelled" : "Deleted!";
+        if (state == "Deleted!")
+        {
+            if (deleteNum == 1 && subid == 0)
+            {
+                DeleteQuestion();
+            }
+            else
+            {
+                DeleteSubject(subid);
+            }
+
+        }
+        StateHasChanged();
+
+    }
+
+
+    MudMessageBox saveNullbox { get; set; }
+    string saveNullstate = "Message box hasn't been opened yet";
+
+    private async void saveNullWarning(int saveNullNum)
+    {
+        if (QuestionsCRUD.QuestionBody == null || QuestionsCRUD.Feedback == null)
+        {
+            bool? result = await saveNullbox.Show();
+            saveNullstate = result == null ? "Cancelled" : "Deleted!";
+            if (saveNullstate == "Deleted!")
+            {
+                if (saveNullNum == 1)
+                {
+                    DeleteQuestion();
+                }
+
+            }
+            StateHasChanged();
+        }
+        else
+        {
+            AddAndUpdate();
+        }
+    }
 
 
     private bool visible;

@@ -15,11 +15,35 @@
         <MudItem xs="8" class="justify-start gap-4 ">  <h1 Color="Color.Primary">Edit Question @QuestionsCRUD.ID</h1></MudItem>
         <MudItem xs="3" class=" gap-4 justify-end mx-2 ">
 
-            <MudButton Variant="Variant.Filled" @onclick="AddAndUpdate" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
-
-            <MudButton Variant="Variant.Filled" @onclick="DeleteQuestion" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+            <MudButton Variant="Variant.Filled" @onclick="(() =>saveNullWarning(1))" Color="Color.Secondary" DisableElevation="true">Save</MudButton>
+            @if (QuestionsCRUD.ID != 0)
+            {
+                <MudButton Class="mx-2" Variant="Variant.Filled" @onclick="(() =>DeleteWarning(1,0))" Color="Color.Primary" DisableElevation="true">Delete Question</MudButton>
+            }
         </MudItem>
     </MudItem>
+
+
+
+    <MudMessageBox Class="DeleteWarning" @ref="mbox" Title="Warning" CancelText="Cancel" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            @warningText  <br /> <b>Are you sure you want to continue?</b>
+        </MessageContent>
+        <YesButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Delete!</MudButton>
+        </YesButton>
+    </MudMessageBox>
+
+    <MudMessageBox Class="DeleteWarning" @ref="saveNullbox" Title="Warning" CancelText="Back to edit" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            All fields must contain details
+        </MessageContent>
+        <YesButton>
+
+        </YesButton>
+    </MudMessageBox>
 
 
     <MudItem xs="8" class="gap-4 py-8" Style="@($" border: 1px solid #D8DDE1; border-radius:10px; margin: 10px; padding-bottom: 0px !important;")">
@@ -60,7 +84,7 @@
                 @foreach (var ans in QuestionsCRUD.Answers)
                 {
 
-                    <MudItem xs="12" id="Answers" class="d-flex gap-4 align-center"  Width="100%" Height="auto">
+                    <MudItem xs="12" id="Answers" class="d-flex gap-4 align-center" Width="100%" Height="auto">
 
                         <MudAvatar class="ma-2" Rounded="true" Color="Color.Default">@ans.QuestionOrder</MudAvatar>
 
@@ -100,7 +124,7 @@
 
                                 @subject.SubjectName
 
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="(() => DeleteSubject(subject.ID))" Class="justify-end" aria-label="delete"></MudIconButton>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete"  OnClick="(() => DeleteWarning(2,subject.ID))" Class="justify-end" aria-label="delete"></MudIconButton>
                             </MudSelectItem>
                         }
                     </MudSelect>
@@ -171,7 +195,7 @@
             @foreach (var QuesAns in QuestionsCRUD.Answers)
             {
                 <MudItem xs="12" sm="12">
-                    <MudPaper Class="d-flex align-center justify-center mud-width-full" Outlined="true" Style="@($"color:{Color.Primary}; background:#EDF8FE; border: 1px solid #001546;")"> <img  class="col-1 offset-1" src="./Files/OrderIcon.svg" style=" margin-right: 25px; margin-left: 10px; width: 20px; " alt="Order icon">@QuesAns.AnswerBody</MudPaper>
+                    <MudPaper Class="d-flex align-center justify-center mud-width-full" Outlined="true" Style="@($"color:{Color.Primary}; background:#EDF8FE; border: 1px solid #001546;")"> <img class="col-1 offset-1" src="./Files/OrderIcon.svg" style=" margin-right: 25px; margin-left: 10px; width: 20px; " alt="Order icon">@QuesAns.AnswerBody</MudPaper>
                 </MudItem>
             }
 
@@ -201,6 +225,64 @@
 
 
 @code {
+
+    MudMessageBox mbox { get; set; }
+    string state = "Message box hasn't been opened yet";
+    string warningText = "Are you sure you want to delete?";
+
+    private async void DeleteWarning(int deleteNum, int subid)
+    {
+        if (deleteNum == 1)
+        {
+            warningText = "Deleting this question can not be undone and will delete it from all the games it is assosiated with!";
+        }
+        else
+        {
+            warningText = "Deleting this subject can not be undone and will delete it from all the questions it is assosiated with!";
+        }
+        bool? result = await mbox.Show();
+        state = result == null ? "Cancelled" : "Deleted!";
+        if (state == "Deleted!")
+        {
+            if (deleteNum == 1 && subid == 0)
+            {
+                DeleteQuestion();
+            }
+            else
+            {
+                DeleteSubject(subid);
+            }
+
+        }
+        StateHasChanged();
+
+    }
+
+
+    MudMessageBox saveNullbox { get; set; }
+    string saveNullstate = "Message box hasn't been opened yet";
+
+    private async void saveNullWarning(int saveNullNum)
+    {
+        if (QuestionsCRUD.QuestionBody == null || QuestionsCRUD.Feedback == null)
+        {
+            bool? result = await saveNullbox.Show();
+            saveNullstate = result == null ? "Cancelled" : "Deleted!";
+            if (saveNullstate == "Deleted!")
+            {
+                if (saveNullNum == 1)
+                {
+                    DeleteQuestion();
+                }
+
+            }
+            StateHasChanged();
+        }
+        else
+        {
+            AddAndUpdate();
+        }
+    }
 
     private bool visible;
     private int rating;

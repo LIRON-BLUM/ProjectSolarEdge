@@ -31,7 +31,7 @@
             <!--</ToolBarContent>-->
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortLabel="ID_field" T="Game">ID</MudTableSortLabel></MudTh>
-              
+
                 @*<MudTh><MudTableSortLabel SortLabel="Subject_field" T="Subject">Subject</MudTableSortLabel></MudTh>*@
 
                 <MudTh><MudTableSortLabel SortLabel="GameName_field" T="Game">Game Name</MudTableSortLabel></MudTh>
@@ -39,7 +39,7 @@
 
 
                 <MudTh><MudTableSortLabel SortLabel="Update_Date_field" T="Game">Last Update</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortLabel="Published_field" T="Game">Published</MudTableSortLabel></MudTh>
+                @*<MudTh><MudTableSortLabel SortLabel="Published_field" T="Game">Published</MudTableSortLabel></MudTh>*@
                 <MudTh>Edit</MudTh>
                 <MudTh>Delete</MudTh>
 
@@ -52,18 +52,18 @@
                 <MudTh DataLabel="Creator">@context.Creator</MudTh>
 
                 <MudTh DataLabel="Update">@context.UpdateDate</MudTh>
-                <MudTh DataLabel="Published">@context.isPublished</MudTh>
+                @*<MudTh DataLabel="Published">@context.isPublished</MudTh>*@
                 <MudTh DataLabel="Edit">
-               
-                       
-                            <MudTooltip Text="Edit Game">
-                                <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="(() =>NavigateToEdit(context.ID))" Color="Color.Primary" />
-                            </MudTooltip>
+
+
+                    <MudTooltip Text="Edit Game">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" @onclick="(() =>NavigateToEdit(context.ID))" Color="Color.Primary" />
+                    </MudTooltip>
                 </MudTh>
                 <MudTh DataLabel="Delete">
 
                     <MudTooltip Text="Delete Question">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>GameToDeleteID(context.ID))" Color="Color.Primary" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" @onclick="(() =>DeleteWarning(context.ID))" Color="Color.Primary" />
                     </MudTooltip>
 
                 </MudTh>
@@ -81,9 +81,39 @@
             </PagerContent>
         </MudTable>
     </MudItem>
+
+    <MudMessageBox Class="DeleteWarning" @ref="mbox" Title="Warning" CancelText="Cancel" Style="max-width: 444px !important; ">
+        <MessageContent>
+            <br />
+            Deleting this Game can not be undone and will delete all player's data associated with it! <br />
+            <b>  Are you sure you want to continue?</b>
+        </MessageContent>
+        <YesButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.DeleteForever">Delete!</MudButton>
+        </YesButton>
+    </MudMessageBox>
 </MudGrid>
 
+@code{
 
+    MudMessageBox mbox { get; set; }
+    string state = "Message box hasn't been opened yet";
+
+    private async void DeleteWarning(int deleteNum)
+    {
+        bool? result = await mbox.Show();
+        state = result == null ? "Cancelled" : "Deleted!";
+        if (state == "Deleted!")
+        {
+
+            GameToDeleteID(deleteNum);
+            NavigationManager.NavigateTo("./Games");
+
+        }
+        StateHasChanged();
+
+    }
+}
 
 
 

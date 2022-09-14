@@ -16,6 +16,8 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         [Parameter]
         public string cameFromGambling { get; set; }
 
+        public string cameFromGamblingString = "false";
+
         public Game GamePlaying { get; set; }
 
         public UsersTable player { get; set; }
@@ -41,6 +43,12 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
         protected override async Task OnInitializedAsync()
         {
 
+            if (cameFromGambling == null)
+            {
+                cameFromGambling = "false";
+            }
+            cameFromGamblingString = cameFromGambling;
+
             int.TryParse(GameId, out var gameId);
             int.TryParse(UserId, out var userId);
 
@@ -56,7 +64,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
 
 
 
-            if (GamePlaying.IsGamified == 1 && cameFromGambling != "true")
+            if (GamePlaying.IsGamified == 1 && cameFromGamblingString != "true")
             {
 
                 //NavigationManager.NavigateTo($"WheelOfFortune/{gameId}/{userId}");

@@ -1,0 +1,20 @@
+﻿@page "/dragble"
+<h3>Dragble</h3>
+
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+    <li>Item 4</li>
+    <li>Item 5</li>
+</ul>
+<span>@message</span>
+@code {
+    [Inject] IJSRuntime JSRuntime { get; set; }
+    public string message = "";
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        this.message = "Invoked";
+        await JSRuntime.InvokeVoidAsync("initiateDrag");
+    }
+}

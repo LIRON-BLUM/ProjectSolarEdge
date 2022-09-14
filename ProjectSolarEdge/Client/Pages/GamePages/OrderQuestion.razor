@@ -7,9 +7,10 @@
 <link href="./css/styles/Game.css" rel="stylesheet" />
 <link href="./css/bootstrap/bootstrap.min.css" rel="stylesheet" />
 
-<body ontouchstart="dragStart(event)"
+@*<body ontouchstart="dragStart(event)"
       ontouchmove="drag(event)"
-      ontouchend="drop(event)">
+      ontouchend="drop(event)">*@
+<body >
     <div class="container mt-4">
         <div id="game" class="justify-content-center align-items-center">
 
@@ -107,26 +108,13 @@
     private IJSObjectReference module;
     private ElementReference questionsContainer;
 
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if(firstRender)
-        {
-            CallJSMethod();
-        }
-    }
-
-
-    private async Task CallJSMethod()
-    {
-        //selfReference = DotNetObjectReference.Create(this);
-        //module = await JSRuntime.InvokeAsync<IJSObjectReference>(
-            //"import", "./jScripts/OrderQuestion.js");
-
-        //await module.InvokeVoidAsync("enableDragandDrop", questionsContainer, selfReference);
-
-        await JSRuntime.InvokeVoidAsync("orderQuestionPage");
-    }
-
+    //protected override void OnAfterRender(bool firstRender)
+    //{
+    //    if (firstRender)
+    //    {
+    //        CallJSMethod();
+    //    }
+    //}
 
     int counter = 0;
 
@@ -135,5 +123,31 @@
 
         counter++;
     }
+
+
+    //selfReference = DotNetObjectReference.Create(this);
+    //module = await JSRuntime.InvokeAsync<IJSObjectReference>(
+    //"import", "./jScripts/OrderQuestion.js");
+
+    //await module.InvokeVoidAsync("enableDragandDrop", questionsContainer, selfReference);
+
+    public string message = "";
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        if (firstRender is true)
+        {
+            this.message = "Invoked";
+            await JSRuntime.InvokeVoidAsync("orderQuestionPage");
+            await JSRuntime.InvokeVoidAsync("initiateDrag");
+        }
+
+    }
+
+
+    //await JSRuntime.InvokeVoidAsync("orderQuestionPage");
+
+
+
 
 }

@@ -44,7 +44,6 @@ namespace ProjectSolarEdge.Client.Pages
             GamesData = await GamesDataService.GetAllGames();
             //  GamesData = await httpClient.GetFromJsonAsync<List<Element>>("webapi/periodictable");
             EditorIDSessiom = LocalService.GetItem<string>("SessionValue");
-
             GameDataToDisplay = GamesData;
         }
 
@@ -107,6 +106,7 @@ namespace ProjectSolarEdge.Client.Pages
                     data = data.OrderByDirection(state.SortDirection, o => o.isPublished);
                     break;
             }
+
 
             pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
             return new TableData<Game>() { TotalItems = totalItems, Items = pagedData };

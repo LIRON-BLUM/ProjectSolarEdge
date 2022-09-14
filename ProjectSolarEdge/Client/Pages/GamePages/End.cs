@@ -34,7 +34,7 @@ namespace ProjectSolarEdge.Client.Pages.GamePages
              protected async Task GoToFeedback()
         {
 
-            NavigationManager.NavigateTo($"./endFeedback/{GameId}/{UserId}");
+            NavigationManager.NavigateTo($"./Login");
         }
 
         //  Liron - delete this after querise

@@ -1,47 +1,6 @@
 ﻿
 function orderQuestionPage() {
 
-    /**
- * Lightweight script to convert touch handlers to mouse handlers
- * credit: http://stackoverflow.com/a/6141093
- */
-    //(function () {
-    //    function touchHandler(e) {
-    //        var touches = e.changedTouches;
-    //        var first = touches[0];
-    //        var type = "";
-
-    //        switch (e.type) {
-    //            case "touchstart":
-    //                type = "mousedown";
-    //                break;
-    //            case "touchmove":
-    //                type = "mousemove";
-    //                break;
-    //            case "touchend":
-    //                type = "mouseup";
-    //                break;
-    //            default:
-    //                return;
-    //        }
-
-    //        var simulatedEvent = document.createEvent("MouseEvent");
-    //        simulatedEvent.initMouseEvent(type, true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false, 0, null);
-
-    //        first.target.dispatchEvent(simulatedEvent);
-    //        e.preventDefault();
-    //    }
-
-    //    function init() {
-    //        document.addEventListener("touchstart", touchHandler, true);
-    //        document.addEventListener("touchmove", touchHandler, true);
-    //        document.addEventListener("touchend", touchHandler, true);
-    //        document.addEventListener("touchcancel", touchHandler, true);
-    //    }
-
-    //    init();
-    //})();
-
 
     let questionHidden = document.getElementById("questionHidden");
     //let acceptingAnswers = true;
@@ -49,65 +8,11 @@ function orderQuestionPage() {
     const maxQuestions = document.getElementById("maxQuestions").innerText;
     const availleblQuestions = document.getElementById("availleblQuestions").innerText;
 
-
-    addEventListeners();
     random();
-
-    //function touchHandler(event) {
-    //    var touches = event.changedTouches,
-    //        first = touches[0],
-    //        type = "";
-
-    //    switch (event.type) {
-    //        case "touchstart": type = "mousedown"; break;
-    //        case "touchmove": type = "mousemove"; break;
-    //        case "touchend": type = "mouseup"; break;
-    //        default: return;
-    //    }
-
-    //    // initMouseEvent(type, canBubble, cancelable, view, clickCount,
-    //    //                screenX, screenY, clientX, clientY, ctrlKey,
-    //    //                altKey, shiftKey, metaKey, button, relatedTarget);
-
-    //    var simulatedEvent = document.createEvent("MouseEvent");
-    //    simulatedEvent.initMouseEvent(type, true, true, window, 1,
-    //        first.screenX, first.screenY,
-    //        first.clientX, first.clientY, false,
-    //        false, false, false, 0/*left*/, null);
-
-    //    first.target.dispatchEvent(simulatedEvent);
-    //    event.preventDefault();
-    //}
-
-    //function init() {
-    //    document.addEventListener("touchstart", touchHandler, true);
-    //    document.addEventListener("touchmove", touchHandler, true);
-    //    document.addEventListener("touchend", touchHandler, true);
-    //    document.addEventListener("touchcancel", touchHandler, true);
-    //}
-
-   
-
-    function dragEnter() {
-        console.log("dragEnter function");
-
-        this.classList.add('over');
-    }
-
-    function dragLeave() {
-        console.log("dragLeave function");
-
-        this.classList.remove('over');
-    }
-
-    function dragOver(e) {
-        console.log("dragOver function");
-        e.preventDefault();
-    }
 
     function dragDrop() {
         console.log("dragDrop function");
-      
+
 
         const dragEndIndex = +this.getAttribute('data-index');
         swapItems(dragStartIndex, dragEndIndex);
@@ -125,36 +30,10 @@ function orderQuestionPage() {
         const liList = document.getElementsByTagName("li");
 
         const itemOne = liList[fromIndex - 1].querySelector('.draggable');
-        const itemTwo = liList[toIndex - 1].querySelector('.draggable'); 
+        const itemTwo = liList[toIndex - 1].querySelector('.draggable');
 
         liList[fromIndex - 1].appendChild(itemTwo);
         liList[toIndex - 1].appendChild(itemOne);
-    }
-
-    function addEventListeners() {
-        const draggables = document.querySelectorAll('.draggable');
-        const dragListItems = document.querySelectorAll('.draggable-list li');
-
-        draggables.forEach(draggable => {
-            draggable.addEventListener('dragstart', dragStart, { passive: false });
-
-          
-        });
-
-        dragListItems.forEach(item => {
-            item.addEventListener('dragover', dragOver, { passive: false });
-            item.addEventListener('drop', dragDrop, { passive: false });
-            item.addEventListener('dragenter', dragEnter, { passive: false });
-            item.addEventListener('dragleave', dragLeave, { passive: false });
-        });
-    }
-
-    function dragStart() {
-        console.log("dragStart function");
-
-
-        dragStartIndex = +this.closest('li').getAttribute('data-index');
-        //submitAnswer.disabled = false;
     }
 
     // update the progress bar
@@ -181,7 +60,8 @@ function orderQuestionPage() {
 
             }
 
-            console.log("currentOrder: " + currentOrder[i] + "rightOrder: " + rightOrder[i]);
+            console.log("currentOrder: " + currentOrder[i]);
+            console.log("rightOrder: " + rightOrder[i]);
         }
 
         if (isTrue == 4) {
@@ -201,6 +81,10 @@ function orderQuestionPage() {
         }, 1000);
     }
 
+
+
+
+
     function random() {
         const liList = document.getElementsByTagName("li");
 
@@ -208,54 +92,20 @@ function orderQuestionPage() {
         let CorrentPosition;
         for (let i = 0; i < answersNum; i++) {
 
-        CorrentPosition = (Math.floor(Math.random() * answersNum));
+            CorrentPosition = (Math.floor(Math.random() * answersNum));
 
-        const itemOne = liList[i].querySelector('.draggable');
-        const itemTwo = liList[CorrentPosition].querySelector('.draggable');
+            const itemOne = liList[i].querySelector('.draggable');
+            const itemTwo = liList[CorrentPosition].querySelector('.draggable');
 
 
-         liList[i].appendChild(itemTwo);
-         liList[CorrentPosition].appendChild(itemOne);
-         }
+            liList[i].appendChild(itemTwo);
+            liList[CorrentPosition].appendChild(itemOne);
+        }
     }
 
-    (function () {
-        function touchHandler(e) {
-            var touches = e.changedTouches;
-            var first = touches[0];
-            var type = "";
-
-            switch (e.type) {
-                case "touchstart":
-                    type = "mousedown";
-                    break;
-                case "touchmove":
-                    type = "mousemove";
-                    break;
-                case "touchend":
-                    type = "mouseup";
-                    break;
-                default:
-                    return;
-            }
-
-            var simulatedEvent = document.createEvent("MouseEvent");
-            simulatedEvent.initMouseEvent(type, true, true, window, 1, first.screenX, first.screenY, first.clientX, first.clientY, false, false, false, false, 0, null);
-
-            first.target.dispatchEvent(simulatedEvent);
-            e.preventDefault();
-        }
-
-        function init() {
-            document.addEventListener("touchstart", touchHandler, true, { passive: false });
-            document.addEventListener("touchmove", touchHandler, true, { passive: false });
-            document.addEventListener("touchend", touchHandler, true, { passive: false });
-            document.addEventListener("touchcancel", touchHandler, true, { passive: false });
-        }
-
-        init();
-    })();
 }
+
+
 
 
 
