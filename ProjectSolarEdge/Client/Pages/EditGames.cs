@@ -225,11 +225,11 @@ namespace ProjectSolarEdge.Client.Pages
         public GameQuestionsConnection questionToUpdate { get; set; }
         int GameIdToAdd { get; set; }
 
-        public int QuestionScore = 200;
+      
 
         protected async Task AddAndUpdate()
         {
-
+           
             //  GameCRUD.Questions = selectedQuestionToUpdate;
 
             int.TryParse(Id, out var gameId);
@@ -239,91 +239,53 @@ namespace ProjectSolarEdge.Client.Pages
             List<Question> selectedQuestionToUpdate = new List<Question>();
 
 
-           
+
 
             if (GameCRUD.ID == 0) // Create new question
             {
                 GameCRUD.Creator = CreatorName;
-                GameCRUD.IsGamified =Convert.ToByte(GameIsGamified);
-                //List<Question> selectedQuestionsToUpdate = new List<Question>();
-                // 2) Save the question itself into the database and get the question ID back from the database
-                GameIdToAdd =  await GameDataService.AddGameToDB(GameCRUD);
-
-                //if (GameIdToAdd != 0) // Question added to the DB
-                //{
-                //    GameCRUD.ID = GameIdToAdd;
+                GameCRUD.IsGamified = Convert.ToByte(GameIsGamified);
                
 
-                  foreach (var item in QuestionsDataToDisplay)
-                  {
+                // 2) Save the question itself into the database and get the question ID back from the database
+                GameIdToAdd = await GameDataService.AddGameToDB(GameCRUD);
 
-                  
-                  
-                       // int QuestionScore = 200;
-                        Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
-                        Question newQ = await QuestionDataService.GetQuestionByIdAsync(q.ID);
-                    if (GameCRUD.ScoreMethod == ScoreMethod.SpreadEqualy)
+                foreach (var item in QuestionsDataToDisplay)
+                {
+                    int QuestionScore = 200;
+                    // int QuestionScore = 200;
+                    Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
+                    Question newQ = await QuestionDataService.GetQuestionByIdAsync(q.ID);
+
+
+                    if (newQ.Difficulty == QuestionDifficulty.Easy)
                     {
-                        if (newQ.Difficulty == QuestionDifficulty.Easy)
-                        {
-                            QuestionScore = 200;
-                        }
-                        if (newQ.Difficulty == QuestionDifficulty.Medium)
-                        {
-                            QuestionScore = 200;
-                        }
-                        if (newQ.Difficulty == QuestionDifficulty.Hard)
-                        {
-                            QuestionScore = 200;
-                        }
-                    } else if (GameCRUD.ScoreMethod == ScoreMethod.SpreadByDifficulty)
+                        QuestionScore = GameCRUD.ScoreEasy;
+                    }
+                    if (newQ.Difficulty == QuestionDifficulty.Medium)
                     {
-                        if (newQ.Difficulty == QuestionDifficulty.Easy)
-                        {
-                           
-                            QuestionScore = 200;
-                        }
-                        if (newQ.Difficulty == QuestionDifficulty.Medium)
-                        {
-                            QuestionScore = QuestionScore + 200;
-                        }
-                        if (newQ.Difficulty == QuestionDifficulty.Hard)
-                        {
-                            QuestionScore = QuestionScore + 400;
-                        }
-                    } else
+                        QuestionScore = GameCRUD.ScoreMedium;
+                    }
+                    if (newQ.Difficulty == QuestionDifficulty.Hard)
                     {
-                        if (newQ.Difficulty == QuestionDifficulty.Easy)
-                        {
-                            QuestionScore = 200;
-                        }
-                        if (newQ.Difficulty == QuestionDifficulty.Medium)
-                        {
-                            QuestionScore = QuestionScore;
-                        }
-                        if (newQ.Difficulty == QuestionDifficulty.Hard)
-                        {
-                            QuestionScore = QuestionScore;
-                        }
+                        QuestionScore = GameCRUD.ScoreHard;
                     }
 
-                       
 
-                       
-                        selectedQuestionToUpdate.Add(newQ);
-                        //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
+                    selectedQuestionToUpdate.Add(newQ);
+                    //await GameDataService.AddQuestionConnection(new GameQuestionsConnection() { QuestionID = q.ID, GameID = gameId, Score = QuestionScore });
 
-                        questionToUpdate = new GameQuestionsConnection()
-                        {
-                            QuestionID = newQ.ID,
-                            GameID = GameIdToAdd,
-                            Score = QuestionScore
-                        };
+                    questionToUpdate = new GameQuestionsConnection()
+                    {
+                        QuestionID = newQ.ID,
+                        GameID = GameIdToAdd,
+                        Score = QuestionScore
+                    };
 
-                      //  GameCRUD.Questions = selectedQuestionToUpdate;
+                    //  GameCRUD.Questions = selectedQuestionToUpdate;
 
-                        await GameDataService.AddQuestionConnection(questionToUpdate);
-                  }
+                    await GameDataService.AddQuestionConnection(questionToUpdate);
+                }
                 //}
             }
             else
@@ -338,9 +300,41 @@ namespace ProjectSolarEdge.Client.Pages
                     GameCRUD.IsGamified = 0;
                 }
 
-
+                int QuestionScore = 200;
                 await GameDataService.UpdateGame(GameCRUD);
-             
+                foreach (var item in QuestionsDataToDisplay)
+                {
+                    // int QuestionScore = 200;
+                    //Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
+                    //Question newQ = await QuestionDataService.GetQuestionByIdAsync(q.ID);
+
+
+                    if (item.Difficulty == QuestionDifficulty.Easy)
+                    {
+                        QuestionScore = GameCRUD.ScoreEasy;
+                    }
+                    if (item.Difficulty == QuestionDifficulty.Medium)
+                    {
+                        QuestionScore = GameCRUD.ScoreMedium;
+                    }
+                    if (item.Difficulty == QuestionDifficulty.Hard)
+                    {
+                        QuestionScore = GameCRUD.ScoreHard;
+                    }
+
+
+                 
+                    questionToUpdate = new GameQuestionsConnection()
+                    {
+                        QuestionID = item.ID,
+                        GameID = GameCRUD.ID,
+                        Score = QuestionScore
+                    };
+
+                    await GameDataService.UpdateGameQuestionsConnections(questionToUpdate);
+
+                }
+
             }
 
          
@@ -416,4 +410,49 @@ namespace ProjectSolarEdge.Client.Pages
     }
 
 }
+
+//if (GameCRUD.ScoreMethod == ScoreMethod.SpreadEqualy)
+//{
+//    if (newQ.Difficulty == QuestionDifficulty.Easy)
+//    {
+//        QuestionScore = 200;
+//    }
+//    if (newQ.Difficulty == QuestionDifficulty.Medium)
+//    {
+//        QuestionScore = 200;
+//    }
+//    if (newQ.Difficulty == QuestionDifficulty.Hard)
+//    {
+//        QuestionScore = 200;
+//    }
+//} else if (GameCRUD.ScoreMethod == ScoreMethod.SpreadByDifficulty)
+//{
+//    if (newQ.Difficulty == QuestionDifficulty.Easy)
+//    {
+
+//        QuestionScore = 200;
+//    }
+//    if (newQ.Difficulty == QuestionDifficulty.Medium)
+//    {
+//        QuestionScore = QuestionScore + 200;
+//    }
+//    if (newQ.Difficulty == QuestionDifficulty.Hard)
+//    {
+//        QuestionScore = QuestionScore + 400;
+//    }
+//} else
+//{
+//    if (newQ.Difficulty == QuestionDifficulty.Easy)
+//    {
+//        QuestionScore = 200;
+//    }
+//    if (newQ.Difficulty == QuestionDifficulty.Medium)
+//    {
+//        QuestionScore = QuestionScore;
+//    }
+//    if (newQ.Difficulty == QuestionDifficulty.Hard)
+//    {
+//        QuestionScore = QuestionScore;
+//    }
+//}
 

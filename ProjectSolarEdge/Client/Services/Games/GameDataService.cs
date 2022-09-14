@@ -1,4 +1,5 @@
-﻿using ProjectSolarEdge.Shared.Entities;
+﻿using ProjectSolarEdge.Client.Pages;
+using ProjectSolarEdge.Shared.Entities;
 using System.Text;
 using System.Text.Json;
 
@@ -128,6 +129,29 @@ namespace ProjectSolarEdge.Client.Services.Games
                 new StringContent(JsonSerializer.Serialize(game), Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PutAsync($"api/Games/DeleteGame/{game}", gameJson);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await JsonSerializer.DeserializeAsync<bool>(await response.Content.ReadAsStreamAsync());
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateGameQuestionsConnections(GameQuestionsConnection gameQuestionsConnection)
+        {
+            try
+            {
+                var gameJson =
+                new StringContent(JsonSerializer.Serialize(gameQuestionsConnection), Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"api/Games/UpdateGameQuestionsConnections/{gameQuestionsConnection}", gameJson);
 
                 if (response.IsSuccessStatusCode)
                 {

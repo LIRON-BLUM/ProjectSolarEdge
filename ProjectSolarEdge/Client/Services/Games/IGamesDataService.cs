@@ -22,5 +22,7 @@ namespace ProjectSolarEdge.Client.Services.Games
         Task<bool> DeleteQuestionIDConnction(int QuestionID, int GameID);
 
         Task<int> AddQuestionConnection(GameQuestionsConnection gameQuestionsConnection);
+
+        Task<bool> UpdateGameQuestionsConnections(GameQuestionsConnection gameQuestionsConnection);
     }
 }

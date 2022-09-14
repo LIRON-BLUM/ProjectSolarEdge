@@ -150,7 +150,7 @@ namespace ProjectSolarEdge.Client.Pages
                 foreach (var item in selectedQuestions)
                 {
 
-                    int QuestionScore = 0;
+                    int QuestionScore =200;
                     Question q = QuestionsData.Where(q => q.ID == item.ID).SingleOrDefault();
 
 

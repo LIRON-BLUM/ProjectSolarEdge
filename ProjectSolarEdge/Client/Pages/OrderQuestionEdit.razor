@@ -1,5 +1,4 @@
-﻿<h3>OrderQuestionEdit</h3>
-
+﻿
 @page "/OrderQuestionEdit"
 @*@page "/EditQuestion/{Id}"*@
 @page "/OrderQuestionEdit/{Id}"
@@ -12,7 +11,15 @@
 
 <MudGrid Spacing="4">
     <MudItem xs="12" class="d-flex gap-4 align-center justify-space-between mt-2">
-        <MudItem xs="8" class="justify-start gap-4 ">  <h1 Color="Color.Primary">Edit Question @QuestionsCRUD.ID</h1></MudItem>
+        @if (QuestionsCRUD.ID != 0)
+        {
+            <MudItem xs="8" class="justify-start gap-4 ">  <h1 Color="Color.Primary">Edit Question @QuestionsCRUD.ID</h1></MudItem>
+        }
+        else
+        {
+            <MudItem xs="8" class="justify-start gap-4 ">  <h1 Color="Color.Primary">New Question </h1></MudItem>
+
+        }
         <MudItem xs="3" class=" gap-4 justify-end mx-2 ">
 
             <MudButton Variant="Variant.Filled" @onclick="(() =>saveNullWarning(1))" Color="Color.Secondary" DisableElevation="true">Save</MudButton>

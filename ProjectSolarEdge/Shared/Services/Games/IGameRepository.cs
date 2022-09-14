@@ -29,7 +29,7 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
         int AddQuestionToConnection(GameQuestionsConnection gameQuestionsConnection);
 
-
+        bool UpdateGameQuestionsConnections(GameQuestionsConnection gameQuestionsConnection);
 
     }
 }

@@ -19,7 +19,7 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
 
         public static string AddGame => @"INSERT INTO Games (GameName, GameDescription, CreationDate, UpdateDate, IsPublished, GameTheme,GameStartDate,GameEndDate,CreatorID,GameTimeLimit, ScoreMethod,ScoreEasy,ScoreMedium, ScoreHard,IsGamified,WheelIteration,GambleIteration, isDeleted, Creator)
-                                        VALUES (@GameName,@GameDescription, @CreationDate, @UpdateDate, 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, @IsGamified, @WheelIteration, @GambleIteration, 0, @Creator)
+                                        VALUES (@GameName,@GameDescription, @CreationDate, @UpdateDate, 0, @GameTheme, @GameStartDate, @GameStartDate, @CreatorID,@GameTimeLimit,@ScoreMethod,@ScoreEasy, @ScoreMedium, @ScoreHard, 1, @WheelIteration, @GambleIteration, 0, @Creator)
                                         SELECT CAST(SCOPE_IDENTITY() as int)";
 
 
@@ -40,14 +40,14 @@ namespace ProjectSolarEdge.Shared.Services.Games
         ScoreEasy=@ScoreEasy,
         ScoreMedium=@ScoreMedium,
         ScoreHard=@ScoreHard,
-        IsGamified=@IsGamified,
+        IsGamified=1,
         WheelIteration=@WheelIteration,
         GambleIteration=@GambleIteration
         WHERE ID=@ID";
 
         public static string DeleteGame => @"UPDATE Games SET isDeleted = 1 WHERE ID = @ID";
 
-        public static string InsertQuestionToConnectionTable => @"INSERT INTO GameQuestionsConnections (QuestionID, GameID, Score) VALUES (@QuestionID, @GameID, 0)  SELECT CAST(SCOPE_IDENTITY() as int)";
+        public static string InsertQuestionToConnectionTable => @"INSERT INTO GameQuestionsConnections (QuestionID, GameID, Score) VALUES (@QuestionID, @GameID, @Score)  SELECT CAST(SCOPE_IDENTITY() as int)";
 
         public static string DeleteQuestionFromConnectionTable => @"DELETE FROM GameQuestionsConnections WHERE GameID = @GameID";
 
@@ -74,6 +74,10 @@ namespace ProjectSolarEdge.Shared.Services.Games
                                                         GQC.GameID
                                                         FROM GameQuestionsConnections as GQC
                                                         INNER JOIN Questions as Q ON GQC.QuestionID = Q.ID";
+
+
+        public static string UpdateGameQuestionsConnections => @"UPDATE GameQuestionsConnections set Score = @Score WHERE QuestionID = @QuestionID AND GameID = @GameID";
+
     }
 }
 

@@ -98,5 +98,13 @@ namespace ProjectSolarEdge.Shared.Services.Games
 
             return results;
         }
+
+        public bool UpdateGameQuestionsConnections(GameQuestionsConnection gameQuestionsConnection)
+        {
+            bool results = ExecuteAll(GamesQueries.UpdateGameQuestionsConnections, gameQuestionsConnection);
+
+
+            return results;
+        }
     }
 }

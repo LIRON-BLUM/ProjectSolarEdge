@@ -158,6 +158,25 @@ namespace ProjectSolarEdge.Server.Controllers
 
             return Ok(_QuesConnection);//success
         }
+
+
+
+        [HttpPut]
+        [Route("UpdateGameQuestionsConnections/{Id}")]
+        public IActionResult UpdateGameQuestionsConnections(GameQuestionsConnection gameQuestionsConnection)
+        {
+            if (gameQuestionsConnection == null)
+            {
+
+                return BadRequest();
+            }
+
+            bool _game = _GameRepository.UpdateGameQuestionsConnections(gameQuestionsConnection);
+
+            return Ok(_game); //success
+        }
+
+
     }
 
 

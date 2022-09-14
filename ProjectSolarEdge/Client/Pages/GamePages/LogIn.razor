@@ -10,28 +10,31 @@
 
 <div class="container-flex Back pt-10">
     <div class="justify-content-center align-items-center gy-10">
-           <div class="row justify-content-center">
-             <img class="imgLogin" src="./Files/KnowledgeOnBlack.svg" width="60%" alt="Logo">
+        <div class="row justify-content-center">
+            <img class="imgLogin" src="./Files/KnowledgeOnBlack.svg" width="60%" alt="Logo">
         </div>
         <br />
         <p id="ErrorHelp"> </p>
 
-           <div class="row justify-content-center gy-10">
-                <p class="subtitleInput col-10">Enter Email:</p>
-            <input type="text" class="inputLoginGame pa-1 col-10"  placeholder="User Email" @bind-value="@UserEmail" />
+        <div class="row justify-content-center gy-10">
+            <p class="subtitleInput col-10">Enter Username:</p>
+            <input type="text" class="inputLoginGame pa-1 col-10" placeholder="Username" @bind-value="@UserEmail" />
             <p class="subtitleInput col-10">Enter game code:</p>
             <input type="text" class="inputLoginGame pa-1 col-10" placeholder="Game code" @bind-value="@GameCode" />
-          </div>
-             
-         <div class="row justify-content-center pt-10">
-            <button type="button" id="StartGame" class="btnGreen mt-15 col-sm-8 col-xs-8 col-lg-5 col-md-5" @onclick="StartTheGame"> Enter the game</button>
-       </div>
+
+
+        </div>
+
+
+            <div class="row justify-content-center pt-10">
+                <button type="button" id="StartGame" class="btnGreen mt-15 col-sm-8 col-xs-8 col-lg-5 col-md-5" @onclick="StartTheGame"> Enter the game</button>
+            </div>
+
+        </div>
 
     </div>
-  
-</div>
 
 
         @code {
-            
+        
         }
